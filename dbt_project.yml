@@ -1,0 +1,81 @@
+name: 'ClearviewD365Analytics'
+version: '1.0.0'
+config-version: 2
+dbt-cloud:
+    project-id: 70471823458051
+
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'dev'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["ClearviewD365Analytics/models"]
+analysis-paths: ["ClearviewD365Analytics/analyses"]
+test-paths: ["ClearviewD365Analytics/tests"]
+seed-paths: ["ClearviewD365Analytics/seeds"]
+macro-paths: ["ClearviewD365Analytics/macros"]
+snapshot-paths: ["ClearviewD365Analytics/snapshots"]
+
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+vars:
+  calendar_start_date: '2022-01-01'
+  calendar_end_date: '2025-07-31'
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In dbt, the default materialization for a model is a view. This means, when you run 
+# dbt run or dbt build, all of your models will be built as a view in your data platform. 
+# The configuration below will override this setting for models in the example folder to 
+# instead be materialized as tables. Any models you add to the root of the models folder will 
+# continue to be built as views. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+
+models:
+  ClearviewD365Analytics:
+    bronze:
+      +materialized: view
+      +schema: bronze
+      +tags: ["bronze"]
+
+      d365cma:
+        +meta:
+          source_system: "d365cma"
+
+      oracle:
+        +meta:
+          source_system: "oracle"
+
+    silver:
+      +materialized: table
+      +schema: silver
+      +tags: ["silver"]
+
+      d365cma:
+        +meta:
+          source_system: "d365cma"
+
+      oracle:
+        +meta:
+          source_system: "oracle"    
+
+    gold:
+      +materialized: table
+      +schema: gold
+      +tags: ["gold"]
+
+      d365cma:
+        +meta:
+          source_system: "d365cma"
+
+      oracle:
+        +meta:
+          source_system: "oracle"

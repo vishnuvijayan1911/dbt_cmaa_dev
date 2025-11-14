@@ -1,0 +1,43 @@
+{{ config(materialized='table', tags=['silver']) }}
+
+-- Source file: cma/cma/layers/_base/_silver/faultcause_fact/faultcause_fact.py
+-- Root method: FaultcauseFact.faultcause_factdetail [FaultCause_FactDetail]
+-- Inlined methods: FaultcauseFact.faultcause_factstage [FaultCause_FactStage]
+-- external_table_name: FaultCause_FactDetail
+-- schema_name: temp
+
+WITH
+faultcause_factstage AS (
+    SELECT ofs.dataareaid AS LegalEntityID
+             , fc.faultcauseid AS FaultCauseID
+             , ofc.recid     AS _RecID
+             , ofs.recid     AS _RecID1
+             , 1               AS _SourceID
+
+         FROM {{ ref('entassetobjectfaultcause') }}        ofc
+
+         INNER JOIN {{ ref('entassetobjectfaultsymptom') }} ofs
+            ON ofs.dataareaid = ofc.dataareaid
+           AND ofs.recid      = ofc.objectfaultsymptom
+          LEFT JOIN {{ ref('entassetfaultcause') }}         fc
+            ON fc.dataareaid  = ofc.dataareaid
+           AND fc.recid      = ofc.faultcause;
+)
+SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg._SourceID) AS FaultCauseFactKey
+          ,ff.FaultKey       AS FaultKey
+         , ofc.faultcausekey AS FaultCauseKey
+         , stg._SourceID     AS _SourceID
+         , stg._RecID
+         ,CURRENT_TIMESTAMP AS _CreatedDate
+         ,CURRENT_TIMESTAMP AS _ModifiedDate
+
+      FROM faultcause_factstage               stg
+     INNER JOIN silver.cma_LegalEntity le
+        ON le.LegalEntityID  = stg.LegalEntityID
+     INNER JOIN silver.cma_Fault_Fact  ff
+        ON ff._RecID         = stg._RecID1
+       AND ff._SourceID      = stg._SourceID
+      LEFT JOIN silver.cma_FaultCause  ofc
+        ON ofc.faultcauseid  = stg.FaultCauseID
+       AND ofc.legalentityid = le.LegalEntityID
+       AND ofc._sourceid     = stg._SourceID;

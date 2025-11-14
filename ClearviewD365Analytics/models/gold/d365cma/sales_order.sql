@@ -1,0 +1,93 @@
+{{ config(materialized='view', schema='gold', alias="Sales order") }}
+
+WITH CTE
+  AS (
+    SELECT  CASE WHEN PriororderDate IS NULL THEN NULL ELSE DATEDIFF(d, dd1.Date, dd.Date) END AS CustomerDaysBetweenOrders
+          , t.*
+      FROM (   SELECT  ROW_NUMBER() OVER (PARTITION BY CustomerKey
+ORDER BY OrderDateKey, SalesOrderKey) AS [CustomerOrderSeqNo]
+                    , LAG(OrderDateKey) OVER (PARTITION BY CustomerKey
+ORDER BY OrderDateKey, SalesOrderKey) AS PriororderDate
+                    , OrderDateKey
+                    , CustomerKey
+                    , SalesOrderKey
+                  FROM {{ ref("SalesOrder_Fact") }}  sof
+                  LEFT JOIN {{ ref("SalesStatus") }} ss1 
+                    ON ss1.SalesStatusKey = sof.SalesStatusKey
+                WHERE ss1.SalesStatusID = 1) t
+      LEFT JOIN {{ ref("Date") }}                     dd
+        ON dd.DateKey  = t.OrderDateKey
+      LEFT JOIN {{ ref("Date") }}                     dd1
+        ON dd1.DateKey = t.PriororderDate)
+SELECT  t.SalesOrderKey                            AS [Sales order key]
+    , NULLIF(t.SalesOrderID, '')                 AS [Sales order #]
+    , CustomerOrderSeqNo                         AS [Customer order seq #]
+    , NULLIF(t.CustomerReference, '')            AS [Customer reference]
+    , NULLIF(t.CustomerRequisition, '')          AS [Customer requisition]
+    , 1                                          AS [Order count]
+    , NULLIF(dm.DeliveryModeID, '')              AS [Delivery mode]
+    , NULLIF(dm.DeliveryMode, '')                AS [Delivery mode name]
+    , NULLIF(t.DeliveryName, '')                 AS [Delivery name]
+    , NULLIF(ddr.DeliveryReasonID, '')           AS [Delivery reason]
+    , NULLIF(ddr.DeliveryReason, '')             AS [Delivery reason name]
+    , NULLIF(dt.DeliveryTermID, '')              AS [Delivery term]
+    , NULLIF(dt.DeliveryTerm, '')                AS [Delivery term name]
+    , NULLIF(ds.DocumentStatusID, '')            AS [Document status]
+    , NULLIF(ds.DocumentStatus, '')              AS [Document status name]
+    , t.IsOnHold                                 AS [Is on-hold]
+    , NULLIF(ss1.SalesStatus, '')                AS [Order status]
+    , NULLIF(pam.PaymentMode, '')                AS [Payment mode]
+    , NULLIF(pat.PaymentTermID, '')              AS [Payment term]
+    , NULLIF(pat.PaymentTerm, '')                AS [Payment term name]
+    , NULLIF(ots.OnTimeShipStatus, '')           AS [On-time ship status]
+    , NULLIF(ots.OnTimeStatus, '')               AS [On-time status]
+    , NULLIF(rs.ReturnStatus, '')                AS [Return status]
+    , NULLIF(e4.EmployeeName, '')                AS [Sales taker]
+    , NULLIF(st.SalesType, '')                   AS [Sales type]
+    , NULLIF(ots.ShipStatus, '')                 AS [Ship status]
+    , NULLIF(tg.TaxGroup, '')                    AS [Tax group]
+    , NULLIF(c.CurrencyID, '')                   AS [Trans currency]
+    , cte.CustomerDaysBetweenOrders              AS [Customer days between orders]
+    , CAST(NULLIF(dd1.Date, '1/1/1900') AS DATE) AS [Order date]
+    , CAST(NULLIF(dd2.Date, '1/1/1900') AS DATE) AS [Receipt date confirmed]
+    , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE) AS [Receipt date requested]
+    , CAST(NULLIF(dd4.Date, '1/1/1900') AS DATE) AS [Ship date actual]
+  FROM {{ ref("SalesOrder") }}            t 
+  JOIN {{ ref("SalesOrder_Fact") }}       f 
+    ON t.SalesOrderKey         = f.SalesOrderKey
+  LEFT JOIN {{ ref("DeliveryMode") }}     dm 
+    ON dm.DeliveryModeKey      = f.DeliveryModeKey
+  LEFT JOIN {{ ref("DeliveryTerm") }}     dt 
+    ON dt.DeliveryTermKey      = f.DeliveryTermKey
+  LEFT JOIN {{ ref("TaxGroup") }}         tg 
+    ON tg.TaxGroupKey          = f.TaxGroupKey
+  LEFT JOIN {{ ref("Currency") }}         c 
+    ON c.CurrencyKey           = f.CurrencyKey
+  LEFT JOIN {{ ref("DocumentStatus") }}   ds 
+    ON ds.DocumentStatusKey    = f.DocumentStatusKey
+  LEFT JOIN {{ ref("SalesStatus") }}      ss1 
+    ON ss1.SalesStatusKey      = f.SalesStatusKey
+  LEFT JOIN {{ ref("PaymentTerm") }}      pat 
+    ON pat.PaymentTermKey      = f.PaymentTermKey
+  LEFT JOIN {{ ref("ReturnStatus") }}     rs 
+    ON rs.ReturnStatusKey      = f.ReturnStatusKey
+  LEFT JOIN {{ ref("SalesType") }}        st 
+    ON st.SalesTypeKey         = f.SalesTypeKey
+  LEFT JOIN {{ ref("Employee") }}         e4 
+    ON e4.EmployeeKey          = f.SalesTakerKey
+  LEFT JOIN {{ ref("Date") }}             dd1 
+    ON dd1.DateKey             = f.OrderDateKey
+  LEFT JOIN {{ ref("Date") }}             dd2 
+    ON dd2.DateKey             = f.ReceiptDateConfirmedKey
+  LEFT JOIN {{ ref("Date") }}             dd3 
+    ON dd3.DateKey             = f.ReceiptDateRequestedKey
+  LEFT JOIN {{ ref("Date") }}             dd4 
+    ON dd4.DateKey             = f.ShipDateActualKey
+  LEFT JOIN {{ ref("PaymentMode") }}      pam 
+    ON pam.PaymentModeKey      = f.PaymentModeKey
+  LEFT JOIN {{ ref("OnTimeShipStatus") }} ots
+    ON ots.OnTimeShipStatusKey = f.OnTimeShipStatusKey
+  LEFT JOIN CTE                  cte
+    ON cte.SalesOrderKey       = t.SalesOrderKey
+  LEFT JOIN {{ ref("DeliveryReason") }}   ddr
+    ON ddr.DeliveryReasonKey   = f.DeliveryReasonKey;
