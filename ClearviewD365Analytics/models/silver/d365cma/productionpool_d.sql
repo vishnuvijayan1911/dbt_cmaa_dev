@@ -1,0 +1,18 @@
+{{ config(materialized='table', tags=['silver'], alias='productionpool_dim') }}
+
+-- Source file: cma/cma/layers/_base/_silver/productionpool/productionpool.py
+-- Root method: Productionpool.productionpooldetail [ProductionPoolDetail]
+-- external_table_name: ProductionPoolDetail
+-- schema_name: temp
+
+SELECT ROW_NUMBER() OVER (ORDER BY pg.recid) AS ProductionPoolKey
+    ,pg.dataareaid                                              AS LegalEntityID
+         , pg.prodpoolid                                              AS ProductionPoolID
+         , CASE WHEN pg.name = '' THEN pg.prodpoolid ELSE pg.name END AS ProductionPool
+         , pg.recid                                                   AS _RecID
+         , 1                                                          AS _SourceID
+         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
+        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+
+      FROM {{ ref('prodpool') }} pg
+     WHERE pg.prodpoolid <> '';

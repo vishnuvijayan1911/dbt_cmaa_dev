@@ -1,0 +1,123 @@
+{{ config(materialized='table', tags=['silver'], alias='tagcostgroup_fact') }}
+
+-- Source file: cma/cma/layers/_base/_silver/tagcostgroup_f/tagcostgroup_f.py
+-- Root method: TagCostGroupFact.Tagcostgroupfactdetail [TagCostGroup_FactDetail]
+-- Inlined methods: TagCostGroupFact.Tagcostgroupfactstage [TagCostGroup_FactStage], TagCostGroupFact.Tagcostgroupfactdetailmain [TagCostGroup_FactDetailMain], TagCostGroupFact.Tagcostgroupfactdetail1 [TagCostGroup_FactDetail1]
+-- external_table_name: TagCostGroup_FactDetail
+-- schema_name: temp
+
+WITH
+tagcostgroup_factstage AS (
+    SELECT DISTINCT
+           ib.inventbatchid
+         , ib.itemid
+         , avg(ib.inventqty)  as inventqty
+         , avg(ib.costamount) as costamount
+         , ib.costgroupid
+         , min(ib.recid) as _recid
+         , ib.dataareaid
+         , id.configid
+         , id.inventcolorid
+         , id.inventstyleid
+         , id.inventsizeid
+         , it.cmacostingunit
+         , 1 as _sourceid
+      FROM {{ ref('inventsum') }}                   oi
+     INNER JOIN {{ ref('inventdim') }}              id
+        ON id.dataareaid    = oi.dataareaid
+       AND id.inventdimid   = oi.inventdimid
+     INNER JOIN {{ ref('cmatagcostsbycostgroup') }} ib
+        ON ib.dataareaid    = id.dataareaid
+       AND ib.itemid        = oi.itemid
+       AND ib.inventbatchid = id.inventbatchid
+       AND ib.inventbatchid <> ''
+      LEFT JOIN {{ ref('inventtable') }}            it
+        ON it.dataareaid    = id.dataareaid
+       AND it.itemid        = oi.itemid
+     WHERE financial = 1
+       AND oi.closed = 0
+     GROUP BY ib.inventbatchid
+    ,ib.itemid
+    ,ib.costgroupid
+    ,ib.dataareaid
+    ,id.configid
+    ,id.inventcolorid
+    ,id.inventstyleid
+    ,id.inventsizeid
+    ,it.cmacostingunit;
+),
+tagcostgroup_factdetailmain AS (
+    SELECT 
+          le.legalentitykey
+        , t.tagkey
+        , dp.productkey
+        , cg.costgroupkey
+        , u2.uomkey                                    AS cmacostingunitkey
+        , ac.costamount
+        , ac.costgroupid
+        , ac.inventqty
+        , ac.inventqty * ISNULL (vuc.factor, 1) * 0.01 AS costingqty
+        , ac._recid
+        , ac._sourceid
+     FROM tagcostgroup_factstage            ac
+    INNER JOIN silver.cma_legalentity     le
+       ON le.legalentityid   = ac.dataareaid
+     LEFT JOIN silver.cma_product         dp
+       ON dp.legalentityid   = ac.dataareaid
+      AND dp.itemid          = ac.itemid
+      AND dp.productwidth    = ac.inventsizeid
+      AND dp.productlength   = ac.inventcolorid
+      AND dp.productcolor    = ac.inventstyleid
+      AND dp.productconfig   = ac.configid
+      AND dp._sourceid       = 1
+     LEFT JOIN silver.cma_uom             u1
+       ON lower(u1.uom)      = lower(dp.inventoryuom)
+     LEFT JOIN silver.cma_uom             u2
+       ON lower(u2.uom)      = lower(ac.cmacostingunit)
+     LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
+       ON vuc.productkey     = dp.productkey
+      AND vuc.legalentitykey = le.legalentitykey
+      AND vuc.fromuomkey     = u1.uomkey
+     -- AND lower(vuc.touom)  = 'lb'
+     LEFT JOIN silver.cma_tag             t
+       ON t.tagid            = ac.inventbatchid
+      AND t.itemid           = ac.itemid
+      AND t.legalentityid    = ac.dataareaid
+     AND t._sourceid       = 1
+     LEFT JOIN silver.cma_costgroup       cg
+       ON cg.costgroupid     = ac.costgroupid;
+),
+tagcostgroup_factdetail1 AS (
+    SELECT 
+         d.legalentitykey
+       , d.tagkey
+       , d.productkey
+       , d.costgroupkey
+       , d.cmacostingunitkey
+       , d.costgroupid
+       , d.inventqty
+       , d.costingqty
+       , d.costamount
+       , d.costamount/isnull(nullif(d.costingqty, 0), 1) as unitcost
+       , CURRENT_TIMESTAMP                               as _createddate
+       , CURRENT_TIMESTAMP                               as _modifieddate 
+       , d._sourceid
+       , d._recid
+    FROM tagcostgroup_factdetailmain  d;
+)
+SELECT ROW_NUMBER() OVER (ORDER BY d._recid, d._sourceid) AS Tagcostgroupkey
+   , d.legalentitykey
+   , d.tagkey
+   , d.productkey
+   , d.costgroupkey
+   , d.cmacostingunitkey
+   , d.costgroupid
+   , d.inventqty
+   , d.costingqty
+   , d.costamount
+   , d.unitcost
+   , CURRENT_TIMESTAMP                               as _createddate
+   , CURRENT_TIMESTAMP                               as _modifieddate 
+   , d._sourceid
+   , d._recid
+FROM tagcostgroup_factdetail1  d;
