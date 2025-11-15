@@ -6,14 +6,13 @@ sources:
     tables:
       - name: agreementclassification
       - name: agreementheader
-      - name: enumeration      
-      - name: logisticsaddresscountryregion      
-      - name: logisticsaddresscountryregiontranslation      
-      - name: logisticspostaladdress      
-      - name: dlvmode   
+      - name: enumeration
+      - name: logisticsaddresscountryregion
+      - name: logisticsaddresscountryregiontranslation
+      - name: logisticspostaladdress
+      - name: dlvmode
       - name: area
       - name: dates
-      - name: enumeration
       - name: fact
       - name: factmeasure
       - name: fiscalcalendardate
@@ -30,8 +29,6 @@ sources:
       - name: accountingevent
       - name: acojournalname_br
       - name: acojournaltable_br
-      - name: agreementclassification
-      - name: agreementheader
       - name: agreementheaderhistory
       - name: agreementline
       - name: agreementlinequantitycommitment
@@ -96,7 +93,6 @@ sources:
       - name: dirorganizationbase
       - name: dirpartylocation
       - name: dirpartytable
-      - name: dlvmode
       - name: dlvreason
       - name: dlvterm
       - name: ecoresattribute
@@ -266,11 +262,8 @@ sources:
       - name: ledgerjournaltable
       - name: ledgerjournaltrans
       - name: lineofbusiness
-      - name: logisticsaddresscountryregion
-      - name: logisticsaddresscountryregiontranslation
       - name: logisticselectronicaddress
       - name: logisticslocation
-      - name: logisticspostaladdress
       - name: mainaccount
       - name: mainaccountcategory
       - name: mainaccounttranslation
@@ -382,4 +375,3 @@ sources:
     database: whcmaanonprodref
     schema: bronze
     tables:
-      - name: agreementclassification
