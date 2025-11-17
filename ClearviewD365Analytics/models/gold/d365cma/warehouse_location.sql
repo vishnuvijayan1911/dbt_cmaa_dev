@@ -3,4 +3,4 @@
 SELECT  t.WarehouseLocationKey          AS [Warehouse location key]
   , NULLIF(t.WarehouseLocation, '') AS [Location]
   , NULLIF(t.Site, '')              AS [Site]
-FROM {{ ref("warehouselocation") }} t;
+FROM {{ ref("warehouselocation_d") }} t;

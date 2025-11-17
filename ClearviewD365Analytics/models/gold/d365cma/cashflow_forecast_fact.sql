@@ -34,24 +34,24 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
                               ELSE FORMAT(DATEADD(d, ISNULL(pt.PaymentDays, 0), dd2.Date), 'yyyyMMdd') END
                     ELSE dt1.DateKey END                  AS [Settlement date key]
               , solf.NetAmount                             AS [Amount]
-          FROM {{ ref("salesorderline_fact") }} solf
-          INNER JOIN {{ ref("salesorderline") }} sol
+          FROM {{ ref("salesorderline_f") }} solf
+          INNER JOIN {{ ref("salesorderline_d") }} sol
             ON sol.SalesOrderLineKey = solf.SalesOrderLineKey
-          INNER JOIN {{ ref("legalentity") }} le
+          INNER JOIN {{ ref("legalentity_d") }} le
             ON le.LegalEntityKey = solf.LegalEntityKey
-          LEFT JOIN {{ ref('date') }}           dd1
+          LEFT JOIN {{ ref('date_d') }}           dd1
             ON dd1.DateKey           = solf.ReceiptDateConfirmedKey
-          LEFT JOIN {{ ref('date') }}           dd2
+          LEFT JOIN {{ ref('date_d') }}           dd2
             ON dd2.DateKey           = solf.ReceiptDateRequestedKey
-          INNER JOIN {{ ref("paymentterm") }}    pt
+          INNER JOIN {{ ref("paymentterm_d") }}    pt
             ON pt.PaymentTermKey     = solf.PaymentTermKey
-          INNER JOIN {{ ref("salesstatus") }}    st
+          INNER JOIN {{ ref("salesstatus_d") }}    st
             ON st.SalesStatusKey     = solf.SalesLineStatusKey
-          INNER JOIN {{ ref("customer") }}       dc
+          INNER JOIN {{ ref("customer_d") }}       dc
             ON dc.CustomerKey        = solf.CustomerKey
-          LEFT JOIN {{ ref('date') }}           dt
+          LEFT JOIN {{ ref('date_d') }}           dt
             ON dt.Date               = CAST(GETDATE() AS DATE)
-          LEFT JOIN {{ ref('date') }}           dt1
+          LEFT JOIN {{ ref('date_d') }}           dt1
             ON dt.WeekDate           = dt1.Date
           WHERE st.SalesStatusID = '1'
             AND solf.NetAmount   <> 0
@@ -89,24 +89,24 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
                               ELSE FORMAT(DATEADD(d, ISNULL(pt.PaymentDays, 0), dd2.Date), 'yyyyMMdd') END
                     ELSE dt1.DateKey END                   AS [Settlement date key]
               , polf.NetAmount * -1                         AS [Amount]
-          FROM {{ ref("purchaseorderline_fact") }} polf
-          INNER JOIN {{ ref("purchaseorderline") }} pol
+          FROM {{ ref("purchaseorderline_f") }} polf
+          INNER JOIN {{ ref("purchaseorderline_d") }} pol
             ON pol.PurchaseOrderLineKey = polf.PurchaseOrderLineKey
-          INNER JOIN {{ ref("legalentity") }}    le
+          INNER JOIN {{ ref("legalentity_d") }}    le
             ON le.LegalEntityKey    = polf.LegalEntityKey
-          INNER JOIN {{ ref('date') }}              dd1
+          INNER JOIN {{ ref('date_d') }}              dd1
             ON dd1.DateKey              = polf.DeliveryDateActualKey
-          INNER JOIN {{ ref('date') }}              dd2
+          INNER JOIN {{ ref('date_d') }}              dd2
             ON dd2.DateKey              = polf.DeliveryDateConfirmedKey
-          INNER JOIN {{ ref("paymentterm") }}       pt
+          INNER JOIN {{ ref("paymentterm_d") }}       pt
             ON pt.PaymentTermKey        = polf.PaymentTermKey
-          INNER JOIN {{ ref("purchasestatus") }}    st
+          INNER JOIN {{ ref("purchasestatus_d") }}    st
             ON st.PurchaseStatusKey     = polf.PurchaseLineStatusKey
-          INNER JOIN {{ ref("vendor") }}            dv
+          INNER JOIN {{ ref("vendor_d") }}            dv
             ON dv.VendorKey             = polf.VendorKey
-          LEFT JOIN {{ ref('date') }}              dt
+          LEFT JOIN {{ ref('date_d') }}              dt
             ON dt.Date                  = CAST(GETDATE() AS DATE)
-          LEFT JOIN {{ ref('date') }}              dt1
+          LEFT JOIN {{ ref('date_d') }}              dt1
             ON dt.WeekDate              = dt1.Date
           WHERE st.PurchaseStatusID = '1'
             AND polf.NetAmount      <> 0
@@ -131,10 +131,10 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , '19000101'          AS [Invoice date key]
               , bt.TransDateKey     AS [Settlement date key]
               , bt.BudgetAmount     AS Amount
-          FROM {{ ref("glbudgettrans_fact") }}  bt
-          INNER JOIN {{ ref("legalentity") }}    le
+          FROM {{ ref("glbudgettrans_f") }}  bt
+          INNER JOIN {{ ref("legalentity_d") }}    le
             ON le.LegalEntityKey = bt.LegalEntityKey
-          LEFT JOIN {{ ref("ledgeraccount") }}  la
+          LEFT JOIN {{ ref("ledgeraccount_d") }}  la
             ON la.LedgerAccountKey   = bt.LedgerAccountKey
         UNION
         SELECT  sf.LegalEntityKey  AS [Legal entity key]
@@ -157,8 +157,8 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , 19000101           AS [Invoice date key]
               , sf.ForecastDateKey AS [Settlement date key]
               , sf.ForecastAmount  AS Amount
-          FROM {{ ref("salesforecast_fact") }}  sf
-           INNER JOIN {{ ref("legalentity") }}    le
+          FROM {{ ref("salesforecast_f") }}  sf
+           INNER JOIN {{ ref("legalentity_d") }}    le
             ON le.LegalEntityKey = sf.LegalEntityKey
         UNION
         SELECT  pf.LegalEntityKey      AS [Legal entity key]
@@ -181,6 +181,6 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , 19000101               AS [Invoice date key]
               , pf.ForecastDateKey     AS [Settlement date key]
               , pf.ForecastAmount * -1 AS Amount
-          FROM {{ ref("purchaseforecast_fact") }} pf
-           INNER JOIN {{ ref("legalentity") }}    le
+          FROM {{ ref("purchaseforecast_f") }} pf
+           INNER JOIN {{ ref("legalentity_d") }}    le
             ON le.LegalEntityKey = pf.LegalEntityKey) t;

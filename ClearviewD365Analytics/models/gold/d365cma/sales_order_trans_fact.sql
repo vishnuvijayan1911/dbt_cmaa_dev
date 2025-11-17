@@ -39,8 +39,8 @@ SELECT  soltf.SalesOrderLineTransKey                          AS [Sales order li
       , NULLIF(soltf.PhysicalReservedQuantity_PC, 0) * 1 AS [Physical reserved PC]
     , CAST(NULLIF(soltf.AvailableDate, '1/1/1900') AS DATE) AS [Available date]
     , CAST(NULLIF(soltf.ReserveDate, '1/1/1900') AS DATE)   AS [Reserve date]
-  FROM {{ ref("salesorderlinetrans_fact") }} soltf 
-  LEFT JOIN {{ ref("salesorderline_fact") }} solf 
+  FROM {{ ref("salesorderlinetrans_f") }} soltf 
+  LEFT JOIN {{ ref("salesorderline_f") }} solf 
     ON solf.SalesOrderLineKey     = soltf.SalesOrderLineKey
 WHERE soltf._SourceID = 1
 UNION ALL

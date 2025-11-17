@@ -42,5 +42,5 @@ SELECT  CONCAT(
             WHEN t1.AgeDaysBegin = -999999
             THEN ' '
             ELSE 'Past due' END                                                                                          AS [Due age type]
-  FROM {{ ref("agingbucket") }}      t
-CROSS JOIN {{ ref("agingbucket") }} t1;
+  FROM {{ ref("agingbucket_d") }}      t
+CROSS JOIN {{ ref("agingbucket_d") }} t1;

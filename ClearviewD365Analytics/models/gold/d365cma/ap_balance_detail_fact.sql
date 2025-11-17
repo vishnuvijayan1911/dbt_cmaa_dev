@@ -32,16 +32,16 @@ SELECT  t.APBalanceKey                                                          
   , NULLIF(t.DiscountTaken, 0)                                                         AS [Discount taken]
   , t.PaymentDays                                                                      AS [Payment days]
   , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE)                                         AS [Discount date]
-FROM {{ ref("apbalancedetail_fact") }}      t 
-LEFT JOIN {{ ref('date') }}                 dd
+FROM {{ ref("apbalancedetail_f") }}      t 
+LEFT JOIN {{ ref('date_d') }}                 dd
   ON dd.DateKey             = t.BalanceDateKey
-LEFT JOIN {{ ref('date') }}                 dd1
+LEFT JOIN {{ ref('date_d') }}                 dd1
   ON dd1.DateKey            = t.InvoiceDateKey
-LEFT JOIN {{ ref('date') }}                 dd2
+LEFT JOIN {{ ref('date_d') }}                 dd2
   ON dd2.DateKey            = t.DueDateKey
-LEFT JOIN {{ ref('date') }}                 dd3
+LEFT JOIN {{ ref('date_d') }}                 dd3
   ON dd3.DateKey            = t.DiscDateKey
-LEFT JOIN {{ ref("agingbucket") }}          ab
+LEFT JOIN {{ ref("agingbucket_d") }}          ab
   ON ab.AgingBucketKey      = t.AgingBucketDueKey
-LEFT JOIN {{ ref("purchaseinvoice_fact") }} p
+LEFT JOIN {{ ref("purchaseinvoice_f") }} p
   ON p.PurchaseInvoiceKey   = t.PurchaseInvoiceKey;

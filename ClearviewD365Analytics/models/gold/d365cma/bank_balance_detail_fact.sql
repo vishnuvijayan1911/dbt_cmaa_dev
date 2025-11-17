@@ -6,7 +6,7 @@ WITH CTE
           , LegalEntityKey
           , TransDateKey
           , TransAmount
-      FROM {{ ref("bankaccounttrans_fact") }}
+      FROM {{ ref("bankaccounttrans_f") }}
     UNION ALL
     SELECT  BankAccountKey
           , bk.LegalEntityKey
@@ -14,11 +14,11 @@ WITH CTE
           , TransAmount
       FROM (   SELECT  d.DateKey AS TransDateKey
                     , 0.00      AS TransAmount
-                  FROM {{ ref('date') }} d
-                WHERE d.DateKey > (SELECT  MIN(TransDateKey) FROM {{ ref("bankaccounttrans_fact") }})
-                  AND d.DateKey < (SELECT  MAX(TransDateKey) FROM {{ ref("bankaccounttrans_fact") }})
-                  AND d.DateKey NOT IN ( SELECT  DISTINCT TransDateKey FROM {{ ref("bankaccounttrans_fact") }} )) dt
-      CROSS JOIN (SELECT  DISTINCT BankAccountKey, LegalEntityKey FROM {{ ref("bankaccounttrans_fact") }})         bk )
+                  FROM {{ ref('date_d') }} d
+                WHERE d.DateKey > (SELECT  MIN(TransDateKey) FROM {{ ref("bankaccounttrans_f") }})
+                  AND d.DateKey < (SELECT  MAX(TransDateKey) FROM {{ ref("bankaccounttrans_f") }})
+                  AND d.DateKey NOT IN ( SELECT  DISTINCT TransDateKey FROM {{ ref("bankaccounttrans_f") }} )) dt
+      CROSS JOIN (SELECT  DISTINCT BankAccountKey, LegalEntityKey FROM {{ ref("bankaccounttrans_f") }})         bk )
 SELECT  tt.[Bank account key]
     , tt.[Legal entity key]
     , tt.[Balance date key]
@@ -40,7 +40,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                           , -1                  AS LedgerTransKey
                           , SUM(c1.TransAmount) AS ActivityAmount
                         FROM CTE           c1
-                      INNER JOIN {{ ref('date') }} d1
+                      INNER JOIN {{ ref('date_d') }} d1
                           ON c1.TransDateKey = d1.DateKey
                       WHERE d1.Date >= DATEADD(
                                             DAY
@@ -56,7 +56,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                           , -1                                                       AS LedgerTransKey
                           , SUM(c2.TransAmount)                                      AS ActivityAmount
                         FROM CTE           c2
-                      INNER JOIN {{ ref('date') }} d2
+                      INNER JOIN {{ ref('date_d') }} d2
                           ON c2.TransDateKey = d2.DateKey
                       WHERE d2.Date < DATEADD(
                                           DAY
@@ -65,9 +65,9 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                       GROUP BY c2.BankAccountKey
                               , c2.LegalEntityKey
                               , DATEFROMPARTS(YEAR(d2.Date), MONTH(d2.Date), 1)) sub
-            INNER JOIN {{ ref('date') }}                                                  d3
+            INNER JOIN {{ ref('date_d') }}                                                  d3
               ON d3.Date                = sub.TransDate
-            LEFT JOIN {{ ref("ledgertranstype") }}                                       ltt
+            LEFT JOIN {{ ref("ledgertranstype_d") }}                                       ltt
               ON ltt.LedgerTransTypeKey = sub.LedgerTransKey) tt
 UNION
 SELECT  BankAccountKey AS [Bank account key]
@@ -78,6 +78,6 @@ SELECT  BankAccountKey AS [Bank account key]
     , NULL           AS [Closing balance]
     , CAST(1 AS INT) AS [Bank balance count]
     , 'Transaction'  AS [Load type]
-  FROM {{ ref("bankaccounttrans_fact") }} F
-  LEFT JOIN {{ ref("ledgertranstype") }}  ltt
+  FROM {{ ref("bankaccounttrans_f") }} F
+  LEFT JOIN {{ ref("ledgertranstype_d") }}  ltt
     ON ltt.LedgerTransTypeKey = F.LedgerTransTypeKey;

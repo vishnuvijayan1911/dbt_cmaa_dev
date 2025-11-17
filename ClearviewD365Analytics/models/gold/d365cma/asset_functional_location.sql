@@ -21,4 +21,4 @@ SELECT  t.AssetFunctionalLocationKey       AS [Asset functional location key]
     , NULLIF(t.Level7, '')               AS [Location level 7]
     , NULLIF(t.Level8, '')               AS [Location level 8]
     , NULLIF(t.Level9, '')               AS [Location level 9]
-  FROM {{ ref("assetfunctionallocation") }} t ;
+  FROM {{ ref("assetfunctionallocation_d") }} t ;

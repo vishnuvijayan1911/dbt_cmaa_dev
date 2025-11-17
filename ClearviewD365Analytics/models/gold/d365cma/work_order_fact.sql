@@ -22,8 +22,8 @@ SELECT  wof.WorkOrderKey                                                        
                 THEN NULLIF(DATEDIFF (
                                 DAY, wo.ScheduleStartDate, GETUTCDATE ()), 0)
                 ELSE NULLIF(DATEDIFF (DAY, wo.ScheduleStartDate, wo.ActualStartDate), 0)END END                     AS [Overdue schedule start days]
-  FROM {{ ref("workorder_fact") }}                   wof
-INNER JOIN {{ ref("workorder") }}                   wo 
+  FROM {{ ref("workorder_f") }}                   wof
+INNER JOIN {{ ref("workorder_d") }}                   wo 
     ON wo.WorkOrderKey = wof.WorkOrderKey
-  LEFT JOIN {{ ref('date') }}                        c
+  LEFT JOIN {{ ref('date_d') }}                        c
     ON c.Date          = wo.CreateDate;

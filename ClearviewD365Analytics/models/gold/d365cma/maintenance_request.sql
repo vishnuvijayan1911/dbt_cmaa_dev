@@ -15,14 +15,14 @@ SELECT  d.MaintenanceRequestKey                                                 
   , NULLIF(d.ActualStartDate, '1/1/1900')                                                                  AS [Actual start date]
   , NULLIF(d.ActualEndDate, '1/1/1900')                                                                    AS [Actual end date]
   , CASE WHEN f.WorkOrderKey = -1 THEN 'Yes' ELSE 'No' END                                                 AS [Work order exists]
-FROM {{ ref("maintenancerequest") }}           d 
-INNER JOIN {{ ref("maintenancerequest_fact") }} f
+FROM {{ ref("maintenancerequest_d") }}           d 
+INNER JOIN {{ ref("maintenancerequest_f") }} f
   ON f.MaintenanceRequestKey       = d.MaintenanceRequestKey
-LEFT JOIN {{ ref("maintenancerequesttype") }}  rt
+LEFT JOIN {{ ref("maintenancerequesttype_d") }}  rt
   ON rt.MaintenanceRequestTypeKey  = f.MaintenanceRequestTypeKey
-LEFT JOIN {{ ref("maintenancerequeststate") }} lc
+LEFT JOIN {{ ref("maintenancerequeststate_d") }} lc
   ON lc.MaintenanceRequestStateKey = f.MaintenanceRequestStateKey
-LEFT JOIN {{ ref("maintenancejobtype") }}      djt
+LEFT JOIN {{ ref("maintenancejobtype_d") }}      djt
   ON djt.MaintenanceJobTypeKey     = f.MaintenanceJobTypeKey
-LEFT JOIN {{ ref("maintenancejobtrade") }}     jt
+LEFT JOIN {{ ref("maintenancejobtrade_d") }}     jt
   ON jt.MaintenanceJobTradeKey     = f.MaintenanceJobTradeKey;

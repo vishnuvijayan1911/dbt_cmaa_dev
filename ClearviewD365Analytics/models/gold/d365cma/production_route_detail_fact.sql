@@ -5,15 +5,15 @@ WITH StartTime
     SELECT  f.ProductionRouteKey
           , f.ScheduleStartDateKey
           , pr.ScheduleStartTime
-      FROM {{ ref("productionroute_fact") }} f
-      INNER JOIN {{ ref("productionroute") }} pr
+      FROM {{ ref("productionroute_f") }} f
+      INNER JOIN {{ ref("productionroute_d") }} pr
         ON pr.ProductionRouteKey = f.ProductionRouteKey)
   , EndTime
   AS (SELECT  f.ProductionRouteKey
           , f.ScheduleEndDateKey
           , pr.ScheduleEndTime
-        FROM {{ ref("productionroute_fact") }} f
-      INNER JOIN {{ ref("productionroute") }} pr
+        FROM {{ ref("productionroute_f") }} f
+      INNER JOIN {{ ref("productionroute_d") }} pr
           ON pr.ProductionRouteKey = f.ProductionRouteKey)
 SELECT  t.ProductionRouteKey                                                     AS [Production route key]
     , dd2.DateKey                                                              AS [Schedule date key]
@@ -31,14 +31,14 @@ SELECT  t.ProductionRouteKey                                                    
               , ISNULL(NULLIF(et.ScheduleEndTime, '12:00:00'), '23:59:59')) END AS [Hours]
     , NULLIF(dd2.Date, '1/1/1900')                                             AS [Schedule end date]
     , ISNULL(NULLIF(et.ScheduleEndTime, '12:00:00'), '23:59:59')               AS [Schedule end time]
-  FROM {{ ref("productionroute") }}           t 
-INNER JOIN {{ ref("productionroute_fact") }} prf 
+  FROM {{ ref("productionroute_d") }}           t 
+INNER JOIN {{ ref("productionroute_f") }} prf 
     ON prf.ProductionRouteKey  = t.ProductionRouteKey
-  LEFT JOIN {{ ref('date') }}                 dd 
+  LEFT JOIN {{ ref('date_d') }}                 dd 
     ON dd.DateKey              = prf.ScheduleStartDateKey
-  LEFT JOIN {{ ref('date') }}                 dd1 
+  LEFT JOIN {{ ref('date_d') }}                 dd1 
     ON dd1.DateKey             = prf.ScheduleEndDateKey
-  LEFT JOIN {{ ref('date') }}                 dd2
+  LEFT JOIN {{ ref('date_d') }}                 dd2
     ON dd2.DateKey BETWEEN prf.ScheduleStartDateKey AND prf.ScheduleEndDateKey
   LEFT JOIN StartTime                st
     ON st.ProductionRouteKey   = prf.ProductionRouteKey

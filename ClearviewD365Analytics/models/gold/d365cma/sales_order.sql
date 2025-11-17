@@ -11,13 +11,13 @@ ORDER BY OrderDateKey, SalesOrderKey) AS PriororderDate
                     , OrderDateKey
                     , CustomerKey
                     , SalesOrderKey
-                  FROM {{ ref("salesorder_fact") }}  sof
-                  LEFT JOIN {{ ref("salesstatus") }} ss1 
+                  FROM {{ ref("salesorder_f") }}  sof
+                  LEFT JOIN {{ ref("salesstatus_d") }} ss1 
                     ON ss1.SalesStatusKey = sof.SalesStatusKey
                 WHERE ss1.SalesStatusID = 1) t
-      LEFT JOIN {{ ref('date') }}                     dd
+      LEFT JOIN {{ ref('date_d') }}                     dd
         ON dd.DateKey  = t.OrderDateKey
-      LEFT JOIN {{ ref('date') }}                     dd1
+      LEFT JOIN {{ ref('date_d') }}                     dd1
         ON dd1.DateKey = t.PriororderDate)
 SELECT  t.SalesOrderKey                            AS [Sales order key]
     , NULLIF(t.SalesOrderID, '')                 AS [Sales order #]
@@ -52,42 +52,42 @@ SELECT  t.SalesOrderKey                            AS [Sales order key]
     , CAST(NULLIF(dd2.Date, '1/1/1900') AS DATE) AS [Receipt date confirmed]
     , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE) AS [Receipt date requested]
     , CAST(NULLIF(dd4.Date, '1/1/1900') AS DATE) AS [Ship date actual]
-  FROM {{ ref("salesorder") }}            t 
-  JOIN {{ ref("salesorder_fact") }}       f 
+  FROM {{ ref("salesorder_d") }}            t 
+  JOIN {{ ref("salesorder_f") }}       f 
     ON t.SalesOrderKey         = f.SalesOrderKey
-  LEFT JOIN {{ ref("deliverymode") }}     dm 
+  LEFT JOIN {{ ref("deliverymode_d") }}     dm 
     ON dm.DeliveryModeKey      = f.DeliveryModeKey
-  LEFT JOIN {{ ref("deliveryterm") }}     dt 
+  LEFT JOIN {{ ref("deliveryterm_d") }}     dt 
     ON dt.DeliveryTermKey      = f.DeliveryTermKey
-  LEFT JOIN {{ ref("taxgroup") }}         tg 
+  LEFT JOIN {{ ref("taxgroup_d") }}         tg 
     ON tg.TaxGroupKey          = f.TaxGroupKey
-  LEFT JOIN {{ ref("currency") }}         c 
+  LEFT JOIN {{ ref("currency_d") }}         c 
     ON c.CurrencyKey           = f.CurrencyKey
-  LEFT JOIN {{ ref("documentstatus") }}   ds 
+  LEFT JOIN {{ ref("documentstatus_d") }}   ds 
     ON ds.DocumentStatusKey    = f.DocumentStatusKey
-  LEFT JOIN {{ ref("salesstatus") }}      ss1 
+  LEFT JOIN {{ ref("salesstatus_d") }}      ss1 
     ON ss1.SalesStatusKey      = f.SalesStatusKey
-  LEFT JOIN {{ ref("paymentterm") }}      pat 
+  LEFT JOIN {{ ref("paymentterm_d") }}      pat 
     ON pat.PaymentTermKey      = f.PaymentTermKey
-  LEFT JOIN {{ ref("returnstatus") }}     rs 
+  LEFT JOIN {{ ref("returnstatus_d") }}     rs 
     ON rs.ReturnStatusKey      = f.ReturnStatusKey
-  LEFT JOIN {{ ref("salestype") }}        st 
+  LEFT JOIN {{ ref("salestype_d") }}        st 
     ON st.SalesTypeKey         = f.SalesTypeKey
-  LEFT JOIN {{ ref("employee") }}         e4 
+  LEFT JOIN {{ ref("employee_d") }}         e4 
     ON e4.EmployeeKey          = f.SalesTakerKey
-  LEFT JOIN {{ ref('date') }}             dd1 
+  LEFT JOIN {{ ref('date_d') }}             dd1 
     ON dd1.DateKey             = f.OrderDateKey
-  LEFT JOIN {{ ref('date') }}             dd2 
+  LEFT JOIN {{ ref('date_d') }}             dd2 
     ON dd2.DateKey             = f.ReceiptDateConfirmedKey
-  LEFT JOIN {{ ref('date') }}             dd3 
+  LEFT JOIN {{ ref('date_d') }}             dd3 
     ON dd3.DateKey             = f.ReceiptDateRequestedKey
-  LEFT JOIN {{ ref('date') }}             dd4 
+  LEFT JOIN {{ ref('date_d') }}             dd4 
     ON dd4.DateKey             = f.ShipDateActualKey
-  LEFT JOIN {{ ref("paymentmode") }}      pam 
+  LEFT JOIN {{ ref("paymentmode_d") }}      pam 
     ON pam.PaymentModeKey      = f.PaymentModeKey
-  LEFT JOIN {{ ref("ontimeshipstatus") }} ots
+  LEFT JOIN {{ ref("ontimeshipstatus_d") }} ots
     ON ots.OnTimeShipStatusKey = f.OnTimeShipStatusKey
   LEFT JOIN CTE                  cte
     ON cte.SalesOrderKey       = t.SalesOrderKey
-  LEFT JOIN {{ ref("deliveryreason") }}   ddr
+  LEFT JOIN {{ ref("deliveryreason_d") }}   ddr
     ON ddr.DeliveryReasonKey   = f.DeliveryReasonKey;

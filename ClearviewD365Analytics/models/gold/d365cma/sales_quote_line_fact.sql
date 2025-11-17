@@ -34,4 +34,4 @@ SELECT  t.SalesQuoteLineKey             AS [Sales quote line key]
     , t.TotalUnitPrice                AS [Quote unit price]
     , t.TotalUnitPrice_TransCur       AS [Quote unit price in trans currency]
     , NULLIF(t.CustomerReference, '') AS [Customer reference]
-  FROM {{ ref("salesquoteline_fact") }}     t;
+  FROM {{ ref("salesquoteline_f") }}     t;

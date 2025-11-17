@@ -7,10 +7,10 @@ SELECT  t.ProductReceiptLineKey                                                 
   , CASE WHEN t.ProductReceiptLineKey <> -1 THEN CAST(1 AS SMALLINT)ELSE NULL END AS [Receipt lines]
   , NULLIF(dv.VoucherID, '')                                                      AS [Physical voucher #]
   , NULLIF(dd.Date, '1/1/1900')                                                   AS [Receipt date]
-FROM {{ ref("productreceiptline") }}           t 
-LEFT JOIN {{ ref("productreceiptline_fact") }} f 
+FROM {{ ref("productreceiptline_d") }}           t 
+LEFT JOIN {{ ref("productreceiptline_f") }} f 
   ON f.ProductReceiptLineKey = t.ProductReceiptLineKey
-LEFT JOIN {{ ref('date') }}                    dd 
+LEFT JOIN {{ ref('date_d') }}                    dd 
   ON dd.DateKey              = f.ReceiptDateKey
-LEFT JOIN {{ ref("voucher") }}                 dv 
+LEFT JOIN {{ ref("voucher_d") }}                 dv 
   ON dv.VoucherKey           = f.VoucherKey;

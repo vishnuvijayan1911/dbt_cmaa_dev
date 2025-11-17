@@ -16,4 +16,4 @@ SELECT t.WarehouseKey                        AS [Warehouse key]
      , NULLIF (t.WarehouseType, '')          AS [Warehouse type]
      , NULLIF (t.WarehousePostalCode, '')    AS [Warehouse postal code]
      , NULLIF (t.VendorAccount, '')          AS [Vendor #]
-  FROM {{ ref("warehouse") }} t;
+  FROM {{ ref("warehouse_d") }} t;

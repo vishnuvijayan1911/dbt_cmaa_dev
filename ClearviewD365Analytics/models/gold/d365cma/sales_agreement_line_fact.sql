@@ -45,4 +45,4 @@ SELECT  t.SalesAgreementLineKey  AS [Sales agreement line key]
     , t.TotalAmount_TransCur   AS [Total amount in trans currency]
    , t.totalprice              AS [Total price]
    , t.totalprice_transcur     AS [Total price in trans currency]
-  FROM {{ ref("salesagreementline_fact") }} t;
+  FROM {{ ref("salesagreementline_f") }} t;

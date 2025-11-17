@@ -20,14 +20,14 @@ SELECT  t.WorkOrderKey                                                          
     , NULLIF(t.ScheduleEndDate, '1/1/1900')                                                               AS [Schedule end date]
     , NULLIF(t.ScheduleStartDate, '1/1/1900')                                                             AS [Schedule start date]
     , NULLIF(REPLACE (REPLACE (wot.WorkOrderType, ' work orders', ''), ' Corrective', ' corrective'), '') AS [Work order type]
-  FROM {{ ref("workorder") }}                 t 
-INNER JOIN {{ ref("workorder_fact") }}       f 
+  FROM {{ ref("workorder_d") }}                 t 
+INNER JOIN {{ ref("workorder_f") }}       f 
     ON f.WorkOrderKey            = t.WorkOrderKey
-  LEFT JOIN {{ ref("workergroup") }}          wg
+  LEFT JOIN {{ ref("workergroup_d") }}          wg
     ON wg.WorkerGroupKey         = f.WorkerGroupKey
-  LEFT JOIN {{ ref("workordercriticality") }} c 
+  LEFT JOIN {{ ref("workordercriticality_d") }} c 
     ON c.WorkOrderCriticalityKey = f.WorkOrderCriticalityKey
-  LEFT JOIN {{ ref("workordertype") }}        wot 
+  LEFT JOIN {{ ref("workordertype_d") }}        wot 
     ON wot.WorkOrderTypeKey      = f.WorkOrderTypeKey
-  LEFT JOIN {{ ref("workorderstate") }}       wos 
+  LEFT JOIN {{ ref("workorderstate_d") }}       wos 
     ON wos.WorkOrderStateKey     = f.WorkOrderStateKey;

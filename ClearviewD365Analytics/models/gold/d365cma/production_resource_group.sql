@@ -5,4 +5,4 @@ SELECT DISTINCT
      , NULLIF (t.LegalEntityID, '')                AS [Legal entity]
      , NULLIF (t.ResourceGroupID, '')              AS [Resource group]
      , NULLIF (t.ResourceGroup, '')                AS [Resource group name]
-  FROM {{ ref("productionresource") }} t;
+  FROM {{ ref('productionresource_d') }} t;

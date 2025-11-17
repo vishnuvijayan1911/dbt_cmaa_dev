@@ -41,52 +41,52 @@ SELECT  t.PurchaseOrderLineKey                                                  
   , f.OrderedQuantity_PurchUOM                                                    AS [Order quantity]
   , f.OrderedQuantity_LB * 1 AS [Order LB], f.OrderedQuantity_LB * 0.01 AS [Order CWT], f.OrderedQuantity_LB * 0.0005 AS [Order TON]
   , f.OrderedQuantity_PC * 1 AS [Order PC]
-FROM {{ ref("purchaseorderline") }}           t  
-INNER JOIN {{ ref("purchaseorderline_fact") }} f  
+FROM {{ ref("purchaseorderline_d") }}           t  
+INNER JOIN {{ ref("purchaseorderline_f") }} f  
   ON f.PurchaseOrderLineKey        = t.PurchaseOrderLineKey
-INNER JOIN {{ ref("purchaseorder") }}       po  
+INNER JOIN {{ ref("purchaseorder_d") }}       po  
   ON po.PurchaseOrderKey           = f.PurchaseOrderKey
-INNER JOIN {{ ref("purchaseorder_fact") }} pf
+INNER JOIN {{ ref("purchaseorder_f") }} pf
 ON pf.PurchaseOrderKey             = f.PurchaseOrderKey
-LEFT JOIN {{ ref("employee") }}               de  
+LEFT JOIN {{ ref("employee_d") }}               de  
   ON de.EmployeeKey                = f.BuyerKey
-LEFT JOIN {{ ref("employee") }}               de1 
+LEFT JOIN {{ ref("employee_d") }}               de1 
   ON de1.EmployeeKey               = pf.RequesterKey
-LEFT JOIN {{ ref("currency") }}               c  
+LEFT JOIN {{ ref("currency_d") }}               c  
   ON c.CurrencyKey                 = f.CurrencyKey
-LEFT JOIN {{ ref("deliverymode") }}           dm  
+LEFT JOIN {{ ref("deliverymode_d") }}           dm  
   ON dm.DeliveryModeKey            = f.DeliveryModeKey
-LEFT JOIN {{ ref("deliveryterm") }}           dt  
+LEFT JOIN {{ ref("deliveryterm_d") }}           dt  
   ON dt.DeliveryTermKey            = f.DeliveryTermKey
-LEFT JOIN {{ ref("documentstatus") }}         ds  
+LEFT JOIN {{ ref("documentstatus_d") }}         ds  
   ON ds.DocumentStatusKey          = f.DocumentStatusKey
-LEFT JOIN {{ ref("paymentterm") }}            pat  
+LEFT JOIN {{ ref("paymentterm_d") }}            pat  
   ON pat.PaymentTermKey            = f.PaymentTermKey
-LEFT JOIN {{ ref("purchaseapprovalstatus") }} pas  
+LEFT JOIN {{ ref("purchaseapprovalstatus_d") }} pas  
   ON pas.PurchaseApprovalStatusKey = f.PurchaseApprovalStatusKey
-LEFT JOIN {{ ref("purchasestatus") }}         ps1  
+LEFT JOIN {{ ref("purchasestatus_d") }}         ps1  
   ON ps1.PurchaseStatusKey         = f.PurchaseLineStatusKey
-LEFT JOIN {{ ref("purchasestatus") }}         ps2  
+LEFT JOIN {{ ref("purchasestatus_d") }}         ps2  
   ON ps2.PurchaseStatusKey         = f.PurchaseStatusKey
-LEFT JOIN {{ ref("purchasetype") }}           pt  
+LEFT JOIN {{ ref("purchasetype_d") }}           pt  
   ON pt.PurchaseTypeKey            = f.PurchaseTypeKey
-LEFT JOIN {{ ref("returnstatus") }}           rs  
+LEFT JOIN {{ ref("returnstatus_d") }}           rs  
   ON rs.ReturnStatusKey            = f.ReturnStatusKey
-LEFT JOIN {{ ref("returnreason") }}           rr  
+LEFT JOIN {{ ref("returnreason_d") }}           rr  
   ON rr.ReturnReasonKey            = f.ReturnReasonKey
-LEFT JOIN {{ ref("taxgroup") }}               tg  
+LEFT JOIN {{ ref("taxgroup_d") }}               tg  
   ON tg.TaxGroupKey                = f.TaxGroupKey
-LEFT JOIN {{ ref("uom") }}                    pu  
+LEFT JOIN {{ ref("uom_d") }}                    pu  
   ON pu.UOMKey                     = f.PurchaseUOMKey
-LEFT JOIN {{ ref('date') }}                   dd1  
+LEFT JOIN {{ ref('date_d') }}                   dd1  
   ON dd1.DateKey                   = f.OrderDateKey
-LEFT JOIN {{ ref('date') }}                   dd2  
+LEFT JOIN {{ ref('date_d') }}                   dd2  
   ON dd2.DateKey                   = f.DeliveryDateActualKey
-LEFT JOIN {{ ref('date') }}                   dd3  
+LEFT JOIN {{ ref('date_d') }}                   dd3  
   ON dd3.DateKey                   = f.DeliveryDateConfirmedKey
-LEFT JOIN {{ ref('date') }}                   dd4  
+LEFT JOIN {{ ref('date_d') }}                   dd4  
   ON dd4.DateKey                   = f.DeliveryDateKey
-LEFT JOIN {{ ref("ontimedeliverystatus") }}   ots  
+LEFT JOIN {{ ref("ontimedeliverystatus_d") }}   ots  
   ON ots.OnTimeDeliveryStatusKey   = f.OnTimeDeliveryStatusKey
-LEFT JOIN {{ ref("uom") }}                    pum  
+LEFT JOIN {{ ref("uom_d") }}                    pum  
   ON pum.UOMKey                    = f.PricingUOMKey;

@@ -22,34 +22,34 @@ SELECT  t.SalesInvoiceLineKey                                                   
   , NULLIF(dd1.Date, '1/1/1900')                                                        AS [Due date]
   , NULLIF(dd2.Date, '1/1/1900')                                                        AS [Invoice date]
   , NULLIF(dd3.Date, '1/1/1900')                                                        AS [Ship date]
-FROM {{ ref("salesinvoiceline") }}           t 
-LEFT JOIN {{ ref("salesinvoiceline_fact") }} f 
+FROM {{ ref("salesinvoiceline_d") }}           t 
+LEFT JOIN {{ ref("salesinvoiceline_f") }} f 
   ON f.SalesInvoiceLineKey = t.SalesInvoiceLineKey
-LEFT JOIN {{ ref("salesinvoice") }}          si 
+LEFT JOIN {{ ref("salesinvoice_d") }}          si 
   ON si.SalesInvoiceKey    = f.SalesInvoiceKey
-LEFT JOIN {{ ref("currency") }}              c 
+LEFT JOIN {{ ref("currency_d") }}              c 
   ON c.CurrencyKey         = f.CurrencyKey
-LEFT JOIN {{ ref("deliverymode") }}          dm 
+LEFT JOIN {{ ref("deliverymode_d") }}          dm 
   ON dm.DeliveryModeKey    = f.DeliveryModeKey
-LEFT JOIN {{ ref("deliveryterm") }}          dt 
+LEFT JOIN {{ ref("deliveryterm_d") }}          dt 
   ON dt.DeliveryTermKey    = f.DeliveryTermKey
-LEFT JOIN {{ ref("paymentterm") }}           pat 
+LEFT JOIN {{ ref("paymentterm_d") }}           pat 
   ON pat.PaymentTermKey    = f.PaymentTermKey
-LEFT JOIN {{ ref("uom") }}                   u1 
+LEFT JOIN {{ ref("uom_d") }}                   u1 
   ON u1.UOMKey             = f.PricingUOMKey
-LEFT JOIN {{ ref("uom") }}                   u2 
+LEFT JOIN {{ ref("uom_d") }}                   u2 
   ON u2.UOMKey             = f.SalesUOMKey
-LEFT JOIN {{ ref("salestype") }}             st 
+LEFT JOIN {{ ref("salestype_d") }}             st 
   ON st.SalesTypeKey       = f.SalesTypeKey
-LEFT JOIN {{ ref('date') }}                  dd1
+LEFT JOIN {{ ref('date_d') }}                  dd1
   ON dd1.DateKey           = f.DueDateKey
-LEFT JOIN {{ ref('date') }}                  dd2
+LEFT JOIN {{ ref('date_d') }}                  dd2
   ON dd2.DateKey           = f.InvoiceDateKey
-LEFT JOIN {{ ref('date') }}                  dd3 
+LEFT JOIN {{ ref('date_d') }}                  dd3 
   ON dd3.DateKey           = f.ShipDateKey
-LEFT JOIN {{ ref("invoicetype") }}           it 
+LEFT JOIN {{ ref("invoicetype_d") }}           it 
   ON it.InvoiceTypeKey     = f.InvoiceTypeKey
-LEFT JOIN {{ ref("voucher") }}               dv 
+LEFT JOIN {{ ref("voucher_d") }}               dv 
   ON dv.VoucherKey         = f.VoucherKey
-LEFT JOIN {{ ref("paymentmode") }}           pam 
+LEFT JOIN {{ ref("paymentmode_d") }}           pam 
   ON pam.PaymentModeKey    = f.PaymentModeKey

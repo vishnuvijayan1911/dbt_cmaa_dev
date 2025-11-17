@@ -17,19 +17,19 @@ SELECT  t.PurchaseRequisitionLineKey AS [Purchase requisition line key]
   FROM {{ ref("purchaserequisitionline_d") }}           t 
 INNER JOIN {{ ref("purchaserequisitionline_f") }} f 
     ON f.PurchaseRequisitionLineKey = t.PurchaseRequisitionLineKey
-INNER JOIN {{ ref('date') }}                         d 
+INNER JOIN {{ ref('date_d') }}                         d 
     ON d.DateKey                    = f.CreatedDateKey
-INNER JOIN {{ ref("currency") }}                     cur
+INNER JOIN {{ ref("currency_d") }}                     cur
     ON cur.CurrencyKey              = f.CurrencyKey
-INNER JOIN {{ ref("requisitionstatus") }}            drs 
+INNER JOIN {{ ref("requisitionstatus_d") }}            drs 
     ON drs.RequisitionStatusKey     = f.RequisitionLineStatusKey
-INNER JOIN {{ ref("requisitionstatus") }}            drs1 
+INNER JOIN {{ ref("requisitionstatus_d") }}            drs1 
     ON drs1.RequisitionStatusKey    = f.RequisitionStatusKey
-INNER JOIN {{ ref("requisitiontype") }}              drt 
+INNER JOIN {{ ref("requisitiontype_d") }}              drt 
     ON drt.RequisitionTypeKey       = f.RequisitionTypeKey
-INNER JOIN {{ ref('date') }}                         d2 
+INNER JOIN {{ ref('date_d') }}                         d2 
     ON d2.DateKey                   = f.RequiredDateKey
-  LEFT JOIN {{ ref("procurementcategory") }}          pc 
+  LEFT JOIN {{ ref("procurementcategory_d") }}          pc 
     ON pc.ProcurementCategoryKey    = f.ProcurementCategoryKey
-  LEFT JOIN {{ ref("uom") }}                          ru 
+  LEFT JOIN {{ ref("uom_d") }}                          ru 
     ON ru.UOMKey                    = f.PurchaseUOMKey;

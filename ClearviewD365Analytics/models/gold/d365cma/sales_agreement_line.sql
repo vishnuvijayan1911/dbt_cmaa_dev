@@ -12,18 +12,18 @@ SELECT  t.SalesAgreementLineKey        AS [Sales agreement line key]
     , NULLIF(dd2.Date, '1/1/1900')   AS [Line effective date]
     , NULLIF(dd3.Date, '1/1/1900')   AS [Line expiration date]
    , NULLIF(du1.UOM, '')                  AS [Pricing UOM]
-  FROM {{ ref("salesagreementline") }}           t 
-  LEFT JOIN {{ ref("salesagreementline_fact") }} f 
+  FROM {{ ref("salesagreementline_d") }}           t 
+  LEFT JOIN {{ ref("salesagreementline_f") }} f 
     ON f.SalesAgreementLineKey = t.SalesAgreementLineKey
-  LEFT JOIN {{ ref('date') }}                    dd 
+  LEFT JOIN {{ ref('date_d') }}                    dd 
     ON dd.DateKey              = f.EffectiveDateKey
-  LEFT JOIN {{ ref('date') }}                    dd1 
+  LEFT JOIN {{ ref('date_d') }}                    dd1 
     ON dd1.DateKey             = f.ExpirationDateKey
-  LEFT JOIN {{ ref("uom") }}                     du 
+  LEFT JOIN {{ ref("uom_d") }}                     du 
     ON du.UOMKey               = f.AgreementUOMKey
-  LEFT JOIN {{ ref("uom") }}           du1 
+  LEFT JOIN {{ ref("uom_d") }}           du1 
     ON du1.UOMKey       = f.PricingUOMKey
-  LEFT JOIN {{ ref('date') }}                    dd2
+  LEFT JOIN {{ ref('date_d') }}                    dd2
     ON dd2.DateKey              = f.LineEffectiveDateKey
-  LEFT JOIN {{ ref('date') }}                    dd3
+  LEFT JOIN {{ ref('date_d') }}                    dd3
     ON dd3.DateKey              = f.LineExpirationDateKey

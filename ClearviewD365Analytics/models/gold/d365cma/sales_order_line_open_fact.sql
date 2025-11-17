@@ -59,13 +59,13 @@ SELECT  f.SalesOrderLineKey                                                     
       , NULLIF(f.ShippedQuantity_PC, 0) * 1 AS [Ship PC]
     , f.TotalUnitPrice                                                                                                 AS [Order total unit price]
     , f.TotalUnitPrice_TransCur                                                                                        AS [Order total unit price in trans currency]
-  FROM {{ ref("salesorderline_fact") }}     f
-  LEFT JOIN {{ ref("ontimeshipstatus") }}   ots
+  FROM {{ ref("salesorderline_f") }}     f
+  LEFT JOIN {{ ref("ontimeshipstatus_d") }}   ots
     ON ots.OnTimeShipStatusKey    = f.OnTimeShipStatusKey
-  LEFT JOIN {{ ref("salesstatus") }}        ss1 
+  LEFT JOIN {{ ref("salesstatus_d") }}        ss1 
     ON ss1.SalesStatusKey         = f.SalesLineStatusKey
-  LEFT JOIN {{ ref("salesstatus") }}        ss2 
+  LEFT JOIN {{ ref("salesstatus_d") }}        ss2 
     ON ss2.SalesStatusKey         = f.SalesStatusKey
-  LEFT JOIN {{ ref("salestype") }}          st1
+  LEFT JOIN {{ ref("salestype_d") }}          st1
     ON st1.SalesTypeKey           = f.SalesTypeKey
     WHERE f.OpenLineCount = 1;

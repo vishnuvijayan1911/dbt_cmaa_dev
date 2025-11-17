@@ -21,4 +21,4 @@ SELECT  t.SalesOrderLineChargeKey    AS [Sales order line charge key]
   , t.PrintCharges               AS [Print charges]
   , t.TotalCharges               AS [Total charges]
   , t.TotalCharges_TransCur      AS [Total charges in trans currency]
-FROM {{ ref("salesorderlinecharge_fact") }} t;
+FROM {{ ref("salesorderlinecharge_f") }} t;

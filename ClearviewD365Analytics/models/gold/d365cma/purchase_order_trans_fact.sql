@@ -33,8 +33,8 @@ SELECT  poltf.PurchaseOrderLineTransKey                 AS [Purchase order line 
     , NULLIF(poltf.RemainingQuantity_PurchUOM, 0)           AS [Receive remain quantity]
     , NULLIF(poltf.RemainingQuantity_LB, 0) * 1 AS [Receive remain LB], NULLIF(poltf.RemainingQuantity_LB, 0) * 0.01 AS [Receive remain CWT], NULLIF(poltf.RemainingQuantity_LB, 0) * 0.0005 AS [Receive remain TON]
     , NULLIF(poltf.RemainingQuantity_PC, 0) * 1 AS [Receive remain PC]
-  FROM {{ ref("purchaseorderlinetrans_fact") }} poltf 
-INNER JOIN {{ ref("purchaseorderline_fact") }} polf 
+  FROM {{ ref("purchaseorderlinetrans_f") }} poltf 
+INNER JOIN {{ ref("purchaseorderline_f") }} polf 
     ON polf.PurchaseOrderLineKey = poltf.PurchaseOrderLineKey
 UNION ALL
 SELECT  -1       AS [Purchase order line trans key]

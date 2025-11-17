@@ -15,8 +15,8 @@ SELECT  prltf.ProductReceiptLineTransKey                      AS [Product receip
     , ISNULL(prltf.ReceivedNotInvoicedQuantity_PurchUOM, 0) AS [Receive not invoiced quantity]
     , ISNULL(prltf.ReceivedNotInvoicedQuantity_LB, 0) * 1 AS [Receive not invoiced LB], ISNULL(prltf.ReceivedNotInvoicedQuantity_LB, 0) * 0.01 AS [Receive not invoiced CWT], ISNULL(prltf.ReceivedNotInvoicedQuantity_LB, 0) * 0.0005 AS [Receive not invoiced TON]
     , ISNULL(prltf.ReceivedNotInvoicedQuantity_PC, 0) * 1 AS [Receive not invoiced PC]
-  FROM {{ ref("productreceiptlinetrans_fact") }} prltf 
-INNER JOIN {{ ref("productreceiptline_fact") }} prlf 
+  FROM {{ ref("productreceiptlinetrans_f") }} prltf 
+INNER JOIN {{ ref("productreceiptline_f") }} prlf 
     ON prlf.ProductReceiptLineKey     = prltf.ProductReceiptLineKey
 UNION ALL
 SELECT  -1             AS [Product receipt line trans key]

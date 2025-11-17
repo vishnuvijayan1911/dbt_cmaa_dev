@@ -25,38 +25,38 @@ SELECT  t.SalesQuoteLineKey                                                     
     , NULLIF(dd1.Date, '1/1/1900')                                                                    AS [Quote date]
     , NULLIF(dd2.Date, '1/1/1900')                                                                    AS [Receipt date requested]
     , NULLIF(dd3.Date, '1/1/1900')                                                                    AS [Ship date requested]
-  FROM {{ ref("salesquoteline") }}           t 
+  FROM {{ ref("salesquoteline_d") }}           t 
   -- INNER JOIN DateFilter                       df
   --   ON 1                            = 1
-  LEFT JOIN {{ ref("salesquoteline_fact") }} f 
+  LEFT JOIN {{ ref("salesquoteline_f") }} f 
     ON f.SalesQuoteLineKey = t.SalesQuoteLineKey
-  LEFT JOIN {{ ref("currency") }}            c 
+  LEFT JOIN {{ ref("currency_d") }}            c 
     ON c.CurrencyKey       = f.CurrencyKey
-  LEFT JOIN {{ ref("deliverymode") }}        dm 
+  LEFT JOIN {{ ref("deliverymode_d") }}        dm 
     ON dm.DeliveryModeKey  = f.DeliveryModeKey
-  LEFT JOIN {{ ref("deliveryterm") }}        dt 
+  LEFT JOIN {{ ref("deliveryterm_d") }}        dt 
     ON dt.DeliveryTermKey  = f.DeliveryTermKey
-  LEFT JOIN {{ ref("employee") }}            emp2 
+  LEFT JOIN {{ ref("employee_d") }}            emp2 
     ON emp2.EmployeeKey    = f.SalesTakerKey
-  LEFT JOIN {{ ref("paymentmode") }}         pm 
+  LEFT JOIN {{ ref("paymentmode_d") }}         pm 
     ON pm.PaymentModeKey   = f.PaymentModeKey
-  LEFT JOIN {{ ref("paymentterm") }}         pat 
+  LEFT JOIN {{ ref("paymentterm_d") }}         pat 
     ON pat.PaymentTermKey  = f.PaymentTermKey
-  LEFT JOIN {{ ref("quotestatus") }}         qs 
+  LEFT JOIN {{ ref("quotestatus_d") }}         qs 
     ON qs.QuoteStatusKey   = f.QuoteStatusKey
-  LEFT JOIN {{ ref("quotetype") }}           qt 
+  LEFT JOIN {{ ref("quotetype_d") }}           qt 
     ON qt.QuoteTypeKey     = f.QuoteTypeKey
-  LEFT JOIN {{ ref('date') }}                dd 
+  LEFT JOIN {{ ref('date_d') }}                dd 
     ON dd.DateKey          = f.ExpirationDateKey
-  LEFT JOIN {{ ref('date') }}                dd1 
+  LEFT JOIN {{ ref('date_d') }}                dd1 
     ON dd1.DateKey         = f.QuoteDateKey
-  LEFT JOIN {{ ref('date') }}                dd2 
+  LEFT JOIN {{ ref('date_d') }}                dd2 
     ON dd2.DateKey         = f.ReceiptDateRequestedKey
-  LEFT JOIN {{ ref('date') }}                dd3 
+  LEFT JOIN {{ ref('date_d') }}                dd3 
     ON dd3.DateKey         = f.ShipDateRequestedKey
-  LEFT JOIN {{ ref("uom") }}                 du 
+  LEFT JOIN {{ ref("uom_d") }}                 du 
     ON du.UOMKey           = f.SalesUOMKey
-  LEFT JOIN {{ ref("uom") }}                 du1 
+  LEFT JOIN {{ ref("uom_d") }}                 du1 
     ON du1.UOMKey           = f.QuotePriceUOMKey
-  LEFT JOIN {{ ref("salesperson") }}         sp 
+  LEFT JOIN {{ ref("salesperson_d") }}         sp 
     ON sp.SalesPersonKey   = f.SalesPersonKey;

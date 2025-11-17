@@ -81,5 +81,5 @@ SELECT t.DateKey                                                                
                END, 
               t.fiscaldate)                                                                  AS [Monday of week]
      , ISNULL (t.FiscalYear, '')                                                             AS [Year]
-  FROM {{ ref('date') }} t
+  FROM {{ ref('date_d') }} t
  WHERE t.DateKey NOT IN ( 99991231, 19000101 );

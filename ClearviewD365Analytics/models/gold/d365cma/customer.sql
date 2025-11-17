@@ -7,10 +7,10 @@ WITH CTE
           , MAX(dd.Date)                         AS CustomerLastOrderDate
           , DATEDIFF(d, MIN(dd.Date), GETDATE()) AS CustomerDaysSinceFirstOrder
           , DATEDIFF(d, MAX(dd.Date), GETDATE()) AS CustomerDaysSinceLastOrder
-      FROM {{ ref("customer") }}             t
-      LEFT JOIN {{ ref("salesorder_fact") }} sil
+      FROM {{ ref("customer_d") }}             t
+      LEFT JOIN {{ ref("salesorder_f") }} sil
         ON sil.CustomerKey = t.CustomerKey
-      LEFT JOIN {{ ref('date') }}            dd
+      LEFT JOIN {{ ref('date_d') }}            dd
         ON dd.DateKey      = sil.OrderDateKey
       GROUP BY t.CustomerKey)
 SELECT  t.CustomerKey                                                                                   AS [Customer key]
@@ -52,20 +52,20 @@ SELECT  t.CustomerKey                                                           
     , CustomerLastOrderDate                                                                           AS [Customer last order date]
     , CustomerDaysSinceFirstOrder                                                                     AS [Customer days since first order]
     , CustomerDaysSinceLastOrder                                                                      AS [Customer days since last order]
-  FROM {{ ref("customer") }}            t 
-  LEFT JOIN {{ ref("customer_fact") }}  F 
+  FROM {{ ref("customer_d") }}            t 
+  LEFT JOIN {{ ref("customer_f") }}  F 
     ON F.CustomerKey         = t.CustomerKey
-  LEFT JOIN {{ ref("address") }}        A 
+  LEFT JOIN {{ ref("address_d") }}        A 
     ON A.AddressKey          = F.AddressKey
-  LEFT JOIN {{ ref("customergroup") }}  g 
+  LEFT JOIN {{ ref("customergroup_d") }}  g 
     ON g.CustomerGroupKey    = F.CustomerGroupKey
-  LEFT JOIN {{ ref("paymentterm") }}    pt 
+  LEFT JOIN {{ ref("paymentterm_d") }}    pt 
     ON pt.PaymentTermKey     = F.PaymentTermKey
-  LEFT JOIN {{ ref("deliveryterm") }}   dt 
+  LEFT JOIN {{ ref("deliveryterm_d") }}   dt 
     ON dt.DeliveryTermKey    = F.DeliveryTermKey
-  LEFT JOIN {{ ref("paymentmode") }}    pm 
+  LEFT JOIN {{ ref("paymentmode_d") }}    pm 
     ON pm.PaymentModeKey     = F.PaymentModeKey
-  LEFT JOIN {{ ref("deliverymode") }}   dm 
+  LEFT JOIN {{ ref("deliverymode_d") }}   dm 
     ON dm.DeliveryModeKey    = F.DeliveryModeKey
   LEFT JOIN CTE                cte
     ON cte.CustomerKey       = t.CustomerKey;

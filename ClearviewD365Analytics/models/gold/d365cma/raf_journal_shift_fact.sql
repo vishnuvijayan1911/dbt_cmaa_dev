@@ -33,6 +33,6 @@ SELECT  t.ProductionFinishedJournalKey AS [Production finished journal key]
   , t.PostedTime                   AS [Posted time]
   , s.Shift                        AS [Shift]
   , CAST(1 AS INT)                 AS [Production finished journal count]
-FROM {{ ref("productionfinishedjournal_fact") }} t
-    LEFT JOIN {{ ref("rafjournalshift_fact") }} s
+FROM {{ ref("productionfinishedjournal_f") }} t
+    LEFT JOIN {{ ref("rafjournalshift_f") }} s
 ON s.ProductionFinishedJournalKey = t.ProductionFinishedJournalKey

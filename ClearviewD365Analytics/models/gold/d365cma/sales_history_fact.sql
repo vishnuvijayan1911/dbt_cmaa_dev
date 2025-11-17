@@ -4,10 +4,10 @@ WITH cte
   AS (
     SELECT  sol.SalesOrderLineKey
           , MAX(dc.CustomerKey) AS CustomerKey
-        FROM {{ ref("packingslipline_fact") }} ps
-        INNER JOIN {{ ref("salesorderline") }}  sol
+        FROM {{ ref("packingslipline_f") }} ps
+        INNER JOIN {{ ref("salesorderline_d") }}  sol
           ON sol.SalesOrderLineKey = ps.SalesOrderLineKey
-        INNER JOIN {{ ref("customer") }}        dc
+        INNER JOIN {{ ref("customer_d") }}        dc
           ON dc.CustomerKey        = ps.CustomerKey
         GROUP BY sol.SalesOrderLineKey)
     SELECT   
@@ -41,12 +41,12 @@ WITH cte
         , sh.OrigShipDateRequested            AS [Orig ship requested date]
         , sh.NewShipDateRequested             AS [New ship requested date]
         , sh.ModifiedBy                       AS [Modified by]
-      FROM {{ ref("saleshistory_fact") }}        sh 
-      LEFT JOIN {{ ref("salesorderline_fact") }} solf
+      FROM {{ ref("saleshistory_f") }}        sh 
+      LEFT JOIN {{ ref("salesorderline_f") }} solf
         ON solf.SalesOrderLineKey = sh.SalesOrderLineKey
-      LEFT JOIN {{ ref('date') }}                dd
+      LEFT JOIN {{ ref('date_d') }}                dd
         ON dd.Date                = CAST(sh.BookDate AS DATE)
       LEFT JOIN cte                     c
         ON c.SalesOrderLineKey    = sh.SalesOrderLineKey	
-      LEFT JOIN {{ ref("salesupdatetype") }}     stu
+      LEFT JOIN {{ ref("salesupdatetype_d") }}     stu
         ON stu.SalesUpdateTypeKey = sh.SalesUpdateTypeKey;

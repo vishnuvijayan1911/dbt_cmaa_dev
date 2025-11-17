@@ -13,4 +13,4 @@ SELECT t.NonConformanceKey       AS [Non-conformance key]
 	   , t.TestDefectQuantity_LB * 1 AS [Test defect LB], t.TestDefectQuantity_LB * 0.01 AS [Test defect CWT], t.TestDefectQuantity_LB * 0.0005 AS [Test defect TON]
      , t.TestDefectQuantity_PC * 1 AS [Test defect PC]
      , 0 AS [Test defect SQIN]
-  FROM {{ ref("nonconformance_fact") }} t;
+  FROM {{ ref("nonconformance_f") }} t;

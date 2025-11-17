@@ -15,12 +15,12 @@ SELECT t.NonConformanceKey                                         AS [Non-confo
      , NULLIF (t.ProblemTypeID, '')                                AS [Problem type]
      , NULLIF (t.ProblemType, '')                                  AS [Problem type name]
      , NULLIF (t.TestUOM, '')                                      AS [Test UOM]
-  FROM {{ ref("nonconformance") }}           t
-  LEFT JOIN {{ ref("nonconformance_fact") }} f
+  FROM {{ ref("nonconformance_d") }}           t
+  LEFT JOIN {{ ref("nonconformance_f") }} f
     ON f.NonConformanceKey = t.NonConformanceKey
-  LEFT JOIN {{ ref("salesperson") }}         dsp1
+  LEFT JOIN {{ ref("salesperson_d") }}         dsp1
     ON dsp1.SalesPersonKey = f.ApproverKey
-  LEFT JOIN {{ ref("salesperson") }}         dsp2
+  LEFT JOIN {{ ref("salesperson_d") }}         dsp2
     ON dsp2.SalesPersonKey = f.ReporterKey
-  LEFT JOIN {{ ref("salesperson") }}         dsp3
+  LEFT JOIN {{ ref("salesperson_d") }}         dsp3
     ON dsp3.SalesPersonKey = f.WorkerResponsibleKey;

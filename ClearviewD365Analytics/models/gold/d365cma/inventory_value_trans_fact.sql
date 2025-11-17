@@ -39,4 +39,4 @@ SELECT  t.InventoryValueTransKey                 AS [Inventory value trans key]
   , t.WIPQuantity_LB * 1 AS [WIP posted LB], t.WIPQuantity_LB * 0.01 AS [WIP posted CWT], t.WIPQuantity_LB * 0.0005 AS [WIP posted TON]
   , t.WIPQuantity_PC * 1 AS [WIP posted PC]
   , t.WIPQuantity_FT * 1 AS [WIP posted FT], t.WIPQuantity_FT * 12 AS [WIP posted IN]
-FROM {{ ref("inventoryvaluetrans_fact") }} t ;
+FROM {{ ref("inventoryvaluetrans_f") }} t ;

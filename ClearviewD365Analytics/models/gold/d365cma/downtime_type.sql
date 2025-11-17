@@ -4,4 +4,4 @@ SELECT  t.DowntimeTypeKey              AS [Downtime type key]
   , NULLIF(t.DowntimeTypeID, '')   AS [Downtime type ID]
   , NULLIF(t.DowntimeTypeName, '') AS [Downtime type]
   , NULLIF(t.KPIInclude, '')                       AS [KPI include]
-FROM {{ ref("downtimetype") }} t;
+FROM {{ ref("downtimetype_d") }} t;

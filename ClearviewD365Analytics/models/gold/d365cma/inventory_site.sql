@@ -5,4 +5,4 @@ SELECT t.InventorySiteKey                          AS [Inventory site key]
      , NULLIF (t.LegalEntityID, '')                AS [Legal entity]
      , NULLIF (t.InventorySiteID, '')              AS [Inventory site]
      , NULLIF (t.InventorySite, '')                AS [Inventory site name]
-  FROM {{ ref("inventorysite") }} t;
+  FROM {{ ref("inventorysite_d") }} t;

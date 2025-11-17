@@ -35,28 +35,28 @@ SELECT  ROW_NUMBER() OVER (ORDER BY COALESCE(soltf.SalesOrderLineTransKey, -1)
     , COALESCE(silf.WarehouseKey, pslf.WarehouseKey, solf.WarehouseKey, -1)                                     AS [Warehouse key]
     , CAST(1 AS INT)                                                                                            AS [Trans count]
     , COALESCE(sold.Date, psld.Date, sild.Date)                                                                 AS [Report date]
-  FROM {{ ref("salesorderlinetrans_fact") }}              soltf 
-  LEFT JOIN {{ ref("salesorderline_fact") }}              solf 
+  FROM {{ ref("salesorderlinetrans_f") }}              soltf 
+  LEFT JOIN {{ ref("salesorderline_f") }}              solf 
     ON solf.SalesOrderLineKey        = soltf.SalesOrderLineKey
-  LEFT JOIN {{ ref('date') }}                             sold 
+  LEFT JOIN {{ ref('date_d') }}                             sold 
     ON sold.DateKey                  = solf.OrderDateKey
-  FULL OUTER JOIN {{ ref("packingsliplinetrans_fact") }}  psltf 
+  FULL OUTER JOIN {{ ref("packingsliplinetrans_f") }}  psltf 
     ON psltf.SalesOrderLineTransKey  = soltf.SalesOrderLineTransKey
-  LEFT JOIN {{ ref("packingslipline_fact") }}             pslf 
+  LEFT JOIN {{ ref("packingslipline_f") }}             pslf 
     ON pslf.PackingSlipLineKey       = psltf.PackingSlipLineKey
-  LEFT JOIN {{ ref('date') }}                             psld 
+  LEFT JOIN {{ ref('date_d') }}                             psld 
     ON psld.DateKey                  = pslf.PackingSlipDateKey
-  FULL OUTER JOIN {{ ref("salesinvoicelinetrans_fact") }} siltf 
+  FULL OUTER JOIN {{ ref("salesinvoicelinetrans_f") }} siltf 
     ON siltf.SalesOrderLineTransKey = soltf.SalesOrderLineTransKey
-  LEFT JOIN {{ ref("salesinvoiceline_fact") }}            silf 
+  LEFT JOIN {{ ref("salesinvoiceline_f") }}            silf 
     ON silf.SalesInvoiceLineKey      = siltf.SalesInvoiceLineKey
-  LEFT JOIN {{ ref('date') }}                             sild 
+  LEFT JOIN {{ ref('date_d') }}                             sild 
     ON sild.DateKey                  = silf.InvoiceDateKey
-  LEFT JOIN {{ ref('date') }}                             dd 
+  LEFT JOIN {{ ref('date_d') }}                             dd 
     ON dd.DateKey                    = solf.ShipDateDueKey
-  LEFT JOIN {{ ref("inventorytransstatus") }}             ist 
+  LEFT JOIN {{ ref("inventorytransstatus_d") }}             ist 
     ON ist.InventoryTransStatusKey   = soltf.InventoryTransStatusKey
-  LEFT JOIN {{ ref("salestype") }}                        st 
+  LEFT JOIN {{ ref("salestype_d") }}                        st 
     ON st.SalesTypeKey               = solf.SalesTypeKey
 WHERE (soltf._SourceID = 1 OR psltf._SourceID = 1 OR siltf._SourceID = 1)
   AND NOT (ISNULL(soltf.SalesOrderLineTransKey, -1) = -1 AND ISNULL(psltf.PackingSlipLineTransKey, -1) <> -1);

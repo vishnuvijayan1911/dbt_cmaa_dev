@@ -4,8 +4,8 @@ SELECT  f.WorkOrderLineKey              AS [Worker order line key]
   , NULLIF(jtc.CertificateType, '') AS [Certificate type]
   , NULLIF(jt.JobTrade, '')        AS [Job trade]
   , f.LineNumber                    AS [Line #]
-FROM {{ ref("workorderline_fact") }}                  f
-LEFT JOIN {{ ref("maintenancejobtradecertificate") }} jtc 
+FROM {{ ref("workorderline_f") }}                  f
+LEFT JOIN {{ ref("maintenancejobtradecertificate_d") }} jtc 
   ON jtc.MaintenanceJobTradeCertificateKey = f.MaintenanceJobTradeCertificateKey
-LEFT JOIN {{ ref("maintenancejobtrade") }} jt
+LEFT JOIN {{ ref("maintenancejobtrade_d") }} jt
 ON jt.MaintenanceJobTradeKey = f.MaintenanceJobTradeKey;

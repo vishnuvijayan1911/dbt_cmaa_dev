@@ -25,4 +25,4 @@ SELECT  t.ProductReceiptLineKey                                                 
   , NULLIF(t.ReceivedNotInvoicedQuantity_LB, 0) * 1 AS [Receive not invoiced LB], NULLIF(t.ReceivedNotInvoicedQuantity_LB, 0) * 0.01 AS [Receive not invoiced CWT], NULLIF(t.ReceivedNotInvoicedQuantity_LB, 0) * 0.0005 AS [Receive not invoiced TON]
     , NULLIF(t.ReceivedNotInvoicedQuantity_PC, 0) * 1 AS [Receive not invoiced PC]
   , t.TotalAmount                                                                 AS [Total amount]
-FROM {{ ref("productreceiptline_fact") }}     t;
+FROM {{ ref("productreceiptline_f") }}     t;

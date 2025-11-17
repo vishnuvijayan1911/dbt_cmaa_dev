@@ -17,6 +17,6 @@ SELECT  t.ShippingLoadKey                                                       
     , t.ShippingCarrier                                                                                   AS [Ship carrier]
     , NULLIF(t.LoadShippedConfirmationDate, '1/1/1900')                                                   AS [Load ship date confirmed]
     , NULLIF(t.ScheduledLoadShippingDate, '1/1/1900')                                                     AS [Load ship date scheduled]
-  FROM {{ ref("shippingload") }}          t 
-  LEFT JOIN {{ ref("ontimeloadstatus") }} ls
+  FROM {{ ref("shippingload_d") }}          t 
+  LEFT JOIN {{ ref("ontimeloadstatus_d") }} ls
     ON ls.OnTimeLoadStatusKey = t.OnTimeLoadStatusKey;

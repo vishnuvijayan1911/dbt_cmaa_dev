@@ -45,9 +45,9 @@ NULLIF (t._1E0170, '') AS [1E0170]
       , NULLIF(t.BestBeforeDate, '1/1/1900')                           AS [Best before date]
       , NULLIF(t.ExpirationDate, '1/1/1900')                           AS [Expiration date]
       , NULLIF(t.ProductionDate, '1/1/1900')                           AS [Production date]
-    FROM {{ ref("tagattribute") }}         t
-    LEFT JOIN {{ ref('date') }}   dd
+    FROM {{ ref("tagattribute_d") }}         t
+    LEFT JOIN {{ ref('date_d') }}   dd
       ON dd.Date          = t.ProductionDate
-    LEFT JOIN {{ ref("vendor") }} dv
+    LEFT JOIN {{ ref("vendor_d") }} dv
       ON dv.LegalEntityID = t.LegalEntityID
     AND dv.VendorAccount = t.VendorAccount;

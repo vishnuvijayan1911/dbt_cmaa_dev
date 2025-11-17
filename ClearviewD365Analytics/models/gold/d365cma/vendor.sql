@@ -32,20 +32,20 @@ SELECT  t.VendorKey                                                       AS [Ve
   , NULLIF(a.PostalCode, '')                                          AS [Vendor postal code]
   , NULLIF(t.VATNumber, '')                                           AS [Vendor VAT number]
   , CAST(1 AS INT)                                                    AS [Vendor count]
-FROM {{ ref("vendor") }}              t 
-LEFT JOIN {{ ref("vendor_fact") }}    f 
+FROM {{ ref("vendor_d") }}              t 
+LEFT JOIN {{ ref("vendor_f") }}    f 
   ON f.VendorKey           = t.VendorKey
-LEFT JOIN {{ ref("address") }}        a 
+LEFT JOIN {{ ref("address_d") }}        a 
   ON a.AddressKey          = f.AddressKey
-LEFT JOIN {{ ref("legalentity") }}    l 
+LEFT JOIN {{ ref("legalentity_d") }}    l 
   ON l.LegalEntityKey      = f.LegalEntityKey
-LEFT JOIN {{ ref("paymentterm") }}    pt 
+LEFT JOIN {{ ref("paymentterm_d") }}    pt 
   ON pt.PaymentTermKey     = f.PaymentTermKey
-LEFT JOIN {{ ref("deliveryterm") }}   dt 
+LEFT JOIN {{ ref("deliveryterm_d") }}   dt 
   ON dt.DeliveryTermKey    = f.DeliveryTermKey
-LEFT JOIN {{ ref("paymentmode") }}    pm 
+LEFT JOIN {{ ref("paymentmode_d") }}    pm 
   ON pm.PaymentModeKey     = f.PaymentModeKey
-LEFT JOIN {{ ref("deliverymode") }}   dm 
+LEFT JOIN {{ ref("deliverymode_d") }}   dm 
   ON dm.DeliveryModeKey    = f.DeliveryModeKey
-LEFT JOIN {{ ref('date') }}           dd
+LEFT JOIN {{ ref('date_d') }}           dd
   ON dd.DateKey            = f.CreatedDateKey;

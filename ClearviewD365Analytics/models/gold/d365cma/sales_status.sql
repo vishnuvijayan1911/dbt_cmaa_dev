@@ -4,4 +4,4 @@ SELECT
     t.SalesStatusKey      AS [Sales status key],
     t.SalesStatus         AS [Sales status],
     t.SalesStatusID       AS [Sales status #]
-FROM {{ ref("salesstatus") }} t;
+FROM {{ ref("salesstatus_d") }} t;

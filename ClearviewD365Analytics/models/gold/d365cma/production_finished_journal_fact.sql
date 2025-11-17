@@ -32,4 +32,4 @@ SELECT  t.ProductionFinishedJournalKey AS [Production finished journal key]
   , NULLIF(t.JournalID, '')        AS [Journal #]
   , t.PostedTime                   AS [Posted time]
   , CAST(1 AS INT)                 AS [Production finished journal count]
-FROM {{ ref("productionfinishedjournal_fact") }} t;
+FROM {{ ref("productionfinishedjournal_f") }} t;

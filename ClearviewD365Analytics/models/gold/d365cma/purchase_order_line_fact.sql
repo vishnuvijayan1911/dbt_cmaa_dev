@@ -50,14 +50,14 @@ SELECT  t.PurchaseOrderLineKey                                                  
   , CAST(1 AS INT)                                                                                                      AS [Purchase order line count]
   , t.TotalUnitPrice                                                                                                    AS [Order total unit price]
   , t.TotalUnitPrice_TransCur                                                                                           AS [Order total unit price in trans currency]
-FROM {{ ref("purchaseorderline_fact") }}    t 
-JOIN {{ ref("purchasetype") }}              st 
+FROM {{ ref("purchaseorderline_f") }}    t 
+JOIN {{ ref("purchasetype_d") }}              st 
   ON st.PurchaseTypeKey          = t.PurchaseTypeKey
-LEFT JOIN {{ ref("ontimedeliverystatus") }} ots 
+LEFT JOIN {{ ref("ontimedeliverystatus_d") }} ots 
   ON ots.OnTimeDeliveryStatusKey = t.OnTimeDeliveryStatusKey
-LEFT JOIN {{ ref("purchasestatus") }}       ps 
+LEFT JOIN {{ ref("purchasestatus_d") }}       ps 
   ON ps.PurchaseStatusKey        = t.PurchaseLineStatusKey
-LEFT JOIN {{ ref("purchasetype") }}         pt1
+LEFT JOIN {{ ref("purchasetype_d") }}         pt1
   ON pt1.PurchaseTypeKey         = t.PurchaseTypeKey
-LEFT JOIN {{ ref("purchasestatus") }}       ps2 
+LEFT JOIN {{ ref("purchasestatus_d") }}       ps2 
   ON ps2.PurchaseStatusKey       = t.PurchaseStatusKey
