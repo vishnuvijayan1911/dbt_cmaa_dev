@@ -58,11 +58,11 @@ LEFT JOIN {{ ref("Currency") }}        cy
   ON cy.CurrencyKey         = t.CurrencyKey
 LEFT JOIN {{ ref("Employee") }}        e 
   ON e.EmployeeKey          = t.ApproverKey
-LEFT JOIN {{ ref("Date") }}            dd 
+LEFT JOIN {{ ref('date') }}            dd 
   ON dd.DateKey             = t.CloseDateKey
-LEFT JOIN {{ ref("Date") }}            dd1
+LEFT JOIN {{ ref('date') }}            dd1
   ON dd1.DateKey            = t.LastSettleDateKey
-LEFT JOIN {{ ref("Date") }}            dd3 
+LEFT JOIN {{ ref('date') }}            dd3 
   ON dd3.DateKey            = t.TransDateKey
 LEFT JOIN {{ ref("PurchaseInvoice") }} pui 
   ON pui.PurchaseInvoiceKey = t.PurchaseInvoiceKey

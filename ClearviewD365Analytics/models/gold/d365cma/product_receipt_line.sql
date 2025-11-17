@@ -10,7 +10,7 @@ SELECT  t.ProductReceiptLineKey                                                 
 FROM {{ ref("ProductReceiptLine") }}           t 
 LEFT JOIN {{ ref("ProductReceiptLine_Fact") }} f 
   ON f.ProductReceiptLineKey = t.ProductReceiptLineKey
-LEFT JOIN {{ ref("Date") }}                    dd 
+LEFT JOIN {{ ref('date') }}                    dd 
   ON dd.DateKey              = f.ReceiptDateKey
 LEFT JOIN {{ ref("Voucher") }}                 dv 
   ON dv.VoucherKey           = f.VoucherKey;

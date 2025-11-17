@@ -49,7 +49,7 @@ SELECT  t.PurchaseInvoiceLineKey                                                
 FROM {{ ref("PurchaseInvoiceLine_Fact") }}    t
 LEFT JOIN Charges                    pilcf 
   ON pilcf.PurchaseInvoiceLineKey = t.PurchaseInvoiceLineKey
-LEFT JOIN {{ ref("Date") }}                   dd
+LEFT JOIN {{ ref('date') }}                   dd
   ON dd.DateKey                   = t.InvoiceDateKey      
 LEFT JOIN {{ ref("PurchaseType") }}           pt
   ON pt.PurchaseTypeKey           = t.PurchaseTypeKey

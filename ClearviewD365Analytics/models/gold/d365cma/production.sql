@@ -58,15 +58,15 @@ INNER JOIN {{ ref("InventoryReferenceType") }}    dpst
     ON dpst.InventoryReferenceTypeKey    = f.InventoryReferenceTypeKey
 INNER JOIN {{ ref("Production") }}                rp 
     ON rp.ProductionKey                  = f.ReferenceProductionKey
-  LEFT JOIN {{ ref("Date") }}                      dd 
+  LEFT JOIN {{ ref('date') }}                      dd 
     ON dd.DateKey                        = f.DueDateKey
-  LEFT JOIN {{ ref("Date") }}                      dd1 
+  LEFT JOIN {{ ref('date') }}                      dd1 
     ON dd1.DateKey                       = f.ProductionStartDateKey
-  LEFT JOIN {{ ref("Date") }}                      dd2 
+  LEFT JOIN {{ ref('date') }}                      dd2 
     ON dd2.DateKey                       = f.ReportAsFinishedDateKey
-  LEFT JOIN {{ ref("Date") }}                      dd3 
+  LEFT JOIN {{ ref('date') }}                      dd3 
     ON dd3.DateKey                       = f.ScheduleStartDateKey
-  LEFT JOIN {{ ref("Date") }}                      dd4 
+  LEFT JOIN {{ ref('date') }}                      dd4 
     ON dd4.DateKey                       = f.ScheduleEndDateKey
-  LEFT JOIN {{ ref("Date") }}                      dd5 
+  LEFT JOIN {{ ref('date') }}                      dd5 
     ON dd5.DateKey                       = f.ProductionEndDateKey;

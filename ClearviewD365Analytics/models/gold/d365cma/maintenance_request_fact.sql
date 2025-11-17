@@ -14,5 +14,5 @@ SELECT t.MaintenanceRequestKey                                                  
   FROM {{ ref("MaintenanceRequest_Fact") }}  t 
 INNER JOIN {{ ref("MaintenanceRequest") }}  mr 
     ON mr.MaintenanceRequestKey = t.MaintenanceRequestKey
-INNER JOIN {{ ref("Date") }}                d 
+INNER JOIN {{ ref('date') }}                d 
     ON d.DateKey                = t.RequestCreateDateKey;

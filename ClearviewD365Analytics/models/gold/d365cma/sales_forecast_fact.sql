@@ -35,9 +35,9 @@ INNER JOIN {{ ref("Currency") }}      cur
     ON cur.CurrencyKey = t.CurrencyKey
 INNER JOIN {{ ref("UOM") }}           du 
     ON du.UOMKey       = t.SalesUOMKey
-INNER JOIN {{ ref("Date") }}          dd 
+INNER JOIN {{ ref('date') }}          dd 
     ON dd.DateKey      = t.ExpectedCostPaymentDateKey
-INNER JOIN {{ ref("Date") }}          dd1 
+INNER JOIN {{ ref('date') }}          dd1 
     ON dd1.DateKey     = t.ExpectedInvoiceDateKey
-INNER JOIN {{ ref("Date") }}          dd2 
+INNER JOIN {{ ref('date') }}          dd2 
     ON dd2.DateKey     = t.ExpectedSalesPaymentDateKey;

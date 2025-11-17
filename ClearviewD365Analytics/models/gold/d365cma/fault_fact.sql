@@ -18,7 +18,7 @@ SELECT  t.FaultKey                       AS [Fault key]
   FROM {{ ref("Fault_Fact") }} t 
   LEFT JOIN pre       p 
     ON p.FaultKey = t.FaultKey
-  LEFT JOIN {{ ref("Date") }}  pd
+  LEFT JOIN {{ ref('date') }}  pd
     ON pd.DateKey = p.PreviousFaultDateKey
-  LEFT JOIN {{ ref("Date") }}  fd 
+  LEFT JOIN {{ ref('date') }}  fd 
     ON fd.DateKey = p.FaultDateKey;

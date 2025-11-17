@@ -39,9 +39,9 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
             ON sol.SalesOrderLineKey = solf.SalesOrderLineKey
           INNER JOIN {{ ref("LegalEntity") }} le
             ON le.LegalEntityKey = solf.LegalEntityKey
-          LEFT JOIN {{ ref("Date") }}           dd1
+          LEFT JOIN {{ ref('date') }}           dd1
             ON dd1.DateKey           = solf.ReceiptDateConfirmedKey
-          LEFT JOIN {{ ref("Date") }}           dd2
+          LEFT JOIN {{ ref('date') }}           dd2
             ON dd2.DateKey           = solf.ReceiptDateRequestedKey
           INNER JOIN {{ ref("PaymentTerm") }}    pt
             ON pt.PaymentTermKey     = solf.PaymentTermKey
@@ -49,9 +49,9 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
             ON st.SalesStatusKey     = solf.SalesLineStatusKey
           INNER JOIN {{ ref("Customer") }}       dc
             ON dc.CustomerKey        = solf.CustomerKey
-          LEFT JOIN {{ ref("Date") }}           dt
+          LEFT JOIN {{ ref('date') }}           dt
             ON dt.Date               = CAST(GETDATE() AS DATE)
-          LEFT JOIN {{ ref("Date") }}           dt1
+          LEFT JOIN {{ ref('date') }}           dt1
             ON dt.WeekDate           = dt1.Date
           WHERE st.SalesStatusID = '1'
             AND solf.NetAmount   <> 0
@@ -94,9 +94,9 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
             ON pol.PurchaseOrderLineKey = polf.PurchaseOrderLineKey
           INNER JOIN {{ ref("LegalEntity") }}    le
             ON le.LegalEntityKey    = polf.LegalEntityKey
-          INNER JOIN {{ ref("Date") }}              dd1
+          INNER JOIN {{ ref('date') }}              dd1
             ON dd1.DateKey              = polf.DeliveryDateActualKey
-          INNER JOIN {{ ref("Date") }}              dd2
+          INNER JOIN {{ ref('date') }}              dd2
             ON dd2.DateKey              = polf.DeliveryDateConfirmedKey
           INNER JOIN {{ ref("PaymentTerm") }}       pt
             ON pt.PaymentTermKey        = polf.PaymentTermKey
@@ -104,9 +104,9 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
             ON st.PurchaseStatusKey     = polf.PurchaseLineStatusKey
           INNER JOIN {{ ref("Vendor") }}            dv
             ON dv.VendorKey             = polf.VendorKey
-          LEFT JOIN {{ ref("Date") }}              dt
+          LEFT JOIN {{ ref('date') }}              dt
             ON dt.Date                  = CAST(GETDATE() AS DATE)
-          LEFT JOIN {{ ref("Date") }}              dt1
+          LEFT JOIN {{ ref('date') }}              dt1
             ON dt.WeekDate              = dt1.Date
           WHERE st.PurchaseStatusID = '1'
             AND polf.NetAmount      <> 0

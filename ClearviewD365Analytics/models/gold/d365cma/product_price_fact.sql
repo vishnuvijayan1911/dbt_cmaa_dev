@@ -9,7 +9,7 @@ SELECT  f.ProductPriceKey           AS [Product price key]
     , dd.Date                     AS [From date]
     , dd1.Date                    AS [To date]
   FROM {{ ref("ProductPrice_Fact") }}   f
-  JOIN {{ ref("Date") }}                dd 
+  JOIN {{ ref('date') }}                dd 
     ON dd.DateKey            = f.FromDateKey
-  JOIN {{ ref("Date") }}                dd1 
+  JOIN {{ ref('date') }}                dd1 
     ON dd1.DateKey           = f.ToDateKey;

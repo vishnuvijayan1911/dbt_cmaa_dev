@@ -25,5 +25,5 @@ SELECT  wof.WorkOrderKey                                                        
   FROM {{ ref("WorkOrder_Fact") }}                   wof
 INNER JOIN {{ ref("WorkOrder") }}                   wo 
     ON wo.WorkOrderKey = wof.WorkOrderKey
-  LEFT JOIN {{ ref("Date") }}                        c
+  LEFT JOIN {{ ref('date') }}                        c
     ON c.Date          = wo.CreateDate;

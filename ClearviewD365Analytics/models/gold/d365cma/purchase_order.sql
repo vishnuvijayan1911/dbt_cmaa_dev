@@ -56,11 +56,11 @@ LEFT JOIN {{ ref("ReturnReason") }}       rr
   ON rr.ReturnReasonKey   = f.ReturnReasonKey
 LEFT JOIN {{ ref("TaxGroup") }}           tg 
   ON tg.TaxGroupKey       = f.TaxGroupKey
-LEFT JOIN {{ ref("Date") }}               dd1 
+LEFT JOIN {{ ref('date') }}               dd1 
   ON dd1.DateKey          = f.OrderDateKey
-LEFT JOIN {{ ref("Date") }}               dd2
+LEFT JOIN {{ ref('date') }}               dd2
   ON dd2.DateKey          = f.DeliveryDateActualKey
-LEFT JOIN {{ ref("Date") }}               dd3 
+LEFT JOIN {{ ref('date') }}               dd3 
   ON dd3.DateKey          = f.DeliveryDateConfirmedKey
-LEFT JOIN {{ ref("Date") }}               dd4 
+LEFT JOIN {{ ref('date') }}               dd4 
   ON dd4.DateKey          = f.DeliveryDateKey;

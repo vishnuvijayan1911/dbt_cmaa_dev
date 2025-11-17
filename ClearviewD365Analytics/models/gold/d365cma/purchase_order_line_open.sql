@@ -57,13 +57,13 @@ INNER JOIN {{ ref("PurchaseOrderLine_Fact") }} f
     ON tg.TaxGroupKey                = f.TaxGroupKey
   LEFT JOIN {{ ref("UOM") }}                    pu 
     ON pu.UOMKey                     = f.PurchaseUOMKey
-  LEFT JOIN {{ ref("Date") }}                   dd1 
+  LEFT JOIN {{ ref('date') }}                   dd1 
     ON dd1.DateKey                   = f.OrderDateKey
-  LEFT JOIN {{ ref("Date") }}                   dd2 
+  LEFT JOIN {{ ref('date') }}                   dd2 
     ON dd2.DateKey                   = f.DeliveryDateActualKey
-  LEFT JOIN {{ ref("Date") }}                   dd3 
+  LEFT JOIN {{ ref('date') }}                   dd3 
     ON dd3.DateKey                   = f.DeliveryDateConfirmedKey
-  LEFT JOIN {{ ref("Date") }}                   dd4 
+  LEFT JOIN {{ ref('date') }}                   dd4 
     ON dd4.DateKey                   = f.DeliveryDateKey
   LEFT JOIN {{ ref("OnTimeDeliveryStatus") }}   ots 
     ON ots.OnTimeDeliveryStatusKey   = f.OnTimeDeliveryStatusKey

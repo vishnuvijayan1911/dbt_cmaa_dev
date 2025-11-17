@@ -15,9 +15,9 @@ ORDER BY OrderDateKey, SalesOrderKey) AS PriororderDate
                   LEFT JOIN {{ ref("SalesStatus") }} ss1 
                     ON ss1.SalesStatusKey = sof.SalesStatusKey
                 WHERE ss1.SalesStatusID = 1) t
-      LEFT JOIN {{ ref("Date") }}                     dd
+      LEFT JOIN {{ ref('date') }}                     dd
         ON dd.DateKey  = t.OrderDateKey
-      LEFT JOIN {{ ref("Date") }}                     dd1
+      LEFT JOIN {{ ref('date') }}                     dd1
         ON dd1.DateKey = t.PriororderDate)
 SELECT  t.SalesOrderKey                            AS [Sales order key]
     , NULLIF(t.SalesOrderID, '')                 AS [Sales order #]
@@ -62,13 +62,13 @@ SELECT  t.SalesOrderKey                            AS [Sales order key]
     ON st.SalesTypeKey         = f.SalesTypeKey
   LEFT JOIN {{ ref("Employee") }}         e4 
     ON e4.EmployeeKey          = f.SalesTakerKey
-  LEFT JOIN {{ ref("Date") }}             dd1 
+  LEFT JOIN {{ ref('date') }}             dd1 
     ON dd1.DateKey             = f.OrderDateKey
-  LEFT JOIN {{ ref("Date") }}             dd2 
+  LEFT JOIN {{ ref('date') }}             dd2 
     ON dd2.DateKey             = f.ReceiptDateConfirmedKey
-  LEFT JOIN {{ ref("Date") }}             dd3 
+  LEFT JOIN {{ ref('date') }}             dd3 
     ON dd3.DateKey             = f.ReceiptDateRequestedKey
-  LEFT JOIN {{ ref("Date") }}             dd4 
+  LEFT JOIN {{ ref('date') }}             dd4 
     ON dd4.DateKey             = f.ShipDateActualKey
   LEFT JOIN {{ ref("PaymentMode") }}      pam 
     ON pam.PaymentModeKey      = f.PaymentModeKey

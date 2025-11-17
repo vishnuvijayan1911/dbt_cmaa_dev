@@ -14,7 +14,7 @@ WITH CTE
           , TransAmount
       FROM (   SELECT  d.DateKey AS TransDateKey
                     , 0.00      AS TransAmount
-                  FROM {{ ref("Date") }} d
+                  FROM {{ ref('date') }} d
                 WHERE d.DateKey > (SELECT  MIN(TransDateKey) FROM {{ ref("BankAccountTrans_Fact") }})
                   AND d.DateKey < (SELECT  MAX(TransDateKey) FROM {{ ref("BankAccountTrans_Fact") }})
                   AND d.DateKey NOT IN ( SELECT  DISTINCT TransDateKey FROM {{ ref("BankAccountTrans_Fact") }} )) dt
@@ -40,7 +40,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                           , -1                  AS LedgerTransKey
                           , SUM(c1.TransAmount) AS ActivityAmount
                         FROM CTE           c1
-                      INNER JOIN {{ ref("Date") }} d1
+                      INNER JOIN {{ ref('date') }} d1
                           ON c1.TransDateKey = d1.DateKey
                       WHERE d1.Date >= DATEADD(
                                             DAY
@@ -56,7 +56,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                           , -1                                                       AS LedgerTransKey
                           , SUM(c2.TransAmount)                                      AS ActivityAmount
                         FROM CTE           c2
-                      INNER JOIN {{ ref("Date") }} d2
+                      INNER JOIN {{ ref('date') }} d2
                           ON c2.TransDateKey = d2.DateKey
                       WHERE d2.Date < DATEADD(
                                           DAY
@@ -65,7 +65,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                       GROUP BY c2.BankAccountKey
                               , c2.LegalEntityKey
                               , DATEFROMPARTS(YEAR(d2.Date), MONTH(d2.Date), 1)) sub
-            INNER JOIN {{ ref("Date") }}                                                  d3
+            INNER JOIN {{ ref('date') }}                                                  d3
               ON d3.Date                = sub.TransDate
             LEFT JOIN {{ ref("LedgerTransType") }}                                       ltt
               ON ltt.LedgerTransTypeKey = sub.LedgerTransKey) tt

@@ -11,9 +11,9 @@ SELECT  t.PurchaseAgreementLineKey        AS [Purchase agreement line key]
   FROM {{ ref("PurchaseAgreementLine") }}           t 
   LEFT JOIN {{ ref("PurchaseAgreementLine_Fact") }} f 
     ON f.PurchaseAgreementLineKey = t.PurchaseAgreementLineKey
-  LEFT JOIN {{ ref("Date") }}                    dd 
+  LEFT JOIN {{ ref('date') }}                    dd 
     ON dd.DateKey              = f.EffectiveDateKey
-  LEFT JOIN {{ ref("Date") }}                    dd1 
+  LEFT JOIN {{ ref('date') }}                    dd1 
     ON dd1.DateKey             = f.ExpirationDateKey
   LEFT JOIN {{ ref("UOM") }}                     du 
     ON du.UOMKey               = f.AgreementUOMKey;

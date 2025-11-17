@@ -10,7 +10,7 @@ WITH CTE
       FROM {{ ref("Customer") }}             t
       LEFT JOIN {{ ref("SalesOrder_Fact") }} sil
         ON sil.CustomerKey = t.CustomerKey
-      LEFT JOIN {{ ref("Date") }}            dd
+      LEFT JOIN {{ ref('date') }}            dd
         ON dd.DateKey      = sil.OrderDateKey
       GROUP BY t.CustomerKey)
 SELECT  t.CustomerKey                                                                                   AS [Customer key]

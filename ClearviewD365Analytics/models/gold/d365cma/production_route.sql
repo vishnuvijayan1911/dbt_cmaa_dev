@@ -21,9 +21,9 @@ SELECT  t.ProductionRouteKey                                AS [Production route
   FROM {{ ref("ProductionRoute") }}               t 
 INNER JOIN {{ ref("ProductionRoute_Fact") }}     prf 
     ON prf.ProductionRouteKey          = t.ProductionRouteKey
-  LEFT JOIN {{ ref("Date") }}                     dd 
+  LEFT JOIN {{ ref('date') }}                     dd 
     ON dd.DateKey                      = prf.ScheduleStartDateKey
-  LEFT JOIN {{ ref("Date") }}                     dd1 
+  LEFT JOIN {{ ref('date') }}                     dd1 
     ON dd1.DateKey                     = prf.ScheduleEndDateKey
   LEFT JOIN {{ ref("ProductionRouteGroup") }}     prg 
     ON prg.ProductionRouteGroupKey     = prf.ProductionRouteGroupKey

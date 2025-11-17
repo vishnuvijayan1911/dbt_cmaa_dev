@@ -55,7 +55,7 @@ NULLIF (t._1E0170, '') AS [1E0170]
   FROM {{ ref("TagAttribute") }}         t 
   INNER JOIN CTE f 
   ON f.TagKey = t.TagKey
-  LEFT JOIN {{ ref("Date") }}   dd
+  LEFT JOIN {{ ref('date') }}   dd
     ON dd.Date          = t.ProductionDate
   LEFT JOIN {{ ref("Vendor") }} dv 
     ON dv.LegalEntityID = t.LegalEntityID

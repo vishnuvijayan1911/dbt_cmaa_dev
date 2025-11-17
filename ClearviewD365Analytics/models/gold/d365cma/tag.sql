@@ -46,7 +46,7 @@ NULLIF (t._1E0170, '') AS [1E0170]
       , NULLIF(t.ExpirationDate, '1/1/1900')                           AS [Expiration date]
       , NULLIF(t.ProductionDate, '1/1/1900')                           AS [Production date]
     FROM {{ ref("TagAttribute") }}         t
-    LEFT JOIN {{ ref("Date") }}   dd
+    LEFT JOIN {{ ref('date') }}   dd
       ON dd.Date          = t.ProductionDate
     LEFT JOIN {{ ref("Vendor") }} dv
       ON dv.LegalEntityID = t.LegalEntityID

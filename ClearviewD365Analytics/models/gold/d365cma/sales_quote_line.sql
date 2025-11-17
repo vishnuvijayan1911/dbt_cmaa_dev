@@ -46,13 +46,13 @@ SELECT  t.SalesQuoteLineKey                                                     
     ON qs.QuoteStatusKey   = f.QuoteStatusKey
   LEFT JOIN {{ ref("QuoteType") }}           qt 
     ON qt.QuoteTypeKey     = f.QuoteTypeKey
-  LEFT JOIN {{ ref("Date") }}                dd 
+  LEFT JOIN {{ ref('date') }}                dd 
     ON dd.DateKey          = f.ExpirationDateKey
-  LEFT JOIN {{ ref("Date") }}                dd1 
+  LEFT JOIN {{ ref('date') }}                dd1 
     ON dd1.DateKey         = f.QuoteDateKey
-  LEFT JOIN {{ ref("Date") }}                dd2 
+  LEFT JOIN {{ ref('date') }}                dd2 
     ON dd2.DateKey         = f.ReceiptDateRequestedKey
-  LEFT JOIN {{ ref("Date") }}                dd3 
+  LEFT JOIN {{ ref('date') }}                dd3 
     ON dd3.DateKey         = f.ShipDateRequestedKey
   LEFT JOIN {{ ref("UOM") }}                 du 
     ON du.UOMKey           = f.SalesUOMKey

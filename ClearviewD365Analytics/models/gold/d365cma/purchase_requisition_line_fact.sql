@@ -30,5 +30,5 @@ SELECT  t.PurchaseRequisitionLineKey AS [Purchase requisition line key]
     , CAST(1 AS INT)               AS [Requisition lines]
     , d.Date                       AS [Created date]
   FROM {{ ref("purchaserequisitionline_f") }}     t
-INNER JOIN {{ ref("Date") }}                        d 
+INNER JOIN {{ ref('date') }}                        d 
     ON d.DateKey                          = t.CreatedDateKey;

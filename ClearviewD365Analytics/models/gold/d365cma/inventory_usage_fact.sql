@@ -68,7 +68,7 @@ INNER JOIN {{ ref("InventorySource") }}      s
     ON s.InventorySourceKey       = it.InventorySourceKey
 INNER JOIN {{ ref("InventoryTransStatus") }} ts
     ON ts.InventoryTransStatusKey = it.InventoryTransStatusKey
-INNER JOIN {{ ref("Date") }}                 pd
+INNER JOIN {{ ref('date') }}                 pd
     ON pd.Date                    = it.DatePhysical
 WHERE s.InventorySourceID IN ( 0, 8 )
 GROUP BY pd.DateKey

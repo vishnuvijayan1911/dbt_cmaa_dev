@@ -10,7 +10,7 @@ SELECT  t.PackingSlipLineKey                                                    
 FROM {{ ref("PackingSlipLine") }}           t 
 LEFT JOIN {{ ref("PackingSlipLine_Fact") }} f 
   ON f.PackingSlipLineKey = t.PackingSlipLineKey
-LEFT JOIN {{ ref("Date") }}                 dd 
+LEFT JOIN {{ ref('date') }}                 dd 
   ON dd.DateKey           = f.PackingSlipDateKey
 LEFT JOIN {{ ref("Voucher") }}              dv 
   ON dv.VoucherKey        = f.VoucherKey

@@ -41,11 +41,11 @@ LEFT JOIN {{ ref("UOM") }}                   u2
   ON u2.UOMKey             = f.SalesUOMKey
 LEFT JOIN {{ ref("SalesType") }}             st 
   ON st.SalesTypeKey       = f.SalesTypeKey
-LEFT JOIN {{ ref("Date") }}                  dd1
+LEFT JOIN {{ ref('date') }}                  dd1
   ON dd1.DateKey           = f.DueDateKey
-LEFT JOIN {{ ref("Date") }}                  dd2
+LEFT JOIN {{ ref('date') }}                  dd2
   ON dd2.DateKey           = f.InvoiceDateKey
-LEFT JOIN {{ ref("Date") }}                  dd3 
+LEFT JOIN {{ ref('date') }}                  dd3 
   ON dd3.DateKey           = f.ShipDateKey
 LEFT JOIN {{ ref("InvoiceType") }}           it 
   ON it.InvoiceTypeKey     = f.InvoiceTypeKey

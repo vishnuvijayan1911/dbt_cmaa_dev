@@ -54,9 +54,9 @@ LEFT JOIN {{ ref("Currency") }}        cy
   ON cy.CurrencyKey        = t.CurrencyKey
 LEFT JOIN {{ ref("Voucher") }}         vc
   ON vc.VoucherKey         = t.VoucherKey
-LEFT JOIN {{ ref("Date") }}            dd
+LEFT JOIN {{ ref('date') }}            dd
   ON dd.DateKey            = t.CloseDateKey
-LEFT JOIN {{ ref("Date") }}            dd1
+LEFT JOIN {{ ref('date') }}            dd1
   ON dd1.DateKey           = t.LastSettleDateKey
 LEFT JOIN {{ ref("SalesInvoice") }}    si
   ON si.SalesInvoiceKey    = t.SalesInvoiceKey

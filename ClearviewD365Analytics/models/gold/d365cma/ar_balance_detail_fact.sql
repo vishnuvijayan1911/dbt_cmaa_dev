@@ -33,13 +33,13 @@ SELECT  t.ARBalanceKey                                                          
     , t.PaymentDays                                                                      AS [Payment days]
     , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE)                                         AS [Discount date]
   FROM {{ ref("ARBalanceDetail_Fact") }}   t 
-INNER JOIN {{ ref("Date") }}              dd
+INNER JOIN {{ ref('date') }}              dd
     ON dd.DateKey             = t.BalanceDateKey
-  LEFT JOIN {{ ref("Date") }}              dd1
+  LEFT JOIN {{ ref('date') }}              dd1
     ON dd1.DateKey            = t.InvoiceDateKey
-  LEFT JOIN {{ ref("Date") }}              dd2
+  LEFT JOIN {{ ref('date') }}              dd2
     ON dd2.DateKey            = t.DueDateKey
-  LEFT JOIN {{ ref("Date") }}              dd3
+  LEFT JOIN {{ ref('date') }}              dd3
     ON dd3.DateKey            = t.DiscDateKey
 INNER JOIN {{ ref("AgingBucket") }}       ab
     ON ab.AgingBucketKey      = t.AgingBucketDueKey

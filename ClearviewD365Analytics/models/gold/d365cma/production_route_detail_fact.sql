@@ -34,11 +34,11 @@ SELECT  t.ProductionRouteKey                                                    
   FROM {{ ref("ProductionRoute") }}           t 
 INNER JOIN {{ ref("ProductionRoute_Fact") }} prf 
     ON prf.ProductionRouteKey  = t.ProductionRouteKey
-  LEFT JOIN {{ ref("Date") }}                 dd 
+  LEFT JOIN {{ ref('date') }}                 dd 
     ON dd.DateKey              = prf.ScheduleStartDateKey
-  LEFT JOIN {{ ref("Date") }}                 dd1 
+  LEFT JOIN {{ ref('date') }}                 dd1 
     ON dd1.DateKey             = prf.ScheduleEndDateKey
-  LEFT JOIN {{ ref("Date") }}                 dd2
+  LEFT JOIN {{ ref('date') }}                 dd2
     ON dd2.DateKey BETWEEN prf.ScheduleStartDateKey AND prf.ScheduleEndDateKey
   LEFT JOIN StartTime                st
     ON st.ProductionRouteKey   = prf.ProductionRouteKey

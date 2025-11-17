@@ -19,7 +19,7 @@ SELECT  t.PurchaseInvoiceKey          AS [Purchase invoice key]
 FROM {{ ref("PurchaseInvoice") }}           t  
 INNER JOIN {{ ref("PurchaseInvoice_Fact") }} F  
   ON F.PurchaseInvoiceKey  = t.PurchaseInvoiceKey
-LEFT JOIN {{ ref("Date") }}                 dd  
+LEFT JOIN {{ ref('date') }}                 dd  
   ON dd.DateKey            = F.InvoiceDateKey
 LEFT JOIN {{ ref("Currency") }}             C  
   ON C.CurrencyKey         = F.CurrencyKey

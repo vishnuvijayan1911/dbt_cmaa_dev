@@ -44,7 +44,7 @@ NULLIF (t.RawMaterialClassificationType, '') AS [Raw material classification typ
     LEFT JOIN {{ ref("ProductPrice_Fact") }} f
       ON f.ProductKey      = t.ProductKey
     AND f.LegalEntityKey  = le.LegalEntityKey
-    LEFT JOIN {{ ref("Date") }}              fd
+    LEFT JOIN {{ ref('date') }}              fd
       ON fd.DateKey        = f.FromDateKey
-    LEFT JOIN {{ ref("Date") }}              td
+    LEFT JOIN {{ ref('date') }}              td
       ON td.DateKey        = f.ToDateKey;

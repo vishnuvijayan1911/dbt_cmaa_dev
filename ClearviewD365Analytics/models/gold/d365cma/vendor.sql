@@ -47,5 +47,5 @@ LEFT JOIN {{ ref("PaymentMode") }}    pm
   ON pm.PaymentModeKey     = f.PaymentModeKey
 LEFT JOIN {{ ref("DeliveryMode") }}   dm 
   ON dm.DeliveryModeKey    = f.DeliveryModeKey
-LEFT JOIN {{ ref("Date") }}           dd
+LEFT JOIN {{ ref('date') }}           dd
   ON dd.DateKey            = f.CreatedDateKey;

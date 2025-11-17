@@ -38,21 +38,21 @@ SELECT  ROW_NUMBER() OVER (ORDER BY COALESCE(soltf.SalesOrderLineTransKey, -1)
   FROM {{ ref("SalesOrderLineTrans_Fact") }}              soltf 
   LEFT JOIN {{ ref("SalesOrderLine_Fact") }}              solf 
     ON solf.SalesOrderLineKey        = soltf.SalesOrderLineKey
-  LEFT JOIN {{ ref("Date") }}                             sold 
+  LEFT JOIN {{ ref('date') }}                             sold 
     ON sold.DateKey                  = solf.OrderDateKey
   FULL OUTER JOIN {{ ref("PackingSlipLineTrans_Fact") }}  psltf 
     ON psltf.SalesOrderLineTransKey  = soltf.SalesOrderLineTransKey
   LEFT JOIN {{ ref("PackingSlipLine_Fact") }}             pslf 
     ON pslf.PackingSlipLineKey       = psltf.PackingSlipLineKey
-  LEFT JOIN {{ ref("Date") }}                             psld 
+  LEFT JOIN {{ ref('date') }}                             psld 
     ON psld.DateKey                  = pslf.PackingSlipDateKey
   FULL OUTER JOIN {{ ref("SalesInvoiceLineTrans_Fact") }} siltf 
     ON siltf.SalesOrderLineTransKey = soltf.SalesOrderLineTransKey
   LEFT JOIN {{ ref("SalesInvoiceLine_Fact") }}            silf 
     ON silf.SalesInvoiceLineKey      = siltf.SalesInvoiceLineKey
-  LEFT JOIN {{ ref("Date") }}                             sild 
+  LEFT JOIN {{ ref('date') }}                             sild 
     ON sild.DateKey                  = silf.InvoiceDateKey
-  LEFT JOIN {{ ref("Date") }}                             dd 
+  LEFT JOIN {{ ref('date') }}                             dd 
     ON dd.DateKey                    = solf.ShipDateDueKey
   LEFT JOIN {{ ref("InventoryTransStatus") }}             ist 
     ON ist.InventoryTransStatusKey   = soltf.InventoryTransStatusKey

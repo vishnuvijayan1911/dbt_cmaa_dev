@@ -76,15 +76,15 @@ INNER JOIN {{ ref("SalesOrderLine_Fact") }} F
     ON u2.UOMKey                = F.SalesUOMKey
   LEFT JOIN {{ ref("TaxGroup") }}            tg 
     ON tg.TaxGroupKey           = F.TaxGroupKey
-  LEFT JOIN {{ ref("Date") }}                dd1 
+  LEFT JOIN {{ ref('date') }}                dd1 
     ON dd1.DateKey              = F.OrderDateKey
-  LEFT JOIN {{ ref("Date") }}                dd2 
+  LEFT JOIN {{ ref('date') }}                dd2 
     ON dd2.DateKey              = F.ShipDateActualKey
-  LEFT JOIN {{ ref("Date") }}                dd3 
+  LEFT JOIN {{ ref('date') }}                dd3 
     ON dd3.DateKey              = F.ShipDateConfirmedKey
-  LEFT JOIN {{ ref("Date") }}                dd4 
+  LEFT JOIN {{ ref('date') }}                dd4 
     ON dd4.DateKey              = F.ShipDateRequestedKey
-  LEFT JOIN {{ ref("Date") }}                dd5 
+  LEFT JOIN {{ ref('date') }}                dd5 
     ON dd5.DateKey              = F.ShipDateDueKey
   LEFT JOIN {{ ref("SalesPerson") }}         sp 
     ON sp.SalesPersonKey        = F.SalesPersonKey

@@ -82,7 +82,7 @@ SELECT  t.ProductionKey                                                         
     ON c.ProductionKey         = t.ProductionKey
   LEFT JOIN cte1                 c1 
     ON c1.ProductionKey        = t.ProductionKey
-  LEFT JOIN {{ ref("Date") }}             d
+  LEFT JOIN {{ ref('date') }}             d
     ON d.DateKey               = t.OrderCreatedDateKey
   LEFT JOIN cte2                 c2 
     ON c2.ProductionKey        = t.ProductionKey;

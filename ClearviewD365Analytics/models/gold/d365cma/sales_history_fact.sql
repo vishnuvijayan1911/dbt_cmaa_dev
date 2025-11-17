@@ -44,7 +44,7 @@ WITH cte
       FROM {{ ref("SalesHistory_Fact") }}        sh 
       LEFT JOIN {{ ref("SalesOrderLine_Fact") }} solf
         ON solf.SalesOrderLineKey = sh.SalesOrderLineKey
-      LEFT JOIN {{ ref("Date") }}                dd
+      LEFT JOIN {{ ref('date') }}                dd
         ON dd.Date                = CAST(sh.BookDate AS DATE)
       LEFT JOIN cte                     c
         ON c.SalesOrderLineKey    = sh.SalesOrderLineKey	
