@@ -54,7 +54,7 @@ SELECT  ROW_NUMBER() OVER (ORDER BY COALESCE(soltf.SalesOrderLineTransKey, -1)
     ON sild.DateKey                  = silf.InvoiceDateKey
   LEFT JOIN {{ ref('date_d') }}                             dd 
     ON dd.DateKey                    = solf.ShipDateDueKey
-  LEFT JOIN {{ ref("inventorytransstatus_d") }}             ist 
+  LEFT JOIN {{ ref("inventory_trans_status_d") }}             ist 
     ON ist.InventoryTransStatusKey   = soltf.InventoryTransStatusKey
   LEFT JOIN {{ ref("salestype_d") }}                        st 
     ON st.SalesTypeKey               = solf.SalesTypeKey

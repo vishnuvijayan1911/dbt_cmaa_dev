@@ -45,7 +45,7 @@ INNER JOIN {{ ref("purchaseorderline_f") }}              polf
     ON pilf.PurchaseInvoiceLineKey      = piltf.PurchaseInvoiceLineKey
   LEFT JOIN {{ ref('date_d') }}                                pild 
     ON pild.DateKey                     = pilf.InvoiceDateKey
-  LEFT JOIN {{ ref("inventorytransstatus_d") }}                ist 
+  LEFT JOIN {{ ref("inventory_trans_status_d") }}                ist 
     ON ist.InventoryTransStatusKey      = poltf.InventoryTransStatusKey
   LEFT JOIN {{ ref("purchasetype_d") }}                        st 
     ON st.PurchaseTypeKey               = polf.PurchaseTypeKey

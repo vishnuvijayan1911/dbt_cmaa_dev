@@ -66,7 +66,7 @@ SELECT  pd.DateKey                                                              
   FROM {{ ref("inventorytrans_f") }}       it
 INNER JOIN {{ ref("inventorysource_d") }}      s
     ON s.InventorySourceKey       = it.InventorySourceKey
-INNER JOIN {{ ref("inventorytransstatus_d") }} ts
+INNER JOIN {{ ref("inventory_trans_status_d") }} ts
     ON ts.InventoryTransStatusKey = it.InventoryTransStatusKey
 INNER JOIN {{ ref('date_d') }}                 pd
     ON pd.Date                    = it.DatePhysical
