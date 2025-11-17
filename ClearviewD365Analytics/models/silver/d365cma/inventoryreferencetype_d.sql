@@ -1,6 +1,6 @@
 {{ config(materialized='table', tags=['silver'], alias='inventoryreferencetype') }}
 
-WITH detail AS (
+WITH detail_inventoryreferencetype AS (
     SELECT e1.EnumValueID AS InventoryReferenceTypeID
          , e1.EnumValue   AS InventoryReferenceType
       FROM {{ ref('enumeration') }} e1
@@ -9,5 +9,5 @@ WITH detail AS (
 
 SELECT InventoryReferenceTypeID
      , InventoryReferenceType
-  FROM detail
+  FROM detail_inventoryreferencetype
  ORDER BY InventoryReferenceTypeID;

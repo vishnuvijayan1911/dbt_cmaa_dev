@@ -1,12 +1,13 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchasetype') }}
+{{ config(materialized='table', tags=['silver'], alias='purchasetype') }}
 
--- External table: silver.cma_PurchaseType
--- Provides the lookup values for Purchase Type across purchase models.
+WITH detail AS (
+    SELECT we.EnumValueID AS PurchaseTypeID
+         , we.EnumValue   AS PurchaseType
+      FROM {{ ref('enumeration') }} we
+     WHERE we.Enum = 'PurchaseType'
+)
 
-SELECT PurchaseTypeKey
-     , PurchaseTypeID
+SELECT PurchaseTypeID
      , PurchaseType
-     , CURRENT_TIMESTAMP AS _CreatedDate
-     , CURRENT_TIMESTAMP AS _ModifiedDate
-  FROM silver.cma_PurchaseType;
-
+  FROM detail
+ ORDER BY PurchaseTypeID;
