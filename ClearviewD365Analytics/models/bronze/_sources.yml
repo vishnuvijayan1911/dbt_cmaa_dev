@@ -374,4 +374,4 @@ sources:
   - name: warehouse
     database: whcmaanonprodref
     schema: bronze
-    tables:
+    tables: []
