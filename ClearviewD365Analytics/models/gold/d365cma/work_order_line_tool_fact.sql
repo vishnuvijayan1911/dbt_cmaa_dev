@@ -2,4 +2,4 @@
 
 SELECT  t.WorkOrderLineKey     AS [Work order line key]
   , t.ResourceKey          AS [Resource key]
-FROM {{ ref("WorkOrderLineTool_Fact") }} t;
+FROM {{ ref("workorderlinetool_fact") }} t;

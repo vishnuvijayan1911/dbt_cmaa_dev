@@ -11,10 +11,10 @@ WITH Charges
           , SUM(CASE WHEN cc.ChargeCode = 'SALES_FRT' THEN silcf.TotalCharges_TransCur END)  AS [Sales freight charges in trans currency]
           , SUM(CASE WHEN cc.ChargeCode = 'BundBreak' THEN silcf.TotalCharges END)           AS [Bundle break fee]
           , SUM(CASE WHEN cc.ChargeCode = 'BundBreak' THEN silcf.TotalCharges_TransCur END)  AS [Bundle break fee in trans currency]
-      FROM {{ ref("SalesInvoiceLineChargeTrans_Fact") }} silcf
-      LEFT JOIN {{ ref("SalesInvoiceLineCharge_Fact") }} solc 
+      FROM {{ ref("salesinvoicelinechargetrans_fact") }} silcf
+      LEFT JOIN {{ ref("salesinvoicelinecharge_fact") }} solc 
         ON solc.SalesInvoiceLineChargeKey = silcf.SalesInvoiceLineChargeKey
-      LEFT JOIN {{ ref("ChargeCode") }}                  cc 
+      LEFT JOIN {{ ref("chargecode") }}                  cc 
         ON cc.ChargeCodeKey               = solc.ChargeCodeKey
       GROUP BY silcf.SalesInvoiceLineTransKey)
 SELECT  siltf.SalesInvoiceLineTransKey                                                   AS [Sales invoice line trans key]
@@ -62,10 +62,10 @@ SELECT  siltf.SalesInvoiceLineTransKey                                          
     , [Sales freight charges in trans currency]                                        AS [Sales freight charges in trans currency]
     , [Bundle break fee]                                                               AS [Bundle break fee]
     , [Bundle break fee in trans currency]                                             AS [Bundle break fee in trans currency]
-  FROM {{ ref("SalesInvoiceLineTrans_Fact") }} siltf 
-  LEFT JOIN {{ ref("SalesInvoiceLine_Fact") }} silf 
+  FROM {{ ref("salesinvoicelinetrans_fact") }} siltf 
+  LEFT JOIN {{ ref("salesinvoiceline_fact") }} silf 
     ON silf.SalesInvoiceLineKey       = siltf.SalesInvoiceLineKey
-  LEFT JOIN {{ ref("SalesInvoice") }}          si 
+  LEFT JOIN {{ ref("salesinvoice") }}          si 
     ON si.SalesInvoiceKey             = silf.SalesInvoiceKey
   LEFT JOIN Charges                   silcf
     ON silcf.SalesInvoiceLineTransKey = siltf.SalesInvoiceLineTransKey

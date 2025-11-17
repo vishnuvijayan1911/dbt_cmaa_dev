@@ -7,4 +7,4 @@ SELECT  t.InventorytransStatusKey               AS [Inventory trans status key]
     , NULLIF(t.InventoryTransStatusGroup, '') AS [Inventory trans status group]
     , NULLIF(t.InventoryTransStatusName, '')  AS [Inventory trans status name]
     , NULLIF(t.InventoryTransStatusType, '')  AS [Inventory trans status type]
-  FROM {{ ref("InventoryTransStatus") }} t;
+  FROM {{ ref("inventorytransstatus") }} t;

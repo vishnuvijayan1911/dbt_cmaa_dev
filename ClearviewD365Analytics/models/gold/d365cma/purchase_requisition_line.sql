@@ -19,17 +19,17 @@ INNER JOIN {{ ref("purchaserequisitionline_f") }} f
     ON f.PurchaseRequisitionLineKey = t.PurchaseRequisitionLineKey
 INNER JOIN {{ ref('date') }}                         d 
     ON d.DateKey                    = f.CreatedDateKey
-INNER JOIN {{ ref("Currency") }}                     cur
+INNER JOIN {{ ref("currency") }}                     cur
     ON cur.CurrencyKey              = f.CurrencyKey
-INNER JOIN {{ ref("RequisitionStatus") }}            drs 
+INNER JOIN {{ ref("requisitionstatus") }}            drs 
     ON drs.RequisitionStatusKey     = f.RequisitionLineStatusKey
-INNER JOIN {{ ref("RequisitionStatus") }}            drs1 
+INNER JOIN {{ ref("requisitionstatus") }}            drs1 
     ON drs1.RequisitionStatusKey    = f.RequisitionStatusKey
-INNER JOIN {{ ref("RequisitionType") }}              drt 
+INNER JOIN {{ ref("requisitiontype") }}              drt 
     ON drt.RequisitionTypeKey       = f.RequisitionTypeKey
 INNER JOIN {{ ref('date') }}                         d2 
     ON d2.DateKey                   = f.RequiredDateKey
-  LEFT JOIN {{ ref("ProcurementCategory") }}          pc 
+  LEFT JOIN {{ ref("procurementcategory") }}          pc 
     ON pc.ProcurementCategoryKey    = f.ProcurementCategoryKey
-  LEFT JOIN {{ ref("UOM") }}                          ru 
+  LEFT JOIN {{ ref("uom") }}                          ru 
     ON ru.UOMKey                    = f.PurchaseUOMKey;

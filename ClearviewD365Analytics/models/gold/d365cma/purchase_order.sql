@@ -25,36 +25,36 @@ SELECT  t.PurchaseOrderKey            AS [Purchase order key]
   , NULLIF(dd3.Date, '1/1/1900')  AS [Delivery date confirmed]
   , NULLIF(dd4.Date, '1/1/1900')  AS [Delivery due date]
   , NULLIF(dd1.Date, '1/1/1900')  AS [Order date]
-FROM {{ ref("PurchaseOrder") }}           t 
-INNER JOIN {{ ref("PurchaseOrder_Fact") }} f 
+FROM {{ ref("purchaseorder") }}           t 
+INNER JOIN {{ ref("purchaseorder_fact") }} f 
   ON f.PurchaseOrderKey   = t.PurchaseOrderKey
-LEFT JOIN {{ ref("BuyerGroup") }}         bg 
+LEFT JOIN {{ ref("buyergroup") }}         bg 
   ON bg.BuyerGroupKey     = f.BuyerGroupKey
-LEFT JOIN {{ ref("Employee") }}           de 
+LEFT JOIN {{ ref("employee") }}           de 
   ON de.EmployeeKey       = f.BuyerKey
-LEFT JOIN {{ ref("Employee") }}           de1 
+LEFT JOIN {{ ref("employee") }}           de1 
   ON de1.EmployeeKey      = f.RequesterKey
-LEFT JOIN {{ ref("Currency") }}           c 
+LEFT JOIN {{ ref("currency") }}           c 
   ON c.CurrencyKey        = f.CurrencyKey
-LEFT JOIN {{ ref("DeliveryMode") }}       dm 
+LEFT JOIN {{ ref("deliverymode") }}       dm 
   ON dm.DeliveryModeKey   = f.DeliveryModeKey
-LEFT JOIN {{ ref("DeliveryTerm") }}       dt 
+LEFT JOIN {{ ref("deliveryterm") }}       dt 
   ON dt.DeliveryTermKey   = f.DeliveryTermKey
-LEFT JOIN {{ ref("DocumentStatus") }}     ds
+LEFT JOIN {{ ref("documentstatus") }}     ds
   ON ds.DocumentStatusKey = f.DocumentStatusKey
-LEFT JOIN {{ ref("DocumentState") }}      dst 
+LEFT JOIN {{ ref("documentstate") }}      dst 
   ON dst.DocumentStateKey = f.DocumentStateKey
-LEFT JOIN {{ ref("PaymentTerm") }}        pat 
+LEFT JOIN {{ ref("paymentterm") }}        pat 
   ON pat.PaymentTermKey   = f.PaymentTermKey
-LEFT JOIN {{ ref("PaymentMode") }}        pm 
+LEFT JOIN {{ ref("paymentmode") }}        pm 
   ON pm.PaymentModeKey    = f.PaymentModeKey
-LEFT JOIN {{ ref("PurchaseStatus") }}     ps 
+LEFT JOIN {{ ref("purchasestatus") }}     ps 
   ON ps.PurchaseStatusKey = f.PurchaseStatusKey
-LEFT JOIN {{ ref("PurchaseType") }}       pt 
+LEFT JOIN {{ ref("purchasetype") }}       pt 
   ON pt.PurchaseTypeKey   = f.PurchaseTypeKey
-LEFT JOIN {{ ref("ReturnReason") }}       rr 
+LEFT JOIN {{ ref("returnreason") }}       rr 
   ON rr.ReturnReasonKey   = f.ReturnReasonKey
-LEFT JOIN {{ ref("TaxGroup") }}           tg 
+LEFT JOIN {{ ref("taxgroup") }}           tg 
   ON tg.TaxGroupKey       = f.TaxGroupKey
 LEFT JOIN {{ ref('date') }}               dd1 
   ON dd1.DateKey          = f.OrderDateKey

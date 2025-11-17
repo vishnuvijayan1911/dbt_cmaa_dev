@@ -17,15 +17,15 @@ SELECT  t.SalesInvoiceLineTransKey                                              
     , SUM (CASE WHEN cc.ChargeCode NOT IN ( 'BEVELING', 'FREIGHT', 'FUEL', 'GRADE ADD', 'RESTOCKING' )
                 THEN t.TotalCharges_TransCur
                 ELSE 0 END)                                                                AS [Unmapped charges in trans currency]
-  FROM {{ ref("SalesInvoiceLineChargeTrans_Fact") }} t
-  LEFT JOIN {{ ref("SalesInvoiceLineTrans_Fact") }}  silt 
+  FROM {{ ref("salesinvoicelinechargetrans_fact") }} t
+  LEFT JOIN {{ ref("salesinvoicelinetrans_fact") }}  silt 
     ON silt.SalesInvoiceLineTransKey  = t.SalesInvoiceLineTransKey
-  LEFT JOIN {{ ref("SalesInvoiceLine_Fact") }}       silf 
+  LEFT JOIN {{ ref("salesinvoiceline_fact") }}       silf 
     ON silf.SalesInvoiceLineKey       = silt.SalesInvoiceLineKey
-  LEFT JOIN {{ ref("SalesInvoice") }}                si
+  LEFT JOIN {{ ref("salesinvoice") }}                si
     ON si.SalesInvoiceKey             = silf.SalesInvoiceKey
-  LEFT JOIN {{ ref("SalesInvoiceLineCharge_Fact") }} solc 
+  LEFT JOIN {{ ref("salesinvoicelinecharge_fact") }} solc 
     ON solc.SalesInvoiceLineChargeKey = t.SalesInvoiceLineChargeKey
-  LEFT JOIN {{ ref("ChargeCode") }}                  cc 
+  LEFT JOIN {{ ref("chargecode") }}                  cc 
     ON cc.ChargeCodeKey               = solc.ChargeCodeKey
 GROUP BY t.SalesInvoiceLineTransKey;

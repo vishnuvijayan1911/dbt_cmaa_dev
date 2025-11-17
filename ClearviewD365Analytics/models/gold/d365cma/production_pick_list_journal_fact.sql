@@ -41,9 +41,9 @@ SELECT  t.ProductionPickListJournalKey AS [Production pick list journal key]
     , t.ReturnToStockQuantity_PC * 1 AS [RTS PC]
     , NULLIF(t.JournalID, '')        AS [Journal #]
     , CAST(1 AS INT)                 AS [Production pick list journal count]
-  FROM {{ ref("ProductionPickListJournal_Fact") }} t 
-INNER JOIN {{ ref("Tag") }}                       tt
+  FROM {{ ref("productionpicklistjournal_fact") }} t 
+INNER JOIN {{ ref("tag") }}                       tt
     ON tt.TagKey             = t.TagKey
-  LEFT JOIN {{ ref("Tag") }}                       m
+  LEFT JOIN {{ ref("tag") }}                       m
     ON m.LegalEntityID       = tt.LegalEntityID
   AND m.TagID               = tt.MasterTagID;

@@ -34,20 +34,20 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
                               ELSE FORMAT(DATEADD(d, ISNULL(pt.PaymentDays, 0), dd2.Date), 'yyyyMMdd') END
                     ELSE dt1.DateKey END                  AS [Settlement date key]
               , solf.NetAmount                             AS [Amount]
-          FROM {{ ref("SalesOrderLine_Fact") }} solf
-          INNER JOIN {{ ref("SalesOrderLine") }} sol
+          FROM {{ ref("salesorderline_fact") }} solf
+          INNER JOIN {{ ref("salesorderline") }} sol
             ON sol.SalesOrderLineKey = solf.SalesOrderLineKey
-          INNER JOIN {{ ref("LegalEntity") }} le
+          INNER JOIN {{ ref("legalentity") }} le
             ON le.LegalEntityKey = solf.LegalEntityKey
           LEFT JOIN {{ ref('date') }}           dd1
             ON dd1.DateKey           = solf.ReceiptDateConfirmedKey
           LEFT JOIN {{ ref('date') }}           dd2
             ON dd2.DateKey           = solf.ReceiptDateRequestedKey
-          INNER JOIN {{ ref("PaymentTerm") }}    pt
+          INNER JOIN {{ ref("paymentterm") }}    pt
             ON pt.PaymentTermKey     = solf.PaymentTermKey
-          INNER JOIN {{ ref("SalesStatus") }}    st
+          INNER JOIN {{ ref("salesstatus") }}    st
             ON st.SalesStatusKey     = solf.SalesLineStatusKey
-          INNER JOIN {{ ref("Customer") }}       dc
+          INNER JOIN {{ ref("customer") }}       dc
             ON dc.CustomerKey        = solf.CustomerKey
           LEFT JOIN {{ ref('date') }}           dt
             ON dt.Date               = CAST(GETDATE() AS DATE)
@@ -89,20 +89,20 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
                               ELSE FORMAT(DATEADD(d, ISNULL(pt.PaymentDays, 0), dd2.Date), 'yyyyMMdd') END
                     ELSE dt1.DateKey END                   AS [Settlement date key]
               , polf.NetAmount * -1                         AS [Amount]
-          FROM {{ ref("PurchaseOrderLine_Fact") }} polf
-          INNER JOIN {{ ref("PurchaseOrderLine") }} pol
+          FROM {{ ref("purchaseorderline_fact") }} polf
+          INNER JOIN {{ ref("purchaseorderline") }} pol
             ON pol.PurchaseOrderLineKey = polf.PurchaseOrderLineKey
-          INNER JOIN {{ ref("LegalEntity") }}    le
+          INNER JOIN {{ ref("legalentity") }}    le
             ON le.LegalEntityKey    = polf.LegalEntityKey
           INNER JOIN {{ ref('date') }}              dd1
             ON dd1.DateKey              = polf.DeliveryDateActualKey
           INNER JOIN {{ ref('date') }}              dd2
             ON dd2.DateKey              = polf.DeliveryDateConfirmedKey
-          INNER JOIN {{ ref("PaymentTerm") }}       pt
+          INNER JOIN {{ ref("paymentterm") }}       pt
             ON pt.PaymentTermKey        = polf.PaymentTermKey
-          INNER JOIN {{ ref("PurchaseStatus") }}    st
+          INNER JOIN {{ ref("purchasestatus") }}    st
             ON st.PurchaseStatusKey     = polf.PurchaseLineStatusKey
-          INNER JOIN {{ ref("Vendor") }}            dv
+          INNER JOIN {{ ref("vendor") }}            dv
             ON dv.VendorKey             = polf.VendorKey
           LEFT JOIN {{ ref('date') }}              dt
             ON dt.Date                  = CAST(GETDATE() AS DATE)
@@ -131,10 +131,10 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , '19000101'          AS [Invoice date key]
               , bt.TransDateKey     AS [Settlement date key]
               , bt.BudgetAmount     AS Amount
-          FROM {{ ref("GLBudgetTrans_Fact") }}  bt
-          INNER JOIN {{ ref("LegalEntity") }}    le
+          FROM {{ ref("glbudgettrans_fact") }}  bt
+          INNER JOIN {{ ref("legalentity") }}    le
             ON le.LegalEntityKey = bt.LegalEntityKey
-          LEFT JOIN {{ ref("LedgerAccount") }}  la
+          LEFT JOIN {{ ref("ledgeraccount") }}  la
             ON la.LedgerAccountKey   = bt.LedgerAccountKey
         UNION
         SELECT  sf.LegalEntityKey  AS [Legal entity key]
@@ -157,8 +157,8 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , 19000101           AS [Invoice date key]
               , sf.ForecastDateKey AS [Settlement date key]
               , sf.ForecastAmount  AS Amount
-          FROM {{ ref("SalesForecast_Fact") }}  sf
-           INNER JOIN {{ ref("LegalEntity") }}    le
+          FROM {{ ref("salesforecast_fact") }}  sf
+           INNER JOIN {{ ref("legalentity") }}    le
             ON le.LegalEntityKey = sf.LegalEntityKey
         UNION
         SELECT  pf.LegalEntityKey      AS [Legal entity key]
@@ -181,6 +181,6 @@ FROM (   SELECT  le.LegalEntityKey                      AS [Legal entity key]
               , 19000101               AS [Invoice date key]
               , pf.ForecastDateKey     AS [Settlement date key]
               , pf.ForecastAmount * -1 AS Amount
-          FROM {{ ref("PurchaseForecast_Fact") }} pf
-           INNER JOIN {{ ref("LegalEntity") }}    le
+          FROM {{ ref("purchaseforecast_fact") }} pf
+           INNER JOIN {{ ref("legalentity") }}    le
             ON le.LegalEntityKey = pf.LegalEntityKey) t;

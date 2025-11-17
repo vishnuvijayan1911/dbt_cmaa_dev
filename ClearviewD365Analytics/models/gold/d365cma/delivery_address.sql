@@ -7,4 +7,4 @@ SELECT  t.AddressKey                AS [Delivery address key]
     , NULLIF(t.StateProvince, '') AS [Delivery state province]
     , NULLIF(t.Street, '')        AS [Delivery street]
     , NULLIF(t.PostalCode, '')    AS [Delivery postal code]
-FROM {{ ref("Address") }} t;
+FROM {{ ref("address") }} t;

@@ -6,4 +6,4 @@ SELECT  t.[BankAccountKey]  AS [Bank account key]
     , t.[BankAccountName] AS [Bank account name]
     , t.[BankGroupID]     AS [Bank group]
     , t.[CurrencyID]      AS [Currency]
-  FROM {{ ref("BankAccount") }} t;
+  FROM {{ ref("bankaccount") }} t;

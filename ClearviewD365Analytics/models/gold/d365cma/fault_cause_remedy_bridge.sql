@@ -10,8 +10,8 @@ SELECT
 , fc.FaultCauseKey                    AS [Fault cause key]
 , fr.FaultRemedyFactKey               AS [Fault remedy fact key]
 , fr.FaultRemedyKey                   AS [Fault remedy key]
-FROM {{ ref("Fault_Fact") }}	            f
-LEFT JOIN {{ ref("FaultCause_Fact") }}   fc
+FROM {{ ref("fault_fact") }}	            f
+LEFT JOIN {{ ref("faultcause_fact") }}   fc
 ON fc.FaultKey = f.FaultKey
-LEFT JOIN {{ ref("FaultRemedy_Fact") }}  fr
+LEFT JOIN {{ ref("faultremedy_fact") }}  fr
 ON fr.FactCauseFactKey = fc.FaultCauseFactKey;

@@ -63,10 +63,10 @@ SELECT  pd.DateKey                                                              
     , SUM (CASE WHEN s.InventorySourceID = 8 THEN it.TransQuantity_PC * -1 END) * 1 AS [Production usage PC]
     , SUM (CASE WHEN s.InventorySourceID = 8 THEN it.TransQuantity_LB * -1 END) * 1 AS [Production usage LB], SUM (CASE WHEN s.InventorySourceID = 8 THEN it.TransQuantity_LB * -1 END) * 0.01 AS [Production usage CWT], SUM (CASE WHEN s.InventorySourceID = 8 THEN it.TransQuantity_LB * -1 END) * 0.0005 AS [Production usage TON]
     , SUM (CASE WHEN s.InventorySourceID = 8 THEN it.TransQuantity_SQIN * -1 END) * 1 AS [Production usage SQIN]
-  FROM {{ ref("InventoryTrans_Fact") }}       it
-INNER JOIN {{ ref("InventorySource") }}      s
+  FROM {{ ref("inventorytrans_fact") }}       it
+INNER JOIN {{ ref("inventorysource") }}      s
     ON s.InventorySourceKey       = it.InventorySourceKey
-INNER JOIN {{ ref("InventoryTransStatus") }} ts
+INNER JOIN {{ ref("inventorytransstatus") }} ts
     ON ts.InventoryTransStatusKey = it.InventoryTransStatusKey
 INNER JOIN {{ ref('date') }}                 pd
     ON pd.Date                    = it.DatePhysical

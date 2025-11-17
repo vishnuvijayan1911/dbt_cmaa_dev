@@ -26,36 +26,36 @@ SELECT  t.PurchaseOrderLineKey                 AS [Purchase order line key]
     , NULLIF(dd2.Date, '1/1/1900')           AS [Delivery date actual]
     , NULLIF(dd3.Date, '1/1/1900')           AS [Delivery date confirmed]
     , NULLIF(dd1.Date, '1/1/1900')           AS [Order date]
-  FROM {{ ref("PurchaseOrderLine") }}           t 
-INNER JOIN {{ ref("PurchaseOrderLine_Fact") }} f 
+  FROM {{ ref("purchaseorderline") }}           t 
+INNER JOIN {{ ref("purchaseorderline_fact") }} f 
     ON f.PurchaseOrderLineKey        = t.PurchaseOrderLineKey
-  LEFT JOIN {{ ref("Employee") }}               de 
+  LEFT JOIN {{ ref("employee") }}               de 
     ON de.EmployeeKey                = f.BuyerKey
-  LEFT JOIN {{ ref("Currency") }}               c 
+  LEFT JOIN {{ ref("currency") }}               c 
     ON c.CurrencyKey                 = f.CurrencyKey
-  LEFT JOIN {{ ref("DeliveryMode") }}           dm 
+  LEFT JOIN {{ ref("deliverymode") }}           dm 
     ON dm.DeliveryModeKey            = f.DeliveryModeKey
-  LEFT JOIN {{ ref("DeliveryTerm") }}           dt 
+  LEFT JOIN {{ ref("deliveryterm") }}           dt 
     ON dt.DeliveryTermKey            = f.DeliveryTermKey
-  LEFT JOIN {{ ref("DocumentStatus") }}         ds
+  LEFT JOIN {{ ref("documentstatus") }}         ds
     ON ds.DocumentStatusKey          = f.DocumentStatusKey
-  LEFT JOIN {{ ref("PaymentTerm") }}            pat 
+  LEFT JOIN {{ ref("paymentterm") }}            pat 
     ON pat.PaymentTermKey            = f.PaymentTermKey
-  LEFT JOIN {{ ref("PurchaseApprovalStatus") }} pas 
+  LEFT JOIN {{ ref("purchaseapprovalstatus") }} pas 
     ON pas.PurchaseApprovalStatusKey = f.PurchaseApprovalStatusKey
-  LEFT JOIN {{ ref("PurchaseStatus") }}         ps1 
+  LEFT JOIN {{ ref("purchasestatus") }}         ps1 
     ON ps1.PurchaseStatusKey         = f.PurchaseLineStatusKey
-  LEFT JOIN {{ ref("PurchaseStatus") }}         ps2 
+  LEFT JOIN {{ ref("purchasestatus") }}         ps2 
     ON ps2.PurchaseStatusKey         = f.PurchaseStatusKey
-  LEFT JOIN {{ ref("PurchaseType") }}           pt 
+  LEFT JOIN {{ ref("purchasetype") }}           pt 
     ON pt.PurchaseTypeKey            = f.PurchaseTypeKey
-  LEFT JOIN {{ ref("ReturnStatus") }}           rs 
+  LEFT JOIN {{ ref("returnstatus") }}           rs 
     ON rs.ReturnStatusKey            = f.ReturnStatusKey
-  LEFT JOIN {{ ref("ReturnReason") }}           rr 
+  LEFT JOIN {{ ref("returnreason") }}           rr 
     ON rr.ReturnReasonKey            = f.ReturnReasonKey
-  LEFT JOIN {{ ref("TaxGroup") }}               tg 
+  LEFT JOIN {{ ref("taxgroup") }}               tg 
     ON tg.TaxGroupKey                = f.TaxGroupKey
-  LEFT JOIN {{ ref("UOM") }}                    pu 
+  LEFT JOIN {{ ref("uom") }}                    pu 
     ON pu.UOMKey                     = f.PurchaseUOMKey
   LEFT JOIN {{ ref('date') }}                   dd1 
     ON dd1.DateKey                   = f.OrderDateKey
@@ -65,9 +65,9 @@ INNER JOIN {{ ref("PurchaseOrderLine_Fact") }} f
     ON dd3.DateKey                   = f.DeliveryDateConfirmedKey
   LEFT JOIN {{ ref('date') }}                   dd4 
     ON dd4.DateKey                   = f.DeliveryDateKey
-  LEFT JOIN {{ ref("OnTimeDeliveryStatus") }}   ots 
+  LEFT JOIN {{ ref("ontimedeliverystatus") }}   ots 
     ON ots.OnTimeDeliveryStatusKey   = f.OnTimeDeliveryStatusKey
-  LEFT JOIN {{ ref("UOM") }}                    pum 
+  LEFT JOIN {{ ref("uom") }}                    pum 
     ON pum.UOMKey                    = f.PricingUOMKey
 WHERE ps1.PurchaseStatusID <> 4
   AND ps2.PurchaseStatusID <> 4;

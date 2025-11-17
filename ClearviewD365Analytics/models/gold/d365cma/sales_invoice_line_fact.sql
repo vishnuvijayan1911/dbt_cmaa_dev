@@ -5,7 +5,7 @@ WITH Charges
     SELECT  SalesInvoiceLineKey
           , SUM(NonBillableCharge)          AS NonBillableCharge
           , SUM(NonBillableCharge_TransCur) AS NonBillableCharge_TransCur
-      FROM {{ ref("SalesInvoiceLineCharge_Fact") }}
+      FROM {{ ref("salesinvoicelinecharge_fact") }}
       GROUP BY SalesInvoiceLineKey)
 SELECT  t.SalesInvoiceLineKey                                                                                               AS [Sales invoice line key]
     , t.SalesInvoiceKey                                                                                                   AS [Sales invoice key]
@@ -50,12 +50,12 @@ SELECT  t.SalesInvoiceLineKey                                                   
     , t.TotalUnitPrice_TransCur                                                                                           AS [Invoice total unit price in trans currency]
     , CASE WHEN st.SalesType = 'Returned order' THEN NULL ELSE t.BaseUnitPrice - solf.BaseUnitPrice END                   AS [Sales price variance]
     , CASE WHEN st.SalesType = 'Returned order' THEN NULL ELSE t.BaseUnitPrice_TransCur - solf.BaseUnitPrice_TransCur END AS [Sales price variance in trans currency]
-  FROM {{ ref("SalesInvoiceLine_Fact") }}    t 
-LEFT JOIN {{ ref("SalesInvoice") }}        si
+  FROM {{ ref("salesinvoiceline_fact") }}    t 
+LEFT JOIN {{ ref("salesinvoice") }}        si
     ON si.SalesInvoiceKey        = t.SalesInvoiceKey
   LEFT JOIN Charges                 silcf 
     ON silcf.SalesInvoiceLineKey = t.SalesInvoiceLineKey
-  LEFT JOIN {{ ref("SalesType") }}           st
+  LEFT JOIN {{ ref("salestype") }}           st
     ON st.SalesTypeKey           = t.SalesTypeKey
-  LEFT JOIN {{ ref("SalesOrderLine_Fact") }} solf
+  LEFT JOIN {{ ref("salesorderline_fact") }} solf
     ON solf.SalesOrderLineKey    = t.SalesOrderLineKey

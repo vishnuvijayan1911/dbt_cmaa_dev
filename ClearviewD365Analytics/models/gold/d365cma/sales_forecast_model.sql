@@ -6,4 +6,4 @@ SELECT  t.SalesForecastModelKey  AS [Sales forecast model key]
     , NULLIF(t.Model, '')      AS [Model name]
     , NULLIF(t.ModelType, '')  AS [Model type]
     , NULLIF(t.SubModelID, '') AS [Sub model]
-  FROM {{ ref("SalesForecastModel") }}  t;
+  FROM {{ ref("salesforecastmodel") }}  t;

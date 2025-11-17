@@ -25,4 +25,4 @@ SELECT  t.PackingSlipLineKey                                                    
     , NULLIF(t.ShippedNotInvoicedQuantity_SalesUOM, 0)                           AS [Ship not invoiced quantity]
     , NULLIF(t.ShippedNotInvoicedQuantity_LB, 0) * 1 AS [Ship not invoiced LB], NULLIF(t.ShippedNotInvoicedQuantity_LB, 0) * 0.01 AS [Ship not invoiced CWT], NULLIF(t.ShippedNotInvoicedQuantity_LB, 0) * 0.0005 AS [Ship not invoiced TON]
         , NULLIF(t.ShippedNotInvoicedQuantity_PC, 0) * 1 AS [Ship not invoiced PC] 
-  FROM {{ ref("PackingSlipLine_Fact") }}     t;
+  FROM {{ ref("packingslipline_fact") }}     t;

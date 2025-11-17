@@ -10,5 +10,5 @@ SELECT  t.AgingBucketKey                                                        
     , ISNULL(NULLIF(t.Age_30_90_180_360_540_720,''), 'N/A')                                                    AS [Inventory age 30-90-180-360-540-720]
     , NULLIF(t.Age_30_90_180_360_540_720_sort, '')                                                             AS [Inventory age 30-90-180-360-540-720 sort]
     , CASE WHEN t.AgeDaysBegin = -999999 THEN NULL ELSE t.AgeDaysBegin END                                     AS [Inventory age days]
-  FROM {{ ref("AgingBucket") }} t 
+  FROM {{ ref("agingbucket") }} t 
 --WHERE t.AgeDaysBegin NOT IN ( -9999999, -99999, 0 );

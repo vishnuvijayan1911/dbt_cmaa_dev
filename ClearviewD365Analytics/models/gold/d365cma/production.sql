@@ -35,28 +35,28 @@ SELECT  t.ProductionKey                                                         
     , CAST(NULLIF(dd4.Date, '1/1/1900') AS DATE)                                                          AS [Schedule end date]
     , NULLIF(t.ScheduleStartTime, '1/1/1900')                                                             AS [Schedule start time]
     , NULLIF(t.ScheduleEndTime, '1/1/1900')                                                               AS [Schedule end time]
-  FROM {{ ref("Production") }}                     t 
-  LEFT JOIN {{ ref("Production_Fact") }}           f 
+  FROM {{ ref("production") }}                     t 
+  LEFT JOIN {{ ref("production_fact") }}           f 
     ON f.ProductionKey                   = t.ProductionKey
-INNER JOIN {{ ref("UOM") }}                       du 
+INNER JOIN {{ ref("uom") }}                       du 
     ON du.UOMKey                         = f.ReportAsFinishedUOMKey
-INNER JOIN {{ ref("UOM") }}                       du1 
+INNER JOIN {{ ref("uom") }}                       du1 
     ON du1.UOMKey                        = f.ProductionUOMKey
-INNER JOIN {{ ref("ProductionGroup") }}           dpg 
+INNER JOIN {{ ref("productiongroup") }}           dpg 
     ON dpg.ProductionGroupKey            = f.ProductionGroupKey
-INNER JOIN {{ ref("ProductionPool") }}            dpp 
+INNER JOIN {{ ref("productionpool") }}            dpp 
     ON dpp.ProductionPoolKey             = f.ProductionPoolKey
-INNER JOIN {{ ref("ProductionStatus") }}          dps 
+INNER JOIN {{ ref("productionstatus") }}          dps 
     ON dps.ProductionStatusKey           = f.ProductionStatusKey
-INNER JOIN {{ ref("ProductionType") }}            dpt 
+INNER JOIN {{ ref("productiontype") }}            dpt 
     ON dpt.ProductionTypeKey             = f.ProductionTypeKey
-INNER JOIN {{ ref("ProductionScheduleStatus") }}  dpss 
+INNER JOIN {{ ref("productionschedulestatus") }}  dpss 
     ON dpss.ProductionScheduleStatusKey  = f.ProductionScheduleStatusKey
-INNER JOIN {{ ref("ProductionRemainingStatus") }} dprs 
+INNER JOIN {{ ref("productionremainingstatus") }} dprs 
     ON dprs.ProductionRemainingStatusKey = f.ProductionRemainingStatusKey
-INNER JOIN {{ ref("InventoryReferenceType") }}    dpst 
+INNER JOIN {{ ref("inventoryreferencetype") }}    dpst 
     ON dpst.InventoryReferenceTypeKey    = f.InventoryReferenceTypeKey
-INNER JOIN {{ ref("Production") }}                rp 
+INNER JOIN {{ ref("production") }}                rp 
     ON rp.ProductionKey                  = f.ReferenceProductionKey
   LEFT JOIN {{ ref('date') }}                      dd 
     ON dd.DateKey                        = f.DueDateKey

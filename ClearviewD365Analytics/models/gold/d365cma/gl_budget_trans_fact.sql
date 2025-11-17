@@ -13,8 +13,8 @@ SELECT  t.GLBudgetTransKey                AS [GL budget trans key]
   , NULLIF(t.BudgetNumber, '')        AS [Budget #]
   , NULLIF(bst.BudgetTransStatus, '') AS [Budget trans status]
   , NULLIF(bt.BudgetTransType, '')    AS [Budget trans type]
-FROM {{ ref("GLBudgetTrans_Fact") }}     t
-LEFT JOIN {{ ref("BudgetTransStatus") }} bst
+FROM {{ ref("glbudgettrans_fact") }}     t
+LEFT JOIN {{ ref("budgettransstatus") }} bst
   ON bst.BudgetTransStatusKey = t.BudgetTransStatusKey
-LEFT JOIN {{ ref("BudgetTransType") }}   bt
+LEFT JOIN {{ ref("budgettranstype") }}   bt
   ON bt.BudgetTransTypeKey    = t.BudgetTransTypeKey;

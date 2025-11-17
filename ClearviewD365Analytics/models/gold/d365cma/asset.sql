@@ -14,7 +14,7 @@ SELECT  t.AssetKey                                                       AS [Ass
   , NULLIF(t.ModelYear, '')                                          AS [Model year]
   , NULLIF(t.AssetValidFrom, '1/1/1900')                             AS [Asset valid from]
   , NULLIF(t.AssetValidTo, '1/1/1900')                               AS [Asset valid to]
-FROM {{ ref("Asset") }}                   t 
-LEFT JOIN {{ ref("ProductionResource") }} pr
+FROM {{ ref("asset") }}                   t 
+LEFT JOIN {{ ref("productionresource") }} pr
   ON pr.ResourceID = t.ResourceID
 AND pr.LegalEntityID = t.LegalEntityID;

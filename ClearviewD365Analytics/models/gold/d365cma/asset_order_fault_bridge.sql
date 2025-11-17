@@ -2,7 +2,7 @@
 
 WITH WorkOrder
   AS (
-SELECT DISTINCT WorkOrderKey, AssetKey, LegalEntityKey FROM {{ ref("WorkOrderLine_Fact") }} )
+SELECT DISTINCT WorkOrderKey, AssetKey, LegalEntityKey FROM {{ ref("workorderline_fact") }} )
 SELECT DISTINCT
       COALESCE (mrf.MaintenanceRequestKey, -1)                                                                             AS [Maintenance request key]
     , COALESCE (wof.WorkOrderKey, -1)                                                                                      AS [Work order key]
@@ -10,13 +10,13 @@ SELECT DISTINCT
     , COALESCE (wof.AssetKey, mrf.AssetKey, rf.AssetKey, woff.AssetKey, md.AssetKey, -1)                                AS [Asset key]
     , COALESCE (mrf.LegalEntityKey, wof.LegalEntityKey, rf.LegalEntityKey, woff.LegalEntityKey, md.LegalEntityKey, -1) AS [Legal entity key]
     , COALESCE (md.downtimeKey, -1)                                                                                     AS [Downtime key]
-  FROM {{ ref("MaintenanceRequest_Fact") }}                      mrf 
+  FROM {{ ref("maintenancerequest_fact") }}                      mrf 
   FULL OUTER JOIN WorkOrder                             wof
     ON wof.WorkOrderKey         = mrf.WorkOrderKey
-  LEFT JOIN {{ ref("Fault_Fact") }}                              rf 
+  LEFT JOIN {{ ref("fault_fact") }}                              rf 
     ON rf.MaintenanceRequestKey = mrf.MaintenanceRequestKey
-  LEFT JOIN {{ ref("Fault_Fact") }}                              woff 
+  LEFT JOIN {{ ref("fault_fact") }}                              woff 
     ON woff.WorkOrderKey        = wof.WorkOrderKey
-  FULL OUTER JOIN {{ ref("Downtime_Fact") }} md
+  FULL OUTER JOIN {{ ref("downtime_fact") }} md
     ON md.AssetKey           = wof.AssetKey
   AND md.WorkOrderKey      = wof.WorkOrderKey;

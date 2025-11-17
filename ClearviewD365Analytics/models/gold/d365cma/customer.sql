@@ -7,8 +7,8 @@ WITH CTE
           , MAX(dd.Date)                         AS CustomerLastOrderDate
           , DATEDIFF(d, MIN(dd.Date), GETDATE()) AS CustomerDaysSinceFirstOrder
           , DATEDIFF(d, MAX(dd.Date), GETDATE()) AS CustomerDaysSinceLastOrder
-      FROM {{ ref("Customer") }}             t
-      LEFT JOIN {{ ref("SalesOrder_Fact") }} sil
+      FROM {{ ref("customer") }}             t
+      LEFT JOIN {{ ref("salesorder_fact") }} sil
         ON sil.CustomerKey = t.CustomerKey
       LEFT JOIN {{ ref('date') }}            dd
         ON dd.DateKey      = sil.OrderDateKey
@@ -52,20 +52,20 @@ SELECT  t.CustomerKey                                                           
     , CustomerLastOrderDate                                                                           AS [Customer last order date]
     , CustomerDaysSinceFirstOrder                                                                     AS [Customer days since first order]
     , CustomerDaysSinceLastOrder                                                                      AS [Customer days since last order]
-  FROM {{ ref("Customer") }}            t 
-  LEFT JOIN {{ ref("Customer_Fact") }}  F 
+  FROM {{ ref("customer") }}            t 
+  LEFT JOIN {{ ref("customer_fact") }}  F 
     ON F.CustomerKey         = t.CustomerKey
-  LEFT JOIN {{ ref("Address") }}        A 
+  LEFT JOIN {{ ref("address") }}        A 
     ON A.AddressKey          = F.AddressKey
-  LEFT JOIN {{ ref("CustomerGroup") }}  g 
+  LEFT JOIN {{ ref("customergroup") }}  g 
     ON g.CustomerGroupKey    = F.CustomerGroupKey
-  LEFT JOIN {{ ref("PaymentTerm") }}    pt 
+  LEFT JOIN {{ ref("paymentterm") }}    pt 
     ON pt.PaymentTermKey     = F.PaymentTermKey
-  LEFT JOIN {{ ref("DeliveryTerm") }}   dt 
+  LEFT JOIN {{ ref("deliveryterm") }}   dt 
     ON dt.DeliveryTermKey    = F.DeliveryTermKey
-  LEFT JOIN {{ ref("PaymentMode") }}    pm 
+  LEFT JOIN {{ ref("paymentmode") }}    pm 
     ON pm.PaymentModeKey     = F.PaymentModeKey
-  LEFT JOIN {{ ref("DeliveryMode") }}   dm 
+  LEFT JOIN {{ ref("deliverymode") }}   dm 
     ON dm.DeliveryModeKey    = F.DeliveryModeKey
   LEFT JOIN CTE                cte
     ON cte.CustomerKey       = t.CustomerKey;

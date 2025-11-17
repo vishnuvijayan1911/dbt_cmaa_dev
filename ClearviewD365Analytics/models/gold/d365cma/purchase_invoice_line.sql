@@ -20,24 +20,24 @@ SELECT  t.PurchaseInvoiceLineKey                                              AS
   , NULLIF(dd3.Date, '1/1/1900')                                              AS [Created date]
   , NULLIF(dd2.Date, '1/1/1900')                                              AS [Due date]
   , NULLIF(dd1.Date, '1/1/1900')                                              AS [Invoice date]
-FROM {{ ref("PurchaseInvoiceLine") }}           t 
-INNER JOIN {{ ref("PurchaseInvoiceLine_Fact") }} f 
+FROM {{ ref("purchaseinvoiceline") }}           t 
+INNER JOIN {{ ref("purchaseinvoiceline_fact") }} f 
   ON f.PurchaseInvoiceLineKey  = t.PurchaseInvoiceLineKey
-LEFT JOIN {{ ref("Currency") }}                 c 
+LEFT JOIN {{ ref("currency") }}                 c 
   ON c.CurrencyKey             = f.CurrencyKey
-LEFT JOIN {{ ref("DeliveryMode") }}             dm 
+LEFT JOIN {{ ref("deliverymode") }}             dm 
   ON dm.DeliveryModeKey        = f.DeliveryModeKey
-LEFT JOIN {{ ref("DeliveryTerm") }}             dt 
+LEFT JOIN {{ ref("deliveryterm") }}             dt 
   ON dt.DeliveryTermKey        = f.DeliveryTermKey
-LEFT JOIN {{ ref("PaymentTerm") }}              pat 
+LEFT JOIN {{ ref("paymentterm") }}              pat 
   ON pat.PaymentTermKey        = f.PaymentTermKey
-LEFT JOIN {{ ref("UOM") }}                      u1 
+LEFT JOIN {{ ref("uom") }}                      u1 
   ON u1.UOMKey                 = f.PricingUOMKey
-LEFT JOIN {{ ref("PurchaseType") }}             st 
+LEFT JOIN {{ ref("purchasetype") }}             st 
   ON st.PurchaseTypeKey        = f.PurchaseTypeKey
-LEFT JOIN {{ ref("UOM") }}                      u2 
+LEFT JOIN {{ ref("uom") }}                      u2 
   ON u2.UOMKey                 = f.PurchaseUOMKey
-LEFT JOIN {{ ref("TaxGroup") }}                 tg 
+LEFT JOIN {{ ref("taxgroup") }}                 tg 
   ON tg.TaxGroupKey            = f.TaxGroupKey
 LEFT JOIN {{ ref('date') }}                     dd1 
   ON dd1.DateKey               = f.InvoiceDateKey
@@ -45,5 +45,5 @@ LEFT JOIN {{ ref('date') }}                     dd2
   ON dd2.DateKey               = f.DueDateKey
 LEFT JOIN {{ ref('date') }}                     dd3 
   ON dd3.DateKey               = f.CreatedDateKey
-LEFT JOIN {{ ref("Voucher") }}                  dv 
+LEFT JOIN {{ ref("voucher") }}                  dv 
   ON dv.VoucherKey             = f.VoucherKey;

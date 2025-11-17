@@ -11,8 +11,8 @@ ORDER BY OrderDateKey, SalesOrderKey) AS PriororderDate
                     , OrderDateKey
                     , CustomerKey
                     , SalesOrderKey
-                  FROM {{ ref("SalesOrder_Fact") }}  sof
-                  LEFT JOIN {{ ref("SalesStatus") }} ss1 
+                  FROM {{ ref("salesorder_fact") }}  sof
+                  LEFT JOIN {{ ref("salesstatus") }} ss1 
                     ON ss1.SalesStatusKey = sof.SalesStatusKey
                 WHERE ss1.SalesStatusID = 1) t
       LEFT JOIN {{ ref('date') }}                     dd
@@ -39,28 +39,28 @@ SELECT  t.SalesOrderKey                            AS [Sales order key]
     , CAST(NULLIF(dd2.Date, '1/1/1900') AS DATE) AS [Receipt date confirmed]
     , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE) AS [Receipt date requested]
     , CAST(NULLIF(dd4.Date, '1/1/1900') AS DATE) AS [Ship date actual]
-  FROM {{ ref("SalesOrder") }}            t 
-  JOIN {{ ref("SalesOrder_Fact") }}       f 
+  FROM {{ ref("salesorder") }}            t 
+  JOIN {{ ref("salesorder_fact") }}       f 
     ON t.SalesOrderKey         = f.SalesOrderKey
-  LEFT JOIN {{ ref("DeliveryMode") }}     dm 
+  LEFT JOIN {{ ref("deliverymode") }}     dm 
     ON dm.DeliveryModeKey      = f.DeliveryModeKey
-  LEFT JOIN {{ ref("DeliveryTerm") }}     dt 
+  LEFT JOIN {{ ref("deliveryterm") }}     dt 
     ON dt.DeliveryTermKey      = f.DeliveryTermKey
-  LEFT JOIN {{ ref("TaxGroup") }}         tg 
+  LEFT JOIN {{ ref("taxgroup") }}         tg 
     ON tg.TaxGroupKey          = f.TaxGroupKey
-  LEFT JOIN {{ ref("Currency") }}         c 
+  LEFT JOIN {{ ref("currency") }}         c 
     ON c.CurrencyKey           = f.CurrencyKey
-  LEFT JOIN {{ ref("DocumentStatus") }}   ds 
+  LEFT JOIN {{ ref("documentstatus") }}   ds 
     ON ds.DocumentStatusKey    = f.DocumentStatusKey
-  LEFT JOIN {{ ref("SalesStatus") }}      ss1 
+  LEFT JOIN {{ ref("salesstatus") }}      ss1 
     ON ss1.SalesStatusKey      = f.SalesStatusKey
-  LEFT JOIN {{ ref("PaymentTerm") }}      pat 
+  LEFT JOIN {{ ref("paymentterm") }}      pat 
     ON pat.PaymentTermKey      = f.PaymentTermKey
-  LEFT JOIN {{ ref("ReturnStatus") }}     rs 
+  LEFT JOIN {{ ref("returnstatus") }}     rs 
     ON rs.ReturnStatusKey      = f.ReturnStatusKey
-  LEFT JOIN {{ ref("SalesType") }}        st 
+  LEFT JOIN {{ ref("salestype") }}        st 
     ON st.SalesTypeKey         = f.SalesTypeKey
-  LEFT JOIN {{ ref("Employee") }}         e4 
+  LEFT JOIN {{ ref("employee") }}         e4 
     ON e4.EmployeeKey          = f.SalesTakerKey
   LEFT JOIN {{ ref('date') }}             dd1 
     ON dd1.DateKey             = f.OrderDateKey
@@ -70,9 +70,9 @@ SELECT  t.SalesOrderKey                            AS [Sales order key]
     ON dd3.DateKey             = f.ReceiptDateRequestedKey
   LEFT JOIN {{ ref('date') }}             dd4 
     ON dd4.DateKey             = f.ShipDateActualKey
-  LEFT JOIN {{ ref("PaymentMode") }}      pam 
+  LEFT JOIN {{ ref("paymentmode") }}      pam 
     ON pam.PaymentModeKey      = f.PaymentModeKey
-  LEFT JOIN {{ ref("OnTimeShipStatus") }} ots
+  LEFT JOIN {{ ref("ontimeshipstatus") }} ots
     ON ots.OnTimeShipStatusKey = f.OnTimeShipStatusKey
   LEFT JOIN CTE                  cte
     ON cte.SalesOrderKey       = t.SalesOrderKey

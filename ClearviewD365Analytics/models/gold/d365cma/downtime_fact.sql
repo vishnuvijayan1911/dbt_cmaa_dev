@@ -10,4 +10,4 @@ SELECT  t.DowntimeKey                     AS [Downtime key]
   , t.DownTimeDuration                AS [Downtime duration]
   , t.StartDateTime                   AS [Start date time]
   , t.EndDateTime                     AS [End date time]
-FROM {{ ref("Downtime_Fact") }} t;
+FROM {{ ref("downtime_fact") }} t;

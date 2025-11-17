@@ -7,12 +7,12 @@ SELECT  t.PackingSlipLineKey                                                    
   , CASE WHEN t.PackingSlipLineKey <> -1 THEN CAST(1 AS SMALLINT)ELSE NULL END AS [Packing slip lines]
   , NULLIF(dv.VoucherID, '')                                                   AS [Physical voucher #]
   , NULLIF(dd.Date, '1/1/1900')                                                AS [Ship date]
-FROM {{ ref("PackingSlipLine") }}           t 
-LEFT JOIN {{ ref("PackingSlipLine_Fact") }} f 
+FROM {{ ref("packingslipline") }}           t 
+LEFT JOIN {{ ref("packingslipline_fact") }} f 
   ON f.PackingSlipLineKey = t.PackingSlipLineKey
 LEFT JOIN {{ ref('date') }}                 dd 
   ON dd.DateKey           = f.PackingSlipDateKey
-LEFT JOIN {{ ref("Voucher") }}              dv 
+LEFT JOIN {{ ref("voucher") }}              dv 
   ON dv.VoucherKey        = f.VoucherKey
-LEFT JOIN {{ ref("OnTimeShipStatus") }}    ots 
+LEFT JOIN {{ ref("ontimeshipstatus") }}    ots 
   ON ots.OnTimeShipStatusKey  = F.OnTimeShipStatusKey;

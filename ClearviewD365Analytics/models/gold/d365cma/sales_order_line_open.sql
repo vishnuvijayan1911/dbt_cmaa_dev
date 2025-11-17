@@ -47,34 +47,34 @@ SELECT
       , F.OrderedQuantity_LB * 1 AS [Order LB], F.OrderedQuantity_LB * 0.01 AS [Order CWT], F.OrderedQuantity_LB * 0.0005 AS [Order TON]
       , F.OrderedQuantity_PC * 1 AS [Order PC]
     , NULLIF(t.RMANumber,'')                                                    AS [RMA #]
-  FROM {{ ref("SalesOrderLine") }}           t 
-INNER JOIN {{ ref("SalesOrderLine_Fact") }} F 
+  FROM {{ ref("salesorderline") }}           t 
+INNER JOIN {{ ref("salesorderline_fact") }} F 
     ON F.SalesOrderLineKey      = t.SalesOrderLineKey
-  LEFT JOIN {{ ref("Currency") }}            C 
+  LEFT JOIN {{ ref("currency") }}            C 
     ON C.CurrencyKey            = F.CurrencyKey
-  LEFT JOIN {{ ref("DeliveryMode") }}        dm 
+  LEFT JOIN {{ ref("deliverymode") }}        dm 
     ON dm.DeliveryModeKey       = F.DeliveryModeKey
-  LEFT JOIN {{ ref("DeliveryTerm") }}        dt 
+  LEFT JOIN {{ ref("deliveryterm") }}        dt 
     ON dt.DeliveryTermKey       = F.DeliveryTermKey
-  LEFT JOIN {{ ref("DocumentStatus") }}      ds 
+  LEFT JOIN {{ ref("documentstatus") }}      ds 
     ON ds.DocumentStatusKey     = F.DocumentStatusKey
-  LEFT JOIN {{ ref("PaymentTerm") }}         pat 
+  LEFT JOIN {{ ref("paymentterm") }}         pat 
     ON pat.PaymentTermKey       = F.PaymentTermKey
-  LEFT JOIN {{ ref("UOM") }}                 u1 
+  LEFT JOIN {{ ref("uom") }}                 u1 
     ON u1.UOMKey                = F.PricingUOMKey
-  LEFT JOIN {{ ref("ReturnStatus") }}        rs 
+  LEFT JOIN {{ ref("returnstatus") }}        rs 
     ON rs.ReturnStatusKey       = F.ReturnStatusKey
-  LEFT JOIN {{ ref("ReturnReason") }}        rr 
+  LEFT JOIN {{ ref("returnreason") }}        rr 
     ON rr.ReturnReasonKey       = F.ReturnReasonKey
-  LEFT JOIN {{ ref("SalesStatus") }}         ss1 
+  LEFT JOIN {{ ref("salesstatus") }}         ss1 
     ON ss1.SalesStatusKey       = F.SalesLineStatusKey
-  LEFT JOIN {{ ref("SalesStatus") }}         ss2 
+  LEFT JOIN {{ ref("salesstatus") }}         ss2 
     ON ss2.SalesStatusKey       = F.SalesStatusKey
-  LEFT JOIN {{ ref("SalesType") }}           st 
+  LEFT JOIN {{ ref("salestype") }}           st 
     ON st.SalesTypeKey          = F.SalesTypeKey
-  LEFT JOIN {{ ref("UOM") }}                 u2 
+  LEFT JOIN {{ ref("uom") }}                 u2 
     ON u2.UOMKey                = F.SalesUOMKey
-  LEFT JOIN {{ ref("TaxGroup") }}            tg 
+  LEFT JOIN {{ ref("taxgroup") }}            tg 
     ON tg.TaxGroupKey           = F.TaxGroupKey
   LEFT JOIN {{ ref('date') }}                dd1 
     ON dd1.DateKey              = F.OrderDateKey
@@ -86,12 +86,12 @@ INNER JOIN {{ ref("SalesOrderLine_Fact") }} F
     ON dd4.DateKey              = F.ShipDateRequestedKey
   LEFT JOIN {{ ref('date') }}                dd5 
     ON dd5.DateKey              = F.ShipDateDueKey
-  LEFT JOIN {{ ref("SalesPerson") }}         sp 
+  LEFT JOIN {{ ref("salesperson") }}         sp 
     ON sp.SalesPersonKey        = F.SalesPersonKey
-  LEFT JOIN {{ ref("Employee") }}            e4 
+  LEFT JOIN {{ ref("employee") }}            e4 
     ON e4.EmployeeKey           = F.SalesTakerKey
-  LEFT JOIN {{ ref("OnTimeShipStatus") }}    ots 
+  LEFT JOIN {{ ref("ontimeshipstatus") }}    ots 
     ON ots.OnTimeShipStatusKey  = F.OnTimeShipStatusKey
-  LEFT JOIN {{ ref("SalesAgreementLine") }}  sa 
+  LEFT JOIN {{ ref("salesagreementline") }}  sa 
     ON sa.SalesAgreementLineKey = F.SalesAgreementLineKey
     WHERE F.OpenLineCount = 1;

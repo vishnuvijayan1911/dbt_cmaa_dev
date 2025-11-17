@@ -23,4 +23,4 @@ SELECT  t.ProjectKey                    AS [Project key]
   , NULLIF(t.ProjectNameLevel6, '') AS [Project level 6]
   , NULLIF(t.ProjectNameLevel7, '') AS [Project level 7]
   , NULLIF(t.ProjectNameLevel8, '') AS [Project level 8]
-FROM {{ ref("Project") }} t;
+FROM {{ ref("project") }} t;

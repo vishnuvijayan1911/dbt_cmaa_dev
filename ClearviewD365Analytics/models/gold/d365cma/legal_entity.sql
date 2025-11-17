@@ -10,5 +10,5 @@ SELECT t.LegalEntityKey                                      AS [Legal entity ke
     , NULLIF(LedgerID, '')                                  AS [Ledger]
     , NULLIF(TimeZone, '')                                  AS [Time zone]
     , NULLIF(TransExchangeRateType, '')                     AS [Trans exchange rate type]
- FROM {{ ref("LegalEntity") }} t 
+ FROM {{ ref("legalentity") }} t 
 WHERE NULLIF(t.LegalEntityID, '') IS NOT NULL;

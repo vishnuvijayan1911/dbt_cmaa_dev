@@ -11,10 +11,10 @@ AS (
         , SUM(CASE WHEN cc.ChargeCode = 'Freight' THEN pilcf.TotalCharges_TransCur ELSE 0 END)    AS [Freight prepaid in trans currency]
         , SUM(CASE WHEN cc.ChargeCode = 'OSP_INV' THEN pilcf.TotalCharges ELSE 0 END)             AS [OSP consignment inventory invoice]
         , SUM(CASE WHEN cc.ChargeCode = 'OSP_INV' THEN pilcf.TotalCharges_TransCur ELSE 0 END)    AS [OSP consignment inventory invoice in trans currency]
-    FROM {{ ref("PurchaseInvoiceLineChargeTrans_Fact") }} pilcf  
-    LEFT JOIN {{ ref("PurchaseInvoiceLineCharge_Fact") }} pilc  
+    FROM {{ ref("purchaseinvoicelinechargetrans_fact") }} pilcf  
+    LEFT JOIN {{ ref("purchaseinvoicelinecharge_fact") }} pilc  
       ON pilc.PurchaseInvoiceLineChargeKey = pilcf.PurchaseInvoiceLineChargeKey
-    LEFT JOIN {{ ref("ChargeCode") }}                     cc
+    LEFT JOIN {{ ref("chargecode") }}                     cc
       ON cc.ChargeCodeKey                  = pilc.ChargeCodeKey
     GROUP BY pilcf.PurchaseInvoiceLineTransKey)
 SELECT  piltf.PurchaseInvoiceLineTransKey               AS [Purchase invoice line trans key]
@@ -56,8 +56,8 @@ SELECT  piltf.PurchaseInvoiceLineTransKey               AS [Purchase invoice lin
   , [Freight prepaid in trans currency]
   , [OSP consignment inventory invoice]
   , [OSP consignment inventory invoice in trans currency]
-FROM {{ ref("PurchaseInvoiceLineTrans_Fact") }} piltf  
-INNER JOIN {{ ref("PurchaseInvoiceLine_Fact") }} pilf  
+FROM {{ ref("purchaseinvoicelinetrans_fact") }} piltf  
+INNER JOIN {{ ref("purchaseinvoiceline_fact") }} pilf  
   ON pilf.PurchaseInvoiceLineKey       = piltf.PurchaseInvoiceLineKey
 LEFT JOIN Charges                      pilcf  
   ON pilcf.PurchaseInvoiceLineTransKey = piltf.PurchaseInvoiceLineTransKey

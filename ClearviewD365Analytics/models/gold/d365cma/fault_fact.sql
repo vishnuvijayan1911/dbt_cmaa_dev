@@ -7,7 +7,7 @@ WITH pre
           , f.FaultDateKey
           , LAG (FaultDateKey, 1) OVER (PARTITION BY AssetKey
 ORDER BY FaultDateKey) AS PreviousFaultDateKey
-      FROM {{ ref("Fault_Fact") }} f)
+      FROM {{ ref("fault_fact") }} f)
 SELECT  t.FaultKey                       AS [Fault key]
     , t.FaultDateKey                   AS [Fault date key]
     , t.AssetKey                       AS [Asset key]
@@ -15,7 +15,7 @@ SELECT  t.FaultKey                       AS [Fault key]
     , t.WorkOrderKey                   AS [Work order key]
     , t.MaintenanceRequestKey          AS [Maintenance request key]
     , DATEDIFF (DAY, pd.Date, fd.Date) AS [Days between faults]
-  FROM {{ ref("Fault_Fact") }} t 
+  FROM {{ ref("fault_fact") }} t 
   LEFT JOIN pre       p 
     ON p.FaultKey = t.FaultKey
   LEFT JOIN {{ ref('date') }}  pd

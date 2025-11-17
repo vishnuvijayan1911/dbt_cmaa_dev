@@ -121,5 +121,5 @@ SELECT  InventoryOnHandKey                                AS [Inventory on-hand 
     , NULLIF(t.TagAge, 0)                                    AS [Tag age]
     , NULLIF(t.LastExpectedUpdateDate, '1/1/1900')           AS [Last expected update date]
     , NULLIF(t.LastPhysicalUpdateDate, '1/1/1900')           AS [Last physical update date]
-  FROM {{ ref("InventoryOnHand_Fact") }} t
+  FROM {{ ref("inventoryonhand_fact") }} t
 WHERE IsClosed = 0;

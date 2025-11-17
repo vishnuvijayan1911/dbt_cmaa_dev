@@ -5,15 +5,15 @@ WITH StartTime
     SELECT  f.ProductionRouteKey
           , f.ScheduleStartDateKey
           , pr.ScheduleStartTime
-      FROM {{ ref("ProductionRoute_Fact") }} f
-      INNER JOIN {{ ref("ProductionRoute") }} pr
+      FROM {{ ref("productionroute_fact") }} f
+      INNER JOIN {{ ref("productionroute") }} pr
         ON pr.ProductionRouteKey = f.ProductionRouteKey)
   , EndTime
   AS (SELECT  f.ProductionRouteKey
           , f.ScheduleEndDateKey
           , pr.ScheduleEndTime
-        FROM {{ ref("ProductionRoute_Fact") }} f
-      INNER JOIN {{ ref("ProductionRoute") }} pr
+        FROM {{ ref("productionroute_fact") }} f
+      INNER JOIN {{ ref("productionroute") }} pr
           ON pr.ProductionRouteKey = f.ProductionRouteKey)
 SELECT  t.ProductionRouteKey                                                     AS [Production route key]
     , dd2.DateKey                                                              AS [Schedule date key]
@@ -31,8 +31,8 @@ SELECT  t.ProductionRouteKey                                                    
               , ISNULL(NULLIF(et.ScheduleEndTime, '12:00:00'), '23:59:59')) END AS [Hours]
     , NULLIF(dd2.Date, '1/1/1900')                                             AS [Schedule end date]
     , ISNULL(NULLIF(et.ScheduleEndTime, '12:00:00'), '23:59:59')               AS [Schedule end time]
-  FROM {{ ref("ProductionRoute") }}           t 
-INNER JOIN {{ ref("ProductionRoute_Fact") }} prf 
+  FROM {{ ref("productionroute") }}           t 
+INNER JOIN {{ ref("productionroute_fact") }} prf 
     ON prf.ProductionRouteKey  = t.ProductionRouteKey
   LEFT JOIN {{ ref('date') }}                 dd 
     ON dd.DateKey              = prf.ScheduleStartDateKey

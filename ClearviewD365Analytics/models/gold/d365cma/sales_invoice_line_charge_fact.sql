@@ -21,8 +21,8 @@ SELECT  t.SalesInvoiceLineChargeKey  AS [Sales invoice line charge key]
   , t.TaxAmount_TransCur         AS [Tax in trans currency]
   , t.TotalCharges               AS [Total charges]
   , t.TotalCharges_TransCur      AS [Total charges in trans currency]
-FROM {{ ref("SalesInvoiceLineCharge_Fact") }} t 
-LEFT JOIN {{ ref("SalesInvoiceLine_Fact") }}  silf 
+FROM {{ ref("salesinvoicelinecharge_fact") }} t 
+LEFT JOIN {{ ref("salesinvoiceline_fact") }}  silf 
   ON silf.SalesInvoiceLineKey = t.SalesInvoiceLineKey
-LEFT JOIN {{ ref("SalesInvoice") }}           si 
+LEFT JOIN {{ ref("salesinvoice") }}           si 
   ON si.SalesInvoiceKey       = silf.SalesInvoiceKey

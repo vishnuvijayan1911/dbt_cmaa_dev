@@ -5,7 +5,7 @@ AS (
   SELECT  PurchaseInvoiceLineKey
         , SUM(NonBillableCharge)          AS NonBillableCharge
         , SUM(NonBillableCharge_TransCur) AS NonBillableCharge_TransCur
-  FROM {{ ref("PurchaseInvoiceLineCharge_Fact") }}
+  FROM {{ ref("purchaseinvoicelinecharge_fact") }}
   GROUP BY PurchaseInvoiceLineKey)
 SELECT  t.PurchaseInvoiceLineKey                                                                                          AS [Purchase invoice line key]
   , t.PurchaseInvoiceKey                                                                                              AS [Purchase invoice key]
@@ -46,12 +46,12 @@ SELECT  t.PurchaseInvoiceLineKey                                                
   , CASE WHEN pt.PurchaseType = 'Returned order' THEN NULL ELSE t.BaseUnitPrice - polf.BaseUnitPrice END              AS [Purchase price variance]
   , CASE WHEN pt.PurchaseType = 'Returned order' THEN NULL ELSE
                                                             t.BaseUnitPrice_TransCur - polf.BaseUnitPrice_TransCur END AS [Purchase price variance in trans currency]
-FROM {{ ref("PurchaseInvoiceLine_Fact") }}    t
+FROM {{ ref("purchaseinvoiceline_fact") }}    t
 LEFT JOIN Charges                    pilcf 
   ON pilcf.PurchaseInvoiceLineKey = t.PurchaseInvoiceLineKey
 LEFT JOIN {{ ref('date') }}                   dd
   ON dd.DateKey                   = t.InvoiceDateKey      
-LEFT JOIN {{ ref("PurchaseType") }}           pt
+LEFT JOIN {{ ref("purchasetype") }}           pt
   ON pt.PurchaseTypeKey           = t.PurchaseTypeKey
-LEFT JOIN {{ ref("PurchaseOrderLine_Fact") }} polf
+LEFT JOIN {{ ref("purchaseorderline_fact") }} polf
   ON polf.PurchaseOrderLineKey    = t.PurchaseOrderLineKey;

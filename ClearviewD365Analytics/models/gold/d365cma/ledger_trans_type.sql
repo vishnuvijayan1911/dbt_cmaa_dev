@@ -2,4 +2,4 @@
 
 SELECT  t.LedgerTransTypeKey          AS [Ledger trans type key]
   , NULLIF(t.LedgerTransType, '') AS [Ledger trans type]
-FROM {{ ref("LedgerTransType") }} t;
+FROM {{ ref("ledgertranstype") }} t;

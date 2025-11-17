@@ -8,12 +8,12 @@ SELECT
       AS BIGINT),0), -1) AS BIGINT) AS [Fault cause remedy key] 
   , NULLIF(dc.FaultCauseID, '')         AS [Fault cause]
   , NULLIF(dr.FaultRemedyID, '')        AS [Fault remedy]
-FROM {{ ref("Fault_Fact") }} f  
-LEFT JOIN {{ ref("FaultCause_Fact") }} fc  
+FROM {{ ref("fault_fact") }} f  
+LEFT JOIN {{ ref("faultcause_fact") }} fc  
   ON fc.FaultKey = f.FaultKey
-LEFT JOIN {{ ref("FaultCause") }} dc  
+LEFT JOIN {{ ref("faultcause") }} dc  
   ON dc.FaultCauseKey = fc.FaultCauseKey
-LEFT JOIN {{ ref("FaultRemedy_Fact") }} fr 
+LEFT JOIN {{ ref("faultremedy_fact") }} fr 
   ON fr.FactCauseFactKey = fc.FaultCauseFactKey
-LEFT JOIN {{ ref("FaultRemedy") }} dr 
+LEFT JOIN {{ ref("faultremedy") }} dr 
   ON dr.FaultRemedyKey = fr.FaultRemedyKey;

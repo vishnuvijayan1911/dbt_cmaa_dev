@@ -15,4 +15,4 @@ SELECT t.ProductionResourceKey                     AS [Production resource key]
      , NULLIF (t.ResourceGroupID, '')              AS [Resource group]
      , NULLIF (t.ResourceGroup, '')                AS [Resource group name]
      , NULLIF (t.ResourceType, '')                 AS [Resource type]
-  FROM {{ ref("ProductionResource") }} t;
+  FROM {{ ref("productionresource") }} t;

@@ -28,26 +28,26 @@ SELECT  ROW_NUMBER() OVER (ORDER BY COALESCE(poltf.PurchaseOrderLineTransKey, -1
     , COALESCE(pilf.WarehouseKey, prlf.WarehouseKey, polf.WarehouseKey, -1)                               AS [Warehouse key]
     , CAST(1 AS INT)                                                                                      AS [Purchase trans count]
     , COALESCE(pold.Date, prld.Date, pild.Date, prd.Date)                                                 AS [Report date]
-  FROM {{ ref("PurchaseOrderLineTrans_Fact") }}              poltf 
-INNER JOIN {{ ref("PurchaseOrderLine_Fact") }}              polf 
+  FROM {{ ref("purchaseorderlinetrans_fact") }}              poltf 
+INNER JOIN {{ ref("purchaseorderline_fact") }}              polf 
     ON polf.PurchaseOrderLineKey        = poltf.PurchaseOrderLineKey
   LEFT JOIN {{ ref('date') }}                                pold 
     ON pold.DateKey                     = polf.OrderDateKey
-  FULL OUTER JOIN {{ ref("ProductReceiptLineTrans_Fact") }}  prltf 
+  FULL OUTER JOIN {{ ref("productreceiptlinetrans_fact") }}  prltf 
     ON prltf.PurchaseOrderLineTransKey  = poltf.PurchaseOrderLineTransKey
-  LEFT JOIN {{ ref("ProductReceiptLine_Fact") }}             prlf 
+  LEFT JOIN {{ ref("productreceiptline_fact") }}             prlf 
     ON prlf.ProductReceiptLineKey       = prltf.ProductReceiptLineKey
   LEFT JOIN {{ ref('date') }}                                prld 
     ON prld.DateKey                     = prlf.ReceiptDateKey
-  FULL OUTER JOIN {{ ref("PurchaseInvoiceLineTrans_Fact") }} piltf 
+  FULL OUTER JOIN {{ ref("purchaseinvoicelinetrans_fact") }} piltf 
     ON piltf.ProductReceiptLineTransKey = prltf.ProductReceiptLineTransKey
-  LEFT JOIN {{ ref("PurchaseInvoiceLine_Fact") }}            pilf 
+  LEFT JOIN {{ ref("purchaseinvoiceline_fact") }}            pilf 
     ON pilf.PurchaseInvoiceLineKey      = piltf.PurchaseInvoiceLineKey
   LEFT JOIN {{ ref('date') }}                                pild 
     ON pild.DateKey                     = pilf.InvoiceDateKey
-  LEFT JOIN {{ ref("InventoryTransStatus") }}                ist 
+  LEFT JOIN {{ ref("inventorytransstatus") }}                ist 
     ON ist.InventoryTransStatusKey      = poltf.InventoryTransStatusKey
-  LEFT JOIN {{ ref("PurchaseType") }}                        st 
+  LEFT JOIN {{ ref("purchasetype") }}                        st 
     ON st.PurchaseTypeKey               = polf.PurchaseTypeKey
   FULL OUTER JOIN {{ ref("purchaserequisitionline_f") }}  prl 
     ON prl.PurchaseRequisitionLineKey   = polf.PurchaseRequisitionLineKey
@@ -55,5 +55,5 @@ INNER JOIN {{ ref("PurchaseOrderLine_Fact") }}              polf
     ON Receiveddate.DateKey             = prlf.ReceiptDateKey
   LEFT JOIN {{ ref('date') }}                                prd 
     ON prd.DateKey                      = prl.CreatedDateKey
-  LEFT JOIN {{ ref("SalesOrderLine_Fact") }}                 solf
+  LEFT JOIN {{ ref("salesorderline_fact") }}                 solf
     ON solf.SalesOrderLineKey           = polf.SalesOrderLineKey;

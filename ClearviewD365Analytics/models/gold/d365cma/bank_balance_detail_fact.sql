@@ -6,7 +6,7 @@ WITH CTE
           , LegalEntityKey
           , TransDateKey
           , TransAmount
-      FROM {{ ref("BankAccountTrans_Fact") }}
+      FROM {{ ref("bankaccounttrans_fact") }}
     UNION ALL
     SELECT  BankAccountKey
           , bk.LegalEntityKey
@@ -15,10 +15,10 @@ WITH CTE
       FROM (   SELECT  d.DateKey AS TransDateKey
                     , 0.00      AS TransAmount
                   FROM {{ ref('date') }} d
-                WHERE d.DateKey > (SELECT  MIN(TransDateKey) FROM {{ ref("BankAccountTrans_Fact") }})
-                  AND d.DateKey < (SELECT  MAX(TransDateKey) FROM {{ ref("BankAccountTrans_Fact") }})
-                  AND d.DateKey NOT IN ( SELECT  DISTINCT TransDateKey FROM {{ ref("BankAccountTrans_Fact") }} )) dt
-      CROSS JOIN (SELECT  DISTINCT BankAccountKey, LegalEntityKey FROM {{ ref("BankAccountTrans_Fact") }})         bk )
+                WHERE d.DateKey > (SELECT  MIN(TransDateKey) FROM {{ ref("bankaccounttrans_fact") }})
+                  AND d.DateKey < (SELECT  MAX(TransDateKey) FROM {{ ref("bankaccounttrans_fact") }})
+                  AND d.DateKey NOT IN ( SELECT  DISTINCT TransDateKey FROM {{ ref("bankaccounttrans_fact") }} )) dt
+      CROSS JOIN (SELECT  DISTINCT BankAccountKey, LegalEntityKey FROM {{ ref("bankaccounttrans_fact") }})         bk )
 SELECT  tt.[Bank account key]
     , tt.[Legal entity key]
     , tt.[Balance date key]
@@ -67,7 +67,7 @@ ORDER BY sub.TransDate)              AS [Closing balance]
                               , DATEFROMPARTS(YEAR(d2.Date), MONTH(d2.Date), 1)) sub
             INNER JOIN {{ ref('date') }}                                                  d3
               ON d3.Date                = sub.TransDate
-            LEFT JOIN {{ ref("LedgerTransType") }}                                       ltt
+            LEFT JOIN {{ ref("ledgertranstype") }}                                       ltt
               ON ltt.LedgerTransTypeKey = sub.LedgerTransKey) tt
 UNION
 SELECT  BankAccountKey AS [Bank account key]
@@ -78,6 +78,6 @@ SELECT  BankAccountKey AS [Bank account key]
     , NULL           AS [Closing balance]
     , CAST(1 AS INT) AS [Bank balance count]
     , 'Transaction'  AS [Load type]
-  FROM {{ ref("BankAccountTrans_Fact") }} F
-  LEFT JOIN {{ ref("LedgerTransType") }}  ltt
+  FROM {{ ref("bankaccounttrans_fact") }} F
+  LEFT JOIN {{ ref("ledgertranstype") }}  ltt
     ON ltt.LedgerTransTypeKey = F.LedgerTransTypeKey;

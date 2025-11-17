@@ -11,4 +11,4 @@ SELECT  t.ProductionBOMKey                                                      
   , NULLIF(t.ProductionUOM, '')                                                      AS [Production UOM]
   , NULLIF(t.ReferenceID, '')                                                        AS [Reference #]
   , NULLIF(t.TransReference, '')                                                     AS [Trans reference #]
-FROM {{ ref("ProductionBOM") }} t ;
+FROM {{ ref("productionbom") }} t ;

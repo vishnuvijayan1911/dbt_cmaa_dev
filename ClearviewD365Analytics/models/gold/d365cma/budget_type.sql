@@ -2,4 +2,4 @@
 
 SELECT  t.BudgetTypeKey          AS [Budget type key]
     , NULLIF(t.BudgetType, '') AS [Budget type]
-  FROM {{ ref("BudgetType") }} t;
+  FROM {{ ref("budgettype") }} t;

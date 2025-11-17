@@ -19,4 +19,4 @@ SELECT  t.InventoryValueBalanceKey                                  AS [Inventor
     , t.TransQuantity_LB * 1 AS [Activity LB], t.TransQuantity_LB * 0.01 AS [Activity CWT], t.TransQuantity_LB * 0.0005 AS [Activity TON]
     , t.TransQuantity_PC * 1 AS [Activity PC]
     , CASE WHEN t.InventoryValueBalanceKey <> -1 THEN 1 ELSE 0 END AS [Inventory balance count]
-  FROM {{ ref("InventoryValueBalance_Fact") }} t;
+  FROM {{ ref("inventoryvaluebalance_fact") }} t;

@@ -30,10 +30,10 @@ SELECT  t.SalesForecastKey           AS [Sales forecast key]
     , NULLIF(dd.Date, '1/1/1900')  AS [Expected cost payment date]
     , NULLIF(dd1.Date, '1/1/1900') AS [Expected invoice date]
     , NULLIF(dd2.Date, '1/1/1900') AS [Expected sales payment date]
-  FROM {{ ref("SalesForecast_Fact") }} t 
-INNER JOIN {{ ref("Currency") }}      cur 
+  FROM {{ ref("salesforecast_fact") }} t 
+INNER JOIN {{ ref("currency") }}      cur 
     ON cur.CurrencyKey = t.CurrencyKey
-INNER JOIN {{ ref("UOM") }}           du 
+INNER JOIN {{ ref("uom") }}           du 
     ON du.UOMKey       = t.SalesUOMKey
 INNER JOIN {{ ref('date') }}          dd 
     ON dd.DateKey      = t.ExpectedCostPaymentDateKey

@@ -16,22 +16,22 @@ SELECT  t.PurchaseInvoiceKey          AS [Purchase invoice key]
   , NULLIF(vou.VoucherID, '')     AS [Voucher]
   , NULLIF(t.DueDate, '1/1/1900') AS [Due date]
   , NULLIF(dd.Date, '1/1/1900')   AS [Invoice date]
-FROM {{ ref("PurchaseInvoice") }}           t  
-INNER JOIN {{ ref("PurchaseInvoice_Fact") }} F  
+FROM {{ ref("purchaseinvoice") }}           t  
+INNER JOIN {{ ref("purchaseinvoice_fact") }} F  
   ON F.PurchaseInvoiceKey  = t.PurchaseInvoiceKey
 LEFT JOIN {{ ref('date') }}                 dd  
   ON dd.DateKey            = F.InvoiceDateKey
-LEFT JOIN {{ ref("Currency") }}             C  
+LEFT JOIN {{ ref("currency") }}             C  
   ON C.CurrencyKey         = F.CurrencyKey
-LEFT JOIN {{ ref("Voucher") }}              vou  
+LEFT JOIN {{ ref("voucher") }}              vou  
   ON vou.VoucherKey        = F.VoucherKey
-LEFT JOIN {{ ref("PaymentTerm") }}          pt  
+LEFT JOIN {{ ref("paymentterm") }}          pt  
   ON pt.PaymentTermKey     = F.PaymentTermKey
-LEFT JOIN {{ ref("DeliveryTerm") }}         dt  
+LEFT JOIN {{ ref("deliveryterm") }}         dt  
   ON dt.DeliveryTermKey    = F.DeliveryTermKey
-LEFT JOIN {{ ref("DeliveryMode") }}         dm  
+LEFT JOIN {{ ref("deliverymode") }}         dm  
   ON dm.DeliveryModeKey    = F.DeliveryModeKey
-LEFT JOIN {{ ref("PaymentMode") }}          pm  
+LEFT JOIN {{ ref("paymentmode") }}          pm  
   ON pm.PaymentModeKey     = F.PaymentModeKey
-INNER JOIN {{ ref("PurchaseType") }}         pts  
+INNER JOIN {{ ref("purchasetype") }}         pts  
   ON pts.PurchaseTypeKey   = F.PurchaseTypeKey;

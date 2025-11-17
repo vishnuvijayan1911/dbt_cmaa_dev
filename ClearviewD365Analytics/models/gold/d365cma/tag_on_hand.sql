@@ -2,7 +2,7 @@
 
 WITH CTE AS
 (
-SELECT  DISTINCT TagKey FROM {{ ref("InventoryOnHand_Fact") }}
+SELECT  DISTINCT TagKey FROM {{ ref("inventoryonhand_fact") }}
 )
 SELECT  t.TagKey                                                       AS [Tag key]
      , ISNULL(dv.VendorKey, -1)                                       AS [Vendor key]
@@ -52,11 +52,11 @@ NULLIF (t._1E0170, '') AS [1E0170]
      , NULLIF(t.BestBeforeDate, '1/1/1900')                           AS [Best before date]
      , NULLIF(t.ExpirationDate, '1/1/1900')                           AS [Expiration date]
      , NULLIF(t.ProductionDate, '1/1/1900')                           AS [Production date]
-  FROM {{ ref("TagAttribute") }}         t 
+  FROM {{ ref("tagattribute") }}         t 
   INNER JOIN CTE f 
   ON f.TagKey = t.TagKey
   LEFT JOIN {{ ref('date') }}   dd
     ON dd.Date          = t.ProductionDate
-  LEFT JOIN {{ ref("Vendor") }} dv 
+  LEFT JOIN {{ ref("vendor") }} dv 
     ON dv.LegalEntityID = t.LegalEntityID
    AND dv.VendorAccount = t.VendorAccount;

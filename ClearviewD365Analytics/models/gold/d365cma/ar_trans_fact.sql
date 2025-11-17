@@ -47,18 +47,18 @@ SELECT  t.ARTransKey                                                            
   , NULLIF(dd.Date, '1/1/1900')                                                                                AS [Close date]
   , NULLIF(dd1.Date, '1/1/1900')                                                                               AS [Date last settled]
   , 1                                                                                                          AS [Trans count]
-FROM {{ ref("ARTrans_Fact") }}         t
-LEFT JOIN {{ ref("LedgerTransType") }} lt
+FROM {{ ref("artrans_fact") }}         t
+LEFT JOIN {{ ref("ledgertranstype") }} lt
   ON lt.LedgerTransTypeKey = t.LedgerTransTypeKey
-LEFT JOIN {{ ref("Currency") }}        cy
+LEFT JOIN {{ ref("currency") }}        cy
   ON cy.CurrencyKey        = t.CurrencyKey
-LEFT JOIN {{ ref("Voucher") }}         vc
+LEFT JOIN {{ ref("voucher") }}         vc
   ON vc.VoucherKey         = t.VoucherKey
 LEFT JOIN {{ ref('date') }}            dd
   ON dd.DateKey            = t.CloseDateKey
 LEFT JOIN {{ ref('date') }}            dd1
   ON dd1.DateKey           = t.LastSettleDateKey
-LEFT JOIN {{ ref("SalesInvoice") }}    si
+LEFT JOIN {{ ref("salesinvoice") }}    si
   ON si.SalesInvoiceKey    = t.SalesInvoiceKey
-LEFT JOIN {{ ref("ApprovalStatus") }}  das
+LEFT JOIN {{ ref("approvalstatus") }}  das
   ON das.ApprovalStatusKey = t.ApprovalStatusKey;

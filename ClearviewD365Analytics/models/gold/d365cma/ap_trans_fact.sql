@@ -51,12 +51,12 @@ SELECT  t.APTransKey                                                            
   , NULLIF(dd.Date, '1/1/1900')                                                                                 AS [Close date]
   , NULLIF(dd1.Date, '1/1/1900')                                                                                AS [Date last settled]
   , 1                                                                                                           AS [Trans count]
-FROM {{ ref("APTrans_Fact") }}         t
-LEFT JOIN {{ ref("LedgerTransType") }} lt 
+FROM {{ ref("aptrans_fact") }}         t
+LEFT JOIN {{ ref("ledgertranstype") }} lt 
   ON lt.LedgerTransTypeKey  = t.LedgerTransTypeKey
-LEFT JOIN {{ ref("Currency") }}        cy 
+LEFT JOIN {{ ref("currency") }}        cy 
   ON cy.CurrencyKey         = t.CurrencyKey
-LEFT JOIN {{ ref("Employee") }}        e 
+LEFT JOIN {{ ref("employee") }}        e 
   ON e.EmployeeKey          = t.ApproverKey
 LEFT JOIN {{ ref('date') }}            dd 
   ON dd.DateKey             = t.CloseDateKey
@@ -64,9 +64,9 @@ LEFT JOIN {{ ref('date') }}            dd1
   ON dd1.DateKey            = t.LastSettleDateKey
 LEFT JOIN {{ ref('date') }}            dd3 
   ON dd3.DateKey            = t.TransDateKey
-LEFT JOIN {{ ref("PurchaseInvoice") }} pui 
+LEFT JOIN {{ ref("purchaseinvoice") }} pui 
   ON pui.PurchaseInvoiceKey = t.PurchaseInvoiceKey
-LEFT JOIN {{ ref("ApprovalStatus") }}  das 
+LEFT JOIN {{ ref("approvalstatus") }}  das 
   ON das.ApprovalStatusKey  = t.ApprovalStatusKey
-LEFT JOIN {{ ref("CheckStatus") }}     cs 
+LEFT JOIN {{ ref("checkstatus") }}     cs 
   ON cs.CheckStatusKey      = t.CheckStatusKey;

@@ -20,28 +20,28 @@ SELECT  t.SalesInvoiceKey                                                       
     , NULLIF(vou.VoucherID, '')                                                           AS [Voucher]
     , NULLIF(t.DueDate, '1/1/1900')                                                       AS [Due date]
     , NULLIF(t.InvoiceDate, '1/1/1900')                                                   AS [Invoice date]
-  FROM {{ ref("SalesInvoice") }}           t 
-INNER JOIN {{ ref("SalesInvoice_Fact") }} f 
+  FROM {{ ref("salesinvoice") }}           t 
+INNER JOIN {{ ref("salesinvoice_fact") }} f 
     ON f.SalesInvoiceKey     = t.SalesInvoiceKey
-INNER JOIN {{ ref("Currency") }}          c 
+INNER JOIN {{ ref("currency") }}          c 
     ON c.CurrencyKey         = f.CurrencyKey
-INNER JOIN {{ ref("SalesType") }}         st 
+INNER JOIN {{ ref("salestype") }}         st 
     ON st.SalesTypeKey       = f.SalesTypeKey
-  LEFT JOIN {{ ref("Employee") }}          e3 
+  LEFT JOIN {{ ref("employee") }}          e3 
     ON e3.EmployeeKey        = f.SalesTakerKey
-  LEFT JOIN {{ ref("DeliveryMode") }}      dm 
+  LEFT JOIN {{ ref("deliverymode") }}      dm 
     ON dm.DeliveryModeKey    = f.DeliveryModeKey
-  LEFT JOIN {{ ref("DeliveryTerm") }}      dt 
+  LEFT JOIN {{ ref("deliveryterm") }}      dt 
     ON dt.DeliveryTermKey    = f.DeliveryTermKey
-  LEFT JOIN {{ ref("PaymentTerm") }}       pat 
+  LEFT JOIN {{ ref("paymentterm") }}       pat 
     ON pat.PaymentTermKey    = f.PaymentTermKey
-  LEFT JOIN {{ ref("TaxGroup") }}          tg 
+  LEFT JOIN {{ ref("taxgroup") }}          tg 
     ON tg.TaxGroupKey        = f.TaxGroupKey
-  LEFT JOIN {{ ref("Voucher") }}           vou 
+  LEFT JOIN {{ ref("voucher") }}           vou 
     ON vou.VoucherKey        = f.VoucherKey
-  LEFT JOIN {{ ref("InvoiceType") }}       it 
+  LEFT JOIN {{ ref("invoicetype") }}       it 
     ON it.InvoiceTypeKey     = f.InvoiceTypeKey
-  LEFT JOIN {{ ref("SalesPerson") }}       sp 
+  LEFT JOIN {{ ref("salesperson") }}       sp 
     ON sp.SalesPersonKey     = f.SalesPersonKey
-  LEFT JOIN {{ ref("PaymentMode") }}       pam 
+  LEFT JOIN {{ ref("paymentmode") }}       pam 
     ON pam.PaymentModeKey    = f.PaymentModeKey;

@@ -38,10 +38,10 @@ NULLIF (t.RawMaterialClassificationType, '') AS [Raw material classification typ
       , t.ProductCategory                                                                                        AS [Product category]
       , TRY_CONVERT(NUMERIC(20, 8), t.ProductWidth)                                                              AS [Product width]
       , CASE WHEN CAST(GETDATE () AS DATE) BETWEEN fd.Date AND td.Date THEN f.StandardPrice ELSE NULL END        AS [Standard price]
-    FROM {{ ref("ProductAttribute") }}                t 
-  INNER JOIN {{ ref("LegalEntity") }}    le
+    FROM {{ ref("productattribute") }}                t 
+  INNER JOIN {{ ref("legalentity") }}    le
       ON le.LegalEntityID = t.LegalEntityID
-    LEFT JOIN {{ ref("ProductPrice_Fact") }} f
+    LEFT JOIN {{ ref("productprice_fact") }} f
       ON f.ProductKey      = t.ProductKey
     AND f.LegalEntityKey  = le.LegalEntityKey
     LEFT JOIN {{ ref('date') }}              fd

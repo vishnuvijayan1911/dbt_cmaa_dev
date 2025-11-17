@@ -15,8 +15,8 @@ SELECT  psltf.PackingSlipLineTransKey                   AS [Packing slip line tr
     , psltf.ShippedNotInvoicedQuantity_SalesUOM        AS [Ship not invoiced quantity]
     , psltf.ShippedNotInvoicedQuantity_LB * 1 AS [Ship not invoiced LB], psltf.ShippedNotInvoicedQuantity_LB * 0.01 AS [Ship not invoiced CWT], psltf.ShippedNotInvoicedQuantity_LB * 0.0005 AS [Ship not invoiced TON]
     , psltf.ShippedNotInvoicedQuantity_PC * 1 AS [Ship not invoiced PC]
-  FROM {{ ref("PackingSlipLineTrans_Fact") }}     psltf 
-INNER JOIN {{ ref("PackingSlipLine_Fact") }} pslf 
+  FROM {{ ref("packingsliplinetrans_fact") }}     psltf 
+INNER JOIN {{ ref("packingslipline_fact") }} pslf 
     ON pslf.PackingSlipLineKey = psltf.PackingSlipLineKey
 WHERE psltf._SourceID = 1
 UNION ALL

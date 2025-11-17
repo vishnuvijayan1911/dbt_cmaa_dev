@@ -4,16 +4,16 @@ WITH cte
   AS (
     SELECT  pt.ProductionKey
           , SUM(pt.IssueQuantity_LB) * 1 AS [Issue LB], SUM(pt.IssueQuantity_LB) * 0.01 AS [Issue CWT], SUM(pt.IssueQuantity_LB) * 0.0005 AS [Issue TON]
-      FROM {{ ref("ProductionPickListJournal_Fact") }} pt 
-      LEFT JOIN {{ ref("Production") }}                f 
+      FROM {{ ref("productionpicklistjournal_fact") }} pt 
+      LEFT JOIN {{ ref("production") }}                f 
         ON f.ProductionKey = pt.ProductionKey
       GROUP BY pt.ProductionKey)
   , cte1
   AS (SELECT  pt.ProductionKey
           , SUM(pt.ActualRunQuantity)     AS [Actual run quantity]
             ,SUM(pt.ActualRunQuantity_LB) * 1 AS [Actual run LB], SUM(pt.ActualRunQuantity_LB) * 0.01 AS [Actual run CWT], SUM(pt.ActualRunQuantity_LB) * 0.0005 AS [Actual run TON]
-        FROM {{ ref("ProductionFinishedJournal_Fact") }} pt 
-        LEFT JOIN {{ ref("Production") }}                f 
+        FROM {{ ref("productionfinishedjournal_fact") }} pt 
+        LEFT JOIN {{ ref("production") }}                f 
           ON f.ProductionKey = pt.ProductionKey
       GROUP BY pt.ProductionKey)
   , cte2
@@ -22,7 +22,7 @@ WITH cte
       ,SUM(CoByQuantity) AS CoByQuantity
       ,SUM(cobyquantity_pc) AS cobyquantity_pc
       ,SUM(cobyquantity_lb) AS cobyquantity_lb
-  FROM {{ ref("ProductionCoProduct_Fact") }}
+  FROM {{ ref("productioncoproduct_fact") }}
   GROUP BY ProductionKey)
 SELECT  t.ProductionKey                                                                     AS [Production key]
     , t.DueDateKey                                                                        AS [Due date key]
@@ -73,10 +73,10 @@ SELECT  t.ProductionKey                                                         
     , CAST(c1.[Actual run quantity]   AS  numeric(38,4))                                                           AS [Actual run quantity]
     , CAST(c1.[Actual run LB] AS  numeric(38,4)) * 1 AS [Actual run LB], CAST(c1.[Actual run LB] AS  numeric(38,4)) * 0.01 AS [Actual run CWT], CAST(c1.[Actual run LB] AS  numeric(38,4)) * 0.0005 AS [Actual run TON]
     , d.Date                                                                              AS [Order date]
-  FROM {{ ref("Production_Fact") }}       t 
-  LEFT JOIN {{ ref("Production") }}       f 
+  FROM {{ ref("production_fact") }}       t 
+  LEFT JOIN {{ ref("production") }}       f 
     ON f.ProductionKey         = t.ProductionKey
-  LEFT JOIN {{ ref("ProductionStatus") }} dps 
+  LEFT JOIN {{ ref("productionstatus") }} dps 
     ON dps.ProductionStatusKey = t.ProductionStatusKey
   LEFT JOIN cte                  c 
     ON c.ProductionKey         = t.ProductionKey

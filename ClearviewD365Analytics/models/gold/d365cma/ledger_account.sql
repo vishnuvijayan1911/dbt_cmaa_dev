@@ -18,8 +18,8 @@ SELECT  t.LedgerAccountKey                AS [Ledger account key]
     , ma.Account_L2                     AS [Account L2]
     , ma.Account_L1                     AS [Account L1]
     FROM {{ ref("ledgeraccount") }} t
-          LEFT JOIN {{ ref("MainAccount") }} ma
+          LEFT JOIN {{ ref("mainaccount") }} ma
           ON ma.Main_Account_Category  = t.MainAccountCategoryID;
 -- use below join in case using main account ID    
---LEFT JOIN {{ ref("MainAccount") }} ma
+--LEFT JOIN {{ ref("mainaccount") }} ma
 --  ON ma.Main_Account  = t.MainAccountID;

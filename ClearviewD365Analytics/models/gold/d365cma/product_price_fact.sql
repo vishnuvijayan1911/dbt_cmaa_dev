@@ -8,7 +8,7 @@ SELECT  f.ProductPriceKey           AS [Product price key]
     , COALESCE(f.StandardPrice, '') AS [Standard price]
     , dd.Date                     AS [From date]
     , dd1.Date                    AS [To date]
-  FROM {{ ref("ProductPrice_Fact") }}   f
+  FROM {{ ref("productprice_fact") }}   f
   JOIN {{ ref('date') }}                dd 
     ON dd.DateKey            = f.FromDateKey
   JOIN {{ ref('date') }}                dd1 

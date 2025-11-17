@@ -23,4 +23,4 @@ SELECT  t.WorkOrderLineKey                AS [Work order line key]
   , ISNULL(t.WorkerScheduledHours, 0) AS [Worker schedule hours]
   , t.ScheduleStartDateKey            AS [Schedule start date key]
   , CAST(1 AS INT)                    AS [Work order lines]
-FROM {{ ref("WorkOrderLine_Fact") }} t ;
+FROM {{ ref("workorderline_fact") }} t ;

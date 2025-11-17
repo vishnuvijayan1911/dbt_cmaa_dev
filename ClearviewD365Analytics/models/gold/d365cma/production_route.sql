@@ -18,14 +18,14 @@ SELECT  t.ProductionRouteKey                                AS [Production route
     , NULLIF(t.ScheduleStartTime, '00:00:00')             AS [Schedule start time]
     , NULLIF(dd1.Date, '1/1/1900')                        AS [Schedule end date]
     , NULLIF(t.ScheduleEndTime, '00:00:00')               AS [Schedule end time]
-  FROM {{ ref("ProductionRoute") }}               t 
-INNER JOIN {{ ref("ProductionRoute_Fact") }}     prf 
+  FROM {{ ref("productionroute") }}               t 
+INNER JOIN {{ ref("productionroute_fact") }}     prf 
     ON prf.ProductionRouteKey          = t.ProductionRouteKey
   LEFT JOIN {{ ref('date') }}                     dd 
     ON dd.DateKey                      = prf.ScheduleStartDateKey
   LEFT JOIN {{ ref('date') }}                     dd1 
     ON dd1.DateKey                     = prf.ScheduleEndDateKey
-  LEFT JOIN {{ ref("ProductionRouteGroup") }}     prg 
+  LEFT JOIN {{ ref("productionroutegroup") }}     prg 
     ON prg.ProductionRouteGroupKey     = prf.ProductionRouteGroupKey
-  LEFT JOIN {{ ref("ProductionRouteOperation") }} pro 
+  LEFT JOIN {{ ref("productionrouteoperation") }} pro 
     ON pro.ProductionRouteOperationKey = prf.ProductionRouteOperationKey;

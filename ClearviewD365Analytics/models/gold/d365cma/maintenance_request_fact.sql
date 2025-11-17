@@ -11,8 +11,8 @@ SELECT t.MaintenanceRequestKey                                                  
     --, DATEDIFF(DAY, d.Date, ISNULL(s.D365ExportStartDateTime, GETUTCDATE()))        AS [Request age]
     , '' AS [Request age]
     , DATEDIFF(DAY, d.Date, NULLIF(mr.ActualEndDate, '1900-01-01'))                AS [Process days]
-  FROM {{ ref("MaintenanceRequest_Fact") }}  t 
-INNER JOIN {{ ref("MaintenanceRequest") }}  mr 
+  FROM {{ ref("maintenancerequest_fact") }}  t 
+INNER JOIN {{ ref("maintenancerequest") }}  mr 
     ON mr.MaintenanceRequestKey = t.MaintenanceRequestKey
 INNER JOIN {{ ref('date') }}                d 
     ON d.DateKey                = t.RequestCreateDateKey;

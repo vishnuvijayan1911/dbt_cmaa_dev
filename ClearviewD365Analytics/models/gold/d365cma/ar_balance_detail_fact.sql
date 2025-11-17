@@ -32,7 +32,7 @@ SELECT  t.ARBalanceKey                                                          
     , NULLIF(t.DiscountTaken, 0)                                                         AS [Discount taken]
     , t.PaymentDays                                                                      AS [Payment days]
     , CAST(NULLIF(dd3.Date, '1/1/1900') AS DATE)                                         AS [Discount date]
-  FROM {{ ref("ARBalanceDetail_Fact") }}   t 
+  FROM {{ ref("arbalancedetail_fact") }}   t 
 INNER JOIN {{ ref('date') }}              dd
     ON dd.DateKey             = t.BalanceDateKey
   LEFT JOIN {{ ref('date') }}              dd1
@@ -41,7 +41,7 @@ INNER JOIN {{ ref('date') }}              dd
     ON dd2.DateKey            = t.DueDateKey
   LEFT JOIN {{ ref('date') }}              dd3
     ON dd3.DateKey            = t.DiscDateKey
-INNER JOIN {{ ref("AgingBucket") }}       ab
+INNER JOIN {{ ref("agingbucket") }}       ab
     ON ab.AgingBucketKey      = t.AgingBucketDueKey
-  LEFT JOIN {{ ref("SalesInvoice_Fact") }} si
+  LEFT JOIN {{ ref("salesinvoice_fact") }} si
     ON si.SalesInvoiceKey     = t.SalesInvoiceKey;
