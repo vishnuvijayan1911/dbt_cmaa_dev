@@ -221,34 +221,34 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS WorkOrderLineKey
          ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
       FROM workorderline_factstage                                  ts
-     INNER JOIN silver.cma_LegalEntity                    le
+     INNER JOIN {{ ref('legalentity_d') }}                    le
         ON le.LegalEntityID         = ts.LegalEntityID
-      LEFT JOIN silver.cma_AssetFunctionalLocation        afl
+      LEFT JOIN {{ ref('assetfunctionallocation_d') }}        afl
         ON afl.LegalEntityID        = ts.LegalEntityID
        AND afl.FunctionalLocationID = ts.FUNCTIONALLOCATION_FUNCTIONALLOCATIONID
-      LEFT JOIN silver.cma_Project                        dph
+      LEFT JOIN {{ ref('project_d') }}                        dph
         ON dph.LegalEntityID        = ts.LegalEntityID
        AND dph.ProjectID            = ts.ProjectID
-      LEFT JOIN silver.cma_Asset                          obj
+      LEFT JOIN {{ ref('asset_d') }}                          obj
         ON obj.LegalEntityID        = le.LegalEntityID
        AND obj.AssetID              = ts.OBJECTTABLE_OBJECTID
-      LEFT JOIN silver.cma_Employee                       w
+      LEFT JOIN {{ ref('employee_d') }}                       w
         ON w._RecID                 = ts.RecID_HCM
        AND w._SourceID              = 1
-      LEFT JOIN silver.cma_MaintenanceJobTradeCertificate cer
+      LEFT JOIN {{ ref('maintenancejobtradecertificate_d') }} cer
         ON cer.JobTradeID           = ts.PARMJOBTRADE_JOBTRADEID
        AND cer.LegalEntityID        = le.LegalEntityID
        AND cer._RecID NOT IN ( 5637144577, 5637144578 )
-      LEFT JOIN silver.cma_MaintenanceJobTrade            jts
+      LEFT JOIN {{ ref('maintenancejobtrade_d') }}            jts
         ON jts.LegalEntityID        = le.LegalEntityID
        AND jts.JobTradeID           = ts.PARMJOBTRADE_JOBTRADEID
-      LEFT JOIN silver.cma_WorkOrder                      wo
+      LEFT JOIN {{ ref('workorder_d') }}                      wo
         ON wo.LegalEntityID         = le.LegalEntityID
        AND wo.WorkOrderID           = ts.WORKORDERTABLE_WORKORDERID
-      LEFT JOIN silver.cma_InventorySite                  s
+      LEFT JOIN {{ ref('inventorysite_d') }}                  s
         ON s.InventorySiteID        = ts.INVENTORYSITEID
        AND s.LegalEntityID          = le.LegalEntityID
-      LEFT JOIN silver.cma_Date                           ss
+      LEFT JOIN {{ ref('date_d') }}                           ss
         ON ss.Date                  = ts.ScheduledStart
-      LEFT JOIN silver.cma_Date                           se
+      LEFT JOIN {{ ref('date_d') }}                           se
         ON se.Date                  = ts.ScheduledEnd;

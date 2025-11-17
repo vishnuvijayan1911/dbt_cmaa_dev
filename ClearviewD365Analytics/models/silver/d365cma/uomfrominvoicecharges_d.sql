@@ -40,7 +40,7 @@ FROM
             {{ ref('vendinvoicetrans') }} t 
             ON t.recid = mt.transrecid 
          INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
          ISNULL(mt.cmapriceuom, '') <> '' 
@@ -67,7 +67,7 @@ FROM
             {{ ref('custinvoicetrans') }} t 
             ON t.recid = mt.transrecid 
          INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
          ISNULL(mt.cmapriceuom, '') <> '' 
@@ -94,7 +94,7 @@ FROM
             {{ ref('purchline') }} t 
             ON t.recid = mt.transrecid 
          INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
          ISNULL(mt.cmapriceuom, '') <> '' 
@@ -113,7 +113,7 @@ FROM
       FROM
          {{ ref('purchline') }} t 
          INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
          INNER JOIN
             {{ ref('inventtablemodule') }} itm 
@@ -141,7 +141,7 @@ FROM
                {{ ref('salesline') }} t 
                ON t.recid = mt.transrecid 
             INNER JOIN
-               silver.cma_Product k 
+               {{ ref('product_d') }} k 
                ON k.itemid = t.itemid 
          WHERE
             ISNULL(mt.cmapriceuom, '') <> '' 
@@ -150,9 +150,9 @@ FROM
    )
    list 
    INNER JOIN
-      silver.cma_UOM fromuom 
+      {{ ref('uom_d') }} fromuom 
       ON lower(fromuom.uom) = lower(list.fromuom) 
    INNER JOIN
-      silver.cma_UOM touom 
+      {{ ref('uom_d') }} touom 
       ON lower(touom.uom) = lower(list.touom)
 

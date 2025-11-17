@@ -91,7 +91,7 @@ purchaseinvoicelinetrans_facttrans AS (
     ORDER BY ISNULL (tr.RecID_IT, 0)) = 1
                     THEN 1
                     ELSE 0 END                                                                    AS IsProrateAdj
-          FROM silver.cma_PurchaseInvoiceLine_Fact fcl
+          FROM {{ ref('purchaseinvoiceline_f') }} fcl
          INNER JOIN purchaseinvoicelinetrans_factstage                  ts
             ON ts.RecID_VIT = fcl._RecID2
          INNER JOIN purchaseinvoicelinetrans_factratio                  tr
@@ -177,7 +177,7 @@ purchaseinvoicelinetrans_factadj AS (
                          ELSE 0 END AS MONEY) AS TaxAmount_TransCurAdj
 
           FROM purchaseinvoicelinetrans_facttrans                           t
-         INNER JOIN silver.cma_PurchaseInvoiceLine_Fact fcl
+         INNER JOIN {{ ref('purchaseinvoiceline_f') }} fcl
             ON fcl.PurchaseInvoiceLineKey = t.PurchaseInvoiceLineKey
 ),
 purchaseinvoicelinetrans_factadj1 AS (
@@ -319,9 +319,9 @@ purchaseinvoicelinetrans_factinvoicetrans AS (
              , ROW_NUMBER () OVER (PARTITION BY frl.PurchaseInvoiceLineKey
     ORDER BY polt._RecID2) AS OrderTransRank
 
-          FROM silver.cma_PurchaseInvoiceLine_Fact         frl
+          FROM {{ ref('purchaseinvoiceline_f') }}         frl
 
-         INNER JOIN silver.cma_PurchaseOrderLineTrans_Fact polt
+         INNER JOIN {{ ref('purchaseorderlinetrans_f') }} polt
             ON polt.PurchaseOrderLineKey = frl.PurchaseOrderLineKey
          WHERE frl.PurchaseOrderLineKey <> -1;
 ),
@@ -332,11 +332,11 @@ purchaseinvoicelinetrans_factinvoicetrans2 AS (
              , ROW_NUMBER () OVER (PARTITION BY frl.PurchaseInvoiceLineKey
     ORDER BY prlt._RecID2) AS OrderTransRank
 
-          FROM silver.cma_PurchaseInvoiceLine_Fact          frl
+          FROM {{ ref('purchaseinvoiceline_f') }}          frl
 
-         INNER JOIN silver.cma_ProductReceiptLine_Fact      prl
+         INNER JOIN {{ ref('productreceiptline_f') }}      prl
             ON prl.PurchaseOrderLineKey   = frl.PurchaseOrderLineKey
-         INNER JOIN silver.cma_ProductReceiptLineTrans_Fact prlt
+         INNER JOIN {{ ref('productreceiptlinetrans_f') }} prlt
             ON prlt.ProductReceiptLineKey = prl.ProductReceiptLineKey
          WHERE frl.PurchaseOrderLineKey <> -1;
 )
@@ -387,14 +387,14 @@ SELECT ROW_NUMBER() OVER (ORDER BY fcl._RecID1, fcl._RecID2, tt.RecID_IT) AS Pur
          ,  CURRENT_TIMESTAMP  AS  _CreatedDate
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
-      FROM silver.cma_PurchaseInvoiceLine_Fact          fcl
+      FROM {{ ref('purchaseinvoiceline_f') }}          fcl
       LEFT JOIN purchaseinvoicelinetrans_factadj4                          tt
         ON tt.PurchaseInvoiceLineKey  = fcl.PurchaseInvoiceLineKey
-      LEFT JOIN silver.cma_Tag                          dt
+      LEFT JOIN {{ ref('tag_d') }}                          dt
         ON dt.LegalEntityID           = tt.DataAreaID
        AND dt.TagID                   = tt.TagID
        AND dt.ItemID                  = tt.ItemID
-      LEFT JOIN silver.cma_ProductReceiptLineTrans_Fact prlt
+      LEFT JOIN {{ ref('productreceiptlinetrans_f') }} prlt
         ON prlt._RecID2               = tt.RecID_IT
        AND prlt._SourceID             = 1
       LEFT JOIN purchaseinvoicelinetrans_factinvoicetrans                    it1

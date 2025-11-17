@@ -29,17 +29,17 @@ SELECT t.transferorderkey         AS TransferOrderkey
      , CURRENT_TIMESTAMP          AS _CreatedDate
      , CURRENT_TIMESTAMP          AS _ModifiedDate
   FROM transferorder_factstage ts
-  INNER JOIN silver.cma_TransferOrder    t
+  INNER JOIN {{ ref('transferorder_d') }}    t
     ON t._RecID          = ts._RecID
-  INNER JOIN silver.cma_LegalEntity le
+  INNER JOIN {{ ref('legalentity_d') }} le
     ON le.legalentityid  = ts.legalentityid
-  LEFT JOIN silver.cma_date              dd
+  LEFT JOIN {{ ref('date_d') }}              dd
     ON dd.date           = ts.shipdate
-  LEFT JOIN silver.cma_date              dd1
+  LEFT JOIN {{ ref('date_d') }}              dd1
     ON dd1.date           = ts.receiptdate
-  LEFT JOIN silver.cma_Warehouse        dw1
+  LEFT JOIN {{ ref('warehouse_d') }}        dw1
     ON dw1.LegalEntityID = ts.LegalEntityID
    AND dw1.WarehouseID   = ts.FromWarehouse
-  LEFT JOIN silver.cma_Warehouse        dw2
+  LEFT JOIN {{ ref('warehouse_d') }}        dw2
     ON dw2.LegalEntityID = ts.LegalEntityID
    AND dw2.WarehouseID   = ts.ToWarehouse;

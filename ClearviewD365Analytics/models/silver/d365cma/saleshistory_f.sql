@@ -39,7 +39,7 @@ saleshistory_facthistory AS (
                         , ROW_NUMBER () OVER (PARTITION BY sh._RecID
     ORDER BY sh.BookDate DESC)                              AS RankVal
                         , sh._RecID                         AS _RecID
-                     FROM silver.cma_SalesHistory_Fact sh
+                     FROM {{ ref('saleshistory_f') }} sh
 
 
           ) AS t
@@ -82,9 +82,9 @@ saleshistory_factstage AS (
                                THEN 4
                                ELSE 1 END                 AS SalesUpdateTypeID
                         , sol._RecID                      AS _RecID
-                     FROM silver.cma_SalesOrderLine_Fact sol
+                     FROM {{ ref('salesorderline_f') }} sol
 
-                    INNER JOIN silver.cma_Date           dd
+                    INNER JOIN {{ ref('date_d') }}           dd
                        ON dd.DateKey = sol.ShipDateRequestedKey
                      LEFT JOIN saleshistory_facthistory           th
                        ON th._RecID  = sol._RecID
@@ -121,9 +121,9 @@ saleshistory_factstage AS (
     ORDER BY sh.BookDate DESC       )                            AS RankVal
                                     , sh._RecID                  AS _RecID
                                  FROM (   SELECT *
-                                            FROM silver.cma_SalesHistory_Fact
-                                           WHERE _RecID NOT IN ( SELECT DISTINCT _RecID FROM silver.cma_SalesHistory_Fact WHERE ModifiedBy = '' )) sh
-                                 LEFT JOIN silver.cma_SalesOrderLine_Fact                                                                          sol
+                                            FROM {{ ref('saleshistory_f') }}
+                                           WHERE _RecID NOT IN ( SELECT DISTINCT _RecID FROM {{ ref('saleshistory_f') }} WHERE ModifiedBy = '' )) sh
+                                 LEFT JOIN {{ ref('salesorderline_f') }}                                                                          sol
                                    ON sol._RecID = sh._RecID
                                  LEFT JOIN {{ ref('salesline') }}                                                                                    sl
                                    ON sl.recid  = sh._RecID
@@ -148,7 +148,7 @@ saleshistory_factstage AS (
                      FROM saleshistory_facthistory             th
                      LEFT JOIN {{ ref('salesline') }}   sl
                        ON sl.recid        = th._RecID
-                     LEFT JOIN silver.cma_SalesStatus ss
+                     LEFT JOIN {{ ref('salesstatus_d') }} ss
                        ON ss.SalesStatusID = sl.salesstatus
                     WHERE sl.salesstatus    = 4
                       AND th.SalesStatusKey <> 5) AS t;
@@ -202,9 +202,9 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
        AND sl.salesstatus       <> 4
       LEFT JOIN saleshistory_facthistory            th
         ON th._RecID            = ts._RecID
-      LEFT JOIN silver.cma_SalesUpdateType st
+      LEFT JOIN {{ ref('salesupdatetype_d') }} st
         ON st.SalesUpdateTypeID = ts.SalesUpdateTypeID 
-        WHERE ts._RecID  NOT IN (SELECT _RecID FROM silver.cma_SalesHistory_Fact)
+        WHERE ts._RecID  NOT IN (SELECT _RecID FROM {{ ref('saleshistory_f') }})
         UNION
         SELECT 
 		  _CreatedDate
@@ -244,5 +244,5 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
          ,  ModifiedBy
          ,  _RecID
          , _SourceID                                                                                                           AS _SourceID
-		FROM silver.cma_SalesHistory_Fact
+		FROM {{ ref('saleshistory_f') }}
 		) t;

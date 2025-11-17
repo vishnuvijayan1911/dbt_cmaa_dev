@@ -82,34 +82,34 @@ inventorycoverage_factdetailmain AS (
              , 1                             AS _SourceID
 
           FROM inventorycoverage_factline                           li
-         INNER JOIN silver.cma_LegalEntity            le
+         INNER JOIN {{ ref('legalentity_d') }}            le
             ON le.LegalEntityID             = li.LegalEntityID
-          LEFT JOIN silver.cma_InventorySite          ds
+          LEFT JOIN {{ ref('inventorysite_d') }}          ds
             ON ds.LegalEntityID             = li.LegalEntityID
            AND ds.InventorySiteID           = li.InventSiteID
-          LEFT JOIN silver.cma_Warehouse              dw
+          LEFT JOIN {{ ref('warehouse_d') }}              dw
             ON dw.LegalEntityID             = li.LegalEntityID
            AND dw.WarehouseID               = li.InventLocationID
-          LEFT JOIN silver.cma_Warehouse              dw2
+          LEFT JOIN {{ ref('warehouse_d') }}              dw2
             ON dw2.LegalEntityID            = li.LegalEntityID
            AND dw2.WarehouseID              = li.InventLocationIDReqMain
-          LEFT JOIN silver.cma_Product                dp
+          LEFT JOIN {{ ref('product_d') }}                dp
             ON dp.LegalEntityID             = li.LegalEntityID
            AND dp.ItemID                    = li.ItemID
            AND dp.ProductWidth              = li.InventSizeID
            AND dp.ProductLength             = li.InventColorID
            AND dp.ProductColor              = li.InventStyleID
            AND dp.ProductConfig             = li.ProductConfig
-         INNER JOIN silver.cma_UOM                    du
+         INNER JOIN {{ ref('uom_d') }}                    du
             ON du.UOM                       = dp.InventoryUOM
           LEFT JOIN inventorycoverage_factonhand                    toh
             ON toh.RecID_RIT                = li._RecID
-          LEFT JOIN silver.cma_InventoryMakeOrBuy     imob
+          LEFT JOIN {{ ref('inventorymakeorbuy_d') }}     imob
             ON imob.InventoryMakeOrBuyID    = li.InventoryMakeOrBuyID
-          LEFT JOIN silver.cma_InventoryCountingGroup mmc
+          LEFT JOIN {{ ref('inventorycountinggroup_d') }} mmc
             ON mmc.LegalEntityID            = li.LegalEntityID
            AND mmc.InventoryCountingGroupID = li.InventoryCountingGroupID
-          LEFT JOIN silver.cma_InventoryCoverageGroup ic
+          LEFT JOIN {{ ref('inventorycoveragegroup_d') }} ic
             ON ic.LegalEntityID             = li.LegalEntityID
            AND ic.InventoryCoverageGroupID  = li.InventoryCoverageGroupID;
 )

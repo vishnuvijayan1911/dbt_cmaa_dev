@@ -11,7 +11,7 @@ apbalancedetail_factdate AS (
     SELECT FiscalMonthDate
              , MIN(FiscalDate) AS startdate
              , MAX(FiscalDate) AS enddate
-          FROM silver.cma_Date
+          FROM {{ ref('date_d') }}
          GROUP BY FiscalMonthDate
          ORDER BY FiscalMonthDate;
 ),
@@ -20,7 +20,7 @@ apbalancedetail_factdate445 AS (
              , dd1.Date
              , dd.startdate
              , dd.enddate
-          FROM silver.cma_Date   dd1
+          FROM {{ ref('date_d') }}   dd1
          INNER JOIN apbalancedetail_factdate dd
             ON dd.FiscalMonthDate = dd1.FiscalMonthDate
     	WHERE dd1.Date <= GETDATE ();
@@ -469,7 +469,7 @@ apbalancedetail_factpurchaseinvoice AS (
                         , ROW_NUMBER() OVER (PARTITION BY dpi.InvoiceID, dpi.LegalEntityID
     ORDER BY dpi._RecID DESC)                    AS RankVal
                      FROM apbalancedetail_factstagemain              ts
-                    INNER JOIN silver.cma_PurchaseInvoice dpi
+                    INNER JOIN {{ ref('purchaseinvoice_d') }} dpi
                        ON ts.LegalEntityID = dpi.LegalEntityID
                       AND ts.InvoiceID     = dpi.InvoiceID
                       AND ts.VendorAccount = dpi.VendorAccount) t
@@ -500,20 +500,20 @@ SELECT ROW_NUMBER() OVER (ORDER BY dv.VendorKey, le.LegalEntityKey, dd.DateKey, 
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM apbalancedetail_factstagemain             ts
-     INNER JOIN silver.cma_LegalEntity   le
+     INNER JOIN {{ ref('legalentity_d') }}   le
         ON ts.LegalEntityID  = le.LegalEntityID
-      LEFT JOIN silver.cma_Vendor        dv
+      LEFT JOIN {{ ref('vendor_d') }}        dv
         ON dv.LegalEntityID  = ts.LegalEntityID
        AND dv.VendorAccount  = ts.VendorAccount
-      LEFT JOIN silver.cma_Date          dd
+      LEFT JOIN {{ ref('date_d') }}          dd
         ON dd.Date           = CAST(ts.BalanceDate AS DATE)
-      LEFT JOIN silver.cma_Date          dd1
+      LEFT JOIN {{ ref('date_d') }}          dd1
         ON dd1.Date          = ts.InvoiceDate
-      LEFT JOIN silver.cma_Date          dd2
+      LEFT JOIN {{ ref('date_d') }}          dd2
         ON dd2.Date          = ts.DueDate
-      LEFT JOIN silver.cma_Date          dd3
+      LEFT JOIN {{ ref('date_d') }}          dd3
         ON dd3.Date          = ts.CashDiscountDate
-      LEFT JOIN silver.cma_Voucher       vo
+      LEFT JOIN {{ ref('voucher_d') }}       vo
         ON vo.LegalEntityID  = ts.LegalEntityID
        AND vo.VoucherID      = ts.VoucherID
       LEFT JOIN apbalancedetail_factpurchaseinvoice  dpi
@@ -532,10 +532,10 @@ SELECT ROW_NUMBER() OVER (ORDER BY dv.VendorKey, le.LegalEntityKey, dd.DateKey, 
        AND bs.BalanceDate    = ts.BalanceDate
        AND bs.InvoiceID      = ts.InvoiceID
        AND bs.VoucherID      = ts.VoucherID
-      LEFT JOIN silver.cma_AgingBucket   ab
+      LEFT JOIN {{ ref('agingbucket_d') }}   ab
         ON ag.AgeInvoiceDays BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd
-      LEFT JOIN silver.cma_AgingBucket   ab1
+      LEFT JOIN {{ ref('agingbucket_d') }}   ab1
         ON ag.AgeDueDays BETWEEN ab1.AgeDaysBegin AND ab1.AgeDaysEnd
-      LEFT JOIN silver.cma_Financial     fd
+      LEFT JOIN {{ ref('financial_d') }}     fd
         ON fd._RecID         = ts.DefaultDimension
        AND fd._SourceID      = 1;

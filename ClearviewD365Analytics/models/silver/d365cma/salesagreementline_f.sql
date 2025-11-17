@@ -84,7 +84,7 @@ salesagreementline_factstage AS (
             ON ah.recid       = al.agreement
          LEFT JOIN {{ ref('salesagreementheader') }} sah
             ON sah.recid = ah.recid
-         INNER JOIN silver.cma_LegalEntity     le
+         INNER JOIN {{ ref('legalentity_d') }}     le
             ON le.LegalEntityID = ISNULL(NULLIF(sah.customerdataareaid, ''), al.inventdimdataareaid)
     		AND ISNULL(NULLIF(sah.customerdataareaid, ''), al.inventdimdataareaid) != ''
           LEFT JOIN {{ ref('inventdim') }}       id
@@ -130,11 +130,11 @@ salesagreementline_factline AS (
              , ts._RecID                                              AS _RecID
              , ts._SourceID                                           AS _SourceID
           FROM salesagreementline_factstage                     ts
-         INNER JOIN silver.cma_Date              dd
+         INNER JOIN {{ ref('date_d') }}              dd
             ON dd.Date             = ts.CreatedDate
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID    = ts.LegalEntityID
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex
+          LEFT JOIN {{ ref('exchangerate_f') }} ex
             ON ex.ExchangeDateKey  = dd.DateKey
            AND ex.FromCurrencyID   = ts.CurrencyID
            AND ex.ToCurrencyID     = le.AccountingCurrencyID
@@ -171,39 +171,39 @@ salesagreementline_factdetail1 AS (
              , tl._RecID                  AS _RecID
              , tl._SourceID               AS _SourceID
           FROM salesagreementline_factline                       tl
-         INNER JOIN silver.cma_SalesAgreementLine dsal
+         INNER JOIN {{ ref('salesagreementline_d') }} dsal
             ON dsal._RecID          = tl._RecID
            AND dsal._SourceID       = 1
-         INNER JOIN silver.cma_LegalEntity        le
+         INNER JOIN {{ ref('legalentity_d') }}        le
             ON le.LegalEntityID     = tl.LegalEntityID
-          LEFT JOIN silver.cma_AgreementState     das
+          LEFT JOIN {{ ref('agreementstate_d') }}     das
             ON das.AgreementStateID = tl.AgreementStateID
-          LEFT JOIN silver.cma_Customer           dc
+          LEFT JOIN {{ ref('customer_d') }}           dc
             ON dc.LegalEntityID     = tl.LegalEntityID
            AND dc.CustomerAccount   = tl.CustomerAccount
-          LEFT JOIN silver.cma_Product            dp
+          LEFT JOIN {{ ref('product_d') }}            dp
             ON dp.LegalEntityID     = tl.LegalEntityID
            AND dp.ItemID            = tl.ItemID
            AND dp.ProductWidth      = tl.ProductWidth
            AND dp.ProductLength     = tl.ProductLength
            AND dp.ProductColor      = tl.ProductColor
            AND dp.ProductConfig     = tl.ProductConfig
-          LEFT JOIN silver.cma_Date               dd
+          LEFT JOIN {{ ref('date_d') }}               dd
             ON dd.Date              = tl.EffectiveDate
-          LEFT JOIN silver.cma_Date               dd1
+          LEFT JOIN {{ ref('date_d') }}               dd1
             ON dd1.Date             = tl.ExpirationDate
-          LEFT JOIN silver.cma_Date               dd2
+          LEFT JOIN {{ ref('date_d') }}               dd2
             ON dd2.Date              = tl.LineEffectiveDate
-          LEFT JOIN silver.cma_Date               dd3
+          LEFT JOIN {{ ref('date_d') }}               dd3
             ON dd3.Date             = tl.LineExpirationDate
-          LEFT JOIN silver.cma_UOM                du
+          LEFT JOIN {{ ref('uom_d') }}                du
             ON du.UOM               = tl.AgreementUnit
-          LEFT JOIN silver.cma_uom                  du1
+          LEFT JOIN {{ ref('uom_d') }}                  du1
             ON du1.uom              = tl.pricingunit
-          LEFT JOIN silver.cma_warehouse            dw
+          LEFT JOIN {{ ref('warehouse_d') }}            dw
             ON dw.legalentityid     = tl.legalentityid
            AND dw.warehouseid       = tl.warehouseid
-          LEFT JOIN silver.cma_inventorysite        ds
+          LEFT JOIN {{ ref('inventorysite_d') }}        ds
             ON ds.legalentityid     = tl.legalentityid
            AND ds.inventorysiteid   = tl.siteid;
 )

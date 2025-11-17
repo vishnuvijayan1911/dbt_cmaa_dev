@@ -5,5 +5,5 @@
 
 IF NOT EXISTS(SELECT *  FROM sys.external_tables WHERE name = 'cma_SalesHistory_Fact')
 BEGIN
-  DROP VIEW IF EXISTS silver.cma_SalesHistory_Fact;
+  DROP VIEW IF EXISTS {{ ref('saleshistory_f') }};
 END

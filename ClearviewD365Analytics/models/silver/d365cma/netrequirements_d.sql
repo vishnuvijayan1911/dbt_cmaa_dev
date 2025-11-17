@@ -27,7 +27,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID) AS NetRequirementsKey
                 , CURRENT_TIMESTAMP                                                                                              AS _CreatedDate
                 , CURRENT_TIMESTAMP                                                                                              AS _ModifiedDate
              FROM {{ ref('reqtrans') }}            rt
-             INNER JOIN silver.cma_LegalEntity         le
+             INNER JOIN {{ ref('legalentity_d') }}         le
 			         ON le.LegalEntityID   = rt.dataareaid
              LEFT JOIN {{ ref('prodtable') }}      pt
                ON pt.dataareaid       = rt.dataareaid

@@ -94,59 +94,59 @@ qualityorder_factdetail1 AS (
          , ts.RecID                        AS _RecID
          , 1                               AS _SourceID
       FROM qualityorder_factstage          ts
-     INNER JOIN silver.cma_QualityOrder             dqo
+     INNER JOIN {{ ref('qualityorder_d') }}             dqo
         ON dqo._RecID          = ts.RecID
        AND dqo._SourceID       = 1
-      LEFT JOIN silver.cma_LegalEntity              le
+      LEFT JOIN {{ ref('legalentity_d') }}              le
         ON le.LegalEntityID    = ts.LegalEntityID
-      LEFT JOIN silver.cma_Product                  dp
+      LEFT JOIN {{ ref('product_d') }}                  dp
         ON dp.LegalEntityID    = ts.LegalEntityID
        AND dp.ItemID           = ts.ItemID
        AND dp.ProductWidth     = ts.ProductWidth
        AND dp.ProductLength    = ts.ProductLength
        AND dp.ProductColor     = ts.ProductColor
        AND dp.ProductConfig    = ts.ProductConfig
-      LEFT JOIN silver.cma_SalesOrderLine           dsol
+      LEFT JOIN {{ ref('salesorderline_d') }}           dsol
         ON dsol._RecID         = ts.RecID_SL
        AND dsol._SourceID      = 1
-      LEFT JOIN silver.cma_PurchaseOrderLine        dpol
+      LEFT JOIN {{ ref('purchaseorderline_d') }}        dpol
         ON dpol._RecID         = ts.RecID_PL
        AND dpol._SourceID      = 1
-      LEFT JOIN silver.cma_Customer                 dc
+      LEFT JOIN {{ ref('customer_d') }}                 dc
         ON dc._RecID           = ts.RecID_CT
        AND dc._SourceID        = 1
-      LEFT JOIN silver.cma_Vendor                   dv
+      LEFT JOIN {{ ref('vendor_d') }}                   dv
         ON dv._RecID           = ts.RecID_VT
        AND dv._SourceID        = 1
-      LEFT JOIN silver.cma_Production               dp1
+      LEFT JOIN {{ ref('production_d') }}               dp1
         ON dp1._RecID          = ts.RecID_PT
        AND dp1._SourceID       = 1
-      LEFT JOIN silver.cma_ProductionCoProduct      dpc
+      LEFT JOIN {{ ref('productioncoproduct_d') }}      dpc
         ON dpc._RecID          = ts.RecID_PC
        AND dpc._SourceID       = 1
-      LEFT JOIN silver.cma_ProductionRoute          dpr
+      LEFT JOIN {{ ref('productionroute_d') }}          dpr
         ON dpr._RecID          = ts.RecID_PR
        AND dpr._SourceID       = 1
-      LEFT JOIN silver.cma_ProductionResource       pr
+      LEFT JOIN {{ ref('productionresource_d') }}       pr
         ON pr.legalentityid    = ts.LegalEntityID
        AND pr.resourceid       = ts.ResourceID
-      LEFT JOIN silver.cma_ProductionRouteOperation pro
+      LEFT JOIN {{ ref('productionrouteoperation_d') }} pro
         ON pro.LegalEntityID   = ts.LegalEntityID
        AND pro.OperationID     = ts.OperationID
-      LEFT JOIN silver.cma_Warehouse                dw
+      LEFT JOIN {{ ref('warehouse_d') }}                dw
         ON dw.LegalEntityID    = ts.LegalEntityID
        AND dw.WarehouseID      = ts.WarehouseID
-      LEFT JOIN silver.cma_WarehouseLocation       dwl
+      LEFT JOIN {{ ref('warehouselocation_d') }}       dwl
         ON dwl.LegalEntityID     = ts.LegalEntityID
        AND dwl.WarehouseID       = ts.WarehouseID
        AND dwl.WarehouseLocation = ts.WarehouseLocation
-      LEFT JOIN silver.cma_InventorySite            dis
+      LEFT JOIN {{ ref('inventorysite_d') }}            dis
         ON dis.LegalEntityID   = ts.LegalEntityID
        AND dis.InventorySiteID = ts.InventorySiteID
-      LEFT JOIN silver.cma_Financial                fd
+      LEFT JOIN {{ ref('financial_d') }}                fd
         ON fd._RecID           = ts.DefaultDimension
        AND fd._SourceID        = 1
-      LEFT JOIN silver.cma_Tag                      dt
+      LEFT JOIN {{ ref('tag_d') }}                      dt
         ON dt.LegalEntityID    = ts.LegalEntityID
        AND dt.TagID            = ts.TagID
        AND dt.ItemID           = ts.ItemID;

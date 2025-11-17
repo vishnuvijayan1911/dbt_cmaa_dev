@@ -29,7 +29,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCoverage
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM inventorycoveragegroupstage               ts
-     INNER JOIN silver.cma_LegalEntity le
+     INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID
       LEFT JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid   = ts.InventoryCoverageRuleID

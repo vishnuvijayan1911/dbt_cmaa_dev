@@ -25,11 +25,11 @@ SELECT le.LegalEntityKey
          , CURRENT_TIMESTAMP   AS _ModifiedDate
 
       FROM workorderpool_factstage                ts
-     INNER JOIN silver.cma_LegalEntity   le
+     INNER JOIN {{ ref('legalentity_d') }}   le
         ON le.LegalEntityID = ts.DATAAREAID
-      LEFT JOIN silver.cma_WorkOrder     dwo
+      LEFT JOIN {{ ref('workorder_d') }}     dwo
         ON dwo._RecID       = ts.WORKORDER
        AND dwo._SourceID    = 1
-      LEFT JOIN silver.cma_WorkOrderPool wop
+      LEFT JOIN {{ ref('workorderpool_d') }} wop
         ON wop._RecID       = ts.WorkOrderPool
        AND wop._SourceID    = 1;

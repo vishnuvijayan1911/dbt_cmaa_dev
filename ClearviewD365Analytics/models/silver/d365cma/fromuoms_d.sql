@@ -28,7 +28,7 @@ FROM
       FROM
       {{ ref('inventtable') }} it 
         INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = it.itemid 
         INNER JOIN
             {{ ref('inventtablemodule') }} im 
@@ -51,7 +51,7 @@ FROM
       FROM
         {{ ref('salesline') }} t 
         INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
         ISNULL(t.itemid, '') <> '' 
@@ -68,7 +68,7 @@ FROM
       FROM
         {{ ref('custpackingsliptrans') }} t 
         INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
         ISNULL(t.itemid, '') <> '' 
@@ -85,7 +85,7 @@ FROM
       FROM
         {{ ref('custinvoicetrans') }} t 
         INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
       WHERE
         ISNULL(t.itemid, '') <> '' 
@@ -102,7 +102,7 @@ FROM
       FROM
         {{ ref('purchline') }} t 
         INNER JOIN
-            silver.cma_Product k 
+            {{ ref('product_d') }} k 
             ON k.itemid = t.itemid 
         UNION
         SELECT DISTINCT
@@ -116,7 +116,7 @@ FROM
         FROM
             {{ ref('vendpackingsliptrans') }} t 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = t.itemid 
         WHERE
             ISNULL(t.itemid, '') <> '' 
@@ -133,7 +133,7 @@ FROM
         FROM
             {{ ref('vendinvoicetrans') }} t 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = t.itemid 
         WHERE
             ISNULL(t.itemid, '') <> '' 
@@ -150,7 +150,7 @@ FROM
         FROM
             {{ ref('forecastsales') }} s 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = s.itemid 
         WHERE
             ISNULL(s.itemid, '') <> '' 
@@ -175,7 +175,7 @@ FROM
               {{ ref('vendinvoicetrans') }} vit 
               ON vit.recid = s.transrecid 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = vit.itemid 
         WHERE
             ISNULL (vit.itemid, '') <> '' 
@@ -200,7 +200,7 @@ FROM
               {{ ref('purchline') }} pl 
               ON pl.recid = s.transrecid 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = pl.itemid 
         WHERE
             ISNULL (pl.itemid, '') <> '' 
@@ -217,7 +217,7 @@ FROM
         FROM
             {{ ref('prodjournalbom') }} pj 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = pj.itemid 
         WHERE
             ISNULL(pj.itemid, '') <> '' 
@@ -234,7 +234,7 @@ FROM
         FROM
             {{ ref('prodjournalprod') }} pj 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = pj.itemid 
             INNER JOIN
               {{ ref('cmatagactualstable') }} ct 
@@ -255,7 +255,7 @@ FROM
         FROM
             {{ ref('purchreqline') }} pr 
             INNER JOIN
-              silver.cma_Product k 
+              {{ ref('product_d') }} k 
               ON k.itemid = pr.itemid 
             INNER JOIN
               {{ ref('unitofmeasure') }} u 
@@ -266,7 +266,7 @@ FROM
   )
   AS list 
   INNER JOIN
-      silver.cma_UOM uom 
+      {{ ref('uom_d') }} uom 
       ON lower(list.fromuom) = lower(uom.uom) 
 WHERE
   list.itemid <> ''

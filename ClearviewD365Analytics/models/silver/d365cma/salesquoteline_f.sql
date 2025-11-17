@@ -61,7 +61,7 @@ salesquoteline_factstage AS (
     INNER JOIN {{ ref('salesquotationtable') }} qt
         ON qt.dataareaid    = ql.dataareaid
       AND qt.quotationid    = ql.quotationid
-    INNER JOIN silver.cma_LegalEntity         le
+    INNER JOIN {{ ref('legalentity_d') }}         le
         ON le.LegalEntityID  = ql.dataareaid
     INNER JOIN {{ ref('inventdim') }}           id
         ON id.dataareaid    = ql.dataareaid
@@ -127,74 +127,74 @@ salesquoteline_factdetailmain AS (
         , 1                             AS _SourceID
         , dql._RecID                    AS _RecID
       FROM salesquoteline_factstage     ts
-    INNER JOIN silver.cma_SalesQuoteLine dql
+    INNER JOIN {{ ref('salesquoteline_d') }} dql
         ON dql._RecID          = ts._RecID
       AND dql._SourceID       = 1
-    INNER JOIN silver.cma_LegalEntity    le
+    INNER JOIN {{ ref('legalentity_d') }}    le
         ON le.LegalEntityID    = ts.LegalEntityID
-      LEFT JOIN silver.cma_Customer       dc1
+      LEFT JOIN {{ ref('customer_d') }}       dc1
         ON dc1.LegalEntityID   = ts.LegalEntityID
       AND dc1.CustomerAccount = ts.CustomerAccount
-      LEFT JOIN silver.cma_Customer       dc2
+      LEFT JOIN {{ ref('customer_d') }}       dc2
         ON dc2.LegalEntityID   = ts.LegalEntityID
       AND dc2.CustomerAccount = ts.InvoiceAccount
-      LEFT JOIN silver.cma_Date           dd
+      LEFT JOIN {{ ref('date_d') }}           dd
         ON dd.Date             = ts.QuoteDate
-      LEFT JOIN silver.cma_Date           dd1
+      LEFT JOIN {{ ref('date_d') }}           dd1
         ON dd1.Date            = ts.ExpirationDate
-      LEFT JOIN silver.cma_Date           dd2
+      LEFT JOIN {{ ref('date_d') }}           dd2
         ON dd2.Date            = ts.ReceiptDateRequested
-      LEFT JOIN silver.cma_Date           dd3
+      LEFT JOIN {{ ref('date_d') }}           dd3
         ON dd3.Date            = ts.ShipDateRequested
-      LEFT JOIN silver.cma_QuoteStatus    qs
+      LEFT JOIN {{ ref('quotestatus_d') }}    qs
         ON qs.QuoteStatusID    = ts.QuoteStatusID
-      LEFT JOIN silver.cma_QuoteType      qt
+      LEFT JOIN {{ ref('quotetype_d') }}      qt
         ON qt.quotetypeid      = ts.QuoteTypeID
-      LEFT JOIN silver.cma_Financial      fd
+      LEFT JOIN {{ ref('financial_d') }}      fd
         ON fd._RecID           = ts.DefaultDimension
       AND fd._SourceID        = 1
-      LEFT JOIN silver.cma_Lot            it
+      LEFT JOIN {{ ref('lot_d') }}            it
         ON it._recid           = ts.RecID_ITO
       AND it._sourceid        = 1
-      LEFT JOIN silver.cma_InventorySite  ds
+      LEFT JOIN {{ ref('inventorysite_d') }}  ds
         ON ds.LegalEntityID    = ts.LegalEntityID
       AND ds.InventorySiteID  = ts.InventSiteID
-      LEFT JOIN silver.cma_Product        dp
+      LEFT JOIN {{ ref('product_d') }}        dp
         ON dp.LegalEntityID    = ts.LegalEntityID
       AND dp.ItemID           = ts.ItemID
       AND dp.ProductWidth     = ts.ProductWidth
       AND dp.ProductLength    = ts.ProductLength
       AND dp.ProductColor     = ts.ProductColor
       AND dp.ProductConfig    = ts.ProductConfig
-      LEFT JOIN silver.cma_Warehouse      dw
+      LEFT JOIN {{ ref('warehouse_d') }}      dw
         ON dw.LegalEntityID    = ts.LegalEntityID
       AND dw.WarehouseID      = ts.WarehouseID
-      LEFT JOIN silver.cma_Currency       cc
+      LEFT JOIN {{ ref('currency_d') }}       cc
         ON cc.CurrencyID       = ts.CurrencyID
-      LEFT JOIN silver.cma_DeliveryMode   ddm
+      LEFT JOIN {{ ref('deliverymode_d') }}   ddm
         ON ddm.LegalEntityID   = ts.LegalEntityID
       AND ddm.DeliveryModeID  = ts.DeliveryModeID
-      LEFT JOIN silver.cma_DeliveryTerm   ddt
+      LEFT JOIN {{ ref('deliveryterm_d') }}   ddt
         ON ddt.LegalEntityID   = ts.LegalEntityID
       AND ddt.DeliveryTermID  = ts.DeliveryTermID
-      LEFT JOIN silver.cma_PaymentTerm    dpt
+      LEFT JOIN {{ ref('paymentterm_d') }}    dpt
         ON dpt.LegalEntityID   = ts.LegalEntityID
       AND dpt.PaymentTermID   = ts.PaymentTermID
-      LEFT JOIN silver.cma_PaymentMode    dpm
+      LEFT JOIN {{ ref('paymentmode_d') }}    dpm
         ON dpm.LegalEntityID   = ts.LegalEntityID
       AND dpm.PaymentModeID   = ts.PaymentModeID
-      LEFT JOIN silver.cma_Employee       de2
+      LEFT JOIN {{ ref('employee_d') }}       de2
         ON de2._RecID          = ts.SalesTaker
-      LEFT JOIN silver.cma_UOM            du
+      LEFT JOIN {{ ref('uom_d') }}            du
         ON du.UOM              = ts.InventoryUnit
-      LEFT JOIN silver.cma_SalesCategory  dsc
+      LEFT JOIN {{ ref('salescategory_d') }}  dsc
         ON dsc._RecID          = ts.RecID_SC
       AND dsc._SourceID       = 1
-      LEFT JOIN silver.cma_UOM            du1
+      LEFT JOIN {{ ref('uom_d') }}            du1
         ON du1.UOM             = ts.SalesUOM
-      LEFT JOIN silver.cma_UOM            du2
+      LEFT JOIN {{ ref('uom_d') }}            du2
         ON du2.UOM             = ts.QuotePriceUOM
-      LEFT JOIN silver.cma_SalesPerson    sp
+      LEFT JOIN {{ ref('salesperson_d') }}    sp
         ON sp._RecID           = ts.SalesPersonID
       AND sp._SourceID        = 1;
 )
@@ -286,7 +286,7 @@ SELECT DISTINCT td.SalesQuoteLineKey
   --  AND vuc5.productkey     = td.ProductKey
   --  AND vuc5.fromuomkey     = td.InventoryUOMKey
   --  AND vuc5.touom          = 'T'
-    LEFT JOIN silver.cma_ExchangeRate_Fact ex
+    LEFT JOIN {{ ref('exchangerate_f') }} ex
       ON ex.ExchangeDateKey  = td.QuoteDateKey
     AND ex.FromCurrencyID   = td.CurrencyID
     AND ex.ToCurrencyID     = td.AccountingCurrencyID

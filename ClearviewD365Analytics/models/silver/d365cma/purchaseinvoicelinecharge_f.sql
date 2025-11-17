@@ -137,11 +137,11 @@ purchaseinvoicelinecharge_factcharge AS (
              , ts._RecID                                          AS _RecID
 
           FROM purchaseinvoicelinecharge_factstage                     ts
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID    = ts.LegalEntityID
-          LEFT JOIN silver.cma_Date              dd
+          LEFT JOIN {{ ref('date_d') }}              dd
             ON dd.Date             = ts.TransDate
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex
+          LEFT JOIN {{ ref('exchangerate_f') }} ex
             ON ex.ExchangeDateKey  = dd.DateKey
            AND ex.FromCurrencyID   = ts.ChargeCurrencyID
            AND ex.ToCurrencyID     = ts.TransCurrencyID
@@ -186,29 +186,29 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._RecID1) AS PurchaseInvoiceLine
          , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
       FROM purchaseinvoicelinecharge_factcharge                      ts
-     INNER JOIN silver.cma_LegalEntity         le
+     INNER JOIN {{ ref('legalentity_d') }}         le
         ON le.LegalEntityID     = ts.LegalEntityID
-      LEFT JOIN silver.cma_ChargeCode          dc
+      LEFT JOIN {{ ref('chargecode_d') }}          dc
         ON dc.LegalEntityID     = ts.LegalEntityID
        AND dc.ModuleTypeID      = ts.ModuleType
        AND dc.ChargeCode        = ts.Code
-      LEFT JOIN silver.cma_ChargeCategory      dcc
+      LEFT JOIN {{ ref('chargecategory_d') }}      dcc
         ON dcc.ChargeCategoryID = ts.MarkupCategoryID
-      LEFT JOIN silver.cma_Date                dd
+      LEFT JOIN {{ ref('date_d') }}                dd
         ON dd.Date              = ts.TransDate
-      LEFT JOIN silver.cma_Currency            cur
+      LEFT JOIN {{ ref('currency_d') }}            cur
         ON cur.CurrencyID       = ts.ChargeCurrencyID
-      LEFT JOIN silver.cma_PurchaseInvoiceLine dvil
+      LEFT JOIN {{ ref('purchaseinvoiceline_d') }} dvil
         ON dvil._RecID2          = ts._RecID1
        AND dvil._SourceID       = 1
-      LEFT JOIN silver.cma_Voucher             dv
+      LEFT JOIN {{ ref('voucher_d') }}             dv
         ON dv.LegalEntityID     = ts.LegalEntityID
        AND dv.VoucherID         = ts.VoucherID
-      LEFT JOIN silver.cma_ChargeType          ct
+      LEFT JOIN {{ ref('chargetype_d') }}          ct
         ON ct.ChargeTypeID      = ts.ChargeTypeID
-      LEFT JOIN silver.cma_UOM                 du
+      LEFT JOIN {{ ref('uom_d') }}                 du
         ON du.UOM               = ts.PriceUnit
-      LEFT JOIN silver.cma_ExchangeRate_Fact   ex1
+      LEFT JOIN {{ ref('exchangerate_f') }}   ex1
         ON ex1.ExchangeDateKey  = dd.DateKey
        AND ex1.FromCurrencyID   = ts.TransCurrencyID
        AND ex1.ToCurrencyID     = le.AccountingCurrencyID

@@ -96,7 +96,7 @@ inventoryvaluebalance_factdate AS (
     SELECT FiscalMonthDate
         , CAST(MIN(FiscalDate) AS DATE) AS StartDate
         , CAST(MAX(FiscalDate) AS DATE) AS EndDate
-      FROM silver.cma_Date
+      FROM {{ ref('date_d') }}
     WHERE FiscalYearDate > DATEADD(YEAR, -3, GETDATE())
     GROUP BY FiscalMonthDate
     ORDER BY FiscalMonthDate;
@@ -1012,7 +1012,7 @@ inventoryvaluebalance_factdate445 AS (
         , dd1.Date
         , dd.StartDate
         , dd.EndDate
-      FROM silver.cma_Date   dd1
+      FROM {{ ref('date_d') }}   dd1
     INNER JOIN inventoryvaluebalance_factdate dd
         ON dd.FiscalMonthDate = dd1.FiscalMonthDate
       WHERE dd1.Date <= GETDATE ();
@@ -1130,11 +1130,11 @@ inventoryvaluebalance_factdetail1 AS (
         , dp.InventoryUOM                     AS InventoryUOM
         , 1                                   AS _SourceID
       FROM inventoryvaluebalance_factopeningbalance            ts
-    INNER JOIN silver.cma_LegalEntity       le
+    INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID     = ts.LegalEntityID
-    INNER JOIN silver.cma_Date              dd
+    INNER JOIN {{ ref('date_d') }}              dd
         ON dd.Date              = ts.AccountingMonth
-    INNER JOIN silver.cma_Product           dp
+    INNER JOIN {{ ref('product_d') }}           dp
         ON dp.LegalEntityID     = ts.LegalEntityID
       AND dp.ItemID            = ts.ITEMID
       AND dp.ProductWidth      = ts.INVENTSIZEID
@@ -1142,17 +1142,17 @@ inventoryvaluebalance_factdetail1 AS (
       AND dp.ProductColor      = ts.INVENTSTYLEID
       AND dp.ProductConfig     = ts.CONFIGID
       AND dp._SourceID         = 1
-      LEFT JOIN silver.cma_Warehouse         dw
+      LEFT JOIN {{ ref('warehouse_d') }}         dw
         ON dw.LegalEntityID     = ts.LegalEntityID
       AND dw.WarehouseID       = ts.INVENTLOCATIONID
-      LEFT JOIN silver.cma_WarehouseLocation wl
+      LEFT JOIN {{ ref('warehouselocation_d') }} wl
         ON wl.LegalEntityID     = ts.LegalEntityID
       AND wl.WarehouseID       = ts.INVENTLOCATIONID
       AND wl.WarehouseLocation = ts.WMSLOCATIONID
-      LEFT JOIN silver.cma_InventorySite     ds
+      LEFT JOIN {{ ref('inventorysite_d') }}     ds
         ON ds.LegalEntityID     = ts.LegalEntityID
       AND ds.InventorySiteID   = ts.SiteID
-      LEFT JOIN silver.cma_AgingBucket       ab
+      LEFT JOIN {{ ref('agingbucket_d') }}       ab
         ON ts.DaysInInventory BETWEEN ab.AgeDaysBegin AND AgeDaysEnd
     GROUP BY dp.ProductKey
             , dd.DateKey

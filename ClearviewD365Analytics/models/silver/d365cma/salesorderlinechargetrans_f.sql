@@ -131,7 +131,7 @@ salesorderlinechargetrans_facttrans AS (
                     ELSE 0 END                                                              AS IsProrateAdj
              , tk.RecID_MT
 
-          FROM silver.cma_SalesOrderLineCharge_Fact fc
+          FROM {{ ref('salesorderlinecharge_f') }} fc
          INNER JOIN salesorderlinechargetrans_factsolkeys                 tk
             ON tk.RecID_MT = fc._RecID1
            AND tk.RecID_SL = fc._RecID2
@@ -179,7 +179,7 @@ salesorderlinechargetrans_factadj AS (
                          THEN fcl.TaxAmount - SUM (t.TaxAmount) OVER (PARTITION BY t.SalesOrderLineChargeKey)
                          ELSE 0 END AS MONEY) AS TaxAmountAdj
           FROM salesorderlinechargetrans_facttrans                             t
-         INNER JOIN silver.cma_SalesOrderLineCharge_Fact fcl
+         INNER JOIN {{ ref('salesorderlinecharge_f') }} fcl
             ON fcl.SalesOrderLineChargeKey = t.SalesOrderLineChargeKey
 ),
 salesorderlinechargetrans_facttransadj AS (
@@ -280,10 +280,10 @@ SELECT
          , ISNULL (fc._RecID1, 0)                                                AS _RECID1
          , ISNULL (fc._RecID2, 0)                                                AS _RecID2
          , 1                                                                     AS _SourceID
-      FROM silver.cma_SalesOrderLineCharge_Fact     fc
+      FROM {{ ref('salesorderlinecharge_f') }}     fc
            LEFT JOIN salesorderlinechargetrans_facttrans4                       tt
         ON tt.SalesOrderLineChargeKey = fc.SalesOrderLineChargeKey
-      LEFT JOIN silver.cma_SalesOrderLineTrans_Fact solt
+      LEFT JOIN {{ ref('salesorderlinetrans_f') }} solt
         ON solt._RecID2               = ISNULL (tt._RecID3, 0)
        AND solt._RecID1               = fc._RecID2
        AND solt._SourceID             = 1 ) t;

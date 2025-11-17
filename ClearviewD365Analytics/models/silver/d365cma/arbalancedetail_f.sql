@@ -15,7 +15,7 @@ arbalancedetail_factdate AS (
         , MAX (t.FiscalMonthOfYearID)                AS FiscalMonthOfYearID
         , MAX (CAST (RIGHT(t.FiscalYear, 4) AS INT)) AS FiscalYear
         , t.FiscalMonthDate
-       FROM silver.cma_Date t
+       FROM {{ ref('date_d') }} t
       WHERE t.Date <= GETDATE ()
     GROUP BY t.FiscalMonthDate;
 ),
@@ -29,10 +29,10 @@ arbalancedetail_factdate445 AS (
         , t.FiscalYear
         , t.FiscalMonthDate
         , DATEDIFF (MONTH, t.FiscalMonthDate, cte1.FiscalMonthDate) AS RelativePriorMonthID      
-      FROM silver.cma_Date   dd
+      FROM {{ ref('date_d') }}   dd
       INNER JOIN arbalancedetail_factdate t
          ON dd.FiscalMonthDate = t.FiscalMonthDate
-      CROSS JOIN (SELECT FiscalMonthDate FROM silver.cma_Date WHERE FiscalDate = CAST (GETDATE () AS DATE)) cte1
+      CROSS JOIN (SELECT FiscalMonthDate FROM {{ ref('date_d') }} WHERE FiscalDate = CAST (GETDATE () AS DATE)) cte1
     WHERE DATEDIFF (MONTH, t.FiscalMonthDate, cte1.FiscalMonthDate) BETWEEN 0 AND '{{ refresh_duration }}';
 ),
 arbalancedetail_factactivitymonths AS (
@@ -364,7 +364,7 @@ arbalancedetail_factsalesinvoice AS (
                         , ROW_NUMBER () OVER (PARTITION BY dsi.InvoiceID, dsi.LegalEntityID
     ORDER BY dsi._RecID DESC)                 AS RankVal
                      FROM arbalancedetail_factstage                ts
-                    INNER JOIN silver.cma_SalesInvoice dsi
+                    INNER JOIN {{ ref('salesinvoice_d') }} dsi
                        ON ts.LegalEntityID   = dsi.LegalEntityID
                       AND ts.InvoiceID       = dsi.InvoiceID) t
          WHERE t.RankVal = 1;
@@ -391,7 +391,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY dd.DateKey, le.LegalEntityKey, dc.CustomerKe
     , 1                                                                                                               AS _SourceID
     , CURRENT_TIMESTAMP                                                                                               AS _ModifiedDate
  FROM arbalancedetail_factstage             ts
-INNER JOIN silver.cma_LegalEntity                    le
+INNER JOIN {{ ref('legalentity_d') }}                    le
    ON ts.LegalEntityID   = le.LegalEntityID
  LEFT JOIN arbalancedetail_factaging        ag
    ON ag.LegalEntityID   = ts.LegalEntityID
@@ -399,27 +399,27 @@ INNER JOIN silver.cma_LegalEntity                    le
   AND ag.BalanceDate     = ts.BalanceDate
   AND ag.InvoiceID       = ts.InvoiceID
   AND ag.VoucherID       = ts.VoucherID
- LEFT JOIN silver.cma_Customer                       dc
+ LEFT JOIN {{ ref('customer_d') }}                       dc
    ON dc.LegalEntityID   = ts.LegalEntityID
   AND dc.CustomerAccount = ts.CustomerAccount
- LEFT JOIN silver.cma_Date                           dd
+ LEFT JOIN {{ ref('date_d') }}                           dd
    ON dd.Date            = CAST (ts.BalanceDate AS DATE)
- LEFT JOIN silver.cma_Date                           dd1
+ LEFT JOIN {{ ref('date_d') }}                           dd1
    ON dd1.Date           = ts.InvoiceDate
- LEFT JOIN silver.cma_Date                           dd2
+ LEFT JOIN {{ ref('date_d') }}                           dd2
    ON dd2.Date           = ts.DueDate
- LEFT JOIN silver.cma_Date                           dd3
+ LEFT JOIN {{ ref('date_d') }}                           dd3
    ON dd3.Date           = ts.CashDiscountDate
- LEFT JOIN silver.cma_Voucher                        vo
+ LEFT JOIN {{ ref('voucher_d') }}                        vo
    ON vo.LegalEntityID   = ts.LegalEntityID
   AND vo.VoucherID       = ts.VoucherID
  LEFT JOIN arbalancedetail_factsalesinvoice dpi
    ON dpi.LegalEntityID  = ts.LegalEntityID
   AND dpi.InvoiceID      = ts.InvoiceID
- LEFT JOIN silver.cma_AgingBucket                    ab
+ LEFT JOIN {{ ref('agingbucket_d') }}                    ab
    ON ag.AgeInvoiceDays BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd
- LEFT JOIN silver.cma_AgingBucket                    ab1
+ LEFT JOIN {{ ref('agingbucket_d') }}                    ab1
    ON ag.AgeDueDays BETWEEN ab1.AgeDaysBegin AND ab1.AgeDaysEnd
- LEFT JOIN silver.cma_Financial                      fd
+ LEFT JOIN {{ ref('financial_d') }}                      fd
    ON fd._RecID          = ts.DefaultDimension
   AND fd._SourceID       = 1;

@@ -72,11 +72,11 @@ SELECT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
-       FROM silver.cma_SalesInvoiceLineTax_Fact        ft
+       FROM {{ ref('salesinvoicelinetax_f') }}        ft
      INNER JOIN salesinvoicelinetaxtrans_factsilkeys                       tk
         ON tk.RecID_TT = ft._RecID
      INNER JOIN salesinvoicelinetaxtrans_factsilratio                    tr
         ON tr.RecID_IT = tk.RecID_IT
        AND tr.RecID_TT = tk.RecID_TT
-      LEFT JOIN silver.cma_SalesInvoiceLineTrans_Fact fclt
+      LEFT JOIN {{ ref('salesinvoicelinetrans_f') }} fclt
         ON fclt._RecID3 = tr.RecID_IT) t;

@@ -104,48 +104,48 @@ SELECT wo.WorkOrderKey
          ,  CURRENT_TIMESTAMP                                                                                                        AS  _ModifiedDate
 
       FROM workorder_factstage                      ts
-     INNER JOIN silver.cma_LegalEntity          le
+     INNER JOIN {{ ref('legalentity_d') }}          le
         ON le.LegalEntityID   = ts.LegalEntityID
-     INNER JOIN silver.cma_WorkOrder            wo
+     INNER JOIN {{ ref('workorder_d') }}            wo
         ON wo._RecID          = ts._RecID
        AND wo._SourceID       = 1
-      LEFT JOIN silver.cma_WorkOrderCriticality woc
+      LEFT JOIN {{ ref('workordercriticality_d') }} woc
         ON woc._RecID         = ts.CRITICALITY
        AND woc._SourceID      = 1
-      LEFT JOIN silver.cma_WorkOrderState       dws
+      LEFT JOIN {{ ref('workorderstate_d') }}       dws
         ON dws._RecID         = ts.WORKORDERLIFECYCLESTATE
        AND dws._SourceID      = 1
-      LEFT JOIN silver.cma_Employee             res
+      LEFT JOIN {{ ref('employee_d') }}             res
         ON res._RecID         = ts.RecID_HCMR
        AND res._SourceID      = 1
-      LEFT JOIN silver.cma_Employee             sch
+      LEFT JOIN {{ ref('employee_d') }}             sch
         ON sch._RecID         = ts.RecID_HCMS
        AND sch._SourceID      = 1
-      LEFT JOIN silver.cma_Customer             dc
+      LEFT JOIN {{ ref('customer_d') }}             dc
         ON dc.LegalEntityID   = ts.LegalEntityID
        AND dc.CustomerAccount = ts.CustomerAccount
-      LEFT JOIN silver.cma_WorkerGroup          dwg
+      LEFT JOIN {{ ref('workergroup_d') }}          dwg
         ON dwg._RecID         = ts.RESPONSIBLEWORKERGROUP
        AND dwg._SourceID      = 1
-      LEFT JOIN silver.cma_WorkOrderType        dwt
+      LEFT JOIN {{ ref('workordertype_d') }}        dwt
         ON dwt._RecID         = ts.WORKORDERTYPE
        AND dwt._SourceID      = 1
-      LEFT JOIN silver.cma_Date                 dd
+      LEFT JOIN {{ ref('date_d') }}                 dd
         ON dd.Date            = ts.ActualEndDate
-      LEFT JOIN silver.cma_Date                 dd1
+      LEFT JOIN {{ ref('date_d') }}                 dd1
         ON dd1.Date           = ts.ActualStartDate
-      LEFT JOIN silver.cma_Date                 dd2
+      LEFT JOIN {{ ref('date_d') }}                 dd2
         ON dd2.Date           = ts.ExpectedEndDate
-      LEFT JOIN silver.cma_Date                 dd3
+      LEFT JOIN {{ ref('date_d') }}                 dd3
         ON dd3.Date           = ts.ExpectedStartDate
-      LEFT JOIN silver.cma_Date                 dd4
+      LEFT JOIN {{ ref('date_d') }}                 dd4
         ON dd4.Date           = ts.ScheduleEndDate
-      LEFT JOIN silver.cma_Date                 dd5
+      LEFT JOIN {{ ref('date_d') }}                 dd5
         ON dd5.Date           = ts.ScheduleStart
-      LEFT JOIN silver.cma_WorkOrder            wo1
+      LEFT JOIN {{ ref('workorder_d') }}            wo1
         ON wo1.LegalEntityID  = le.LegalEntityID
        AND wo1.WorkOrderID    = ts.ParentWorkOrderID
-      LEFT JOIN silver.cma_OnTimeStatus         ond
+      LEFT JOIN {{ ref('on_time_status_d') }}         ond
         ON ond.OnTimeStatusID = ts.OnTimeStatusDueDate
-      LEFT JOIN silver.cma_OnTimeStatus         ons
+      LEFT JOIN {{ ref('on_time_status_d') }}         ons
         ON ons.OnTimeStatusID = ts.OnTimeStatusStartDate;

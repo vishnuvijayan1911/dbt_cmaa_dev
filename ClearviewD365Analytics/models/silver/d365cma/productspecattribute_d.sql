@@ -148,7 +148,7 @@ SELECT dp.ProductKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM productspecattributestage         ba
-     INNER JOIN silver.cma_Product dp
+     INNER JOIN {{ ref('product_d') }} dp
         ON dp.LegalEntityID = ba.legalentityid
        AND dp.ItemID        = ba.pdsbatchattribitemid
      GROUP BY dp.ProductKey;

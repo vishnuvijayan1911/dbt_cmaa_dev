@@ -42,7 +42,7 @@ warehouseaddress AS (
                     , _RecID
                     , ROW_NUMBER() OVER (PARTITION BY Location
     ORDER BY _RecID DESC) AS Rank_Val
-                FROM silver.cma_Address) t
+                FROM {{ ref('address_d') }}) t
     WHERE t.Rank_Val = 1;
 )
 SELECT 

@@ -92,34 +92,34 @@ transferorderline_factdetailmain AS (
          , ts._RecID                     AS _RecID
          , ts._SourceID                  AS _SourceID
       FROM transferorderline_factstage  ts
-     INNER JOIN silver.cma_TransferOrderLine t
+     INNER JOIN {{ ref('transferorderline_d') }} t
         ON t._RecID         = ts._RecID
-     INNER JOIN silver.cma_LegalEntity       le
+     INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.legalentityid = ts.legalentityid
       LEFT JOIN transferorderline_factshipped  dts
        ON dts.RecID         = ts._RecID
       LEFT JOIN transferorderline_factreceived drs
        ON drs.RecID         = ts._RecID
-      LEFT JOIN silver.cma_TransferOrder dto
+      LEFT JOIN {{ ref('transferorder_d') }} dto
         ON dto._RecID       = ts._RecID_ITT
-      LEFT JOIN silver.cma_Product           dp
+      LEFT JOIN {{ ref('product_d') }}           dp
         ON dp.LegalEntityID = ts.LegalEntityID
        AND dp.ItemID        = ts.ItemID
        AND dp.ProductWidth  = ts.ProductWidth
        AND dp.ProductLength = ts.ProductLength
        AND dp.ProductConfig = ts.ProductConfig
        AND dp.ProductColor  = ts.ProductColor
-      LEFT JOIN silver.cma_UOM               du
+      LEFT JOIN {{ ref('uom_d') }}               du
         ON du.UOM           = ts.TransferUOM
-      LEFT JOIN silver.cma_UOM               du1
+      LEFT JOIN {{ ref('uom_d') }}               du1
         ON du1.UOM           = dp.InventoryUOM
-      LEFT JOIN silver.cma_date              dd
+      LEFT JOIN {{ ref('date_d') }}              dd
         ON dd.date           = ts.shipdate
-      LEFT JOIN silver.cma_date              dd1
+      LEFT JOIN {{ ref('date_d') }}              dd1
         ON dd1.date          = ts.receiptdate
-      LEFT JOIN silver.cma_date              dd2
+      LEFT JOIN {{ ref('date_d') }}              dd2
         ON dd2.date          = dts.ActualShipDate
-      LEFT JOIN silver.cma_date              dd3
+      LEFT JOIN {{ ref('date_d') }}              dd3
         ON dd3.date          = drs.ActualReceiptDate;
 )
 SELECT dm.TransferOrderLinekey

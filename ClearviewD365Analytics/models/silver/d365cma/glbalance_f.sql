@@ -12,7 +12,7 @@ glbalance_factdate AS (
              , MIN(FiscalDate) AS StartDate
              , MAX(FiscalDate) AS EndDate
 
-          FROM silver.cma_Date
+          FROM {{ ref('date_d') }}
          GROUP BY FiscalMonthDate
          ORDER BY FiscalMonthDate;
 ),
@@ -35,7 +35,7 @@ glbalance_factactivity AS (
             ON je.accountingdate BETWEEN dd.StartDate AND dd.EndDate
          INNER JOIN  {{ ref('ledger') }}              ldg
     			  ON ldg.recid = je.ledger
-         INNER JOIN silver.cma_LedgerAccount         la
+         INNER JOIN {{ ref('ledgeraccount_d') }}         la
             ON la._RecID  = jae.ledgerdimension
          WHERE jae.postingtype <> 19
          GROUP BY ldg.name
@@ -52,7 +52,7 @@ glbalance_factdate445 AS (
              , dd.StartDate
              , dd.EndDate
 
-          FROM silver.cma_Date   dd1
+          FROM {{ ref('date_d') }}   dd1
          INNER JOIN glbalance_factdate dd
             ON dd.FiscalMonthDate = dd1.FiscalMonthDate;
 ),
@@ -140,10 +140,10 @@ SELECT ROW_NUMBER() OVER (ORDER BY dd.DateKey, le.LegalEntityKey, dca.LedgerAcco
          , te.TransAmount                   AS TransAmount
 
       FROM glbalance_factsummary               te
-     INNER JOIN silver.cma_LegalEntity   le
+     INNER JOIN {{ ref('legalentity_d') }}   le
         ON le.LegalEntityID = te.LegalEntityID
-      LEFT JOIN silver.cma_Date          dd
+      LEFT JOIN {{ ref('date_d') }}          dd
         ON dd.Date          = te.EOMONTHDate
-     INNER JOIN silver.cma_LedgerAccount dca
+     INNER JOIN {{ ref('ledgeraccount_d') }} dca
         ON dca._RecID       = te.LedgerAccount
        AND dca._SourceID    = 1;

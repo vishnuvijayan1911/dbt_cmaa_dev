@@ -222,51 +222,51 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS APTransKey
          , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
       FROM aptrans_factstage                   ts
-     INNER JOIN silver.cma_LegalEntity     le
+     INNER JOIN {{ ref('legalentity_d') }}     le
         ON le.LegalEntityID      = ts.LegalEntityID
-      LEFT JOIN silver.cma_ApprovalStatus  das
+      LEFT JOIN {{ ref('approvalstatus_d') }}  das
         ON das.ApprovalStatusID  = ts.IsApproved
-      LEFT JOIN silver.cma_Employee        de
+      LEFT JOIN {{ ref('employee_d') }}        de
         ON de._RecID             = ts.ApproverID
        AND de._SourceID          = 1
-      LEFT JOIN silver.cma_PurchaseInvoice dvi
+      LEFT JOIN {{ ref('purchaseinvoice_d') }} dvi
         ON dvi._RecID            = ts.RecID_VIJ
        AND dvi._SourceID         = 1
-      LEFT JOIN silver.cma_Vendor          dv
+      LEFT JOIN {{ ref('vendor_d') }}          dv
         ON dv.LegalEntityID      = ts.LegalEntityID
        AND dv.VendorAccount      = ts.AccountNum
-      LEFT JOIN silver.cma_AgingBucket     ab
+      LEFT JOIN {{ ref('agingbucket_d') }}     ab
         ON ts.AgeInvoiceDate BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd
-      LEFT JOIN silver.cma_AgingBucket     ab1
+      LEFT JOIN {{ ref('agingbucket_d') }}     ab1
         ON ts.AgeDueDate BETWEEN ab1.AgeDaysBegin AND ab1.AgeDaysEnd
-      LEFT JOIN silver.cma_Vendor          dv1
+      LEFT JOIN {{ ref('vendor_d') }}          dv1
         ON dv1.LegalEntityID     = ts.LegalEntityID
        AND dv1.VendorAccount     = ts.VendorAccount
-      LEFT JOIN silver.cma_Voucher         vo
+      LEFT JOIN {{ ref('voucher_d') }}         vo
         ON vo.LegalEntityID      = ts.LegalEntityID
        AND vo.VoucherID          = ts.VoucherID
-      LEFT JOIN silver.cma_Financial       fd1
+      LEFT JOIN {{ ref('financial_d') }}       fd1
         ON fd1._RecID            = ts.DefaultDimension
        AND fd1._SourceID         = 1
-      LEFT JOIN silver.cma_Date            dd1
+      LEFT JOIN {{ ref('date_d') }}            dd1
         ON dd1.Date              = ts.CloseDate
-      LEFT JOIN silver.cma_Date            dd2
+      LEFT JOIN {{ ref('date_d') }}            dd2
         ON dd2.Date              = ts.DueDate
-      LEFT JOIN silver.cma_Date            dd3
+      LEFT JOIN {{ ref('date_d') }}            dd3
         ON dd3.Date              = ts.InvoiceDate
-      LEFT JOIN silver.cma_Date            dd4
+      LEFT JOIN {{ ref('date_d') }}            dd4
         ON dd4.Date              = ts.LastSettleDate
-      LEFT JOIN silver.cma_Date            dd5
+      LEFT JOIN {{ ref('date_d') }}            dd5
         ON dd5.Date              = ts.TransDate
-      LEFT JOIN silver.cma_LedgerTransType dlt
+      LEFT JOIN {{ ref('ledgertranstype_d') }} dlt
         ON dlt.LedgerTransTypeID = ts.TransTypeID
-      LEFT JOIN silver.cma_Currency        cc
+      LEFT JOIN {{ ref('currency_d') }}        cc
         ON cc.CurrencyID         = ts.CurrencyID
-      LEFT JOIN silver.cma_PaymentMode     pm
+      LEFT JOIN {{ ref('paymentmode_d') }}     pm
         ON pm.LegalEntityID      = ts.LegalEntityID
        AND pm.PaymentModeID      = ts.PaymentModeID
-      LEFT JOIN silver.cma_PaymentTerm     pt
+      LEFT JOIN {{ ref('paymentterm_d') }}     pt
         ON pt.LegalEntityID      = ts.LegalEntityID
        AND pt.PaymentTermID      = ts.PaymentTermID
-      LEFT JOIN silver.cma_CheckStatus     cs
+      LEFT JOIN {{ ref('checkstatus_d') }}     cs
         ON cs.CheckStatusID      = ts.CheckStatusID;

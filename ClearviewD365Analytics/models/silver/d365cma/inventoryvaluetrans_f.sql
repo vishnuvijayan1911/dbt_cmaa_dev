@@ -475,7 +475,7 @@ inventoryvaluetrans_factstage AS (
           LEFT JOIN inventoryvaluetrans_factinventdim           id
             ON id.dataareaid   = ivr.DATAAREAID
            AND id.inventdimid   = ivr.INVENTDIMID
-          LEFT JOIN silver.cma_Product          dp
+          LEFT JOIN {{ ref('product_d') }}          dp
             ON dp.LegalEntityID = ivr.DATAAREAID
            AND dp.ItemID        = ivr.ITEMID
            AND dp.ProductWidth  = id.inventsizeid
@@ -532,52 +532,52 @@ inventoryvaluetrans_factdetail1 AS (
              , 1                                       AS _SourceID
 
           FROM inventoryvaluetrans_factstage                        ts
-         INNER JOIN silver.cma_LegalEntity          le
+         INNER JOIN {{ ref('legalentity_d') }}          le
             ON le.LegalEntityID               = ts.LegalEntityID
           LEFT JOIN inventoryvaluetrans_factfinancial               df
             ON df.RECID_IT                    = ts.RECID_IT
            AND df.RECID_ITPDP                 = ts.RECID_ITPDP
            AND df.RECID_ITPDF                 = ts.RECID_ITPDF
            AND df.RECID_IS                    = ts.RECID_IS
-          LEFT JOIN silver.cma_InventoryTrans_Fact  it
+          LEFT JOIN {{ ref('inventorytrans_f') }}  it
             ON it._recid                      = ts.RECID_IT
            AND it._sourceid                   = 1
-          LEFT JOIN silver.cma_Product              dp
+          LEFT JOIN {{ ref('product_d') }}              dp
             ON dp.LegalEntityID               = ts.LegalEntityID
            AND dp.ItemID                      = ts.ITEMID
            AND dp.ProductWidth                = ts.INVENTSIZEID
            AND dp.ProductLength               = ts.INVENTCOLORID
            AND dp.ProductColor                = ts.INVENTSTYLEID
            AND dp.ProductConfig               = ts.CONFIGID
-          LEFT JOIN silver.cma_Warehouse            dw
+          LEFT JOIN {{ ref('warehouse_d') }}            dw
             ON dw.LegalEntityID               = ts.LegalEntityID
            AND dw.WarehouseID                 = ts.WarehouseID
-          LEFT JOIN silver.cma_WarehouseLocation    dwl
+          LEFT JOIN {{ ref('warehouselocation_d') }}    dwl
             ON dwl.LegalEntityID              = ts.LegalEntityID
            AND dwl.WarehouseID                = ts.WarehouseID
            AND dwl.WarehouseLocation          = ts.WarehouseLocationID
-          LEFT JOIN silver.cma_Tag                  dt
+          LEFT JOIN {{ ref('tag_d') }}                  dt
             ON dt.LegalEntityID               = ts.LegalEntityID
            AND dt.TagID                       = ts.TagID
            AND dt.ItemID                      = ts.ITEMID
-          LEFT JOIN silver.cma_LedgerAccount        dca
+          LEFT JOIN {{ ref('ledgeraccount_d') }}        dca
             ON dca._RecID                     = ts.LedgerDimensionID
            AND dca._SourceID                  = 1
-          LEFT JOIN silver.cma_LedgerAccount        dca1
+          LEFT JOIN {{ ref('ledgeraccount_d') }}        dca1
             ON dca1._RecID                    = ts.LedgerDimensionOffsetID
            AND dca1._SourceID                 = 1
-          LEFT JOIN silver.cma_InventoryTransStatus dts
+          LEFT JOIN {{ ref('inventory_trans_status_d') }} dts
             ON dts.InventoryTransStatusTypeID = ts.TransStatusTypeID
            AND dts.InventoryTransStatusID     = ts.TransStatusID
-          LEFT JOIN silver.cma_Voucher              vou
+          LEFT JOIN {{ ref('voucher_d') }}              vou
             ON vou.LegalEntityID              = ts.LegalEntityID
            AND vou.VoucherID                  = ts.VoucherID
-          LEFT JOIN silver.cma_Date                 d
+          LEFT JOIN {{ ref('date_d') }}                 d
             ON d.Date                         = ts.TransDate
-          LEFT JOIN silver.cma_Lot                  il
+          LEFT JOIN {{ ref('lot_d') }}                  il
             ON il._RecID                      = ts.RECID_ITO
            AND il._SourceID                   = 1
-          LEFT JOIN silver.cma_InventorySite        ds
+          LEFT JOIN {{ ref('inventorysite_d') }}        ds
             ON ds.LegalEntityID               = ts.LegalEntityID
            AND ds.InventorySiteID             = ts.SiteID
          WHERE df.InventoryFinancialQuantity         <> 0

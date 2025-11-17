@@ -39,25 +39,25 @@ productioncoproduct_factdetail1 AS (
              , ts._RecID                 AS _RecID
              , ts._SourceID              AS _SourceID
           FROM productioncoproduct_factstage                      ts
-         INNER JOIN silver.cma_ProductionCoProduct pp
+         INNER JOIN {{ ref('productioncoproduct_d') }} pp
             ON pp._RecID        = ts._RecID
            AND pp._SourceID     = 1
-          LEFT JOIN silver.cma_Product             dp
+          LEFT JOIN {{ ref('product_d') }}             dp
             ON dp.LegalEntityID = ts.LegalEntityID
            AND dp.ItemID        = ts.ItemID
            AND dp.ProductLength = ts.ProductLength
            AND dp.ProductColor  = ts.ProductColor
            AND dp.ProductWidth  = ts.ProductWidth
            AND dp.ProductConfig = ts.ProductConfig
-          LEFT JOIN silver.cma_Production          po
+          LEFT JOIN {{ ref('production_d') }}          po
             ON po.LegalEntityID = ts.LegalEntityID
            AND po.ProductionID  = ts.ProductionID
-         INNER JOIN silver.cma_LegalEntity         le
+         INNER JOIN {{ ref('legalentity_d') }}         le
             ON le.LegalEntityID = ts.LegalEntityID
-          LEFT JOIN silver.cma_Financial           fd
+          LEFT JOIN {{ ref('financial_d') }}           fd
             ON fd._RecID        = ts.DefaultDimension
            AND fd._SourceID     = 1
-          LEFT JOIN silver.cma_UOM                 du
+          LEFT JOIN {{ ref('uom_d') }}                 du
             ON du.UOM           = dp.InventoryUOM;
 )
 SELECT td.ProductionCoProductKey

@@ -150,7 +150,7 @@ purchaseinvoicelinechargetrans_facttrans AS (
              , tk.RecID_VIT
              , tk.RecID_MT
 
-        FROM silver.cma_PurchaseInvoiceLineCharge_Fact fc
+        FROM {{ ref('purchaseinvoicelinecharge_f') }} fc
          INNER JOIN purchaseinvoicelinechargetrans_factpilkeys                      tk
             ON tk.RecID_MT  = fc._RecID1
            AND tk.RecID_VIT = fc._RECID2
@@ -200,7 +200,7 @@ purchaseinvoicelinechargetrans_factadj AS (
                          ELSE 0 END AS MONEY) AS TaxAmountAdj
 
           FROM purchaseinvoicelinechargetrans_facttrans                                  t
-         INNER JOIN silver.cma_PurchaseInvoiceLineCharge_Fact fcl
+         INNER JOIN {{ ref('purchaseinvoicelinecharge_f') }} fcl
             ON fcl.PurchaseInvoiceLineChargeKey = t.PurchaseInvoiceLineChargeKey
 ),
 purchaseinvoicelinechargetrans_facttransadj AS (
@@ -307,11 +307,11 @@ SELECT DISTINCT
          , CURRENT_TIMESTAMP                                                    AS _CreatedDate
          , CURRENT_TIMESTAMP                                                    AS _ModifiedDate 
 
-      FROM silver.cma_PurchaseInvoiceLineCharge_Fact     fc
+      FROM {{ ref('purchaseinvoicelinecharge_f') }}     fc
       LEFT JOIN purchaseinvoicelinechargetrans_facttrans4                            tt
         ON tt.PurchaseInvoiceLineChargeKey = fc.PurchaseInvoiceLineChargeKey
        AND tt.RecID_VIT                    = fc._RecID2
-      LEFT JOIN silver.cma_PurchaseInvoiceLineTrans_Fact pilt
+      LEFT JOIN {{ ref('purchaseinvoicelinetrans_f') }} pilt
         ON pilt._RecID3                    = ISNULL(tt._RecID3, 0)
        AND pilt._RecID2                    = fc._RecID2
        AND pilt._SourceID                  = 1;

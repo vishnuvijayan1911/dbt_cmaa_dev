@@ -65,11 +65,11 @@ SELECT DISTINCT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID 
 
-      FROM silver.cma_PurchaseOrderLineTax_Fact        ft
+      FROM {{ ref('purchaseorderlinetax_f') }}        ft
      INNER JOIN purchaseorderlinetaxtrans_factpolkeys                        tk
         ON tk.RecID_TT = ft._RecID
      INNER JOIN purchaseorderlinetaxtrans_factpolratio                       tr
         ON tr.RecID_IT = tk.RecID_IT
        AND tr.RecID_TT = tk.RecID_TT
-      LEFT JOIN silver.cma_PurchaseOrderLineTrans_Fact fclt
+      LEFT JOIN {{ ref('purchaseorderlinetrans_f') }} fclt
         ON fclt._RecID1 = tr.RecID_IT;

@@ -73,32 +73,32 @@ SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg.SourceID) AS FaultKey
          ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
       FROM fault_factstage                      stg
-     INNER JOIN silver.cma_LegalEntity        le
+     INNER JOIN {{ ref('legalentity_d') }}        le
         ON le.LegalEntityID       = stg.LegalEntityID
        AND le._SourceID           = stg.SourceID
-      LEFT JOIN silver.cma_WorkOrder          wd
+      LEFT JOIN {{ ref('workorder_d') }}          wd
         ON wd.WorkOrderID         = stg.WorkOrderID
        AND wd.LegalEntityID       = stg.LegalEntityID
        AND wd._SourceID           = le._SourceID
-      LEFT JOIN silver.cma_FaultArea          fa
+      LEFT JOIN {{ ref('faultarea_d') }}          fa
         ON fa.faultareaid         = stg.FaultAreaID
        AND fa.legalentityid       = le.LegalEntityID
        AND fa._sourceid           = le._SourceID
-      LEFT JOIN silver.cma_Asset              obj
+      LEFT JOIN {{ ref('asset_d') }}              obj
         ON obj.AssetID            = stg.ObjectID
        AND obj.LegalEntityID      = le.LegalEntityID
        AND obj._SourceID          = le._SourceID
-      LEFT JOIN silver.cma_Date               d
+      LEFT JOIN {{ ref('date_d') }}               d
         ON d.Date                 = stg.FaultDate
-      LEFT JOIN silver.cma_MaintenanceRequest r
+      LEFT JOIN {{ ref('maintenancerequest_d') }} r
         ON r.MaintenanceRequestID = stg.RequestID
        AND r.LegalEntityID        = le.LegalEntityID
        AND r._SourceID            = stg.SourceID
-      LEFT JOIN silver.cma_FaultType          ft
+      LEFT JOIN {{ ref('faulttype_d') }}          ft
         ON ft.faulttypeid         = stg.FaultTypeID
        AND ft.legalentityid       = le.LegalEntityID
        AND ft._sourceid           = le._SourceID
-      LEFT JOIN silver.cma_FaultSymptom       ofs
+      LEFT JOIN {{ ref('faultsymptom_d') }}       ofs
         ON ofs.faultsymptomid     = stg.FaultSymptomID
        AND ofs.legalentityid      = le.LegalEntityID
        AND ofs._sourceid          = le._SourceID;

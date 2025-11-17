@@ -32,12 +32,12 @@ SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg._SourceID) AS FaultCauseFactK
          ,CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM faultcause_factstage               stg
-     INNER JOIN silver.cma_LegalEntity le
+     INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID  = stg.LegalEntityID
-     INNER JOIN silver.cma_Fault_Fact  ff
+     INNER JOIN {{ ref('fault_f') }}  ff
         ON ff._RecID         = stg._RecID1
        AND ff._SourceID      = stg._SourceID
-      LEFT JOIN silver.cma_FaultCause  ofc
+      LEFT JOIN {{ ref('faultcause_d') }}  ofc
         ON ofc.faultcauseid  = stg.FaultCauseID
        AND ofc.legalentityid = le.LegalEntityID
        AND ofc._sourceid     = stg._SourceID;

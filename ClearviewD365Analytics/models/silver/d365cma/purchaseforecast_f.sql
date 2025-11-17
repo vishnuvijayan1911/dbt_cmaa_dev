@@ -62,35 +62,35 @@ purchaseforecast_factdetail1 AS (
              , 1                          AS _SourceID
 
         FROM purchaseforecast_factstage                ts
-         INNER JOIN silver.cma_LegalEntity   le
+         INNER JOIN {{ ref('legalentity_d') }}   le
             ON le.LegalEntityID   = ts.LEGALENTITYID
-          LEFT JOIN silver.cma_Financial     fd
+          LEFT JOIN {{ ref('financial_d') }}     fd
             ON fd._RecID          = ts.DEFAULTDIMENSION
            AND fd._SourceID       = 1
-          LEFT JOIN silver.cma_ForecastModel dm
+          LEFT JOIN {{ ref('forecastmodel_d') }} dm
             ON dm.LegalEntityID   = ts.LEGALENTITYID
            AND dm.ModelID         = ts.MODELID
-          LEFT JOIN silver.cma_Product       dp
+          LEFT JOIN {{ ref('product_d') }}       dp
             ON dp.LegalEntityID   = ts.LEGALENTITYID
            AND dp.ItemID          = ts.ItemID
            AND dp.ProductWidth    = ts.INVENTSIZEID
            AND dp.ProductLength   = ts.INVENTCOLORID
            AND dp.ProductColor    = ts.INVENTSTYLEID
            AND dp.ProductConfig   = ts.PRODUCTCONFIG
-          LEFT JOIN silver.cma_Vendor        dv
+          LEFT JOIN {{ ref('vendor_d') }}        dv
             ON dv.LegalEntityID   = ts.LEGALENTITYID
            AND dv.VendorAccount   = ts.VENDACCOUNTID
-          LEFT JOIN silver.cma_InventorySite iv
+          LEFT JOIN {{ ref('inventorysite_d') }} iv
             ON iv.LegalEntityID   = ts.LEGALENTITYID
            AND iv.InventorySiteID = ts.INVENTSITEID
-          LEFT JOIN silver.cma_Warehouse     dw
+          LEFT JOIN {{ ref('warehouse_d') }}     dw
             ON dw.LegalEntityID   = ts.LEGALENTITYID
            AND dw.WarehouseID     = ts.INVENTLOCATIONID
-          LEFT JOIN silver.cma_Date          dd
+          LEFT JOIN {{ ref('date_d') }}          dd
             ON dd.Date            = ts.STARTDATE
-          LEFT JOIN silver.cma_Currency      cur
+          LEFT JOIN {{ ref('currency_d') }}      cur
             ON cur.CurrencyID     = ts.Currency
-          LEFT JOIN silver.cma_UOM           du
+          LEFT JOIN {{ ref('uom_d') }}           du
             ON du.UOM             = ts.PURCHUNITID;
 )
 SELECT 

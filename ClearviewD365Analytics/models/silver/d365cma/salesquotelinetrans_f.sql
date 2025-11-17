@@ -62,7 +62,7 @@ salesquotelinetrans_facttrans AS (
              , ISNULL(ts.Qty_IT * -1, 0)                                                AS OrderedQuantity
 
           FROM salesquotelinetrans_factstage                       ts
-         INNER JOIN silver.cma_SalesQuoteLine_Fact fcl
+         INNER JOIN {{ ref('salesquoteline_f') }} fcl
             ON fcl._RecID    = ts.RecID_QL
            AND fcl._SourceID = 1;
 ),
@@ -112,7 +112,7 @@ SELECT
          , fcl._RecID                                                                                           AS _RecID1
          , 1                                                                                                    AS _SourceID
 
-      FROM silver.cma_SalesQuoteLine_Fact       fcl
+      FROM {{ ref('salesquoteline_f') }}       fcl
 
       LEFT JOIN salesquotelinetrans_factstage                   ts
         ON ts.RecID_QL                   = fcl._RecID
@@ -124,9 +124,9 @@ SELECT
         ON tr.RecID_IT                   = ts.RecID_IT
       LEFT JOIN salesquotelinetrans_facttag                     tg
         ON tg.RecID_IT                   = ts.RecID_IT
-      LEFT JOIN silver.cma_Tag                  dt
+      LEFT JOIN {{ ref('tag_d') }}                  dt
         ON dt._RecID                     = tg.RecID_IB
        AND dt._SourceID                  = 1
-      LEFT JOIN silver.cma_InventoryTransStatus ds
+      LEFT JOIN {{ ref('inventory_trans_status_d') }} ds
         ON ds.InventoryTransStatusID     = ts.STATUSISSUE
        AND ds.InventoryTransStatusTypeID = CASE WHEN ts.STATUSISSUE > 0 THEN 1 ELSE 2 END

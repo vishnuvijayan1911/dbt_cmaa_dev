@@ -144,7 +144,7 @@ salesinvoicelinechargetrans_facttrans AS (
              , tk.RECID_MT
              , tk.RECID_CIT
 
-          FROM silver.cma_SalesInvoiceLineCharge_Fact fc
+          FROM {{ ref('salesinvoicelinecharge_f') }} fc
          INNER JOIN salesinvoicelinechargetrans_factsilkeys                   tk
             ON tk.RECID_MT  = fc._RECID1
            AND tk.RECID_CIT = fc._RECID2
@@ -194,7 +194,7 @@ salesinvoicelinechargetrans_factadj AS (
                          ELSE 0 END AS MONEY) AS TaxAmountAdj
 
           FROM salesinvoicelinechargetrans_facttrans                               t
-         INNER JOIN silver.cma_SalesInvoiceLineCharge_Fact fcl
+         INNER JOIN {{ ref('salesinvoicelinecharge_f') }} fcl
             ON fcl.SalesInvoiceLineChargeKey = t.SalesInvoiceLineChargeKey
 ),
 salesinvoicelinechargetrans_facttransadj AS (
@@ -297,14 +297,14 @@ SELECT DISTINCT
          , ISNULL(tt._RecID3, 0)                                                AS _RecID3
          , 1                                                                    AS _SourceID
 
-      FROM silver.cma_SalesInvoiceLineCharge_Fact     fc
+      FROM {{ ref('salesinvoicelinecharge_f') }}     fc
 
       LEFT JOIN salesinvoicelinechargetrans_facttrans4                         tt
         ON tt.SalesInvoiceLineChargeKey = fc.SalesInvoiceLineChargeKey
        AND tt.RECID_CIT                 = fc._RecID2
-      LEFT JOIN silver.cma_SalesInvoiceLineTrans_Fact fclt
+      LEFT JOIN {{ ref('salesinvoicelinetrans_f') }} fclt
         ON fclt._RecID3                 = ISNULL(tt._RecID3, 0)
        AND fclt._RECID2                 = fc._RecID2
        AND fclt._SourceID               = 1
-     INNER JOIN silver.cma_SalesInvoiceLine           sil
+     INNER JOIN {{ ref('salesinvoiceline_d') }}           sil
         ON sil.SalesInvoiceLineKey      = fc.SalesInvoiceLineKey;

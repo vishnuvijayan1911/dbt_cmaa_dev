@@ -237,8 +237,8 @@ purchaseorderline_factcharge AS (
              , SUM(crg.NonBillableCharge)          AS NonBillableCharge
              , SUM(crg.NonBillableCharge_TransCur) AS NonBillableCharge_TransCur
 
-          FROM silver.cma_PurchaseOrderLineCharge_Fact crg
-         INNER JOIN silver.cma_PurchaseOrderLine       pol
+          FROM {{ ref('purchaseorderlinecharge_f') }} crg
+         INNER JOIN {{ ref('purchaseorderline_d') }}       pol
             ON pol.PurchaseOrderLineKey = crg.PurchaseOrderLineKey
            AND pol._SourceID            = 1
          GROUP BY pol.PurchaseOrderLineKey;
@@ -387,117 +387,117 @@ purchaseorderline_factdetailmain AS (
              , 1                                                                                        AS _SourceID
 
           FROM purchaseorderline_factstage                           ts
-         INNER JOIN silver.cma_PurchaseOrderLine       dpol
+         INNER JOIN {{ ref('purchaseorderline_d') }}       dpol
             ON dpol._RecID                   = ts.RecID
            AND dpol._SourceID                = 1
-         INNER JOIN silver.cma_LegalEntity             le
+         INNER JOIN {{ ref('legalentity_d') }}             le
             ON le.LegalEntityID              = ts.LegalEntityID
-          LEFT JOIN silver.cma_Address                 da
+          LEFT JOIN {{ ref('address_d') }}                 da
             ON da._RecID                     = ts.DeliveryPostalAddress
            AND da._SourceID                  = 1
-          LEFT JOIN silver.cma_Product                 dp
+          LEFT JOIN {{ ref('product_d') }}                 dp
             ON dp.LegalEntityID              = ts.LegalEntityID
            AND dp.ItemID                     = ts.ItemID
            AND dp.ProductWidth               = ts.ProductWidth
            AND dp.ProductLength              = ts.ProductLength
            AND dp.ProductColor               = ts.ProductColor
            AND dp.ProductConfig              = ts.ProductConfig
-          LEFT JOIN silver.cma_OnTimeDeliveryStatus    ot
+          LEFT JOIN {{ ref('ontimedeliverystatus_d') }}    ot
             ON ot.OnTimeDeliveryStatusID     = ts.OnTimeDeliveryStatusID
-          LEFT JOIN silver.cma_Date                    dd
+          LEFT JOIN {{ ref('date_d') }}                    dd
             ON dd.Date                       = ts.OrderDate
-          LEFT JOIN silver.cma_Date                    dd1
+          LEFT JOIN {{ ref('date_d') }}                    dd1
             ON dd1.Date                      = ts.DeliveryDate
-          LEFT JOIN silver.cma_Date                    dd2
+          LEFT JOIN {{ ref('date_d') }}                    dd2
             ON dd2.Date                      = ts.DeliveryDateConfirmed
-          LEFT JOIN silver.cma_Date                    dd3
+          LEFT JOIN {{ ref('date_d') }}                    dd3
             ON dd3.Date                      = ts.DeliveryDateActual
-          LEFT JOIN silver.cma_Vendor                  dv1
+          LEFT JOIN {{ ref('vendor_d') }}                  dv1
             ON dv1.LegalEntityID             = ts.LegalEntityID
            AND dv1.VendorAccount             = ts.VendorAccount
-          LEFT JOIN silver.cma_Vendor                  dv2
+          LEFT JOIN {{ ref('vendor_d') }}                  dv2
             ON dv2.LegalEntityID             = ts.LegalEntityID
            AND dv2.VendorAccount             = ts.InvoiceAccount
-          LEFT JOIN silver.cma_InventorySite           ds
+          LEFT JOIN {{ ref('inventorysite_d') }}           ds
             ON ds.LegalEntityID              = ts.LegalEntityID
            AND ds.InventorySiteID            = ts.SiteID
-          LEFT JOIN silver.cma_Warehouse               dw
+          LEFT JOIN {{ ref('warehouse_d') }}               dw
             ON dw.LegalEntityID              = ts.LegalEntityID
            AND dw.WarehouseID                = ts.WarehouseID
-          LEFT JOIN silver.cma_PurchaseOrder           dpo
+          LEFT JOIN {{ ref('purchaseorder_d') }}           dpo
             ON dpo.LegalEntityID             = dpol.LegalEntityID
            AND dpo.PurchaseOrderID           = dpol.PurchaseOrderID
-          LEFT JOIN silver.cma_Lot                     it
+          LEFT JOIN {{ ref('lot_d') }}                     it
             ON it._recid                     = ts.RecID_ITO
            AND it._sourceid                  = 1
-          LEFT JOIN silver.cma_Financial               fd1
+          LEFT JOIN {{ ref('financial_d') }}               fd1
             ON fd1._RecID                    = ts.DefaultDimension
            AND fd1._SourceID                 = 1
-          LEFT JOIN silver.cma_DocumentStatus          dds
+          LEFT JOIN {{ ref('documentstatus_d') }}          dds
             ON dds.DocumentStatusID          = ts.DocumentStatusID
-          LEFT JOIN silver.cma_SalesOrderLine          dsol
+          LEFT JOIN {{ ref('salesorderline_d') }}          dsol
             ON dsol.LegalEntityID            = ts.LegalEntityID
            AND dsol.LotID                    = ts.InventTransID_Sales
-          LEFT JOIN silver.cma_PurchaseStatus          dps
+          LEFT JOIN {{ ref('purchasestatus_d') }}          dps
             ON dps.PurchaseStatusID          = ts.PurchaseStatusID
-          LEFT JOIN silver.cma_PurchaseStatus          dps1
+          LEFT JOIN {{ ref('purchasestatus_d') }}          dps1
             ON dps1.PurchaseStatusID         = ts.PurchaseLineStatusID
-          LEFT JOIN silver.cma_PurchaseType            dpt
+          LEFT JOIN {{ ref('purchasetype_d') }}            dpt
             ON dpt.PurchaseTypeID            = ts.PurchaseTypeID
-          LEFT JOIN silver.cma_PurchaseApprovalStatus  dpas
+          LEFT JOIN {{ ref('purchaseapprovalstatus_d') }}  dpas
             ON dpas.PurchaseApprovalStatusID = ts.ApprovalStatusID
-          LEFT JOIN silver.cma_DeliveryMode            ddm
+          LEFT JOIN {{ ref('deliverymode_d') }}            ddm
             ON ddm.LegalEntityID             = ts.LegalEntityID
            AND ddm.DeliveryModeID            = ts.DeliveryModeID
-          LEFT JOIN silver.cma_PurchaseRequisitionLine prl
+          LEFT JOIN {{ ref('purchaserequisitionline_d') }} prl
             ON prl._recid                    = ts.RecID_PRL
            AND prl._sourceid                 = 1
-          LEFT JOIN silver.cma_DeliveryTerm            ddt
+          LEFT JOIN {{ ref('deliveryterm_d') }}            ddt
             ON ddt.LegalEntityID             = ts.LegalEntityID
            AND ddt.DeliveryTermID            = ts.DeliveryTermID
-          LEFT JOIN silver.cma_PaymentTerm             pa
+          LEFT JOIN {{ ref('paymentterm_d') }}             pa
             ON pa.LegalEntityID              = ts.LegalEntityID
            AND pa.PaymentTermID              = ts.PaymentTermID
-          LEFT JOIN silver.cma_TaxGroup                tg
+          LEFT JOIN {{ ref('taxgroup_d') }}                tg
             ON tg.LegalEntityID              = ts.LegalEntityID
            AND tg.TaxGroupID                 = ts.TaxGroupID
-          LEFT JOIN silver.cma_UOM                     du
+          LEFT JOIN {{ ref('uom_d') }}                     du
             ON du.UOM                        = ts.PricingUnit
-          LEFT JOIN silver.cma_UOM                     du1
+          LEFT JOIN {{ ref('uom_d') }}                     du1
             ON du1.UOM                       = ts.PurchaseUnit
-          LEFT JOIN silver.cma_UOM                     du2
+          LEFT JOIN {{ ref('uom_d') }}                     du2
             ON du2.UOM                       = ts.ReceivingUnit
-          LEFT JOIN silver.cma_Currency                dc
+          LEFT JOIN {{ ref('currency_d') }}                dc
             ON dc.CurrencyID                 = ts.CurrencyID
           LEFT JOIN purchaseorderline_factcharge                     tca
             ON tca.PurchaseOrderLineKey      = dpol.PurchaseOrderLineKey
-          LEFT JOIN silver.cma_ReturnStatus            drs
+          LEFT JOIN {{ ref('returnstatus_d') }}            drs
             ON drs.ReturnStatusID            = ts.ReturnStatusID
-          LEFT JOIN silver.cma_ReturnReason            drr
+          LEFT JOIN {{ ref('returnreason_d') }}            drr
             ON drr.LegalEntityID             = ts.LegalEntityID
            AND drr.ReturnReasonID            = ts.ReturnReasonID
-          LEFT JOIN silver.cma_ProcurementCategory     dpc
+          LEFT JOIN {{ ref('procurementcategory_d') }}     dpc
             ON dpc._RecID                    = ts.RecID_PC
            AND dpc._SourceID                 = 1
           LEFT JOIN purchaseorderline_factexhangerate                er
             ON er.RecID_PL                   = ts.RECID
-          LEFT JOIN silver.cma_Date                    dd4
+          LEFT JOIN {{ ref('date_d') }}                    dd4
             ON dd4.Date                      = CAST(GETDATE() AS DATE)
-          LEFT JOIN silver.cma_ExchangeRate_Fact       ex
+          LEFT JOIN {{ ref('exchangerate_f') }}       ex
             ON ex.ExchangeDateKey            = dd4.DateKey
            AND ex.FromCurrencyID             = ts.CurrencyID
            AND ex.ToCurrencyID               = le.AccountingCurrencyID
            AND ex.ExchangeRateType           = le.TransExchangeRateType
-          LEFT JOIN silver.cma_UserInfo                u
+          LEFT JOIN {{ ref('userinfo_d') }}                u
             ON u.LegalEntityID               = ts.LegalEntityID
            AND u.UserName                    = ts.Approver1
-          LEFT JOIN silver.cma_UserInfo                u1
+          LEFT JOIN {{ ref('userinfo_d') }}                u1
             ON u1.LegalEntityID              = ts.LegalEntityID
            AND u1.UserName                   = ts.Approver2
-          LEFT JOIN silver.cma_Employee                de
+          LEFT JOIN {{ ref('employee_d') }}                de
             ON de._RecID                     = ts.BuyerID
            AND de._SourceID                  = 1
-          LEFT JOIN silver.cma_PurchaseAgreementLine pal
+          LEFT JOIN {{ ref('purchaseagreementline_d') }} pal
             ON pal._RecID            = ts.RecID_AL;
 )
 SELECT DISTINCT td.PurchaseOrderLineKey

@@ -191,60 +191,60 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID1, ts._RecID2, ts._SourceID) AS GLCo
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM glcostdetail_factstage                       ts
-     INNER JOIN silver.cma_LegalEntity         le
+     INNER JOIN {{ ref('legalentity_d') }}         le
         ON le.LegalEntityID      = ts.LegalEntityID
-      LEFT JOIN silver.cma_PurchaseOrderLine   dpol
+      LEFT JOIN {{ ref('purchaseorderline_d') }}   dpol
         ON dpol._RecID           = ts.RecID_PL
        AND dpol._SourceID        = 1
-      LEFT JOIN silver.cma_Address             da
+      LEFT JOIN {{ ref('address_d') }}             da
         ON da._RecID             = ts.PaymentAddress
        AND da._SourceID          = 1
-      LEFT JOIN silver.cma_Product             dp
+      LEFT JOIN {{ ref('product_d') }}             dp
         ON dp.LegalEntityID      = ts.LegalEntityID
        AND dp.ItemID             = ts.ItemID
        AND dp.ProductLength      = ts.ProductLength
        AND dp.ProductWidth       = ts.ProductWidth
        AND dp.ProductColor       = ts.ProductColor
        AND dp.ProductConfig      = ts.ProductConfig
-      LEFT JOIN silver.cma_ProcurementCategory dpc
+      LEFT JOIN {{ ref('procurementcategory_d') }} dpc
         ON dpc._RecID            = ts.RecID_ERC
        AND dpc._SourceID         = 1
-      LEFT JOIN silver.cma_Vendor              dv
+      LEFT JOIN {{ ref('vendor_d') }}              dv
         ON dv.LegalEntityID      = ts.LegalEntityID
        AND dv.VendorAccount      = ts.VendorAccount
-      LEFT JOIN silver.cma_Vendor              dv1
+      LEFT JOIN {{ ref('vendor_d') }}              dv1
         ON dv1.LegalEntityID     = ts.LegalEntityID
        AND dv1.VendorAccount     = ts.InvoiceAccount
-      LEFT JOIN silver.cma_InventorySite       ds
+      LEFT JOIN {{ ref('inventorysite_d') }}       ds
         ON ds.LegalEntityID      = ts.LegalEntityID
        AND ds.InventorySiteID    = ts.SiteID
-      LEFT JOIN silver.cma_PaymentTerm         pt
+      LEFT JOIN {{ ref('paymentterm_d') }}         pt
         ON pt.LegalEntityID      = ts.LegalEntityID
        AND pt.PaymentTermID      = ts.PaymentTermID
-      LEFT JOIN silver.cma_PostingType         pos
+      LEFT JOIN {{ ref('postingtype_d') }}         pos
         ON pos.PostingTypeID     = ts.PostingTypeID
-      LEFT JOIN silver.cma_PaymentMode         pm
+      LEFT JOIN {{ ref('paymentmode_d') }}         pm
         ON pm.LegalEntityID      = ts.LegalEntityID
        AND pm.PaymentModeID      = ts.PaymentModeID
-      LEFT JOIN silver.cma_LedgerTransType     dlt
+      LEFT JOIN {{ ref('ledgertranstype_d') }}     dlt
         ON dlt.LedgerTransTypeID = ts.TransTypeID
-      LEFT JOIN silver.cma_Warehouse           dw
+      LEFT JOIN {{ ref('warehouse_d') }}           dw
         ON dw.LegalEntityID      = ts.LegalEntityID
        AND dw.WarehouseID        = ts.WarehouseID
-      LEFT JOIN silver.cma_LedgerAccount       dfd
+      LEFT JOIN {{ ref('ledgeraccount_d') }}       dfd
         ON dfd._RecID            = ts.DefaultDimension
-      LEFT JOIN silver.cma_Voucher             dvo
+      LEFT JOIN {{ ref('voucher_d') }}             dvo
         ON dvo.LegalEntityID     = ts.LegalEntityID
        AND dvo.VoucherID         = ts.VoucherID
-      LEFT JOIN silver.cma_Date                dd
+      LEFT JOIN {{ ref('date_d') }}                dd
         ON dd.Date               = ts.TransDate
-      LEFT JOIN silver.cma_Date                dd1
+      LEFT JOIN {{ ref('date_d') }}                dd1
         ON dd1.Date              = ts.InvoiceDate
-      LEFT JOIN silver.cma_Date                dd2
+      LEFT JOIN {{ ref('date_d') }}                dd2
         ON dd2.Date              = ts.InvoiceReceiptDate
-      LEFT JOIN silver.cma_Date                dd3
+      LEFT JOIN {{ ref('date_d') }}                dd3
         ON dd3.Date              = ts.InvoiceDueDate
-      LEFT JOIN silver.cma_Date                dd4
+      LEFT JOIN {{ ref('date_d') }}                dd4
         ON dd4.Date              = ts.LastSettleDate
-      LEFT JOIN silver.cma_Currency            cc
+      LEFT JOIN {{ ref('currency_d') }}            cc
         ON cc.CurrencyID         = ts.CurrencyID;

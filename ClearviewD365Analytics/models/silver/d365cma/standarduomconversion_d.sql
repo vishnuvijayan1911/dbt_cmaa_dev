@@ -18,7 +18,7 @@ SELECT
         uomc.factor,
         prd.productwidth,
         prd.productlength     
-      FROM silver.cma_Product prd
+      FROM {{ ref('product_d') }} prd
       INNER JOIN {{ ref('unitofmeasureconversion') }} uomc ON uomc.product = prd.productid
       INNER JOIN {{ ref('unitofmeasure') }} fromuom ON fromuom.recid = uomc.fromunitofmeasure
       INNER JOIN {{ ref('unitofmeasure') }} touom ON touom.recid = uomc.tounitofmeasure

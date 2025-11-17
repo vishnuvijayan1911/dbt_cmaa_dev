@@ -2,4 +2,4 @@
 
 -- Simple pass-through dimension for main account hierarchy.
 SELECT *
-  FROM silver.cma_MainAccount;
+  FROM {{ ref('mainaccount_d') }};

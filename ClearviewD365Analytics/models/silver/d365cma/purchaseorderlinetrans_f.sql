@@ -50,10 +50,10 @@ purchaseorderlinetrans_facttrans AS (
              , ts.PRODUCTRECEIPTID                                                                                           AS ProductReceiptID
 
           FROM purchaseorderlinetrans_factstage                          ts
-         INNER JOIN silver.cma_PurchaseOrderLine_Fact fpl
+         INNER JOIN {{ ref('purchaseorderline_f') }} fpl
             ON fpl._RecID    = ts.RECID_PL
            AND fpl._SourceID = 1
-          LEFT JOIN silver.cma_Product                dp
+          LEFT JOIN {{ ref('product_d') }}                dp
             ON dp.ProductKey = fpl.ProductKey;
 ),
 purchaseorderlinetrans_facttransuom AS (
@@ -109,7 +109,7 @@ purchaseorderlinetrans_factprorate AS (
                     ELSE 0 END                                                                       AS IsProrateAdj
     		, ts._SourceDate
 
-          FROM silver.cma_PurchaseOrderLine_Fact fsl
+          FROM {{ ref('purchaseorderline_f') }} fsl
           LEFT JOIN purchaseorderlinetrans_factstage                ts
             ON ts.RECID_PL = fsl._RecID
           LEFT JOIN purchaseorderlinetrans_factratio                tr
@@ -190,7 +190,7 @@ purchaseorderlinetrans_factadj AS (
                          ELSE 0 END AS MONEY)                                                                                  AS ReceivedAmount_TransCurAdj
 
           FROM purchaseorderlinetrans_factprorate                        t
-         INNER JOIN silver.cma_PurchaseOrderLine_Fact fcl
+         INNER JOIN {{ ref('purchaseorderline_f') }} fcl
             ON fcl.PurchaseOrderLineKey = t.PurchaseOrderLineKey
 ),
 purchaseorderlinetrans_facttransadj AS (
@@ -389,23 +389,23 @@ SELECT
          ,  CURRENT_TIMESTAMP  AS  _CreatedDate
          , CURRENT_TIMESTAMP AS _ModifiedDate 
 
-      FROM silver.cma_PurchaseOrderLine_Fact    fpl
+      FROM {{ ref('purchaseorderline_f') }}    fpl
        LEFT JOIN purchaseorderlinetrans_factprorate4                 ts
         ON ts.PurchaseOrderLineKey       = fpl.PurchaseOrderLineKey
       LEFT JOIN purchaseorderlinetrans_facttrans                   tt
         ON tt.RecID_IT                   = ts.RecID_IT
       LEFT JOIN purchaseorderlinetrans_factratio                   tr
         ON tr.RecID_IT                   = tt.RecID_IT
-      LEFT JOIN silver.cma_PurchaseOrderLine    dpl
+      LEFT JOIN {{ ref('purchaseorderline_d') }}    dpl
         ON dpl._RecID                    = tt.RecID_PL
        AND dpl._SourceID                 = 1
       LEFT JOIN purchaseorderlinetrans_facttransuom                tu
         ON tu.RecID_IT                   = tt.RecID_IT
       LEFT JOIN {{ ref('inventtrans') }}          it
         ON it.recid                     = tt.RecID_IT
-      LEFT JOIN silver.cma_Tag                  dt
+      LEFT JOIN {{ ref('tag_d') }}                  dt
         ON dt._RecID                     = ts.RECID_IB
        AND dt._SourceID                  = 1
-      LEFT JOIN silver.cma_InventoryTransStatus ds
+      LEFT JOIN {{ ref('inventory_trans_status_d') }} ds
         ON ds.InventoryTransStatusID     = CASE WHEN ts.STATUSRECEIPT > 0 THEN ts.STATUSRECEIPT ELSE ts.STATUSISSUE END
        AND ds.InventoryTransStatusTypeID = CASE WHEN ts.STATUSRECEIPT > 0 THEN 2 ELSE 1 END

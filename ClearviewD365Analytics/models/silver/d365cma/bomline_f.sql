@@ -32,7 +32,7 @@ bomline_factbom AS (
                         , ROW_NUMBER() OVER (PARTITION BY db.LegalEntityID, db.BOMID
                                                  ORDER BY db._RecID DESC) AS RankVal
                      FROM {{ ref('bom') }}      b
-                    INNER JOIN silver.cma_BOM db
+                    INNER JOIN {{ ref('bom_d') }} db
                        ON db.LegalEntityID = b.dataareaid
                       AND db.BOMID         = b.bomid) t
          WHERE t.RankVal = 1;
@@ -49,17 +49,17 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS BOMLineKey
          ,  CURRENT_TIMESTAMP  AS  _CreatedDate
          , CURRENT_TIMESTAMP AS _ModifiedDate
       FROM bomline_factstage              ts
-     INNER JOIN silver.cma_LegalEntity le
+     INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID
       LEFT JOIN bomline_factbom           tb
         ON tb.LegalEntityID = ts.LegalEntityID
        AND tb.BOMID         = ts.BOMID
-      LEFT JOIN silver.cma_Product     dp
+      LEFT JOIN {{ ref('product_d') }}     dp
         ON dp.LegalEntityID = ts.LegalEntityID
        AND dp.ItemID        = ts.ItemID
        AND dp.ProductLength = ts.ProductLength
        AND dp.ProductColor  = ts.ProductColor
        AND dp.ProductWidth  = ts.ProductWidth
        AND dp.ProductConfig = ts.ProductConfig
-      LEFT JOIN silver.cma_UOM         du
+      LEFT JOIN {{ ref('uom_d') }}         du
         ON du.UOM           = ts.UnitID;

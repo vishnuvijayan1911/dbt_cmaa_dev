@@ -60,9 +60,9 @@ tagcostgroup_factdetailmain AS (
         , ac._recid
         , ac._sourceid
      FROM tagcostgroup_factstage            ac
-    INNER JOIN silver.cma_legalentity     le
+    INNER JOIN {{ ref('legalentity_d') }}     le
        ON le.legalentityid   = ac.dataareaid
-     LEFT JOIN silver.cma_product         dp
+     LEFT JOIN {{ ref('product_d') }}         dp
        ON dp.legalentityid   = ac.dataareaid
       AND dp.itemid          = ac.itemid
       AND dp.productwidth    = ac.inventsizeid
@@ -70,21 +70,21 @@ tagcostgroup_factdetailmain AS (
       AND dp.productcolor    = ac.inventstyleid
       AND dp.productconfig   = ac.configid
       AND dp._sourceid       = 1
-     LEFT JOIN silver.cma_uom             u1
+     LEFT JOIN {{ ref('uom_d') }}             u1
        ON lower(u1.uom)      = lower(dp.inventoryuom)
-     LEFT JOIN silver.cma_uom             u2
+     LEFT JOIN {{ ref('uom_d') }}             u2
        ON lower(u2.uom)      = lower(ac.cmacostingunit)
      LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
        ON vuc.productkey     = dp.productkey
       AND vuc.legalentitykey = le.legalentitykey
       AND vuc.fromuomkey     = u1.uomkey
      -- AND lower(vuc.touom)  = 'lb'
-     LEFT JOIN silver.cma_tag             t
+     LEFT JOIN {{ ref('tag_d') }}             t
        ON t.tagid            = ac.inventbatchid
       AND t.itemid           = ac.itemid
       AND t.legalentityid    = ac.dataareaid
      AND t._sourceid       = 1
-     LEFT JOIN silver.cma_costgroup       cg
+     LEFT JOIN {{ ref('costgroup_d') }}       cg
        ON cg.costgroupid     = ac.costgroupid;
 ),
 tagcostgroup_factdetail1 AS (

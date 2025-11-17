@@ -302,8 +302,8 @@ inventorycosttransfactgroup AS (
              , cb.CostBucketGroup
              , cb.CostBucketID
              , cb.CostBucket
-          FROM silver.cma_CostGroup       cg
-          LEFT JOIN silver.cma_CostBucket cb
+          FROM {{ ref('costgroup_d') }}       cg
+          LEFT JOIN {{ ref('cost_bucket_d') }} cb
             ON cb.CostBucketID = cg.CostBucketID;
 ),
 inventoryprocessingcost AS (
@@ -619,16 +619,16 @@ inventoryallsellingcost AS (
                     THEN SUM(ts.ChargeAmount_ChargeCur * ISNULL(ex.ExchangeRate, 1) * ISNULL(ex1.ExchangeRate, 1))
                     ELSE SUM(ts.ChargeAmount_ChargeCur * ISNULL(ex.ExchangeRate, 1) * ts.ExchangeRate / 100) END AS CostAmount
           FROM inventorysellingcost              ts
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID     = ts.LegalEntityID
-         INNER JOIN silver.cma_Date              dd
+         INNER JOIN {{ ref('date_d') }}              dd
             ON dd.Date              = ts.TransDate
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex
+          LEFT JOIN {{ ref('exchangerate_f') }} ex
             ON ex.ExchangeDateKey   = dd.DateKey
            AND ex.FromCurrencyID    = ts.ChargeCurrencyID
            AND ex.ToCurrencyID      = ts.TransCurrencyID
            AND ex.ExchangeRateType  = le.TransExchangeRateType
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex1
+          LEFT JOIN {{ ref('exchangerate_f') }} ex1
             ON ex1.ExchangeDateKey  = dd.DateKey
            AND ex1.FromCurrencyID   = ts.TransCurrencyID
            AND ex1.ToCurrencyID     = le.AccountingCurrencyID
@@ -739,9 +739,9 @@ SELECT ISNULL(dcg.CostGroupKey, -1) AS CostGroupKey
          , CURRENT_TIMESTAMP                                                            AS _CreatedDate
          , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
       FROM inventorycostdetail         tcd
-      LEFT JOIN silver.cma_CostGroup  dcg
+      LEFT JOIN {{ ref('costgroup_d') }}  dcg
         ON dcg.CostGroupID = tcd.CostGroupID
-      LEFT JOIN silver.cma_CostBucket cb
+      LEFT JOIN {{ ref('cost_bucket_d') }} cb
         ON cb.CostBucketID = dcg.CostBucketID
      GROUP BY ISNULL(dcg.CostGroupKey, -1)
             , tcd.RecID

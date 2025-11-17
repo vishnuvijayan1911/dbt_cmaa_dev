@@ -32,14 +32,14 @@ SELECT di.LotKey              AS LotKey
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM lot_factstage                  ts
-     INNER JOIN silver.cma_LegalEntity     le
+     INNER JOIN {{ ref('legalentity_d') }}     le
         ON le.LegalEntityID      = ts.LegalEntityID
-     INNER JOIN silver.cma_Lot             di
+     INNER JOIN {{ ref('lot_d') }}             di
         ON di._RecID             = ts._RecID
        AND di._SourceID          = 1
-      LEFT JOIN silver.cma_InventorySource dis
+      LEFT JOIN {{ ref('inventorysource_d') }} dis
         ON dis.InventorySourceID = ts.REFERENCECATEGORY
-      LEFT JOIN silver.cma_Product         dp
+      LEFT JOIN {{ ref('product_d') }}         dp
         ON dp.LegalEntityID      = ts.LegalEntityID
        AND dp.ItemID             = ts.ItemID
        AND dp.ProductLength      = ts.ProductLength

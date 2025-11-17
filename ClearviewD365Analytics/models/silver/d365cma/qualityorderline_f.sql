@@ -39,19 +39,19 @@ SELECT dqol.QualityOrderLineKey        AS QualityOrderLineKey
      , ts.RecID                        AS _RecID
      , 1                               AS _SourceID
   FROM qualityorderline_factstage      ts
- INNER JOIN silver.cma_QualityOrderLine         dqol
+ INNER JOIN {{ ref('qualityorderline_d') }}         dqol
     ON dqol._RecID        = ts.RecID
    AND dqol._SourceID     = 1
-  LEFT JOIN silver.cma_LegalEntity              le
+  LEFT JOIN {{ ref('legalentity_d') }}              le
     ON le.LegalEntityID   = ts.LegalEntityID
-  LEFT JOIN silver.cma_QualityOrder             dqo
+  LEFT JOIN {{ ref('qualityorder_d') }}             dqo
     ON dqo.LegalEntityID  = ts.LegalEntityID
    AND dqo.QualityOrderID = ts.QualityOrderID
-  LEFT JOIN silver.cma_ProductionRouteOperation pro
+  LEFT JOIN {{ ref('productionrouteoperation_d') }} pro
     ON pro.LegalEntityID  = ts.LegalEntityID
    AND pro.OperationID    = ts.OperationID
-  LEFT JOIN silver.cma_QualityTest                     dt
+  LEFT JOIN {{ ref('qualitytest_d') }}                     dt
     ON dt.LegalEntityID   = ts.LegalEntityID
    AND dt.TestID          = ts.TestID
-  LEFT JOIN silver.cma_UOM                      uom
+  LEFT JOIN {{ ref('uom_d') }}                      uom
     ON uom.UOM            = ts.TestUOM;

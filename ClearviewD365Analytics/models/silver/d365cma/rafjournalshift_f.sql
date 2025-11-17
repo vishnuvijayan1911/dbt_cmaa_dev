@@ -44,9 +44,9 @@ rafjournalshift_facttemp AS (
          , ts.ShiftStartTime                      AS ShiftStartTime
          , ts.ShiftEndTime                        AS ShiftEndTime
       FROM rafjournalshift_factstage ts
-     INNER JOIN silver.cma_LegalEntity        le
+     INNER JOIN {{ ref('legalentity_d') }}        le
         ON le.LegalEntityID    = ts.LegalEntityID
-      LEFT JOIN silver.cma_InventorySite      din
+      LEFT JOIN {{ ref('inventorysite_d') }}      din
         ON din.LegalEntityID   = ts.LegalEntityID
        AND din.InventorySiteID = ts.InventorySiteID;
 )
@@ -56,8 +56,8 @@ SELECT f.ProductionFinishedJournalKey AS ProductionFinishedJournalKey
      , s.shift                                          AS Shift
      , f._SourceID                                      AS _SourceID
      , f._RecID                                         AS _RecID
-  FROM silver.cma_ProductionFinishedJournal_Fact f
- INNER JOIN silver.cma_LegalEntity               le
+  FROM {{ ref('productionfinishedjournal_f') }} f
+ INNER JOIN {{ ref('legalentity_d') }}               le
     ON le.LegalEntityKey  = f.LegalEntityKey
   LEFT JOIN rafjournalshift_facttemp    s
     ON s.legalentitykey   = f.LegalEntityKey

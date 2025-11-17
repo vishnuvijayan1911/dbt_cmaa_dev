@@ -10,7 +10,7 @@ WITH
 vendor_factlogisticspostaladdress AS (
     SELECT Location    AS Location
          , MAX(_RecID) AS RecID
-    FROM silver.cma_Address
+    FROM {{ ref('address_d') }}
     WHERE LocationRank = 1
     GROUP BY Location;
 ),
@@ -107,56 +107,56 @@ SELECT dv.VendorKey                                                             
        , ts._RecID                                                                                                       AS _RecID
        , ts._SourceID                                                                                                    AS _SourceID
  FROM vendor_factstage                       ts
-INNER JOIN silver.cma_LegalEntity         le
+INNER JOIN {{ ref('legalentity_d') }}         le
    ON le.LegalEntityID    = ts.LegalEntityID
-INNER JOIN silver.cma_Vendor              dv
+INNER JOIN {{ ref('vendor_d') }}              dv
    ON dv.LegalEntityID    = ts.LegalEntityID
   AND dv.VendorAccount    = ts.VendorAccount
  LEFT JOIN vendor_factlogisticspostaladdress lpa
    ON lpa.Location        = ts.Location
- LEFT JOIN silver.cma_Address             da
+ LEFT JOIN {{ ref('address_d') }}             da
    ON da._RecID           = lpa.RecID
- LEFT JOIN silver.cma_Date                dd
+ LEFT JOIN {{ ref('date_d') }}                dd
    ON dd.Date             = ts.CreatedDate
- LEFT JOIN silver.cma_BalanceStatus       bal
+ LEFT JOIN {{ ref('balance_status_d') }}       bal
    ON bal.BalanceStatusID = ts.BalanceStatusID
   AND bal.CreditStatusID  = ts.CreditStatusID
- LEFT JOIN silver.cma_DeliveryMode        dm
+ LEFT JOIN {{ ref('deliverymode_d') }}        dm
    ON dm.LegalEntityID    = ts.LegalEntityID
   AND dm.DeliveryModeID   = ts.DeliveryModeID
- LEFT JOIN silver.cma_DeliveryTerm        tm
+ LEFT JOIN {{ ref('deliveryterm_d') }}        tm
    ON tm.LegalEntityID    = ts.LegalEntityID
   AND tm.DeliveryTermID   = ts.DeliveryTermID
- LEFT JOIN silver.cma_PaymentTerm         pa
+ LEFT JOIN {{ ref('paymentterm_d') }}         pa
    ON pa.LegalEntityID    = ts.LegalEntityID
   AND pa.PaymentTermID    = ts.PaymentTermID
- LEFT JOIN silver.cma_PaymentMode         pm
+ LEFT JOIN {{ ref('paymentmode_d') }}         pm
    ON pm.LegalEntityID    = ts.LegalEntityID
   AND pm.PaymentModeID    = ts.PaymentModeID
- LEFT JOIN silver.cma_Currency            cur
+ LEFT JOIN {{ ref('currency_d') }}            cur
    ON cur.CurrencyID      = ts.CurrencyID
- LEFT JOIN silver.cma_Warehouse           dw
+ LEFT JOIN {{ ref('warehouse_d') }}           dw
    ON dw.LegalEntityID    = ts.LegalEntityID
   AND dw.WarehouseID      = ts.DefaultWarehouseID
- LEFT JOIN silver.cma_InventorySite       dis
+ LEFT JOIN {{ ref('inventorysite_d') }}       dis
    ON dis.LegalEntityID   = ts.LegalEntityID
   AND dis.InventorySiteID = ts.DefaultSiteID
-  LEFT JOIN silver.cma_ExchangeRate_Fact   ex
+  LEFT JOIN {{ ref('exchangerate_f') }}   ex
    ON ex.ExchangeDateKey   = dd.DateKey
   AND ex.FromCurrencyID    = le.AccountingCurrencyID
   AND ex.ToCurrencyID      = ts.CurrencyID
   AND ex.ExchangeRateType  = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex1
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex1
    ON ex1.ExchangeDateKey  = dd.DateKey
   AND ex1.FromCurrencyID   = le.AccountingCurrencyID
   AND ex1.ToCurrencyID     = 'CAD'
   AND ex1.ExchangeRateType = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex2
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex2
    ON ex2.ExchangeDateKey  = dd.DateKey
   AND ex2.FromCurrencyID   = le.AccountingCurrencyID
   AND ex2.ToCurrencyID     = 'MXN'
   AND ex2.ExchangeRateType = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex3
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex3
    ON ex3.ExchangeDateKey  = dd.DateKey
   AND ex3.FromCurrencyID   = le.AccountingCurrencyID
   AND ex3.ToCurrencyID     = 'USD'

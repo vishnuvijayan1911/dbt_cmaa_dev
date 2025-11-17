@@ -73,7 +73,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
      , ts._RecID                                             AS _RecID
      , ts._SourceID                                          AS _SourceID
   FROM casestage          ts
-  LEFT JOIN silver.cma_SalesPerson dsp
+  LEFT JOIN {{ ref('salesperson_d') }} dsp
     ON dsp._RecID      = ts.RecID_HCM
    AND dsp._SourceID   = 1
   LEFT JOIN {{ ref('enumeration') }} we1

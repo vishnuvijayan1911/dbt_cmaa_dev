@@ -25,6 +25,6 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCounting
         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate         
       FROM inventorycountinggroupstage              ts
-     INNER JOIN silver.cma_LegalEntity le
+     INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID;
 

@@ -43,33 +43,33 @@ SELECT
 
 
     FROM maintenancerequest_factstage ts
-     INNER JOIN silver.cma_MaintenanceRequest      re
+     INNER JOIN {{ ref('maintenancerequest_d') }}      re
         ON re._RecID                   = ts._RecID
        AND re._SourceID                = 1
-     INNER JOIN silver.cma_LegalEntity             dle
+     INNER JOIN {{ ref('legalentity_d') }}             dle
         ON dle.LegalEntityID           = ts.LegalEntityID
-      LEFT JOIN silver.cma_MaintenanceRequestType  rt
+      LEFT JOIN {{ ref('maintenancerequesttype_d') }}  rt
         ON rt.maintenancerequesttypeid = ts.RequestTypeID
        AND rt.legalentityid            = ts.LegalEntityID
-      LEFT JOIN silver.cma_MaintenanceRequestState lcs
+      LEFT JOIN {{ ref('maintenancerequeststate_d') }} lcs
         ON lcs._RecID                  = ts.RECID_LCS
        AND lcs._SourceID               = 1
-      LEFT JOIN silver.cma_MaintenanceJobType      djt
+      LEFT JOIN {{ ref('maintenancejobtype_d') }}      djt
         ON djt._RecID                  = ts.RECID_JTYPE
        AND djt._SourceID               = 1
-      LEFT JOIN silver.cma_WorkOrder               dwo
+      LEFT JOIN {{ ref('workorder_d') }}               dwo
         ON dwo._RecID                  = ts.RECID_WOT
        AND dwo._SourceID               = 1
-      LEFT JOIN silver.cma_Asset                   do
+      LEFT JOIN {{ ref('asset_d') }}                   do
         ON do._RecID                   = ts.RECID_OT
        AND do._SourceID                = 1
-      LEFT JOIN silver.cma_AssetFunctionalLocation dfl
+      LEFT JOIN {{ ref('assetfunctionallocation_d') }} dfl
         ON dfl._RecID                  = ts.RECID_FL
        AND dfl._SourceID               = 1
-      LEFT JOIN silver.cma_MaintenanceJobTrade     djd
+      LEFT JOIN {{ ref('maintenancejobtrade_d') }}     djd
         ON djd._RecID                  = ts.RECID_JT
        AND djd._SourceID               = 1
-      LEFT JOIN silver.cma_Date                    d
+      LEFT JOIN {{ ref('date_d') }}                    d
         ON d.Date                      = re.RequestCreateDate
-      LEFT JOIN silver.cma_Date                    d1
+      LEFT JOIN {{ ref('date_d') }}                    d1
         ON d1.Date                     = ts.ActualStartDate;

@@ -227,18 +227,18 @@ inventorytrans_factinventory AS (
              , ts.INVENTSTATUSID          AS INVENTSTATUSID
 
           FROM inventorytrans_factstage               ts
-         INNER JOIN silver.cma_LegalEntity le
+         INNER JOIN {{ ref('legalentity_d') }} le
             ON le.LegalEntityID = ts.LegalEntityID
-          LEFT JOIN silver.cma_Product     dp
+          LEFT JOIN {{ ref('product_d') }}     dp
             ON dp.LegalEntityID = ts.LegalEntityID
            AND dp.ItemID        = ts.ItemID
            AND dp.ProductLength = ts.ProductLength
            AND dp.ProductColor  = ts.ProductColor
            AND dp.ProductWidth  = ts.ProductWidth
            AND dp.ProductConfig = ts.ProductConfig
-          LEFT JOIN silver.cma_Date        dd1
+          LEFT JOIN {{ ref('date_d') }}        dd1
             ON dd1.Date         = ts.DeliveryDate_PL
-          LEFT JOIN silver.cma_Date        dd2
+          LEFT JOIN {{ ref('date_d') }}        dd2
             ON dd2.Date         = ts.DeliveryDate_SL;
 ),
 inventorytrans_factdetailmain AS (
@@ -289,59 +289,59 @@ inventorytrans_factdetailmain AS (
              , t1.RecID                             AS _RecID
 
           FROM inventorytrans_factinventory                    t1
-         INNER JOIN silver.cma_LegalEntity          le
+         INNER JOIN {{ ref('legalentity_d') }}          le
             ON le.LegalEntityID               = t1.LegalEntityID
-          LEFT JOIN silver.cma_InventorySource      dits
+          LEFT JOIN {{ ref('inventorysource_d') }}      dits
             ON dits.InventorySourceID         = t1.TransSourceID
-          LEFT JOIN silver.cma_InventoryTransStatus dts
+          LEFT JOIN {{ ref('inventory_trans_status_d') }} dts
             ON dts.InventoryTransStatusTypeID = t1.TransStatusTypeID
            AND dts.InventoryTransStatusID     = t1.TransStatusID
-          LEFT JOIN silver.cma_AgingBucket          ab
+          LEFT JOIN {{ ref('agingbucket_d') }}          ab
             ON t1.DaysInInventory BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd
-          LEFT JOIN silver.cma_Financial            fd1
+          LEFT JOIN {{ ref('financial_d') }}            fd1
             ON fd1._RecID                     = t1.DefaultDimension
            AND fd1._SourceID                  = 1
-          LEFT JOIN silver.cma_InventorySite        dis
+          LEFT JOIN {{ ref('inventorysite_d') }}        dis
             ON dis.LegalEntityID              = t1.LegalEntityID
            AND dis.InventorySiteID            = t1.SiteID
-          LEFT JOIN silver.cma_InventoryStatus      iss
+          LEFT JOIN {{ ref('inventorystatus_d') }}      iss
             ON iss.LegalEntityID              = t1.LegalEntityID
            AND iss.InventoryStatusID          = t1.INVENTSTATUSID
-          LEFT JOIN silver.cma_Warehouse            dw
+          LEFT JOIN {{ ref('warehouse_d') }}            dw
             ON dw.LegalEntityID               = t1.LegalEntityID
            AND dw.WarehouseID                 = t1.WarehouseID
-          LEFT JOIN silver.cma_WarehouseLocation    dwl
+          LEFT JOIN {{ ref('warehouselocation_d') }}    dwl
             ON dwl.LegalEntityID              = t1.LegalEntityID
            AND dwl.WarehouseID                = t1.WarehouseID
            AND dwl.WarehouseLocation          = t1.WarehouseLocationID
-          LEFT JOIN silver.cma_Vendor               dv
+          LEFT JOIN {{ ref('vendor_d') }}               dv
             ON dv.LegalEntityID               = t1.LegalEntityID
            AND dv.VendorAccount               = t1.VendorID
-          LEFT JOIN silver.cma_Lot                  il
+          LEFT JOIN {{ ref('lot_d') }}                  il
             ON il._RecID                      = t1.RecID_ITO
            AND il._SourceID                   = 1
-          LEFT JOIN silver.cma_Tag                  dt
+          LEFT JOIN {{ ref('tag_d') }}                  dt
             ON dt.LegalEntityID               = t1.LegalEntityID
            AND dt.TagID                       = t1.TagID
            AND dt.ItemID                      = t1.ItemID
-          LEFT JOIN silver.cma_UOM                  du
+          LEFT JOIN {{ ref('uom_d') }}                  du
             ON du.UOM                         = t1.InventoryUnit
-          LEFT JOIN silver.cma_SalesOrderLine       fsl
+          LEFT JOIN {{ ref('salesorderline_d') }}       fsl
             ON fsl._RecID                     = t1.RecID_SL
            AND fsl._SourceID                  = 1
-          LEFT JOIN silver.cma_PurchaseOrderLine    dpl
+          LEFT JOIN {{ ref('purchaseorderline_d') }}    dpl
             ON dpl._RecID                     = t1.RecID_PL
            AND dpl._SourceID                  = 1
-          LEFT JOIN silver.cma_SalesInvoiceLine     sil
+          LEFT JOIN {{ ref('salesinvoiceline_d') }}     sil
             ON sil._RecID2                    = t1.RecID_CIT
            AND sil._SourceID                  = 1
-          LEFT JOIN silver.cma_PurchaseInvoiceLine  pil
+          LEFT JOIN {{ ref('purchaseinvoiceline_d') }}  pil
             ON pil._RecID2                    = t1.RecID_VIT
            AND pil._SourceID                  = 1
-          LEFT JOIN silver.cma_Voucher              vou
+          LEFT JOIN {{ ref('voucher_d') }}              vou
             ON vou.LegalEntityID              = t1.LegalEntityID
            AND vou.VoucherID                  = t1.VoucherID
-          LEFT JOIN silver.cma_Voucher              vou1
+          LEFT JOIN {{ ref('voucher_d') }}              vou1
             ON vou1.LegalEntityID             = t1.LegalEntityID
            AND vou1.VoucherID                 = t1.PhysicalVoucherID;
 )

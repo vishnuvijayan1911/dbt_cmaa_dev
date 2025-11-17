@@ -53,7 +53,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY t._RecID, t._SourceID) AS ShippingLoadKey
      ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 --   INTO #Detail
   FROM shippingloaddetail1                  t
-  LEFT JOIN silver.cma_OnTimeLoadStatus l
+  LEFT JOIN {{ ref('ontimeloadstatus_d') }} l
     ON t.OnTimeLoadStatusID = l.OnTimeLoadStatusID
   LEFT JOIN {{ ref('enumeration') }}      we1
     ON we1.enumvalueid      = t.LoadStatusID

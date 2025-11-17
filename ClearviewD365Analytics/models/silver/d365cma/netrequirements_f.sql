@@ -62,37 +62,37 @@ netrequirements_factmain AS (
         , ts._RecID            AS _RecID
         , ts._SourceID
      FROM netrequirements_factstage ts
-     INNER JOIN silver.cma_NetRequirements dnr
+     INNER JOIN {{ ref('netrequirements_d') }} dnr
      ON ts._RecID = dnr._RecID
-     LEFT JOIN silver.cma_Date               dd1
+     LEFT JOIN {{ ref('date_d') }}               dd1
        ON dd1.Date           = ts.RequirementDate
-     LEFT JOIN silver.cma_Date               dd2
+     LEFT JOIN {{ ref('date_d') }}               dd2
        ON dd2.Date           = ts.RequestedDate
-    INNER JOIN silver.cma_LegalEntity        le
+    INNER JOIN {{ ref('legalentity_d') }}        le
        ON le.LegalEntityID   = ts.LegalEntityID
-     LEFT JOIN silver.cma_InventorySite      ds
+     LEFT JOIN {{ ref('inventorysite_d') }}      ds
        ON ds.LegalEntityID   = ts.LegalEntityID
       AND ds.InventorySiteID = ts.SiteID
-     LEFT JOIN silver.cma_Warehouse          dw
+     LEFT JOIN {{ ref('warehouse_d') }}          dw
        ON dw.LegalEntityID   = ts.LegalEntityID
       AND dw.WarehouseID     = ts.WarehouseID
-     LEFT JOIN silver.cma_Product            dp
+     LEFT JOIN {{ ref('product_d') }}            dp
        ON dp.LegalEntityID   = ts.LegalEntityID
       AND dp.ItemID          = ts.ItemID
       AND dp.ProductWidth    = ts.ProductWidth
       AND dp.ProductLength   = ts.ProductLength
       AND dp.ProductColor    = ts.ProductColor
       AND dp.ProductConfig   = ts.ProductConfig
-    LEFT JOIN silver.cma_Product            dp1
+    LEFT JOIN {{ ref('product_d') }}            dp1
        ON dp1.LegalEntityID   = ts.LegalEntityID
       AND dp1.ItemID          = ts.POItemID
       AND dp1.ProductWidth    = ts.POProductWidth
       AND dp1.ProductLength   = ts.POProductLength
       AND dp1.ProductColor    = ts.POProductColor
       AND dp1.ProductConfig   = ts.POProductConfig
-     LEFT JOIN silver.cma_Lot                it
+     LEFT JOIN {{ ref('lot_d') }}                it
        ON it._RecID          = ts.RecID_ITO
-     LEFT JOIN silver.cma_UOM                pu
+     LEFT JOIN {{ ref('uom_d') }}                pu
        ON pu.UOM             = dp.InventoryUOM;
 )
 SELECT tl.LegalEntityKey                                   AS LegalEntityKey

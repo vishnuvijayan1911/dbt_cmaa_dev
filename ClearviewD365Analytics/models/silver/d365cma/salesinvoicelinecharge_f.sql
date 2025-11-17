@@ -134,11 +134,11 @@ salesinvoicelinecharge_factcharge AS (
              , ts._RECID
 
           FROM salesinvoicelinecharge_factstage                     ts
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID    = ts.LegalEntityID
-          LEFT JOIN silver.cma_Date              dd
+          LEFT JOIN {{ ref('date_d') }}              dd
             ON dd.Date             = ts.TransDate
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex
+          LEFT JOIN {{ ref('exchangerate_f') }} ex
             ON ex.ExchangeDateKey  = dd.DateKey
            AND ex.FromCurrencyID   = ts.ChargeCurrencyID
            AND ex.ToCurrencyID     = ts.TransCurrencyID
@@ -182,29 +182,29 @@ salesinvoicelinecharge_factdetail1 AS (
              , 1                                                                   AS _SourceID
 
           FROM salesinvoicelinecharge_factcharge                    ts
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID     = ts.LegalEntityID
-          LEFT JOIN silver.cma_ChargeCode        dc
+          LEFT JOIN {{ ref('chargecode_d') }}        dc
             ON dc.LegalEntityID     = ts.LegalEntityID
            AND dc.ModuleTypeID      = ts.ModuleType
            AND dc.ChargeCode        = ts.Code
-          LEFT JOIN silver.cma_ChargeCategory    dcc
+          LEFT JOIN {{ ref('chargecategory_d') }}    dcc
             ON dcc.ChargeCategoryID = ts.MarkupCategoryID
-          LEFT JOIN silver.cma_Date              dd
+          LEFT JOIN {{ ref('date_d') }}              dd
             ON dd.Date              = ts.TransDate
-          LEFT JOIN silver.cma_Currency          cur
+          LEFT JOIN {{ ref('currency_d') }}          cur
             ON cur.CurrencyID       = ts.ChargeCurrencyID
-          LEFT JOIN silver.cma_SalesInvoiceLine  dsil
+          LEFT JOIN {{ ref('salesinvoiceline_d') }}  dsil
             ON dsil._RecID2          = ts._RECID1
            AND dsil._SourceID       = 1
-          LEFT JOIN silver.cma_Voucher           dv
+          LEFT JOIN {{ ref('voucher_d') }}           dv
             ON dv.LegalEntityID     = ts.LegalEntityID
            AND dv.VoucherID         = ts.VoucherID
-          LEFT JOIN silver.cma_ChargeType        ct
+          LEFT JOIN {{ ref('chargetype_d') }}        ct
             ON ct.ChargeTypeID      = ts.ChargeTypeID
-          LEFT JOIN silver.cma_UOM               du
+          LEFT JOIN {{ ref('uom_d') }}               du
             ON du.UOM               = ts.PriceUnit
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex1
+          LEFT JOIN {{ ref('exchangerate_f') }} ex1
             ON ex1.ExchangeDateKey  = dd.DateKey
            AND ex1.FromCurrencyID   = ts.TransCurrencyID
            AND ex1.ToCurrencyID     = le.AccountingCurrencyID
@@ -254,19 +254,19 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._RecID1) AS SalesInvoiceLineChargeKey
          , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
       FROM salesinvoicelinecharge_factdetail1                   td
-      LEFT JOIN silver.cma_LegalEntity       le
+      LEFT JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityKey    = td.LegalEntityKey
-      LEFT JOIN silver.cma_ExchangeRate_Fact ex
+      LEFT JOIN {{ ref('exchangerate_f') }} ex
         ON ex.ExchangeDateKey   = td.TransDateKey
        AND ex.FromCurrencyID    = le.AccountingCurrencyID
        AND ex.ToCurrencyID      = 'CAD'
        AND ex.ExchangeRateType  = le.TransExchangeRateType
-      LEFT JOIN silver.cma_ExchangeRate_Fact ex1
+      LEFT JOIN {{ ref('exchangerate_f') }} ex1
         ON ex1.ExchangeDateKey   = td.TransDateKey
        AND ex1.FromCurrencyID   = le.AccountingCurrencyID
        AND ex1.ToCurrencyID     = 'MXN'
        AND ex1.ExchangeRateType = le.TransExchangeRateType
-      LEFT JOIN silver.cma_ExchangeRate_Fact ex2
+      LEFT JOIN {{ ref('exchangerate_f') }} ex2
         ON ex2.ExchangeDateKey   = td.TransDateKey
        AND ex2.FromCurrencyID   = le.AccountingCurrencyID
        AND ex2.ToCurrencyID     = 'USD'

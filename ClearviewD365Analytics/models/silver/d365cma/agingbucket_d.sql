@@ -11,7 +11,7 @@ agingbucketlastyear AS (
     SELECT MAX(d.DayOfYearID) AS LastYear
              , d.Year
 
-          FROM silver.cma_Date d
+          FROM {{ ref('date_d') }} d
          WHERE d.Year IN ( YEAR(DATEADD(YEAR, -1, GETDATE())))
          GROUP BY d.Year;
 ),
@@ -19,7 +19,7 @@ agingbucketlast1year AS (
     SELECT MAX(d.DayOfYearID) AS Last1Year
              , d.Year
 
-          FROM silver.cma_Date d
+          FROM {{ ref('date_d') }} d
          WHERE d.Year IN ( YEAR(DATEADD(YEAR, -2, GETDATE())))
          GROUP BY d.Year;
 ),
@@ -34,7 +34,7 @@ agingbucketdays1 AS (
                                THEN d.DayOfYearID + dd1.LastYear - 2
                                WHEN d.Year = YEAR(DATEADD(YEAR, -3, GETDATE()))
                                THEN d.DayOfYearID + dd2.Last1Year + dd1.LastYear - 2 END AS AgeDays
-                     FROM silver.cma_Date        d
+                     FROM {{ ref('date_d') }}        d
                      LEFT JOIN agingbucketlastyear  dd1
                        ON dd1.Year = YEAR(DATEADD(YEAR, -1, GETDATE()))
                      LEFT JOIN agingbucketlast1year dd2

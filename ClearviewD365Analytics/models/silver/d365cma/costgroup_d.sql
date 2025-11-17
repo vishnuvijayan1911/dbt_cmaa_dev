@@ -31,7 +31,7 @@ costgroupdetail1 AS (
           LEFT JOIN {{ ref('enumeration') }} we
             ON we.enum         = 'CostGroupType'
            AND we.enumvalueid  = ts.CostGroupType
-          LEFT JOIN silver.cma_CostBucket  cb
+          LEFT JOIN {{ ref('cost_bucket_d') }}  cb
             ON cb.CostBucketID = ISNULL(ucg.costbucketid, 'MAT');
 ),
 costgroupdetail2 AS (
@@ -43,7 +43,7 @@ costgroupdetail2 AS (
              , cb.CostBucketID AS CostBucketID
 
           FROM {{ ref('costgroup') }}  ucg
-          JOIN silver.cma_CostBucket cb
+          JOIN {{ ref('cost_bucket_d') }} cb
             ON cb.CostBucketID = ucg.costbucketid
          WHERE NOT EXISTS (SELECT 1 FROM costgroupdetail1 d1 WHERE d1.CostGroupID = ucg.costgroupid);
 )

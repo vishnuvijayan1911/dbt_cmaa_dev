@@ -172,14 +172,14 @@ productionfinishedjournal_factproduct AS (
              , ts._SourceID
              , ts._RecID
           FROM productionfinishedjournal_factstage          ts
-         INNER JOIN silver.cma_Product dp
+         INNER JOIN {{ ref('product_d') }} dp
             ON dp.LegalEntityID  = ts.LegalEntityID
            AND dp.ItemID         = ts.ItemID
            AND dp.ProductWidth = ts.ProductWidth
            AND dp.ProductLength = ts.ProductLength
            AND dp.ProductColor = ts.ProductColor
            AND dp.ProductConfig = ts.ProductConfig
-          LEFT JOIN silver.cma_Product dp1
+          LEFT JOIN {{ ref('product_d') }} dp1
             ON dp1.LegalEntityID = ts.LegalEntityID
            AND dp1.ItemID        = ts.MasterItemID
              AND dp1.ProductWidth = ts.MasterProductWidth
@@ -193,11 +193,11 @@ productionfinishedjournal_factmastertag AS (
              , dt.ItemID
              , MAX(dt1.TagKey) AS MasterTagKey
           FROM productionfinishedjournal_factstage       t1
-          LEFT JOIN silver.cma_Tag dt
+          LEFT JOIN {{ ref('tag_d') }} dt
             ON dt.LegalEntityID  = t1.LegalEntityID
            AND dt.TagID          = t1.TagID
            AND dt.ItemID         = t1.ItemID
-          LEFT JOIN silver.cma_Tag dt1
+          LEFT JOIN {{ ref('tag_d') }} dt1
             ON dt1.LegalEntityID = dt.LegalEntityID
            AND dt1.TagID         = dt.MasterTagID
          GROUP BY dt.LegalEntityID
@@ -210,11 +210,11 @@ productionfinishedjournal_factparenttag AS (
              , dt.ItemID
              , MAX(dt1.TagKey) AS ParentTagKey
           FROM productionfinishedjournal_factstage      t1
-          LEFT JOIN silver.cma_Tag dt
+          LEFT JOIN {{ ref('tag_d') }} dt
             ON dt.LegalEntityID  = t1.LegalEntityID
            AND dt.TagID          = t1.TagID
            AND dt.ItemID         = t1.ItemID
-          LEFT JOIN silver.cma_Tag dt1
+          LEFT JOIN {{ ref('tag_d') }} dt1
             ON dt1.LegalEntityID = dt.LegalEntityID
            AND dt1.TagID         = dt.ParentTagID
          GROUP BY dt.LegalEntityID
@@ -256,42 +256,42 @@ productionfinishedjournal_factdetailmain AS (
              , t1._SourceID                                                                           AS _SourceID
              , t1._RecID                                                                              AS _RecID
           FROM productionfinishedjournal_factproduct                           t1
-         INNER JOIN silver.cma_Production                po
+         INNER JOIN {{ ref('production_d') }}                po
             ON po.LegalEntityID                 = t1.LegalEntityID
            AND po.ProductionID                  = t1.ProductionNumber
-         INNER JOIN silver.cma_LegalEntity               le
+         INNER JOIN {{ ref('legalentity_d') }}               le
             ON le.LegalEntityID                 = t1.LegalEntityID
-          LEFT JOIN silver.cma_Financial                 fd
+          LEFT JOIN {{ ref('financial_d') }}                 fd
             ON fd._RecID                        = t1.DefaultDimension
            AND fd._SourceID                     = 1
-          LEFT JOIN silver.cma_Lot                       it
+          LEFT JOIN {{ ref('lot_d') }}                       it
             ON it._recid                        = t1.RecID_ITO
            AND it._sourceid                     = 1
-          LEFT JOIN silver.cma_InventorySite             din
+          LEFT JOIN {{ ref('inventorysite_d') }}             din
             ON din.LegalEntityID                = t1.LegalEntityID
            AND din.InventorySiteID              = t1.InventorySiteID
-          LEFT JOIN silver.cma_Warehouse                 dw
+          LEFT JOIN {{ ref('warehouse_d') }}                 dw
             ON dw.LegalEntityID                 = t1.LegalEntityID
            AND dw.WarehouseID                   = t1.WarehouseID
-          LEFT JOIN silver.cma_WarehouseLocation         dwl
+          LEFT JOIN {{ ref('warehouselocation_d') }}         dwl
             ON dwl.LegalEntityID                = t1.LegalEntityID
            AND dwl.WarehouseID                  = t1.WarehouseID
            AND dwl.WarehouseLocation            = t1.WarehouseLocation
-         INNER JOIN silver.cma_Date                      dd1
+         INNER JOIN {{ ref('date_d') }}                      dd1
             ON dd1.Date                         = t1.TransDate
-         INNER JOIN silver.cma_Date                      dd
+         INNER JOIN {{ ref('date_d') }}                      dd
             ON dd.Date                          = t1.OrderCreatedDate
-          LEFT JOIN silver.cma_ProductionPool            dpp
+          LEFT JOIN {{ ref('productionpool_d') }}            dpp
             ON dpp.LegalEntityID                = t1.LegalEntityID
            AND dpp.ProductionPoolID             = t1.ProductionPoolID
-          LEFT JOIN silver.cma_ProductionGroup           dpg
+          LEFT JOIN {{ ref('productiongroup_d') }}           dpg
             ON dpg.LegalEntityID                = t1.LegalEntityID
            AND dpg.ProductionGroupID            = t1.ProductionGroupID
 
 
-          LEFT JOIN silver.cma_UOM                       du1
+          LEFT JOIN {{ ref('uom_d') }}                       du1
             ON du1.UOM                          = t1.ProductionUnitID
-          LEFT JOIN silver.cma_Tag                       dt
+          LEFT JOIN {{ ref('tag_d') }}                       dt
             ON dt.LegalEntityID                 = t1.LegalEntityID
            AND dt.TagID                         = t1.TagID
            AND dt.ItemID                        = t1.ItemID
@@ -303,19 +303,19 @@ productionfinishedjournal_factdetailmain AS (
             ON tmt.LegalEntityID                = dt.LegalEntityID
            AND tmt.TagID                        = dt.TagID
            AND tmt.ItemID                       = dt.ItemID
-          LEFT JOIN silver.cma_ProductionStatus          dps
+          LEFT JOIN {{ ref('productionstatus_d') }}          dps
             ON dps.ProductionStatusID           = t1.ProductionStatusID
-          LEFT JOIN silver.cma_ProductionType            dpt
+          LEFT JOIN {{ ref('productiontype_d') }}            dpt
             ON dpt.ProductionTypeID             = t1.ProductionTypeID
-          LEFT JOIN silver.cma_ProductionRemainingStatus dprs
+          LEFT JOIN {{ ref('productionremainingstatus_d') }} dprs
             ON dprs.ProductionRemainingStatusID = t1.ProductionRemainingStatusID
-          LEFT JOIN silver.cma_InventoryReferenceType    dirt
+          LEFT JOIN {{ ref('inventoryreferencetype_d') }}    dirt
             ON dirt.InventoryReferenceTypeID    = t1.InventoryReferenceTypeID
-          LEFT JOIN silver.cma_ProductionScheduleStatus  dpss
+          LEFT JOIN {{ ref('productionschedulestatus_d') }}  dpss
             ON dpss.ProductionScheduleStatusID  = t1.ProductionScheduleStatusID
-          LEFT JOIN silver.cma_UOM                       du2
+          LEFT JOIN {{ ref('uom_d') }}                       du2
             ON du2.UOM                          = t1.ProductionUnitID
-          LEFT JOIN silver.cma_Date                                  dd2
+          LEFT JOIN {{ ref('date_d') }}                                  dd2
     	      ON dd2.Date                         = CAST (t1.PostedDateTime AT TIME ZONE 'UTC' AT TIME ZONE le.TimeZone AS Date);
 )
 SELECT 

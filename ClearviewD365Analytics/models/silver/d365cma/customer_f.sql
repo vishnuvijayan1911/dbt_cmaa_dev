@@ -10,7 +10,7 @@ WITH
 customer_factadress AS (
     SELECT Location
           , MAX(_RecID) AS RecID
-     FROM silver.cma_Address
+     FROM {{ ref('address_d') }}
     WHERE LocationRank = 1
     GROUP BY Location;
 ),
@@ -110,62 +110,62 @@ SELECT  dv.CustomerKey                                                          
        , CURRENT_TIMESTAMP                                                                                               AS _CreatedDate
        , CURRENT_TIMESTAMP                                                                                               AS _ModifiedDate  
  FROM   customer_factstage                    ts
-INNER JOIN silver.cma_LegalEntity         le
+INNER JOIN {{ ref('legalentity_d') }}         le
    ON le.LegalEntityID    = ts.LegalEntityID
-INNER JOIN silver.cma_Customer            dv
+INNER JOIN {{ ref('customer_d') }}            dv
    ON dv.LegalEntityID    = ts.LegalEntityID
   AND dv.CustomerAccount  = ts.CustomerAccount
- LEFT JOIN silver.cma_CustomerGroup       cg
+ LEFT JOIN {{ ref('customergroup_d') }}       cg
    ON cg.LegalEntityID    = ts.LegalEntityID
   AND cg.CustomerGroupID  = ts.CustomerGroupID
- LEFT JOIN silver.cma_SalesPerson         dsp
+ LEFT JOIN {{ ref('salesperson_d') }}         dsp
    ON dsp._RecID          = ts.RecID_HCM
   AND dsp._SourceID       = 1
  LEFT JOIN customer_factadress lpa
    ON lpa.Location        = ts.Location
- LEFT JOIN silver.cma_Address             da
+ LEFT JOIN {{ ref('address_d') }}             da
    ON da._RecID           = lpa.RecID
- LEFT JOIN silver.cma_BalanceStatus       bal
+ LEFT JOIN {{ ref('balance_status_d') }}       bal
    ON bal.BalanceStatusID = ts.BalanceStatusID
   AND bal.CreditStatusID  = ts.CreditStatusID
- LEFT JOIN silver.cma_DeliveryMode        ddm
+ LEFT JOIN {{ ref('deliverymode_d') }}        ddm
    ON ddm.LegalEntityID   = ts.LegalEntityID
   AND ddm.DeliveryModeID  = ts.DeliveryModeID
- LEFT JOIN silver.cma_DeliveryTerm        ddt
+ LEFT JOIN {{ ref('deliveryterm_d') }}        ddt
    ON ddt.LegalEntityID   = ts.LegalEntityID
   AND ddt.DeliveryTermID  = ts.DeliveryTermID
- LEFT JOIN silver.cma_PaymentTerm         dpt
+ LEFT JOIN {{ ref('paymentterm_d') }}         dpt
    ON dpt.legalentityid   = ts.LegalEntityID
   AND dpt.paymenttermid   = ts.PaymentTermID
- LEFT JOIN silver.cma_PaymentMode         dpm
+ LEFT JOIN {{ ref('paymentmode_d') }}         dpm
    ON dpm.LegalEntityID   = ts.LegalEntityID
   AND dpm.PaymentModeID   = ts.PaymentModeID
- LEFT JOIN silver.cma_Currency            dc
+ LEFT JOIN {{ ref('currency_d') }}            dc
    ON dc.CurrencyID       = ts.CurrencyID
- LEFT JOIN silver.cma_Warehouse           dw
+ LEFT JOIN {{ ref('warehouse_d') }}           dw
    ON dw.LegalEntityID    = ts.LegalEntityID
   AND dw.WarehouseID      = ts.DefaultWarehouseID
- LEFT JOIN silver.cma_InventorySite       ds
+ LEFT JOIN {{ ref('inventorysite_d') }}       ds
    ON ds.LegalEntityID    = ts.LegalEntityID
   AND ds.InventorySiteID  = ts.DefaultSiteID
-  LEFT JOIN silver.cma_Date                dd
+  LEFT JOIN {{ ref('date_d') }}                dd
    ON dd.Date              = ts.CreatedDate
-  LEFT JOIN silver.cma_ExchangeRate_Fact   ex
+  LEFT JOIN {{ ref('exchangerate_f') }}   ex
    ON ex.ExchangeDateKey   = dd.DateKey
   AND ex.FromCurrencyID    = le.AccountingCurrencyID
   AND ex.ToCurrencyID      = ts.CurrencyID
   AND ex.ExchangeRateType  = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex1
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex1
    ON ex1.ExchangeDateKey  = dd.DateKey
   AND ex1.FromCurrencyID   = le.AccountingCurrencyID
   AND ex1.ToCurrencyID     = 'CAD'
   AND ex1.ExchangeRateType = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex2
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex2
    ON ex2.ExchangeDateKey  = dd.DateKey
   AND ex2.FromCurrencyID   = le.AccountingCurrencyID
   AND ex2.ToCurrencyID     = 'MXN'
   AND ex2.ExchangeRateType = le.TransExchangeRateType
- LEFT JOIN silver.cma_ExchangeRate_Fact   ex3
+ LEFT JOIN {{ ref('exchangerate_f') }}   ex3
    ON ex3.ExchangeDateKey  = dd.DateKey
   AND ex3.FromCurrencyID   = le.AccountingCurrencyID
   AND ex3.ToCurrencyID     = 'USD'

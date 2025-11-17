@@ -90,10 +90,10 @@ purchaseinvoiceline_factcharge AS (
              , SUM (crg.NonBillableCharge)          AS NonBillableCharge
              , SUM (crg.NonBillableCharge_TransCur) AS NonBillableCharge_TransCur
 
-          FROM silver.cma_PurchaseInvoiceLineCharge_Fact crg
+          FROM {{ ref('purchaseinvoicelinecharge_f') }} crg
 
 
-         INNER JOIN silver.cma_PurchaseInvoiceLine       dvil
+         INNER JOIN {{ ref('purchaseinvoiceline_d') }}       dvil
             ON dvil.PurchaseInvoiceLineKey = crg.PurchaseInvoiceLineKey
          GROUP BY dvil.PurchaseInvoiceLineKey;
 ),
@@ -170,77 +170,77 @@ purchaseinvoiceline_factline AS (
              , ts._SourceID                                                                                               AS _SourceID
 
           FROM purchaseinvoiceline_factstage                       ts
-         INNER JOIN silver.cma_LegalEntity         le
+         INNER JOIN {{ ref('legalentity_d') }}         le
             ON le.LegalEntityID          = ts.LegalEntityID
-         INNER JOIN silver.cma_PurchaseInvoice     dpi
+         INNER JOIN {{ ref('purchaseinvoice_d') }}     dpi
             ON dpi._RecID                = ts._RECID1
            AND dpi._SourceID             = 1
-          LEFT JOIN silver.cma_Date                dd
+          LEFT JOIN {{ ref('date_d') }}                dd
             ON dd.Date                   = ts.InvoiceDate
-          LEFT JOIN silver.cma_Date                dd1
+          LEFT JOIN {{ ref('date_d') }}                dd1
             ON dd1.Date                  = ts.CreatedDate
-          LEFT JOIN silver.cma_Date                dd2
+          LEFT JOIN {{ ref('date_d') }}                dd2
             ON dd2.Date                  = ts.DueDate
-          LEFT JOIN silver.cma_Address             da
+          LEFT JOIN {{ ref('address_d') }}             da
             ON da._RecID                 = ts.DELIVERYPOSTALADDRESS
            AND da._SourceID              = 1
-          LEFT JOIN silver.cma_PurchaseOrderLine   dpl
+          LEFT JOIN {{ ref('purchaseorderline_d') }}   dpl
             ON dpl._RecID                = ts.RecID_PL
            AND dpl._SourceID             = 1
-         INNER JOIN silver.cma_PurchaseInvoiceLine dvil
+         INNER JOIN {{ ref('purchaseinvoiceline_d') }} dvil
             ON dvil._RecID              = ts._RECID1
            AND dvil._RecID2              = ts._RecID2
            AND dvil._SourceID            = 1
-          LEFT JOIN silver.cma_Vendor              dv
+          LEFT JOIN {{ ref('vendor_d') }}              dv
             ON dv.LegalEntityID          = ts.LegalEntityID
            AND dv.VendorAccount          = ts.OrderAccount
-          LEFT JOIN silver.cma_Vendor              dv2
+          LEFT JOIN {{ ref('vendor_d') }}              dv2
             ON dv2.LegalEntityID         = ts.LegalEntityID
            AND dv2.VendorAccount         = ts.InvoiceAccount
-          LEFT JOIN silver.cma_Product             dp
+          LEFT JOIN {{ ref('product_d') }}             dp
             ON dp.LegalEntityID          = ts.LegalEntityID
            AND dp.ItemID                 = ts.ItemID
            AND dp.ProductLength          = ts.ProductLength
            AND dp.ProductColor           = ts.ProductColor
            AND dp.ProductWidth           = ts.ProductWidth
            AND dp.ProductConfig          = ts.ProductConfig
-          LEFT JOIN silver.cma_InventorySite       ds
+          LEFT JOIN {{ ref('inventorysite_d') }}       ds
             ON ds.LegalEntityID          = ts.LegalEntityID
            AND ds.InventorySiteID        = ts.SiteID
-          LEFT JOIN silver.cma_Warehouse           dw
+          LEFT JOIN {{ ref('warehouse_d') }}           dw
             ON dw.LegalEntityID          = ts.LegalEntityID
            AND dw.WarehouseID            = ts.WarehouseID
-          LEFT JOIN silver.cma_Financial           fd1
+          LEFT JOIN {{ ref('financial_d') }}           fd1
             ON fd1._RecID                = ts.DEFAULTDIMENSION
            AND fd1._SourceID             = 1
-          LEFT JOIN silver.cma_Voucher             vou
+          LEFT JOIN {{ ref('voucher_d') }}             vou
             ON vou.LegalEntityID         = ts.LegalEntityID
            AND vou.VoucherID             = ts.VoucherID
-          LEFT JOIN silver.cma_Lot                 it
+          LEFT JOIN {{ ref('lot_d') }}                 it
             ON it._RecID                 = ts.RecID_ITO
            AND it._SourceID              = 1
-          LEFT JOIN silver.cma_DeliveryMode        dm
+          LEFT JOIN {{ ref('deliverymode_d') }}        dm
             ON dm.LegalEntityID          = ts.LegalEntityID
            AND dm.DeliveryModeID         = ts.DeliveryModeID
-          LEFT JOIN silver.cma_DeliveryTerm        tm
+          LEFT JOIN {{ ref('deliveryterm_d') }}        tm
             ON tm.LegalEntityID          = ts.LegalEntityID
            AND tm.DeliveryTermID         = ts.DeliveryTermID
-          LEFT JOIN silver.cma_PaymentTerm         pa
+          LEFT JOIN {{ ref('paymentterm_d') }}         pa
             ON pa.LegalEntityID          = ts.LegalEntityID
            AND pa.PaymentTermID          = ts.PaymentTermID
-          LEFT JOIN silver.cma_TaxGroup            tg
+          LEFT JOIN {{ ref('taxgroup_d') }}            tg
             ON tg.LegalEntityID          = ts.LegalEntityID
            AND tg.TaxGroupID             = ts.TaxGroupID
-          LEFT JOIN silver.cma_UOM                 pu
+          LEFT JOIN {{ ref('uom_d') }}                 pu
             ON pu.UOM                    = ts.PricingUnit
-          LEFT JOIN silver.cma_UOM                 pur
+          LEFT JOIN {{ ref('uom_d') }}                 pur
             ON pur.UOM                   = ts.PurchaseUnit
-          LEFT JOIN silver.cma_CashDiscount        cd
+          LEFT JOIN {{ ref('cashdiscount_d') }}        cd
             ON cd.LegalEntityID          = ts.LegalEntityID
            AND cd.CashDiscountID         = ts.CashDiscountID
-          LEFT JOIN silver.cma_PurchaseType        pit
+          LEFT JOIN {{ ref('purchasetype_d') }}        pit
             ON pit.PurchaseTypeID        = ts.PurchaseTypeID
-          LEFT JOIN silver.cma_Currency            cur
+          LEFT JOIN {{ ref('currency_d') }}            cur
             ON cur.CurrencyID            = ts.CurrencyID
           LEFT JOIN purchaseinvoiceline_factcharge                 ca
             ON ca.PurchaseInvoiceLineKey = dvil.PurchaseInvoiceLineKey;

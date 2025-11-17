@@ -55,24 +55,24 @@ tagactuals_factdetailmain AS (
              , ts._SourceID
 
           FROM tagactuals_factstage               ts
-         INNER JOIN silver.cma_LegalEntity le
+         INNER JOIN {{ ref('legalentity_d') }} le
             ON le.LegalEntityID = ts.DATAAREAID
-          LEFT JOIN silver.cma_Product     dp
+          LEFT JOIN {{ ref('product_d') }}     dp
             ON dp.LegalEntityID = ts.DATAAREAID
            AND dp.ItemID        = ts.ITEMID
            AND dp.ProductLength = ts.INVENTCOLORID
            AND dp.ProductColor  = ts.INVENTSTYLEID
            AND dp.ProductWidth  = ts.INVENTSIZEID
            AND dp.ProductConfig = ts.CONFIGID
-          LEFT JOIN silver.cma_Tag         it
+          LEFT JOIN {{ ref('tag_d') }}         it
             ON it.legalentityid = ts.DATAAREAID
            AND it.itemid        = ts.ITEMID
            AND it.tagid         = ts.INVENTBATCHID
-          LEFT JOIN silver.cma_UOM         uo
+          LEFT JOIN {{ ref('uom_d') }}         uo
             ON uo.UOM           = ts.TagActualsUnitID
-          LEFT JOIN silver.cma_UOM         uo1
+          LEFT JOIN {{ ref('uom_d') }}         uo1
             ON uo1.UOM          = ts.TagactualsSUMUnit
-          LEFT JOIN silver.cma_UOM         uo2
+          LEFT JOIN {{ ref('uom_d') }}         uo2
             ON uo2.UOM          = ts.CMAWEIGHTUOM;
 )
 SELECT 

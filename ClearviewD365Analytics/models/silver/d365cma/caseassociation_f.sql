@@ -215,68 +215,68 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseAssociationK
   LEFT JOIN {{ ref('globaloptionsetmetadata') }}   we
     ON we.optionsetname    = 'EntityType'
    AND we.[Option]         = ts.EntityTypeID
-  LEFT JOIN silver.cma_Case                      cd
+  LEFT JOIN {{ ref('case_d') }}                      cd
     ON cd._RecID           = ts.RecID_CDB
-  LEFT JOIN silver.cma_LegalEntity               le
+  LEFT JOIN {{ ref('legalentity_d') }}               le
     ON le.LegalEntityID    = ts.LegalEntityID
-  LEFT JOIN silver.cma_Customer                  c
+  LEFT JOIN {{ ref('customer_d') }}                  c
     ON c.LegalEntityID     = ts.LegalEntityID
    AND c.CustomerAccount   = ts.CustomerAccount
-  LEFT JOIN silver.cma_SalesOrder                so
+  LEFT JOIN {{ ref('salesorder_d') }}                so
     ON so.LegalEntityID    = ts.LegalEntityID
    AND so.SalesOrderID     = ts.SalesOrderID
-  LEFT JOIN silver.cma_SalesInvoice              si
+  LEFT JOIN {{ ref('salesinvoice_d') }}              si
     ON si.LegalEntityID    = ts.LegalEntityID
    AND si.InvoiceID        = ts.SalesInvoiceID
-  LEFT JOIN silver.cma_Tag                       dt
+  LEFT JOIN {{ ref('tag_d') }}                       dt
     ON dt.LegalEntityID    = ts.LegalEntityID
    AND dt.TagID            = ts.TagID
    AND dt.ItemID           = ts.TagItemID
    AND ts.EntityTypeID     = 15
-  LEFT JOIN silver.cma_Case                      cd1
+  LEFT JOIN {{ ref('case_d') }}                      cd1
     ON cd1.CaseID          = ts.RefCaseID
-  LEFT JOIN silver.cma_Vendor                    v
+  LEFT JOIN {{ ref('vendor_d') }}                    v
     ON v.LegalEntityID     = ts.LegalEntityID
    AND v.VendorAccount     = ts.VendorAccount
-  LEFT JOIN silver.cma_PurchaseOrder             po
+  LEFT JOIN {{ ref('purchaseorder_d') }}             po
     ON po.LegalEntityID    = ts.LegalEntityID
    AND po.PurchaseOrderID  = ts.PurchaseOrderID
-  LEFT JOIN silver.cma_Product                   dp
+  LEFT JOIN {{ ref('product_d') }}                   dp
     ON dp.ItemID           = tp.ItemID
    AND dp.LegalEntityID    = tp.LegalEntityID
    AND dp.ProductWidth     = tp.ProductWidth
    AND dp.ProductLength    = tp.ProductLength
    AND dp.ProductColor     = tp.ProductColor
    AND dp.ProductConfig    = tp.ProductConfig
-  LEFT JOIN silver.cma_Product                   dp1
+  LEFT JOIN {{ ref('product_d') }}                   dp1
     ON dp1.ItemID          = ti.ItemID
    AND dp1.LegalEntityID   = ti.LegalEntityID
    AND dp1.ProductWidth    = ti.ProductWidth
    AND dp1.ProductLength   = ti.ProductLength
    AND dp1.ProductColor    = ti.ProductColor
    AND dp1.ProductConfig   = ti.ProductConfig
-  LEFT JOIN silver.cma_PurchaseInvoice           dpi
+  LEFT JOIN {{ ref('purchaseinvoice_d') }}           dpi
     ON dpi.LegalEntityID   = ts.LegalEntityID
    AND dpi.InvoiceID       = ts.PurchaseInvoiceID
-  LEFT JOIN silver.cma_PurchaseOrderLine         pol
+  LEFT JOIN {{ ref('purchaseorderline_d') }}         pol
     ON pol.LegalEntityID   = ts.LegalEntityID
    AND pol.PurchaseOrderID = ts.PurchaseOrderLineID
-  LEFT JOIN silver.cma_Production                p
+  LEFT JOIN {{ ref('production_d') }}                p
     ON p.LegalEntityID     = ts.LegalEntityID
    AND p.ProductionID      = ts.ProductionOrderID
-  LEFT JOIN silver.cma_SalesInvoiceLine          sil
+  LEFT JOIN {{ ref('salesinvoiceline_d') }}          sil
     ON sil.LegalEntityID   = ts.LegalEntityID
    AND sil.InvoiceID       = ts.SalesInvoiceLineID
-  LEFT JOIN silver.cma_BOM                       db
+  LEFT JOIN {{ ref('bom_d') }}                       db
     ON db.LegalEntityID    = ts.LegalEntityID
    AND db.BOMID            = ts.BOMID
-  LEFT JOIN silver.cma_Employee                  de
+  LEFT JOIN {{ ref('employee_d') }}                  de
     ON de.PersonnelNumber  = ts.WorkerID
-  LEFT JOIN silver.cma_PurchaseInvoiceLine       pil
+  LEFT JOIN {{ ref('purchaseinvoiceline_d') }}       pil
     ON pil._RecID2         = ts.RecID_VIT
-  LEFT JOIN silver.cma_SalesOrder                so1
+  LEFT JOIN {{ ref('salesorder_d') }}                so1
     ON so1.LegalEntityID   = ts.LegalEntityID
    AND so1._RecID          = ts.RecID_ReturnItem
-  LEFT JOIN silver.cma_QualityOrder              qo
+  LEFT JOIN {{ ref('qualityorder_d') }}              qo
     ON qo.LegalEntityID    = ts.LegalEntityID
    AND qo.QualityOrderID   = ts.QualityOrderID;

@@ -173,11 +173,11 @@ packingsliplinetrans_factmastertag AS (
         , dt.ItemID
         , MAX(dt1.TagKey) AS MasterTagKey
       FROM packingsliplinetrans_factstage       t1
-      LEFT JOIN silver.cma_Tag dt
+      LEFT JOIN {{ ref('tag_d') }} dt
         ON dt.LegalEntityID  = t1.LegalEntityID
       AND dt.TagID          = t1.TagID
       AND dt.ItemID         = t1.ItemID
-      LEFT JOIN silver.cma_Tag dt1
+      LEFT JOIN {{ ref('tag_d') }} dt1
         ON dt1.LegalEntityID = dt.LegalEntityID
       AND dt1.TagID         = dt.MasterTagID
     GROUP BY dt.LegalEntityID
@@ -246,7 +246,7 @@ packingsliplinetrans_facttrans AS (
     ORDER BY ISNULL(ts.RecID_IT, 0)) = 1
                     THEN 1
                     ELSE 0 END                                                                       AS IsProrateAdj
-          FROM silver.cma_PackingSlipLine_Fact frl
+          FROM {{ ref('packingslipline_f') }} frl
         INNER JOIN packingsliplinetrans_factstage              ts
             ON ts.RecID_CPST = frl._RecID
           AND frl._SourceID = 1
@@ -330,7 +330,7 @@ packingsliplinetrans_factadj AS (
                           - SUM(CAST(t.RemainingQuantity_SQIN AS NUMERIC(20, 6))) OVER (PARTITION BY t.PackingSlipLineKey)
                     ELSE 0 END AS NUMERIC(20, 6))  AS RemainingQuantity_SQINAdj
       FROM packingsliplinetrans_facttrans                        t
-    INNER JOIN silver.cma_PackingSlipLine_Fact fcl
+    INNER JOIN {{ ref('packingslipline_f') }} fcl
         ON fcl.PackingSlipLineKey = t.PackingSlipLineKey
 ),
 packingsliplinetrans_facttransadj AS (
@@ -467,17 +467,17 @@ SELECT DISTINCT
     , 1                                                                                                    AS _SourceID
     , ISNULL(tt._RecID2, 0)                                                                                AS _RecID2
     , frl._RecID                                                                                           AS _RECID
-  FROM silver.cma_PackingSlipLine_Fact          frl
+  FROM {{ ref('packingslipline_f') }}          frl
   LEFT JOIN packingsliplinetrans_facttrans_updated                       tt
     ON frl.PackingSlipLineKey         = tt.PackingSlipLineKey
-  LEFT JOIN silver.cma_InventoryTransStatus     dis
+  LEFT JOIN {{ ref('inventory_trans_status_d') }}     dis
     ON dis.InventoryTransStatusID     = CASE WHEN tt.STATUSISSUE > 0 THEN tt.STATUSISSUE ELSE tt.STATUSRECEIPT END
   AND dis.InventoryTransStatusTypeID = CASE WHEN tt.STATUSISSUE > 0 THEN 1 ELSE 2 END
-  LEFT JOIN silver.cma_Tag                      dt
+  LEFT JOIN {{ ref('tag_d') }}                      dt
     ON dt.LegalEntityID               = tt.LegalEntityID
   AND dt.TagID                       = tt.TagID
   AND dt.ItemID                      = tt.ItemID
-  LEFT JOIN silver.cma_Tag                      dt1
+  LEFT JOIN {{ ref('tag_d') }}                      dt1
     ON dt1.LegalEntityID              = tt.LegalEntityID
   AND dt1.TagID                      = tt.ParentTagID
   AND dt1.ItemID                     = tt.ParentItemID
@@ -487,20 +487,20 @@ SELECT DISTINCT
     ON tmt.LegalEntityID              = dt.LegalEntityID
   AND tmt.TagID                      = dt.TagID
   AND tmt.ItemID                     = dt.ItemID
-  LEFT JOIN silver.cma_Product                  dp
+  LEFT JOIN {{ ref('product_d') }}                  dp
     ON dp.LegalEntityID               = tt.LegalEntityID
   AND dp.ItemID                      = tt.ParentItemID
   AND dp.ProductLength               = tt.ParentProductLength
   AND dp.ProductColor                = tt.ParentProductColor
   AND dp.ProductWidth                = tt.ParentProductWidth
   AND dp.ProductConfig               = tt.ParentProductConfig
-  LEFT JOIN silver.cma_Product                  dp1
+  LEFT JOIN {{ ref('product_d') }}                  dp1
     ON dp1.LegalEntityID              = tt.LegalEntityID
   AND dp1.ItemID                     = tt.MasterItemID
   AND dp1.ProductLength              = tt.MasterProductLength
   AND dp1.ProductColor               = tt.MasterProductColor
   AND dp1.ProductWidth               = tt.MasterProductWidth
   AND dp1.ProductConfig              = tt.MasterProductConfig
-  LEFT JOIN silver.cma_SalesOrderLineTrans_Fact solt
+  LEFT JOIN {{ ref('salesorderlinetrans_f') }} solt
     ON solt._RecID2                   = tt._RecID2
   AND solt._SourceID                 = 1;

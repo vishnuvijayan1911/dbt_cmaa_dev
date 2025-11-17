@@ -36,20 +36,20 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS BankAccountTransK
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM bankaccounttrans_factstage                  ts
-     INNER JOIN silver.cma_LegalEntity     le
+     INNER JOIN {{ ref('legalentity_d') }}     le
         ON le.LegalEntityID      = ts.LegalEntityID
-      LEFT JOIN silver.cma_BankAccount     ba
+      LEFT JOIN {{ ref('bankaccount_d') }}     ba
         ON ba.LegalEntityID      = ts.LegalEntityID
        AND ba.BankAccountID      = ts.BankAccountID
-      LEFT JOIN silver.cma_Date            dd
+      LEFT JOIN {{ ref('date_d') }}            dd
         ON dd.Date               = ts.TransDate
-      LEFT JOIN silver.cma_LedgerAccount   dca
+      LEFT JOIN {{ ref('ledgeraccount_d') }}   dca
         ON dca._RecID            = ts.LedgerDimension
        AND dca._SourceID         = 1
-      LEFT JOIN silver.cma_LedgerTransType dlt
+      LEFT JOIN {{ ref('ledgertranstype_d') }} dlt
         ON dlt.LedgerTransTypeID = ts.LedgerTransTypeID
-      LEFT JOIN silver.cma_Voucher         vo
+      LEFT JOIN {{ ref('voucher_d') }}         vo
         ON vo.LegalEntityID      = ts.LegalEntityID
        AND vo.VoucherID          = ts.VoucherID
-      LEFT JOIN silver.cma_Currency        cc
+      LEFT JOIN {{ ref('currency_d') }}        cc
         ON cc.CurrencyID         = ts.CurrencyID;

@@ -34,12 +34,12 @@ SELECT
          , dd1.DateKey     AS ToDateKey
 
       FROM productprice_factcost      tc
-     INNER JOIN silver.cma_LegalEntity dle
+     INNER JOIN {{ ref('legalentity_d') }} dle
         ON dle.LegalEntityID = tc.DATAAREAID
-     INNER JOIN silver.cma_Product     dp
+     INNER JOIN {{ ref('product_d') }}     dp
         ON dp.LegalEntityID  = dle.LegalEntityID
        AND dp.ItemID         = tc.ITEMID
-     INNER JOIN silver.cma_Date        dd
+     INNER JOIN {{ ref('date_d') }}        dd
         ON dd.Date           = tc.FromDate
-     INNER JOIN silver.cma_Date        dd1
+     INNER JOIN {{ ref('date_d') }}        dd1
         ON dd1.Date          = tc.ToDate;

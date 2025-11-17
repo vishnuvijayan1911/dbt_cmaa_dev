@@ -12,12 +12,12 @@ select  prd.productkey,
               CASE WHEN uomc.factor = 0 then CAST(0 as FLOAT)
 		          else CAST(1 AS FLOAT) / CAST(uomc.factor AS FLOAT)
 		          END as factor
-      from silver.cma_product prd
+      from {{ ref('product_d') }} prd
       inner join {{ ref('unitofmeasureconversion') }} uomc on uomc.product = prd.productid
       inner join {{ ref('unitofmeasure') }} fromuom on fromuom.recid = uomc.fromunitofmeasure
       inner join {{ ref('unitofmeasure') }} touom on touom.recid = uomc.tounitofmeasure
-	    inner join silver.cma_uom uom  on lower(fromuom.symbol) = lower(uom.uom)
-	    inner join silver.cma_uom uom1 on lower(touom.symbol)   = lower(uom1.uom) 
-	    inner join silver.cma_legalentity le
+	    inner join {{ ref('uom_d') }} uom  on lower(fromuom.symbol) = lower(uom.uom)
+	    inner join {{ ref('uom_d') }} uom1 on lower(touom.symbol)   = lower(uom1.uom) 
+	    inner join {{ ref('legalentity_d') }} le
 	    on le.legalentityid=prd.legalentityid
 

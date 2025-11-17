@@ -103,19 +103,19 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS GLTransKey
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM gltrans_factstage                   ts
-     INNER JOIN silver.cma_LegalEntity     le
+     INNER JOIN {{ ref('legalentity_d') }}     le
         ON le.LegalEntityID      = ts.LegalEntityID
-      LEFT JOIN silver.cma_Date            dd
+      LEFT JOIN {{ ref('date_d') }}            dd
         ON dd.Date               = ts.AccountingDate
-      LEFT JOIN silver.cma_LedgerAccount   dca
+      LEFT JOIN {{ ref('ledgeraccount_d') }}   dca
         ON dca._RecID            = ts.LedgerDimension
        AND dca._SourceID         = 1
-      LEFT JOIN silver.cma_LedgerTransType dlt
+      LEFT JOIN {{ ref('ledgertranstype_d') }} dlt
         ON dlt.LedgerTransTypeID = ts.JournalCategory
-      LEFT JOIN silver.cma_Voucher         vo
+      LEFT JOIN {{ ref('voucher_d') }}         vo
         ON vo.LegalEntityID      = ts.LegalEntityID
        AND vo.VoucherID          = ts.SubLedgerVoucherID
-      LEFT JOIN silver.cma_Currency        cc
+      LEFT JOIN {{ ref('currency_d') }}        cc
         ON cc.CurrencyID         = ts.CurrencyID
-      LEFT JOIN silver.cma_PostingType     pt
+      LEFT JOIN {{ ref('postingtype_d') }}     pt
         ON pt.PostingTypeID      = ts.PostingTypeID;

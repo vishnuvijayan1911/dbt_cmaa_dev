@@ -12,8 +12,8 @@ productreceiptlinetrans_factordertrans AS (
              , polt.PurchaseOrderLineTransKey
              , ROW_NUMBER () OVER (PARTITION BY frl.ProductReceiptLineKey
     ORDER BY polt._RecID2) AS OrderTransRank
-          FROM silver.cma_ProductReceiptLine_Fact          frl
-         INNER JOIN silver.cma_PurchaseOrderLineTrans_Fact polt
+          FROM {{ ref('productreceiptline_f') }}          frl
+         INNER JOIN {{ ref('purchaseorderlinetrans_f') }} polt
             ON polt.PurchaseOrderLineKey = frl.PurchaseOrderLineKey
          WHERE frl.PurchaseOrderLineKey <> -1;
 ),
@@ -121,7 +121,7 @@ productreceiptlinetrans_facttrans AS (
                     ELSE 0 END                                                                        AS IsProrateAdj
              , ts.RecID_IT
              , ts.RecID_VPST
-          FROM silver.cma_ProductReceiptLine_Fact frl
+          FROM {{ ref('productreceiptline_f') }} frl
          INNER JOIN productreceiptlinetrans_factstage                ts
             ON frl._RecID    = ts.RecID_VPST
            AND frl._SourceID = 1
@@ -165,7 +165,7 @@ productreceiptlinetrans_factadj AS (
              , fcl.ProductReceiptLineKey
 
           FROM productreceiptlinetrans_facttrans                           t
-         INNER JOIN silver.cma_ProductReceiptLine_Fact fcl
+         INNER JOIN {{ ref('productreceiptline_f') }} fcl
             ON fcl.ProductReceiptLineKey = t.ProductReceiptLineKey
 ),
 productreceiptlinetrans_facttransadj AS (
@@ -322,27 +322,27 @@ SELECT
          ,  CURRENT_TIMESTAMP  AS  _CreatedDate
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
- FROM silver.cma_ProductReceiptLine_Fact          frl
+ FROM {{ ref('productreceiptline_f') }}          frl
       LEFT JOIN productreceiptlinetrans_facttransadj4                         ts
         ON frl.ProductReceiptLineKey      = ts.ProductReceiptLineKey
-      LEFT JOIN silver.cma_LegalEntity                 le
+      LEFT JOIN {{ ref('legalentity_d') }}                 le
         ON le.LegalEntityID               = ts.LegalEntityID
-      LEFT JOIN silver.cma_InventoryTransStatus        dis
+      LEFT JOIN {{ ref('inventory_trans_status_d') }}        dis
         ON dis.InventoryTransStatusTypeID = 2
        AND dis.InventoryTransStatusID     = ts.StatusReceipt
-      LEFT JOIN silver.cma_Tag                         dt
+      LEFT JOIN {{ ref('tag_d') }}                         dt
         ON dt.LegalEntityID               = ts.LegalEntityID
        AND dt.TagID                       = ts.TagID
        AND dt.ItemID                      = ts.ItemID
       LEFT JOIN {{ ref('inventtrans') }}                 it
         ON it.recid                      = ts.RecID_IT
-      LEFT JOIN silver.cma_PurchaseOrderLineTrans_Fact polt
+      LEFT JOIN {{ ref('purchaseorderlinetrans_f') }} polt
         ON polt._RecID2                   = ts.RecID_IT
        AND polt._SourceID                 = 1
-      LEFT JOIN silver.cma_PurchaseOrderLine_Fact      polf
+      LEFT JOIN {{ ref('purchaseorderline_f') }}      polf
         ON polf._RecID                    = ts.RecID_PL
        AND polf._SourceID                 = 1
-      LEFT JOIN silver.cma_ExchangeRate_Fact           ex
+      LEFT JOIN {{ ref('exchangerate_f') }}           ex
         ON ex.ExchangeDateKey             = frl.ReceiptDateKey
        AND ex.FromCurrencyID              = le.AccountingCurrencyID
        AND ex.ToCurrencyID                = ts.CurrencyID

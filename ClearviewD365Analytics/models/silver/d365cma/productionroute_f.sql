@@ -122,7 +122,7 @@ productionroute_factproduct AS (
              , ts._RecID
 
           FROM productionroute_factstage           ts
-         INNER JOIN silver.cma_Product dp
+         INNER JOIN {{ ref('product_d') }} dp
             ON dp.LegalEntityID = ts.LegalEntityID
            AND dp.ItemID        = ts.ItemID
            AND dp.ProductWidth = ts.ProductWidth
@@ -154,30 +154,30 @@ SELECT
          , CURRENT_TIMESTAMP              AS _ModifiedDate 
 
       FROM  productionroute_factproduct                   t1
-     INNER JOIN silver.cma_LegalEntity              le
+     INNER JOIN {{ ref('legalentity_d') }}              le
         ON le.LegalEntityID            = t1.LegalEntityID
-     INNER JOIN silver.cma_ProductionRoute          pb
+     INNER JOIN {{ ref('productionroute_d') }}          pb
         ON pb._RecID                   = t1._RecID
        AND pb._SourceID                = 1
-      LEFT JOIN silver.cma_Date                     dd
+      LEFT JOIN {{ ref('date_d') }}                     dd
         ON dd.Date                     = t1.ScheduleStartDate
-      LEFT JOIN silver.cma_Date                     dd1
+      LEFT JOIN {{ ref('date_d') }}                     dd1
         ON dd1.Date                    = t1.ScheduleEndDate
-      LEFT JOIN silver.cma_Production               po
+      LEFT JOIN {{ ref('production_d') }}               po
         ON po.LegalEntityID            = t1.LegalEntityID
        AND po.ProductionID             = t1.ProductionID
-      LEFT JOIN silver.cma_Financial                fd1
+      LEFT JOIN {{ ref('financial_d') }}                fd1
         ON fd1._RecID                  = t1.DefaultDimension
        AND fd1._SourceID               = 1
-      LEFT JOIN silver.cma_Vendor                   dv
+      LEFT JOIN {{ ref('vendor_d') }}                   dv
         ON dv.LegalEntityID            = t1.LegalEntityID
        AND dv.VendorAccount            = t1.VendorAccount
-      LEFT JOIN silver.cma_ProductionResource       res
+      LEFT JOIN {{ ref('productionresource_d') }}       res
         ON res.LegalEntityID           = t1.LegalEntityID
        AND res.ResourceID              = t1.ResourceID
-      LEFT JOIN silver.cma_ProductionRouteOperation ro
+      LEFT JOIN {{ ref('productionrouteoperation_d') }} ro
         ON ro.LegalEntityID            = t1.LegalEntityID
        AND ro.OperationID              = t1.OperationID
-      LEFT JOIN silver.cma_ProductionRouteGroup     dprg
+      LEFT JOIN {{ ref('productionroutegroup_d') }}     dprg
         ON dprg.LegalEntityID          = t1.LegalEntityID
        AND dprg.ProductionRouteGroupID = t1.ProductionRouteGroupID;

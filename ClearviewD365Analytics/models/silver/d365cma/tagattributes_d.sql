@@ -25,7 +25,7 @@ tagattributesdetail1 AS (
 )
 SELECT ib.*
         ,{{ get_tag_attr_def_for_detail() }}
-    FROM silver.cma_Tag                     ib
+    FROM {{ ref('tag_d') }}                     ib
 
     LEFT JOIN tagattributesdetail1                           tt
         ON tt.LegalEntityID    = ib.legalentityid

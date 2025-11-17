@@ -72,43 +72,43 @@ salesforecast_factdetail1 AS (
              , 1                         AS _SourceID
 
           FROM salesforecast_factstage                      ts
-         INNER JOIN silver.cma_LegalEntity        le
+         INNER JOIN {{ ref('legalentity_d') }}        le
             ON le.LegalEntityID   = ts.LEGALENTITYID
-          LEFT JOIN silver.cma_Financial          fd
+          LEFT JOIN {{ ref('financial_d') }}          fd
             ON fd._RecID          = ts.DEFAULTDIMENSION
            AND fd._SourceID       = 1
-          LEFT JOIN silver.cma_ForecastModel dm
+          LEFT JOIN {{ ref('forecastmodel_d') }} dm
             ON dm.LegalEntityID   = ts.LEGALENTITYID
            AND dm.ModelID         = ts.MODELID
-          LEFT JOIN silver.cma_Product            dp
+          LEFT JOIN {{ ref('product_d') }}            dp
             ON dp.LegalEntityID   = ts.LEGALENTITYID
            AND dp.ItemID          = ts.ITEMID
            AND dp.ProductWidth    = ts.INVENTSIZEID
            AND dp.ProductLength   = ts.INVENTCOLORID
            AND dp.ProductColor    = ts.INVENTSTYLEID
            AND dp.ProductConfig   = ts.PRODUCTCONFIG
-          LEFT JOIN silver.cma_Customer           dc
+          LEFT JOIN {{ ref('customer_d') }}           dc
             ON dc.LegalEntityID   = ts.LEGALENTITYID
            AND dc.CustomerAccount = ts.CUSTACCOUNTID
-          LEFT JOIN silver.cma_InventorySite      iv
+          LEFT JOIN {{ ref('inventorysite_d') }}      iv
             ON iv.LegalEntityID   = ts.LEGALENTITYID
            AND iv.InventorySiteID = ts.INVENTSITEID
-          LEFT JOIN silver.cma_Warehouse          dw
+          LEFT JOIN {{ ref('warehouse_d') }}          dw
             ON dw.LegalEntityID   = ts.LEGALENTITYID
            AND dw.WarehouseID     = ts.INVENTLOCATIONID
-          LEFT JOIN silver.cma_Date               dd
+          LEFT JOIN {{ ref('date_d') }}               dd
             ON dd.Date            = ts.STARTDATE
-          LEFT JOIN silver.cma_Date               dd2
+          LEFT JOIN {{ ref('date_d') }}               dd2
             ON dd2.Date           = ts.EXPECTEDCOSTPAYMENTDATE
-          LEFT JOIN silver.cma_Date               dd3
+          LEFT JOIN {{ ref('date_d') }}               dd3
             ON dd3.Date           = ts.EXPECTEDINVOICEDATE
-          LEFT JOIN silver.cma_Date               dd4
+          LEFT JOIN {{ ref('date_d') }}               dd4
             ON dd4.Date           = ts.EXPECTEDSALESPAYMENTDATE
-          LEFT JOIN silver.cma_Currency           cur
+          LEFT JOIN {{ ref('currency_d') }}           cur
             ON cur.CurrencyID     = ts.CURRENCY
-          LEFT JOIN silver.cma_UOM                du
+          LEFT JOIN {{ ref('uom_d') }}                du
             ON du.UOM             = ts.SALESUNITID
-          LEFT JOIN silver.cma_SalesPerson        dsp
+          LEFT JOIN {{ ref('salesperson_d') }}        dsp
             ON dsp._RecID         = ts.MAINCONTACTWORKER
            AND dsp._SourceID      = 1;
 )

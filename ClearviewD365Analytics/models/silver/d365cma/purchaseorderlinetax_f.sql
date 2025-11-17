@@ -46,22 +46,22 @@ purchaseorderlinetax_factdetailmain AS (
              , 1                                                                                 AS _SourceID
 
           FROM purchaseorderlinetax_factstage                     ts
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID    = ts.LegalEntityID
-         INNER JOIN silver.cma_Date              dd
+         INNER JOIN {{ ref('date_d') }}              dd
             ON dd.Date             = ts.TransDate
-          LEFT JOIN silver.cma_Currency          cur
+          LEFT JOIN {{ ref('currency_d') }}          cur
             ON cur.CurrencyID      = ts.TaxCurrencyID
-          LEFT JOIN silver.cma_PurchaseOrderLine dpol
+          LEFT JOIN {{ ref('purchaseorderline_d') }} dpol
             ON dpol._RecID         = ts.RecID_PL
            AND dpol._SourceID      = 1
-          LEFT JOIN silver.cma_TaxGroup          dtg
+          LEFT JOIN {{ ref('taxgroup_d') }}          dtg
             ON dtg.LegalEntityID   = ts.LegalEntityID
            AND dtg.TaxGroupID      = ts.TaxGroupID
-          LEFT JOIN silver.cma_TaxCode           dtc
+          LEFT JOIN {{ ref('taxcode_d') }}           dtc
             ON dtc.LegalEntityID   = ts.LegalEntityID
            AND dtc.TaxCode         = ts.TaxCodeID
-          LEFT JOIN silver.cma_ExchangeRate_Fact ex
+          LEFT JOIN {{ ref('exchangerate_f') }} ex
             ON ex.ExchangeDateKey  = dd.DateKey
            AND ex.FromCurrencyID   = ts.TaxCurrencyID
            AND ex.ToCurrencyID     = le.AccountingCurrencyID

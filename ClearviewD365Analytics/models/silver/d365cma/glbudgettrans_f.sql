@@ -69,11 +69,11 @@ SELECT ROW_NUMBER() OVER (ORDER BY le.LegalEntityKey, dca.LedgerAccountKey, dd.D
          , CURRENT_TIMESTAMP AS _ModifiedDate
 
       FROM glbudgettrans_factstage                     te
-     INNER JOIN silver.cma_LegalEntity       le
+     INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID        = te.LegalEntityID
-     INNER JOIN silver.cma_Date              dd
+     INNER JOIN {{ ref('date_d') }}              dd
         ON dd.Date                 = te.TransDate
-     INNER JOIN silver.cma_LedgerAccount     dca
+     INNER JOIN {{ ref('ledgeraccount_d') }}     dca
         ON dca._RecID              = te.LedgerAccount
        AND dca._SourceID           = 1
       LEFT JOIN glbudgettrans_factbudget               bg
@@ -81,11 +81,11 @@ SELECT ROW_NUMBER() OVER (ORDER BY le.LegalEntityKey, dca.LedgerAccountKey, dd.D
        AND bg.LedgerAccount        = te.LedgerAccount
        AND bg.TransDate            = te.TransDate
        AND bg.BudgetTypeID         = te.BudgetTypeID
-      LEFT JOIN silver.cma_BudgetTransStatus bts
+      LEFT JOIN {{ ref('budgettransstatus_d') }} bts
         ON bts.BudgetTransStatusID = te.BudgetTransStatusID
-      LEFT JOIN silver.cma_BudgetTransType   btt
+      LEFT JOIN {{ ref('budgettranstype_d') }}   btt
         ON btt.BudgetTransTypeID   = te.BudgetTransTypeID
-      LEFT JOIN silver.cma_BudgetType        bt
+      LEFT JOIN {{ ref('budgettype_d') }}        bt
         ON bt.budgettypeid         = te.BudgetTypeID
-      LEFT JOIN silver.cma_Currency          tc
+      LEFT JOIN {{ ref('currency_d') }}          tc
         ON tc.CurrencyID           = te.CurrencyID;

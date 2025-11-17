@@ -73,34 +73,34 @@ nonconformance_facttmp AS (
          , t1._RecID                  AS _RecID
          , t1._SourceID               AS _SourceID
       FROM nonconformance_factstage t1
-     INNER JOIN silver.cma_NonConformance    nc
+     INNER JOIN {{ ref('nonconformance_d') }}    nc
         ON nc._recid          = t1._RecID
        AND nc._sourceid       = 1
-     INNER JOIN silver.cma_LegalEntity       le
+     INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID   = t1.LegalEntityID
-     INNER JOIN silver.cma_Date              dd
+     INNER JOIN {{ ref('date_d') }}              dd
         ON dd.Date            = t1.NonConformanceDate
-      LEFT JOIN silver.cma_InventorySite     vs
+      LEFT JOIN {{ ref('inventorysite_d') }}     vs
         ON vs.LegalEntityID   = t1.LegalEntityID
        AND vs.InventorySiteID = t1.SiteID
-      LEFT JOIN silver.cma_Warehouse         dw
+      LEFT JOIN {{ ref('warehouse_d') }}         dw
         ON dw.LegalEntityID   = t1.LegalEntityID
        AND dw.WarehouseID     = t1.WarehouseID
-      LEFT JOIN silver.cma_Product           dp
+      LEFT JOIN {{ ref('product_d') }}           dp
         ON dp.LegalEntityID   = t1.LegalEntityID
        AND dp.ItemID          = t1.ItemID
        AND dp.ProductWidth    = t1.ProductWidth
        AND dp.ProductLength   = t1.ProductLength
        AND dp.ProductColor    = t1.ProductColor
        AND dp.ProductConfig   = t1.ProductConfig
-      LEFT JOIN silver.cma_Production        dpo
+      LEFT JOIN {{ ref('production_d') }}        dpo
         ON dpo.LegalEntityID  = t1.LegalEntityID
        AND dpo.ProductionID   = t1.ProductionID
-      LEFT JOIN silver.cma_SalesPerson       dsp1
+      LEFT JOIN {{ ref('salesperson_d') }}       dsp1
         ON dsp1._RecID        = t1.WorkerResponsible
-      LEFT JOIN silver.cma_SalesPerson       dsp2
+      LEFT JOIN {{ ref('salesperson_d') }}       dsp2
         ON dsp2._RecID        = t1.ReportedBy
-      LEFT JOIN silver.cma_SalesPerson       dsp3
+      LEFT JOIN {{ ref('salesperson_d') }}       dsp3
         ON dsp3._RecID        = t1.ApprovedBy;
 )
 SELECT tl.NonConformanceKey                                       AS NonConformanceKey

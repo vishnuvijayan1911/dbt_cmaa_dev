@@ -212,14 +212,14 @@ productionpicklistjournal_factproduct AS (
              , ts._SourceID
              , ts._RecID
           FROM productionpicklistjournal_factstage ts
-         INNER JOIN silver.cma_Product dp
+         INNER JOIN {{ ref('product_d') }} dp
             ON dp.ItemID         = ts.ItemID
            AND dp.LegalEntityID  = ts.LegalEntityID
              AND dp.ProductWidth = ts.ProductWidth
           AND dp.ProductLength = ts.ProductLength
           AND dp.ProductColor = ts.ProductColor
           AND dp.ProductConfig = ts.ProductConfig
-          LEFT JOIN silver.cma_Product dp1
+          LEFT JOIN {{ ref('product_d') }} dp1
             ON dp1.LegalEntityID = ts.LegalEntityID
            AND dp1.ItemID        = ts.MasterItemID
                  AND dp1.ProductWidth = ts.MasterProductWidth
@@ -259,34 +259,34 @@ productionpicklistjournal_factdetailmain AS (
              , t1._SourceID               AS _SourceID
              , t1._RecID                  AS _RecID
           FROM productionpicklistjournal_factproduct                   t1
-         INNER JOIN silver.cma_ProductionBOM     dpb
+         INNER JOIN {{ ref('productionbom_d') }}     dpb
             ON dpb._RecID            = t1.RecID_PB
            AND dpb._SourceID         = 1
-          LEFT JOIN silver.cma_Production        po
+          LEFT JOIN {{ ref('production_d') }}        po
             ON po.LegalEntityID      = t1.LegalEntityID
            AND po.ProductionID       = t1.ProductionID
-         INNER JOIN silver.cma_Date              dd1
+         INNER JOIN {{ ref('date_d') }}              dd1
             ON dd1.Date              = t1.TransDate
-         INNER JOIN silver.cma_LegalEntity       le
+         INNER JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityID      = t1.LegalEntityID
-          LEFT JOIN silver.cma_Financial         fd1
+          LEFT JOIN {{ ref('financial_d') }}         fd1
             ON fd1._RecID            = t1.DefaultDimension
            AND fd1._SourceID         = 1
-          LEFT JOIN silver.cma_Vendor            dv
+          LEFT JOIN {{ ref('vendor_d') }}            dv
             ON dv.LegalEntityID      = t1.LegalEntityID
            AND dv.VendorAccount      = t1.VendorAccount
-          LEFT JOIN silver.cma_UOM               pu
+          LEFT JOIN {{ ref('uom_d') }}               pu
             ON pu.UOM                = t1.BOMUOMID
-          LEFT JOIN silver.cma_UOM               pu1
+          LEFT JOIN {{ ref('uom_d') }}               pu1
             ON pu1.UOM               = t1.FormulaUOM
-          LEFT JOIN silver.cma_Tag               dt
+          LEFT JOIN {{ ref('tag_d') }}               dt
             ON dt.LegalEntityID      = t1.LegalEntityID
            AND dt.TagID              = t1.TagID
            AND dt.ItemID             = t1.ItemID
-          LEFT JOIN silver.cma_Warehouse         dw
+          LEFT JOIN {{ ref('warehouse_d') }}         dw
             ON dw.LegalEntityID      = t1.LegalEntityID
            AND dw.WarehouseID        = t1.WarehouseID
-          LEFT JOIN silver.cma_WarehouseLocation dwl
+          LEFT JOIN {{ ref('warehouselocation_d') }} dwl
             ON dwl.LegalEntityID     = t1.LegalEntityID
            AND dwl.WarehouseID       = t1.WarehouseID
            AND dwl.WarehouseLocation = t1.WarehouseLocation;

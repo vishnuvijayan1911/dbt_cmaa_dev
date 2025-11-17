@@ -40,10 +40,10 @@ salesorderlinetrans_factuomconversion AS (
           , ROUND(tr.PhysicalReservedQuantity * ISNULL(vuc5.factor, 1), 0) AS PhysicalReservedQuantity_PC
           , tr.RecID_IT													  AS _RecID
         FROM salesorderlinetrans_factreserved                    tr
-      INNER JOIN silver.cma_SalesOrderLine_Fact sol
+      INNER JOIN {{ ref('salesorderline_f') }} sol
           ON sol._RecID          = tr.RecID_SL
         AND sol._SourceID       = 1
-      INNER JOIN silver.cma_Product             dp
+      INNER JOIN {{ ref('product_d') }}             dp
           ON dp.ProductKey       = sol.ProductKey
         LEFT JOIN {{ ref('vwuomconversion_ft') }}     vuc
           ON vuc.legalentitykey  = sol.LegalEntityKey
@@ -107,10 +107,10 @@ salesorderlinetrans_facttrans AS (
                 THEN 0
                 ELSE (ts.Qty_IT * -1) - CASE WHEN ts.Shipped = 1 THEN (ts.Qty_IT * -1) ELSE 0 END END                        AS RemainingQuantity
       FROM salesorderlinetrans_factstage                       ts
-    INNER JOIN silver.cma_SalesOrderLine_Fact fsl
+    INNER JOIN {{ ref('salesorderline_f') }} fsl
         ON fsl._RecID    = ts.RecID_SL
       AND fsl._SourceID = 1
-      LEFT JOIN silver.cma_Product             dp
+      LEFT JOIN {{ ref('product_d') }}             dp
         ON dp.ProductKey = fsl.ProductKey;
 ),
 salesorderlinetrans_facttransuom AS (
@@ -163,7 +163,7 @@ salesorderlinetrans_factprorate AS (
                     THEN 1
                     ELSE 0 END                                                                AS IsProrateAdj
             , ts._SourceDate
-          FROM silver.cma_SalesOrderLine_Fact fsl
+          FROM {{ ref('salesorderline_f') }} fsl
           LEFT JOIN salesorderlinetrans_factstage             ts
             ON ts.RecID_SL = fsl._RecID
           LEFT JOIN salesorderlinetrans_factratio             tr
@@ -233,7 +233,7 @@ salesorderlinetrans_factadj AS (
                           - SUM(t.OrderedSalesAmount_TransCur) OVER (PARTITION BY t.SalesOrderLineKey)
                     ELSE 0 END AS NUMERIC(28, 12))                                                                       AS OrderedSalesAmount_TransCurAdj
       FROM salesorderlinetrans_factprorate                     t
-    INNER JOIN silver.cma_SalesOrderLine_Fact fcl
+    INNER JOIN {{ ref('salesorderline_f') }} fcl
         ON fcl.SalesOrderLineKey = t.SalesOrderLineKey
 ),
 salesorderlinetrans_facttransadj AS (
@@ -442,7 +442,7 @@ salesorderlinetrans_factdetail1 AS (
       , ISNULL(ts.RecID_IT, 0)                                                                                     AS _RecID2
       , fsl._RecID                                                                                                 AS _RECID1
       , 1                                                                                                          AS _SourceID
-    FROM silver.cma_SalesOrderLine_Fact       fsl
+    FROM {{ ref('salesorderline_f') }}       fsl
     LEFT JOIN salesorderlinetrans_factprorate4                 ts
       ON ts.SalesOrderLineKey          = fsl.SalesOrderLineKey
     LEFT JOIN salesorderlinetrans_factreservedaging           trd
@@ -453,12 +453,12 @@ salesorderlinetrans_factdetail1 AS (
       ON tuc._RecID                    = ts.RecID_IT
     LEFT JOIN salesorderlinetrans_facttransuom                tu
       ON tu.RecID_IT                   = ts.RecID_IT
-    LEFT JOIN silver.cma_Tag                  dt
+    LEFT JOIN {{ ref('tag_d') }}                  dt
       ON dt._RecID                     = ts.RecID_IB
     AND dt._SourceID                  = 1
     LEFT JOIN {{ ref('inventtrans') }}          it
       ON it.recid                      = ts.RecID_IT
-    LEFT JOIN silver.cma_InventoryTransStatus ds
+    LEFT JOIN {{ ref('inventory_trans_status_d') }} ds
       ON ds.InventoryTransStatusID     = CASE WHEN ts.STATUSISSUE > 0 THEN ts.STATUSISSUE ELSE ts.STATUSRECEIPT END
     AND ds.InventoryTransStatusTypeID = CASE WHEN ts.STATUSISSUE > 0 THEN 1 ELSE 2 END;
 )
@@ -532,5 +532,5 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._RECID1) AS SalesOrderLineTransKey
     , CURRENT_TIMESTAMP                        AS  _CreatedDate  
     , CURRENT_TIMESTAMP                        AS _ModifiedDate
   FROM salesorderlinetrans_factdetail1             td
-  LEFT JOIN silver.cma_AgingBucket ab
+  LEFT JOIN {{ ref('agingbucket_d') }} ab
     ON td.ReservedDays BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd;

@@ -67,7 +67,7 @@ production_factpicklistproduct AS (
              , dp.InventoryUOM                AS InventoryUnit
              , SUM(ts.PostedPickListQuantity) AS PostedPickListQuantity
           FROM production_factpickquantity    ts
-         INNER JOIN silver.cma_Product dp
+         INNER JOIN {{ ref('product_d') }} dp
             ON dp.LegalEntityID = ts.LegalEntityID
            AND dp.ItemID        = ts.ItemID
            AND dp.ProductLength = ts.ProductLength
@@ -205,7 +205,7 @@ production_factstage AS (
              , 1                                                                             AS _SourceID
              , pt.recid                                                                    AS _RecID
           FROM {{ ref('prodtable') }}                pt
-         INNER JOIN silver.cma_LegalEntity         le
+         INNER JOIN {{ ref('legalentity_d') }}         le
             ON le.LegalEntityID   = pt.dataareaid
          INNER JOIN {{ ref('inventtablemodule') }}   itm
             ON itm.dataareaid    = pt.dataareaid
@@ -283,14 +283,14 @@ production_factproduct AS (
              , ts._SourceID                                                                                                   AS _SourceID
              , ts._RecID                                                                                                      AS _RecID
           FROM production_factstage           ts
-         INNER JOIN silver.cma_Product dp
+         INNER JOIN {{ ref('product_d') }} dp
             ON dp.ItemID        = ts.ItemID
            AND dp.LegalEntityID = ts.LegalEntityID
            AND dp.ProductWidth = ts.ProductWidth
            AND dp.ProductLength = ts.ProductLength
            AND dp.ProductColor = ts.ProductColor
            AND dp.ProductConfig = ts.ProductConfig
-          LEFT JOIN silver.cma_UOM     du
+          LEFT JOIN {{ ref('uom_d') }}     du
             ON du.UOM           = ts.ProductionUnitID;
 ),
 production_factuomconversion AS (
@@ -414,56 +414,56 @@ SELECT po.ProductionKey                                                         
       FROM production_factproduct                          t1
       LEFT JOIN production_factuomconversion                t2
         ON t2._RecID                        = t1._RecID
-     INNER JOIN silver.cma_Production                po
+     INNER JOIN {{ ref('production_d') }}                po
         ON po._RecID                        = t1._RecID
        AND po._SourceID                     = 1
-     INNER JOIN silver.cma_LegalEntity               le
+     INNER JOIN {{ ref('legalentity_d') }}               le
         ON le.LegalEntityID                 = t1.LegalEntityID
-      LEFT JOIN silver.cma_Financial                 fd
+      LEFT JOIN {{ ref('financial_d') }}                 fd
         ON fd._RecID                        = t1.DefaultDimension
        AND fd._SourceID                     = 1
-      LEFT JOIN silver.cma_Lot                       it
+      LEFT JOIN {{ ref('lot_d') }}                       it
         ON it._RecID                        = t1.RecID_ITO
        AND it._SourceID                     = 1
-      LEFT JOIN silver.cma_Warehouse                 dw
+      LEFT JOIN {{ ref('warehouse_d') }}                 dw
         ON dw.LegalEntityID                 = t1.LegalEntityID
        AND dw.WarehouseID                   = t1.WarehouseID
-      LEFT JOIN silver.cma_WarehouseLocation         dwl
+      LEFT JOIN {{ ref('warehouselocation_d') }}         dwl
         ON dwl.LegalEntityID                = t1.LegalEntityID
        AND dwl.WarehouseID                  = t1.WarehouseID
        AND dwl.WarehouseLocation            = t1.WarehouseLocation
-      LEFT JOIN silver.cma_Date                      dd
+      LEFT JOIN {{ ref('date_d') }}                      dd
         ON dd.Date                          = t1.OrderCreatedDate
-      LEFT JOIN silver.cma_Date                      dd1
+      LEFT JOIN {{ ref('date_d') }}                      dd1
         ON dd1.Date                         = t1.ScheduleStartDate
-      LEFT JOIN silver.cma_Date                      dd2
+      LEFT JOIN {{ ref('date_d') }}                      dd2
         ON dd2.Date                         = t1.ScheduleEndDate
-      LEFT JOIN silver.cma_Date                      dd3
+      LEFT JOIN {{ ref('date_d') }}                      dd3
         ON dd3.Date                         = t1.ReportAsFinishedDate
-      LEFT JOIN silver.cma_Date                      dd4
+      LEFT JOIN {{ ref('date_d') }}                      dd4
         ON dd4.Date                         = t1.ProductionEndDate
-      LEFT JOIN silver.cma_Date                      dd5
+      LEFT JOIN {{ ref('date_d') }}                      dd5
         ON dd5.Date                         = t1.ProductionStartDate
-      LEFT JOIN silver.cma_Date                      dd6
+      LEFT JOIN {{ ref('date_d') }}                      dd6
         ON dd6.Date                         = t1.DueDate
-      LEFT JOIN silver.cma_ProductionPool            dpp
+      LEFT JOIN {{ ref('productionpool_d') }}            dpp
         ON dpp.LegalEntityID                = t1.LegalEntityID
        AND dpp.ProductionPoolID             = t1.ProductionPoolID
-      LEFT JOIN silver.cma_ProductionGroup           dpg
+      LEFT JOIN {{ ref('productiongroup_d') }}           dpg
         ON dpg.LegalEntityID                = t1.LegalEntityID
        AND dpg.ProductionGroupID            = t1.ProductionGroupID
-      LEFT JOIN silver.cma_UOM                       du
+      LEFT JOIN {{ ref('uom_d') }}                       du
         ON du.UOM                           = t1.ReportAsFinishedUnitID
-      LEFT JOIN silver.cma_ProductionStatus          dps
+      LEFT JOIN {{ ref('productionstatus_d') }}          dps
         ON dps.ProductionStatusID           = t1.ProductionStatusID
-      LEFT JOIN silver.cma_ProductionType            dpt
+      LEFT JOIN {{ ref('productiontype_d') }}            dpt
         ON dpt.ProductionTypeID             = t1.ProductionTypeID
-      LEFT JOIN silver.cma_ProductionRemainingStatus dprs
+      LEFT JOIN {{ ref('productionremainingstatus_d') }} dprs
         ON dprs.ProductionRemainingStatusID = t1.ProductionRemainingStatusID
-      LEFT JOIN silver.cma_InventoryReferenceType    dirt
+      LEFT JOIN {{ ref('inventoryreferencetype_d') }}    dirt
         ON dirt.InventoryReferenceTypeID    = t1.InventoryReferenceTypeID
-      LEFT JOIN silver.cma_ProductionScheduleStatus  dpss
+      LEFT JOIN {{ ref('productionschedulestatus_d') }}  dpss
         ON dpss.ProductionScheduleStatusID  = t1.ProductionScheduleStatusID
-      LEFT JOIN silver.cma_InventorySite             din
+      LEFT JOIN {{ ref('inventorysite_d') }}             din
         ON din.LegalEntityID                = t1.LegalEntityID
        AND din.InventorySiteID              = t1.InventorySiteID;

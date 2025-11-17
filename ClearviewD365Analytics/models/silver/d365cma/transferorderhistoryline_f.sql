@@ -49,31 +49,31 @@ transferorderhistoryline_factdetailmain AS (
          , ts._RecID                     AS _RecID
          , ts._SourceID                  AS _SourceID
       FROM transferorderhistoryline_factstage  ts
-     INNER JOIN silver.cma_transferorderhistoryline t
+     INNER JOIN {{ ref('transferorderhistoryline_d') }} t
         ON t._RecID         = ts._RecID
-     INNER JOIN silver.cma_LegalEntity       le
+     INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.legalentityid = ts.legalentityid
-      LEFT JOIN silver.cma_transferorderhistory toh
+      LEFT JOIN {{ ref('transferorderhistory_d') }} toh
         ON toh._RecID       = ts._RecID_ITJ
-      LEFT JOIN silver.cma_Product           dp
+      LEFT JOIN {{ ref('product_d') }}           dp
         ON dp.LegalEntityID = ts.LegalEntityID
        AND dp.ItemID        = ts.ItemID
        AND dp.ProductWidth  = ts.ProductWidth
        AND dp.ProductLength = ts.ProductLength
        AND dp.ProductConfig = ts.ProductConfig
        AND dp.ProductColor  = ts.ProductColor
-      LEFT JOIN silver.cma_tag               dt
+      LEFT JOIN {{ ref('tag_d') }}               dt
         ON dt.tagid         = ts.tagid
        AND dt.legalentityid = ts.legalentityid
        AND dt.itemid        = ts.itemid
-      LEFT JOIN silver.cma_UOM               du
+      LEFT JOIN {{ ref('uom_d') }}               du
         ON du.UOM           = ts.TransferUOM
-      LEFT JOIN silver.cma_UOM               du1
+      LEFT JOIN {{ ref('uom_d') }}               du1
         ON du1.UOM           = dp.InventoryUOM
-      LEFT JOIN silver.cma_TransferOrder     dto
+      LEFT JOIN {{ ref('transferorder_d') }}     dto
         ON dto.TransferOrderID = ts.TransferOrderID
        AND dto.LegalEntityID   = ts.LegalEntityID
-      LEFT JOIN silver.cma_TransferOrderLine  tol
+      LEFT JOIN {{ ref('transferorderline_d') }}  tol
         ON tol.TransferOrderID = ts.TransferOrderID
        AND tol.LineNumber      = ts.LineNumber
        AND tol.LegalEntityID   = ts.LegalEntityID;

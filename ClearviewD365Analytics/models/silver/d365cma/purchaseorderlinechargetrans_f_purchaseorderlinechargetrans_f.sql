@@ -130,7 +130,7 @@ purchaseorderlinechargetrans_facttrans AS (
                     ELSE 0 END                                                             AS IsProrateAdj
              , tk.RecID_MT
 
-          FROM silver.cma_PurchaseOrderLineCharge_Fact fc
+          FROM {{ ref('purchaseorderlinecharge_f') }} fc
          INNER JOIN purchaseorderlinechargetrans_factpolkeys                    tk
             ON tk.RecID_MT = fc._RecID1
            AND tk.RecID_PL = fc._RECID2
@@ -180,7 +180,7 @@ purchaseorderlinechargetrans_factadj AS (
                          ELSE 0 END AS MONEY) AS TaxAmountAdj
 
           FROM purchaseorderlinechargetrans_facttrans                                t
-         INNER JOIN silver.cma_PurchaseOrderLineCharge_Fact fcl
+         INNER JOIN {{ ref('purchaseorderlinecharge_f') }} fcl
             ON fcl.PurchaseOrderLineChargeKey = t.PurchaseOrderLineChargeKey
 )
 SELECT PurchaseOrderLineChargeKey

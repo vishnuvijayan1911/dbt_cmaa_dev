@@ -94,7 +94,7 @@ salesinvoicelinetrans_facttrans AS (
                       ELSE 0 END                                                                     AS IsProrateAdj
                 , tk._SourceDate
 
-             FROM silver.cma_SalesInvoiceLine_Fact fcl
+             FROM {{ ref('salesinvoiceline_f') }} fcl
 
           INNER JOIN salesinvoicelinetrans_factstage              tk
              ON tk.RECID_CIT            = fcl._RecID2
@@ -195,7 +195,7 @@ salesinvoicelinetrans_factadj AS (
                             ELSE 0 END AS MONEY)                                                                                            AS TaxAmount_TransCurAdj
 
              FROM salesinvoicelinetrans_facttrans                        t
-          INNER JOIN silver.cma_SalesInvoiceLine_Fact fcl
+          INNER JOIN {{ ref('salesinvoiceline_f') }} fcl
              ON fcl.SalesInvoiceLineKey = t.SalesInvoiceLineKey
 ),
 salesinvoicelinetrans_facttransadj AS (
@@ -356,8 +356,8 @@ salesinvoicelinetrans_factinvoicetrans AS (
        , polt.SalesOrderLineTransKey
        , ROW_NUMBER () OVER (PARTITION BY frl.SalesInvoiceLineKey
     ORDER BY polt._RecID2) AS OrderTransRank
-    FROM silver.cma_SalesInvoiceLine_Fact         frl
-    INNER JOIN silver.cma_SalesOrderLineTrans_Fact polt
+    FROM {{ ref('salesinvoiceline_f') }}         frl
+    INNER JOIN {{ ref('salesorderlinetrans_f') }} polt
        ON polt.SalesOrderLineKey = frl.SalesOrderLineKey;
 ),
 salesinvoicelinetrans_factinvoicetrans2 AS (
@@ -366,10 +366,10 @@ salesinvoicelinetrans_factinvoicetrans2 AS (
        , prlt.SalesOrderLineTransKey
        , ROW_NUMBER () OVER (PARTITION BY frl.SalesInvoiceLineKey
     ORDER BY prlt._RecID2) AS OrderTransRank
-    FROM silver.cma_SalesInvoiceLine_Fact          frl
-    INNER JOIN silver.cma_PackingSlipLine_Fact      prl
+    FROM {{ ref('salesinvoiceline_f') }}          frl
+    INNER JOIN {{ ref('packingslipline_f') }}      prl
        ON prl.SalesOrderLineKey   = frl.SalesOrderLineKey
-    INNER JOIN silver.cma_PackingSlipLineTrans_Fact prlt
+    INNER JOIN {{ ref('packingsliplinetrans_f') }} prlt
        ON prlt.PackingSlipLineKey = prl.PackingSlipLineKey;
 )
 SELECT ROW_NUMBER() OVER (ORDER BY tt.PackingSlipID) AS SalesInvoiceLineTransKey
@@ -424,20 +424,20 @@ SELECT ROW_NUMBER() OVER (ORDER BY tt.PackingSlipID) AS SalesInvoiceLineTransKey
                ,  CURRENT_TIMESTAMP  AS  _CreatedDate
                , CURRENT_TIMESTAMP AS _ModifiedDate
 
-            FROM silver.cma_SalesInvoiceLine_Fact          fcl
+            FROM {{ ref('salesinvoiceline_f') }}          fcl
 
             LEFT JOIN  salesinvoicelinetrans_facttransadj4                       tt
             ON tt.SalesInvoiceLineKey       = fcl.SalesInvoiceLineKey
-            LEFT JOIN silver.cma_Tag                       dt
+            LEFT JOIN {{ ref('tag_d') }}                       dt
             ON dt.LegalEntityID             = tt.LegalEntityID
             AND dt.TagID                     = tt.TagID
             AND dt.ItemID                    = tt.ItemID
-            LEFT JOIN silver.cma_PackingSlipLineTrans_Fact pslt
+            LEFT JOIN {{ ref('packingsliplinetrans_f') }} pslt
             ON pslt._RecID2                 = tt.RECID_IT
             AND pslt._SourceID               = 1
             LEFT JOIN {{ ref('inventtrans') }}               it
             ON it.recid                   = tt.RECID_IT
-            LEFT JOIN silver.cma_InventoryTransStatus      s
+            LEFT JOIN {{ ref('inventory_trans_status_d') }}      s
             ON s.InventoryTransStatusID     = tt.InventoryTransStatusID
             AND s.InventoryTransStatusTypeID = 1
             LEFT JOIN salesinvoicelinetrans_factinvoicetrans                it1	

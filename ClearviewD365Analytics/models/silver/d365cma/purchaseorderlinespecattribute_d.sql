@@ -56,7 +56,7 @@ SELECT dso.PurchaseOrderLineKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM purchaseorderlinespecattribute                      ba
-     INNER JOIN silver.cma_PurchaseOrderLine dso
+     INNER JOIN {{ ref('purchaseorderline_d') }} dso
         ON dso._RecID    = ba.recid
        AND dso._SourceID = 1
      GROUP BY dso.PurchaseOrderLineKey

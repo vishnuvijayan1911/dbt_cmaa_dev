@@ -53,7 +53,7 @@ exchangeratefactdailyrates AS (
              , r._RecID
 
           FROM exchangeratefactrates        r
-         CROSS JOIN silver.cma_Date dd
+         CROSS JOIN {{ ref('date_d') }} dd
          WHERE dd.Date BETWEEN r.ValidFrom AND r.ValidTo
            AND dd.Date BETWEEN (SELECT MIN(ValidFrom) AS FromDate FROM exchangeratefactcurrency) AND DATEADD(d, 1, GETDATE());
 ),
@@ -70,7 +70,7 @@ exchangeratefactdetail1 AS (
                         , ROW_NUMBER() OVER (PARTITION BY r.FromCurrID, r.ToCurrID, r.ExchDate, r.ExchType
     ORDER BY r.ExchRate, r._RecID DESC) AS RankVal
                      FROM exchangeratefactdailyrates   r
-                    INNER JOIN silver.cma_Date d
+                    INNER JOIN {{ ref('date_d') }} d
                        ON d.Date = r.ExchDate) t
          WHERE t.RankVal = 1;
 )

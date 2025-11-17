@@ -13,9 +13,9 @@ SELECT dwo.WorkOrderLineKey      AS WorkOrderLineKey
          ,CURRENT_TIMESTAMP           AS _ModifiedDate
 
       FROM {{ ref('entassetworkorderlinetool') }} wt
-     INNER JOIN silver.cma_WorkOrderLine_Fact   dwo
+     INNER JOIN {{ ref('workorderline_f') }}   dwo
         ON dwo._RecID        = wt.workorderline
        AND dwo._SourceID     = 1
-     INNER JOIN silver.cma_ProductionResource   wop
+     INNER JOIN {{ ref('productionresource_d') }}   wop
         ON wop.LegalEntityID = wt.dataareaid
        AND wop.ResourceID    = wt.wrkctrid;

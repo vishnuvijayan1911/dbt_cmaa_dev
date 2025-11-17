@@ -51,7 +51,7 @@ SELECT
 
 
     FROM productionbomstage               ts
-     INNER JOIN silver.cma_LegalEntity le
+     INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID
       LEFT JOIN {{ ref('enumeration') }} e1
         ON e1.enum          = 'ProdFlushingPrincipBOM'

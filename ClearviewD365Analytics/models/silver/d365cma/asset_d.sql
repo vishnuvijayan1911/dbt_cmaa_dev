@@ -53,7 +53,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS AssetKey
          ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
       FROM assetstage                           ts
-      LEFT JOIN silver.cma_AssetFunctionalLocation afl
+      LEFT JOIN {{ ref('assetfunctionallocation_d') }} afl
         ON afl.LegalEntityID        = ts.LegalEntityID
        AND afl.FunctionalLocationID = ts.FunctionalLocationID;
 
