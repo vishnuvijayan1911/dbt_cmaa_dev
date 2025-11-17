@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesorder_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesorder/salesorder.py
 -- Root method: Salesorder.salesorderdetail [SalesOrderDetail]
@@ -22,3 +22,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY st.recid) AS SalesOrderKey
             ,'1900-01-01'                                                       AS ActivityDate  
 
         FROM {{ ref('salestable') }} st
+

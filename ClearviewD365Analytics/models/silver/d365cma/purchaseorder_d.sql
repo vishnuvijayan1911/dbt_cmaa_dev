@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='purchaseorder_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorder/purchaseorder.py
 -- Root method: Purchaseorder.purchaseorderdetail [PurchaseOrderDetail]
@@ -18,3 +18,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY pt.recid) AS PurchaseOrderKey
       FROM {{ ref('purchtable') }} pt
 
      WHERE pt.purchstatus <> 4;
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='on_time_dimelivery_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='on_time_dimelivery_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.on_time_delivery_status
@@ -58,3 +58,4 @@ SELECT t.[OnTimeDeliveryStatusID]
                         , CURRENT_TIMESTAMP AS _CreatedDate
                         , CURRENT_TIMESTAMP AS _ModifiedDate
                         ) t
+

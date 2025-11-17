@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesquoteline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesquoteline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesquoteline/salesquoteline.py
 -- Root method: Salesquoteline.salesquotelinedetail [SalesQuoteLineDetail]
@@ -22,3 +22,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ql.recid) AS SalesQuoteLineKey
      INNER JOIN {{ ref('salesquotationtable') }} qt
         ON qt.dataareaid  = ql.dataareaid
        AND qt.quotationid = ql.quotationid;
+

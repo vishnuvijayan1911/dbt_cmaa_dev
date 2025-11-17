@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='agreementstate_dim') }}
+{{ config(materialized='table', tags=['silver'], alias='agreementstate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/agreementstate/agreementstate.py
 -- Root method: Agreementstate.agreementstatedetail [AgreementStateDetail]

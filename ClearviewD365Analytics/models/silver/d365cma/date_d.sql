@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='date_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='date') }}
 
 -- Source file: cma/cma/layers/_base/_silver/date/date.py
 -- Root method: Date.get_detail_query [DateDetail]
@@ -320,3 +320,4 @@ ORDER BY d1.Date)                                            AS FiscalDayOfMonth
   LEFT JOIN {{ ref('fiscalcalendardate') }} fcd
     ON fcd.gregoriandate = d1.Date
   AND fcd.calendarname  = 'Fiscal';
+

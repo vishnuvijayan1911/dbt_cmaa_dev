@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='on_time_load_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='on_time_load_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.on_time_load_status
@@ -45,3 +45,4 @@ FROM (   SELECT  1             AS OnTimeLoadStatusID
                , 'Not shipped'        AS ShipStatus
                , CURRENT_TIMESTAMP AS _ModifiedDate
                ) t
+

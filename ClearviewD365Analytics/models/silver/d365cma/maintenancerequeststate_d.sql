@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='maintenancerequeststate_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='maintenancerequeststate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancerequeststate/maintenancerequeststate.py
 -- Root method: Maintenancerequeststate.maintenancerequeststatedetail [MaintenanceRequestStateDetail]
@@ -15,3 +15,4 @@ SELECT
          , CURRENT_TIMESTAMP                                               AS _CreatedDate
          , CURRENT_TIMESTAMP                                               AS _ModifiedDate         
       FROM {{ ref('entassetrequestlifecyclestate') }} slog;
+

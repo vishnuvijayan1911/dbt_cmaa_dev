@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesforecastmodel_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesforecastmodel') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesforecastmodel/salesforecastmodel.py
 -- Root method: Salesforecastmodel.salesforecastmodeldetail [SalesForecastModelDetail]
@@ -45,3 +45,4 @@ SELECT
      INNER JOIN {{ ref('enumeration') }} we2
         ON we2.enum        = 'ProjBudgetType'
        AND we2.enumvalueid = ts.BudgetTypeID) t;
+

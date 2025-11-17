@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventorysite_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventorysite') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorysite/inventorysite.py
 -- Root method: Inventorysite.inventorysitedetail [InventorySiteDetail]
@@ -17,3 +17,4 @@ SELECT
 
       FROM {{ ref('inventsite') }} ivs
      WHERE ivs.siteid <> ''
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='employee_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='employee') }}
 
 -- Source file: cma/cma/layers/_base/_silver/employee/employee.py
 -- Root method: Employee.employeedetail [EmployeeDetail]
@@ -95,3 +95,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS EmployeeKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM employeedetail1 ts;
+

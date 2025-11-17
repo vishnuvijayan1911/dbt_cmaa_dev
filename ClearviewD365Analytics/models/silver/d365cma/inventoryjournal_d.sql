@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventoryjournal_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventoryjournal') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventoryjournal/inventoryjournal.py
 -- Root method: Inventoryjournal.inventoryjournaldetail [InventoryJournalDetail]
@@ -34,3 +34,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID) AS InventoryJournalKey
         ON e1.enum          = 'InventJournalType'
        AND e1.enumvalueid   = ts.JournalTypeID
        AND ts.JournalNumber <> '';
+

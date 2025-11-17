@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='procurementcategory_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='procurementcategory') }}
 
 -- Source file: cma/cma/layers/_base/_silver/procurementcategory/procurementcategory.py
 -- Root method: Procurementcategory.procurementcategorydetail [ProcurementCategoryDetail]
@@ -24,3 +24,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ec.recid) AS ProcurementCategoryKey
         ON ec1.recid                       = ec.parentcategory
       LEFT JOIN  {{ ref('ecorescategory') }}               ec2
         ON ec2.recid                       = ec1.parentcategory
+

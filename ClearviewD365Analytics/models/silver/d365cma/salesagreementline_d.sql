@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesagreementline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesagreementline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesagreementline/salesagreementline.py
 -- Root method: Salesagreementline.salesagreementlinedetail [SalesAgreementLineDetail]
@@ -33,3 +33,4 @@ SELECT * FROM (
         ON we.enum                = 'agreementstate'
       AND we.enumvalueid         = ah.agreementstate
       ) t ) p WHERE p.IsDeleted = 0
+

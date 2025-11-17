@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='ledgeraccount_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='ledgeraccount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/ledgeraccount/ledgeraccount.py
 -- Root method: Ledgeraccount.ledgeraccountdetail [LedgerAccountDetail]
@@ -92,3 +92,4 @@ ORDER BY ma.recid)                                                              
       LEFT JOIN {{ ref('enumeration') }}         we1
         ON we1.enum               = 'DimensionLedgerAccountType'
        AND we1.enumvalueid        = ma.type;
+

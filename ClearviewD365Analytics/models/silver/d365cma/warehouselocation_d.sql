@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='warehouselocation_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='warehouselocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/warehouselocation/warehouselocation.py
 -- Root method: Warehouselocation.warehouselocationdetail [WarehouseLocationDetail]
@@ -24,3 +24,4 @@ INNER JOIN {{ ref('inventlocation') }}  il
 INNER JOIN {{ ref('inventsite') }}     ins
    ON ins.dataareaid     = il.dataareaid
    AND ins.siteid          = il.inventsiteid ;
+

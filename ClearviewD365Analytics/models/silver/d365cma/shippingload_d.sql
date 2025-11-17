@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='shippingload_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='shippingload') }}
 
 -- Source file: cma/cma/layers/_base/_silver/shippingload/shippingload.py
 -- Root method: Shippingload.get_detail_query [ShippingLoadDetail]
@@ -58,3 +58,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY t._RecID, t._SourceID) AS ShippingLoadKey
   LEFT JOIN {{ ref('enumeration') }}      we1
     ON we1.enumvalueid      = t.LoadStatusID
    AND we1.enum             = 'WHSLoadStatus';
+

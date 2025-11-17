@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='taxgroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='taxgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxgroup/taxgroup.py
 -- Root method: Taxgroup.taxgroupdetail [TaxGroupDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY tg.recid) AS TaxGroupKey
          , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
       FROM {{ ref('taxgroupheading') }} tg
      WHERE tg.taxgroup <> '';
+

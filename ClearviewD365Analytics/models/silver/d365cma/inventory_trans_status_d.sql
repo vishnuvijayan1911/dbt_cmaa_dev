@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventory_trans_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventory_trans_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.inventory_trans_status
@@ -80,3 +80,4 @@ SELECT
 FROM {{ ref('enumeration') }} we
 WHERE we.enum IN ( 'StatusIssue', 'StatusReceipt' )
 AND we.enumvalueid <> 0
+

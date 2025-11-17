@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='workordertype_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='workordertype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workordertype/workordertype.py
 -- Root method: Workordertype.workordertypedetail [WorkOrderTypeDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderTypeKey
          ,  CURRENT_TIMESTAMP                                 AS  _ModifiedDate
 
       FROM {{ ref('entassetworkordertype') }} JT
+

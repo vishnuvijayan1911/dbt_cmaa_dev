@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='uom_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='uom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/uom/uom.py
 -- Root method: Uom.uomdetail [UOMDetail]
@@ -26,3 +26,4 @@ SELECT
       LEFT JOIN {{ ref('enumeration') }} we1
         ON we1.enum        = 'UnitOfMeasureClass'
        AND we1.enumvalueid = ts.UnitOfMeasureClass;
+

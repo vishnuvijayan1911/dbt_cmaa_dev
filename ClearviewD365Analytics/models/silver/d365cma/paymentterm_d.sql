@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='paymentterm_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='paymentterm') }}
 
 -- Source file: cma/cma/layers/_base/_silver/paymentterm/paymentterm.py
 -- Root method: Paymentterm.paymenttermdetail [PaymentTermDetail]
@@ -19,3 +19,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY pt.recid) AS PaymentTermKey
      WHERE pt.paymtermid <> ''
      ORDER BY pt.dataareaid
             , pt.paymtermid;
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='licenseplate_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='licenseplate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/licenseplate/licenseplate.py
 -- Root method: Licenseplate.licenseplatedetail [LicensePlateDetail]
@@ -17,3 +17,4 @@ SELECT *, ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.LicensePlate) AS Licens
       LEFT JOIN {{ ref('whslicenseplate') }} wlp
         ON wlp.dataareaid     = id.dataareaid
        AND wlp.licenseplateid = id.licenseplateid) t
+

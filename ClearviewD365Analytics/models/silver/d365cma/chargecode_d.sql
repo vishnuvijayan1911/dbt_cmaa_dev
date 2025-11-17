@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='chargecode_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='chargecode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/chargecode/chargecode.py
 -- Root method: Chargecode.chargecodedetail [ChargeCodeDetail]
@@ -33,3 +33,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.ChargeCode, t.ModuleTypeI
         ON we1.enumvalueid = ts.ModuleType
        AND we1.enum        = 'MarkupModuleType'
      WHERE ts.ChargeCode <> '') t;
+

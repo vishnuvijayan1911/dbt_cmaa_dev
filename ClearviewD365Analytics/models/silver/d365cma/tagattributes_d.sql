@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='tagattributes_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='tagattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/tagattributes/tagattributes.py
 -- Root method: Tagattribute.tagattributedetail [TagAttributeDetail]
@@ -34,3 +34,4 @@ SELECT ib.*
 
     WHERE ib.tagid <> '0'
     AND ib.tagid <> '';
+

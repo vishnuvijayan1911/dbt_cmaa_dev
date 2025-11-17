@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='faultremedy_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='faultremedy') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultremedy/faultremedy.py
 -- Root method: Faultremedy.faultremedydetail [FaultRemedyDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY fr.recid) AS FaultRemedyKey
          ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
       FROM {{ ref('entassetfaultremedy') }} fr
+

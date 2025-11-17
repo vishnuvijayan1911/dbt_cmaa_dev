@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='workorderstate_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='workorderstate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workorderstate/workorderstate.py
 -- Root method: Workorderstate.workorderstatedetail [WorkOrderStateDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderStateKey
          ,  CURRENT_TIMESTAMP                                                                                      AS  _ModifiedDate
 
       FROM {{ ref('entassetworkorderlifecyclestate') }} JT
+

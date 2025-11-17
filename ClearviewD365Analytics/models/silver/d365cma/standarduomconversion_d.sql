@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='standarduomconversion_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='standarduomconversion') }}
 
 -- Source file: cma/cma/layers/_base/_silver/standarduomconversion/standarduomconversion.py
 -- Root method: StandardUomConversion.standard_uom_conversion [StandardUomConversionDetail]
@@ -22,3 +22,4 @@ SELECT
       INNER JOIN {{ ref('unitofmeasureconversion') }} uomc ON uomc.product = prd.productid
       INNER JOIN {{ ref('unitofmeasure') }} fromuom ON fromuom.recid = uomc.fromunitofmeasure
       INNER JOIN {{ ref('unitofmeasure') }} touom ON touom.recid = uomc.tounitofmeasure
+

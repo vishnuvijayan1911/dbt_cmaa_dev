@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='approval_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='approval_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.approval_status
@@ -14,3 +14,4 @@ UNION
                CAST('Approved' AS VARCHAR(60)) ApprovalStatus, 
                CURRENT_TIMESTAMP AS _CreatedDate,
                CURRENT_TIMESTAMP AS _ModifiedDate
+

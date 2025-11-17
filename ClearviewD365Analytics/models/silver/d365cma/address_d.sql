@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='address_dim') }}
+{{ config(materialized='table', tags=['silver'], alias='address') }}
 
 -- Source file: cma/cma/layers/_base/_silver/address/address.py
 -- Root method: Address.addressdetail [AddressDetail]

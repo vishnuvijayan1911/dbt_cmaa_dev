@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='workorderpool_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='workorderpool') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workorderpool/workorderpool.py
 -- Root method: Workorderpool.workorderpooldetail [WorkOrderPoolDetail]
@@ -13,3 +13,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY wop.recid) AS WorkOrderPoolKey
          , 1               AS _SourceID
 
       FROM {{ ref('entassetworkorderpool') }} wop
+

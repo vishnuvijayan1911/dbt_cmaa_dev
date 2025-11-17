@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='lot_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='lot') }}
 
 -- Source file: cma/cma/layers/_base/_silver/lot/lot.py
 -- Root method: Lot.lotdetail [LotDetail]
@@ -14,3 +14,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ito.recid) AS LotKey
          ,CURRENT_TIMESTAMP                                               AS _CreatedDate
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
       FROM {{ ref('inventtransorigin') }} ito
+

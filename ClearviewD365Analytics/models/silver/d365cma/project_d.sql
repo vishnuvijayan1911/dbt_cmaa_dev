@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='project_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='project') }}
 
 -- Source file: cma/cma/layers/_base/_silver/project/project.py
 -- Root method: Project.projectdetail [ProjectDetail]
@@ -99,3 +99,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID) AS ProjectKey
       LEFT JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid = ts.ProjectStateID
        AND we.enum        = 'ProjStatus';
+

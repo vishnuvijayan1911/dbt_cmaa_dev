@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='voucher_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='voucher') }}
 
 -- Source file: cma/cma/layers/_base/_silver/voucher/voucher.py
 -- Root method: Voucher.voucherdetail [VoucherDetail]
@@ -15,3 +15,4 @@ SELECT
 
       FROM {{ ref('generaljournalentry') }} gj
      WHERE gj.subledgervoucher <> '') t;
+

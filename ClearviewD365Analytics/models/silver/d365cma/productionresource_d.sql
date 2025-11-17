@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productionresource_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productionresource') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionresource/productionresource.py
 -- Root method: Productionresource.productionresourcedetail [ProductionResourceDetail]
@@ -56,3 +56,4 @@ FROM productionresourcestage               ts
 LEFT JOIN {{ ref('enumeration') }} e1
   ON e1.enum        = 'WrkCtrType'
  AND e1.enumvalueid = ts.ResourceTypeID
+

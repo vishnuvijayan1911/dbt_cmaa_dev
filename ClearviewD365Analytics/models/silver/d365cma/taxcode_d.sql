@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='taxcode_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='taxcode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxcode/taxcode.py
 -- Root method: Taxcode.taxcodedetail [TaxCodeDetail]
@@ -40,3 +40,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY tt._recid) AS TaxCodeKey
      INNER JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid = TaxBaseID
        AND we.enum        = 'TaxBaseType';
+

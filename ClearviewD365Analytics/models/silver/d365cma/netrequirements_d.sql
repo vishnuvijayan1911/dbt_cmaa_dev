@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='netrequirements_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='netrequirements') }}
 
 -- Source file: cma/cma/layers/_base/_silver/netrequirements/netrequirements.py
 -- Root method: NetRequirements.netrequirementsdetail [NetRequirementsDetail]
@@ -51,3 +51,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID) AS NetRequirementsKey
               AND de3.enum            = 'ProdStatus'
              LEFT JOIN {{ ref('reqplanversion') }} rpv
                ON rpv.recid           = rt.planversion) t;
+

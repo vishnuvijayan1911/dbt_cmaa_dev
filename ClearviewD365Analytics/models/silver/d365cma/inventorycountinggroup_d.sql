@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventorycountinggroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventorycountinggroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorycountinggroup/inventorycountinggroup.py
 -- Root method: Inventorycountinggroup.inventorycountinggroupdetail [InventoryCountingGroupDetail]
@@ -27,3 +27,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCounting
       FROM inventorycountinggroupstage              ts
      INNER JOIN silver.cma_LegalEntity le
         ON le.LegalEntityID = ts.LegalEntityID;
+

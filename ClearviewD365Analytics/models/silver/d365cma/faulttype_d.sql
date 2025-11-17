@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='faulttype_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='faulttype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faulttype/faulttype.py
 -- Root method: Faulttype.faulttypedetail [FaultTypeDetail]
@@ -15,3 +15,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultTypeKey
          ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
       FROM {{ ref('entassetfaulttype') }} fa
+

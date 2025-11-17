@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productspecattribute_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productspecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productspecattribute/productspecattribute.py
 -- Root method: Productspecattribute.productspecattributedetail [ProductSpecAttributeDetail]
@@ -152,3 +152,4 @@ SELECT dp.ProductKey
         ON dp.LegalEntityID = ba.legalentityid
        AND dp.ItemID        = ba.pdsbatchattribitemid
      GROUP BY dp.ProductKey;
+

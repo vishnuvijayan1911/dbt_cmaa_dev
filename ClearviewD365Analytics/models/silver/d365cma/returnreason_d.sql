@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='returnreason_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='returnreason') }}
 
 -- Source file: cma/cma/layers/_base/_silver/returnreason/returnreason.py
 -- Root method: Returnreason.returnreasondetail [ReturnReasonDetail]
@@ -14,3 +14,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY rrc.recid) AS ReturnReasonKey
          ,CURRENT_TIMESTAMP                                               AS _CreatedDate
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
       FROM {{ ref('returnreasoncode') }} rrc
+

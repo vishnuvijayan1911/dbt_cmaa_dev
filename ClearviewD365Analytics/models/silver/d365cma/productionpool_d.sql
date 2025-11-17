@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productionpool_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productionpool') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionpool/productionpool.py
 -- Root method: Productionpool.productionpooldetail [ProductionPoolDetail]
@@ -16,3 +16,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY pg.recid) AS ProductionPoolKey
 
       FROM {{ ref('prodpool') }} pg
      WHERE pg.prodpoolid <> '';
+

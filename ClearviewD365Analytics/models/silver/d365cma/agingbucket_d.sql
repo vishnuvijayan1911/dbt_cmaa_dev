@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='agingbucket_dim') }}
+{{ config(materialized='table', tags=['silver'], alias='agingbucket') }}
 
 -- Source file: cma/cma/layers/_base/_silver/agingbucket/agingbucket.py
 -- Root method: Agingbucket.agingbucketdetail [AgingBucketDetail]

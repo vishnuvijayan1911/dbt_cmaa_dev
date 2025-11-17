@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='legalentity_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='legalentity') }}
 
 -- Source file: cma/cma/layers/_base/_silver/legalentity/legalentity.py
 -- Root method: Legalentity.get_detail_query [LegalEntityDetail]
@@ -50,3 +50,4 @@ ORDER BY da.id      )                                                AS RankValu
 
      WHERE t.RankValue     = 1
      AND t.LegalEntityID <> ''
+

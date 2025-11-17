@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='cashdiscount_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='cashdiscount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/cashdiscount/cashdiscount.py
 -- Root method: Cashdiscount.cashdiscountdetail [CashDiscountDetail]
@@ -17,3 +17,4 @@ SELECT
 
       FROM {{ ref('cashdisc') }} cd
      WHERE cd.cashdisccode <> '';
+

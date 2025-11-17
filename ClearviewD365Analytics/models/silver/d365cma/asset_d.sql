@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='asset_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='asset') }}
 
 -- Source file: cma/cma/layers/_base/_silver/asset/asset.py
 -- Root method: Asset.assetdetail [AssetDetail]
@@ -56,3 +56,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS AssetKey
       LEFT JOIN silver.cma_AssetFunctionalLocation afl
         ON afl.LegalEntityID        = ts.LegalEntityID
        AND afl.FunctionalLocationID = ts.FunctionalLocationID;
+

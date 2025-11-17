@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='transferorderhistory_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='transferorderhistory') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorderhistory/transferorderhistory.py
 -- Root method: TransferOrderHistory.transferorderhistorydetail [TransferOrderHistoryDetail]
@@ -18,3 +18,4 @@ FROM {{ ref('inventtransferjour') }} itj
 LEFT JOIN {{ ref('enumeration') }}   we
   ON we.enumvalueid = itj.updatetype
  AND we.enum        = 'InventTransferUpdateType';
+

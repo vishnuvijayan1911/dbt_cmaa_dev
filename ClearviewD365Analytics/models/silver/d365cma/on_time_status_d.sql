@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='on_time_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='on_time_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.on_time_status
@@ -83,3 +83,4 @@ SELECT t.OnTimeStatusID
                     , 'Not due to start'                                  AS OnTime
                     , 'Not started'                                       AS ProcessStatus
                     , 'Work Order Status (Start date)'                    AS OnTimeStatusType) t;
+

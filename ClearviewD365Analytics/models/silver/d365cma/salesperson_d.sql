@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesperson_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesperson') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesperson/salesperson.py
 -- Root method: Salesperson.salespersondetail [SalesPersonDetail]
@@ -22,3 +22,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY hcm.recid) AS SalesPersonKey
       FROM {{ ref('hcmworker') }}          hcm
       LEFT JOIN  {{ ref('dirpartytable') }}  dpt
         ON dpt.recid = hcm.person;
+

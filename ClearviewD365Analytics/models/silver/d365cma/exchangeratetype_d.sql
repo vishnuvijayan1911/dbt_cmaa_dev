@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='exchangeratetype_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='exchangeratetype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/exchangeratetype/exchangeratetype.py
 -- Root method: Exchangeratetype.exchangeratetypedetail [ExchangeRateTypeDetail]
@@ -13,3 +13,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ert.recid) AS ExchangeRateTypeKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
       FROM {{ ref('exchangeratetype') }} ert
      WHERE ert.name <> ''
+

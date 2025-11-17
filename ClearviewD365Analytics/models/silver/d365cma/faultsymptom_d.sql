@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='faultsymptom_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='faultsymptom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultsymptom/faultsymptom.py
 -- Root method: Faultsymptom.faultsymptomdetail [FaultSymptomDetail]
@@ -15,3 +15,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultSymptomKey
          ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
       FROM {{ ref('entassetfaultsymptom') }} fa
+

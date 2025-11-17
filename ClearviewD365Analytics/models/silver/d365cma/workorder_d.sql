@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='workorder_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='workorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workorder/workorder.py
 -- Root method: Workorder.workorderdetail [WorkOrderDetail]
@@ -75,3 +75,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
       LEFT JOIN {{ ref('entassetworkorderservicelevel') }}   wos
         ON wos.dataareaid             = WOT.dataareaid
        AND wos.servicelevel            = WOT.servicelevel;
+

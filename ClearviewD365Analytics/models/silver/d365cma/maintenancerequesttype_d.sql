@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='maintenancerequesttype_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='maintenancerequesttype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancerequesttype/maintenancerequesttype.py
 -- Root method: Maintenancerequesttype.maintenancerequesttypedetail [MaintenanceRequestTypeDetail]
@@ -22,3 +22,4 @@ SELECT
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM {{ ref('entassetrequesttype') }} rty
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='qualityorder_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='qualityorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/qualityorder/qualityorder.py
 -- Root method: Qualityorder.qualityorderdetail [QualityOrderDetail]
@@ -23,3 +23,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY qt.dataareaid, qt.qualityorderid) AS Quality
   LEFT JOIN {{ ref('enumeration') }}        we2
     ON we2.enum        = 'InventTestReferenceType'
    AND we2.enumvalueid = qt.referencetype;
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='bom_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='bom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/bom/bom.py
 -- Root method: Bom.bomdetail [BOMDetail]
@@ -48,3 +48,4 @@ ORDER BY bv.bomid, bv.dataareaid DESC) AS RankValue
                    ON tu.RECID  = bv.recid
                 WHERE bv.active = 1) AS t
      WHERE RankValue = 1;
+

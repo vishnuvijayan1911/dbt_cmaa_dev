@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='purchaseinvoiceline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='purchaseinvoiceline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseinvoiceline/purchaseinvoiceline.py
 -- Root method: Purchaseinvoiceline.purchaseinvoicelinedetail [PurchaseInvoiceLineDetail]
@@ -25,3 +25,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY vij.recid) AS PurchaseInvoiceLineKey
        AND vit.invoicedate         = vij.invoicedate
        AND vit.numbersequencegroup = vij.numbersequencegroup
        AND vit.internalinvoiceid   = vij.internalinvoiceid;
+

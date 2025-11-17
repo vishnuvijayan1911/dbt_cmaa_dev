@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productionroute_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productionroute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionroute/productionroute.py
 -- Root method: Productionroute.productionroutedetail [ProductionRouteDetail]
@@ -64,3 +64,4 @@ SELECT
       LEFT JOIN {{ ref('enumeration') }} e1
         ON e1.enum        = 'RouteOprPriority'
        AND e1.enumvalueid = ts.OprPriority;
+

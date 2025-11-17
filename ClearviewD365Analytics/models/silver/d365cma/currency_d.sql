@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='currency_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='currency') }}
 
 -- Source file: cma/cma/layers/_base/_silver/currency/currency.py
 -- Root method: Currency.currencydetail [CurrencyDetail]
@@ -15,3 +15,4 @@ SELECT
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
     FROM {{ ref('currency') }} dc
     WHERE dc.currencycode <> '';
+

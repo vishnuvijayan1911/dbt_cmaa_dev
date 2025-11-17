@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='fromuoms_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='fromuoms') }}
 
 -- Source file: cma/cma/layers/_base/_silver/fromuoms/fromuoms.py
 -- Root method: FromUoms.from_uoms_detail [FromUomsDetail]
@@ -270,3 +270,4 @@ FROM
       ON lower(list.fromuom) = lower(uom.uom) 
 WHERE
   list.itemid <> ''
+

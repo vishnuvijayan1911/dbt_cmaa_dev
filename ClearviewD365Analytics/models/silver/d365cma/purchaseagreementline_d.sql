@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='purchaseagreementline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='purchaseagreementline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseagreementline/purchaseagreementline.py
 -- Root method: Purchaseagreementline.purchaseagreementlinedetail [PurchaseAgreementLineDetail]
@@ -31,3 +31,4 @@ SELECT
        LEFT JOIN {{ ref('agreementclassification') }} ac
         ON ac.recid        = ah.agreementclassification
     WHERE ah.instancerelationtype IN( 6827)) t;
+

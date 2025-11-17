@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='costgroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='costgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/costgroup/costgroup.py
 -- Root method: Costgroup.costgroupdetail [CostGroupDetail]
@@ -53,3 +53,4 @@ SELECT *
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM (SELECT * FROM costgroupdetail1 UNION SELECT * FROM costgroupdetail2) t;
+

@@ -1,4 +1,4 @@
----{{ config(materialized='table', tags=['silver'], alias='deliverymode_dim') }}
+﻿---{{ config(materialized='table', tags=['silver'], alias='deliverymode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliverymode/deliverymode.py
 -- Root method: Deliverymode.deliverymodedetail [DeliveryModeDetail]
@@ -15,3 +15,4 @@ SELECT {{ dbt_utils.generate_surrogate_key(["dm.recid"]) }}            AS Delive
          , cast(CURRENT_TIMESTAMP  as DATETIME2(6))                                              AS _ModifiedDate
       FROM {{ ref('dlvmode') }} dm
      WHERE dm.code <> '';
+

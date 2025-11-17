@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='faultcause_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='faultcause') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultcause/faultcause.py
 -- Root method: Faultcause.faultcausedetail [FaultCauseDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultCauseKey
          ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
       FROM {{ ref('entassetfaultcause') }} fa
+

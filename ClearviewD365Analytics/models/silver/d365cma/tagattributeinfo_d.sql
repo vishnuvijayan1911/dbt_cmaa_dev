@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='tagattributeinfo_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='tagattributeinfo') }}
 
 -- Source file: cma/cma/layers/_base/_silver/tagattributeinfo/tagattributeinfo.py
 -- Root method: TagAttributeInfo.tagattributeinfodetail [TagAttributeInfoDetail]
@@ -84,3 +84,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RECID) AS TagAttributeInfoKey,
      and e.enumvalue IN ('Chemical', 'Mechanical','Physical','Cleanliness','Hardenability','ASTM E45 Method A (Worst)','ASTM E45 Method A (Average)','ASTM 345 Method E','ASTM E45 Method C','ASTM E381', 'Bundle Length', 'Other', 'Diameter')
 --and 1=0
 ) t
+

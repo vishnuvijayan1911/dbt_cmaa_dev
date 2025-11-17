@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='qualityorderline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='qualityorderline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/qualityorderline/qualityorderline.py
 -- Root method: Qualityorderline.qualityorderlinedetail [QualityOrderLineDetail]
@@ -24,3 +24,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts.LegalEntityID, ts.QualityOrderID, ts.Sequ
                 , t.recid                                                                AS _RecID
                 , 1                                                                      AS _SourceID
              FROM {{ ref('inventqualityorderline') }} t) ts;
+

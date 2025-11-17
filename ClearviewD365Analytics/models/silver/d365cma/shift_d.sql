@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='shift_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='shift') }}
 {% set shift_prefix = env_var('DATAVERSE_SHIFT_PREFIX', '') %}
 
 -- Source file: cma/cma/layers/_base/_silver/shift/shift.py
@@ -44,3 +44,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts.LegalEntityID, ts.InventorySiteID, ts.Shi
      , ts.ShiftStartTime                                                                                                                  AS ShiftStartTime
      , ts.ShiftEndTime                                                                                                                    AS ShiftEndTime
   FROM shiftstage ts;
+

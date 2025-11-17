@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='deliveryterm_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='deliveryterm') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliveryterm/deliveryterm.py
 -- Root method: Deliveryterm.deliverytermdetail [DeliveryTermDetail]
@@ -16,3 +16,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY tm.recid) AS DeliveryTermKey
 
       FROM {{ ref('dlvterm') }} tm
      WHERE tm.code <> '';
+

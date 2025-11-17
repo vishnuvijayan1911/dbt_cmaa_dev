@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='customer_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='customer') }}
 
 -- Source file: cma/cma/layers/_base/_silver/customer/customer.py
 -- Root method: Customer.customerdetail [CustomerDetail]
@@ -111,3 +111,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS CustomerKey
         ON te2.Party = ts.RecID_DPT
        AND te2.Type  = 2 
      WHERE ts.CustomerAccount <> ''
+

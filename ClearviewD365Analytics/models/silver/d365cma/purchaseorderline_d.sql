@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='purchaseorderline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorderline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorderline/purchaseorderline.py
 -- Root method: PurchaseOrderLine.get_detail_query [PurchaseOrderLineDetail]
@@ -39,3 +39,4 @@ SELECT * FROM
      WHERE pl.purchstatus <> 4 -- 4: Cancelled
        AND pl.purchasetype IN ( 3, 4 ) -- 3: Purchase Order, 4: Return Order
        ) P WHERE P.IsDeleted = 0
+

@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesinvoice_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesinvoice') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesinvoice/salesinvoice.py
 -- Root method: Salesinvoice.salesinvoicedetail [SalesInvoiceDetail]
@@ -18,3 +18,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY cij.invoiceid) AS SalesInvoiceKey
         ,'1900-01-01'       AS ActivityDate 
 
       FROM {{ ref('custinvoicejour') }} cij
+

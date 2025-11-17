@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='transferorderhistoryline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='transferorderhistoryline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorderhistoryline/transferorderhistoryline.py
 -- Root method: TransferOrderHistoryline.transferorderhistorylinedetail [TransferOrderHistoryLineDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY itjl.recid) AS TransferOrderHistoryLineKey
      , CURRENT_TIMESTAMP                            AS _CreatedDate
      , CURRENT_TIMESTAMP                            AS _ModifiedDate
   FROM {{ ref('inventtransferjourline') }} itjl;
+

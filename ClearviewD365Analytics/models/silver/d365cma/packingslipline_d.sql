@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='packingslipline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='packingslipline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/packingslipline/packingslipline.py
 -- Root method: Packingslipline.packingsliplinedetail [PackingSlipLineDetail]
@@ -28,3 +28,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t._RecID) AS PackingSlipLineKey
       LEFT JOIN {{ ref('tmscarrierservice') }}   tms
         ON tms.dataareaid    = cpsj.dataareaid
        AND tms.dlvmodeid      = cpsj.dlvmode) t;
+

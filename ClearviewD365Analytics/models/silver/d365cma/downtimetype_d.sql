@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='downtimetype_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='downtimetype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/downtimetype/downtimetype.py
 -- Root method: Downtimetype.downtimetypedetail [DowntimeTypeDetail]
@@ -16,3 +16,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY rt.recid) AS DowntimeTypeKey
          ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
       FROM {{ ref('entassetproductionstoptype') }} rt;
+

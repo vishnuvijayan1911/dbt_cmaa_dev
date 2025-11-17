@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorycoveragegroup/inventorycoveragegroup.py
 -- Root method: Inventorycoveragegroup.inventorycoveragegroupdetail [InventoryCoverageGroupDetail]
@@ -34,3 +34,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCoverage
       LEFT JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid   = ts.InventoryCoverageRuleID
        AND we.enum          = 'ReqCovType';
+

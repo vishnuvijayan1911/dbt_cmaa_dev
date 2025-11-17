@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productionbom_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productionbom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionbom/productionbom.py
 -- Root method: Productionbom.productionbomdetail [ProductionBOMDetail]
@@ -65,3 +65,4 @@ SELECT
       LEFT JOIN {{ ref('enumeration') }} e4
         ON e4.enum          = 'InventRefType'
        AND e4.enumvalueid   = ts.ReferenceTypeID;
+

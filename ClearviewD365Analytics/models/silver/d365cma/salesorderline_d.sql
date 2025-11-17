@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesorderline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesorderline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesorderline/salesorderline.py
 -- Root method: Salesorderline.salesorderlinedetail [SalesOrderLineDetail]
@@ -27,3 +27,4 @@ SELECT
        AND sh.salesstatus <> 4 
      WHERE sl.salesstatus <> 4 
        AND sl.salestype IN ( 3, 4 );
+

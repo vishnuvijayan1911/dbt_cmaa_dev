@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='uomfrominvoicecharges_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='uomfrominvoicecharges') }}
 
 -- Source file: cma/cma/layers/_base/_silver/uomfrominvoicecharges/uomfrominvoicecharges.py
 -- Root method: UomFromInvoiceCharges.uoms_from_invoice_charges_detail [UomFromInvoiceChargesDetail]
@@ -155,3 +155,4 @@ FROM
    INNER JOIN
       silver.cma_UOM touom 
       ON lower(touom.uom) = lower(list.touom)
+

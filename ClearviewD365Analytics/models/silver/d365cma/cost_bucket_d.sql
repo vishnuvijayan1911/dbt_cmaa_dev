@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='cost_bucket_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='cost_bucket') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.cost_bucket
@@ -108,3 +108,4 @@ SELECT 12,
           , 'Tariff'
           , CURRENT_TIMESTAMP
           , CURRENT_TIMESTAMP
+

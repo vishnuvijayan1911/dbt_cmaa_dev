@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='qualitytest_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='qualitytest') }}
 
 -- Source file: cma/cma/layers/_base/_silver/qualitytest/qualitytest.py
 -- Root method: QualityTest.qualitytestdetail [QualityTestDetail]
@@ -24,3 +24,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS QualityTestKey
              LEFT JOIN {{ ref('enumeration') }} we1
                ON we1.enum        = 'InventTestType'
               AND we1.enumvalueid = t.testtype) ts;
+

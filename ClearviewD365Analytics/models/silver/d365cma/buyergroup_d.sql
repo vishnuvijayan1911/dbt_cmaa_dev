@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='buyergroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='buyergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/buyergroup/buyergroup.py
 -- Root method: Buyergroup.buyergroupdetail [BuyerGroupDetail]
@@ -16,3 +16,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS BuyerGroupKey
 
       FROM {{ ref('inventbuyergroup') }} ib
      WHERE ib.description <> '';
+

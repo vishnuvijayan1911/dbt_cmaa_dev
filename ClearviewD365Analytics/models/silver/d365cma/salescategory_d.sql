@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salescategory_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salescategory') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salescategory/salescategory.py
 -- Root method: Salescategory.salescategorydetail [SalesCategoryDetail]
@@ -23,3 +23,4 @@ INNER JOIN {{ ref('ecorescategoryhierarchyrole') }}  echr
    ON ec1.recid                     = ec.parentcategory
    LEFT JOIN  {{ ref('ecorescategory') }}               ec2
    ON ec2.recid                      = ec1.parentcategory ;
+

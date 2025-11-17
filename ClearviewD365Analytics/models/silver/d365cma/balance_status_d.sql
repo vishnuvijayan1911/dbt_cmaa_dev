@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='balance_status_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='balance_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.balance_status
@@ -22,3 +22,4 @@ SELECT 0  AS BalanceStatusID
                , CURRENT_TIMESTAMP AS _CreatedDate
                , CURRENT_TIMESTAMP AS  _ModifiedDate
      FROM (SELECT 0 AS CreditStatusID, 'No credit used' AS CreditStatus) AS c
+

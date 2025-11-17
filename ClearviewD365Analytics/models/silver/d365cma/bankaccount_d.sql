@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='bankaccount_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='bankaccount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/bankaccount/bankaccount.py
 -- Root method: Bankaccount.bankaccountdetail [BankAccountDetail]
@@ -18,3 +18,4 @@ SELECT
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM {{ ref('bankaccounttable') }} ba
+

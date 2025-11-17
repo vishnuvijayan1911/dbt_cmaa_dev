@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/assetfunctionallocation/assetfunctionallocation.py
 -- Root method: Assetfunctionallocation.assetfunctionallocationdetail [AssetFunctionalLocationDetail]
@@ -121,3 +121,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY FL.recid) AS AssetFunctionalLocationKey
         ON fl9.recid               = l9.functionallocation
       LEFT JOIN {{ ref('entassetfunctionallocationtype') }}      flt9
         ON flt9.recid               = fl9.functionallocationtype;
+

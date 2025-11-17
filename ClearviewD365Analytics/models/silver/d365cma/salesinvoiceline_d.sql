@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesinvoiceline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesinvoiceline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesinvoiceline/salesinvoiceline.py
 -- Root method: Salesinvoiceline.salesinvoicelinedetail [SalesInvoiceLineDetail]
@@ -30,3 +30,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesInvoiceLineKey
         ON id.dataareaid          = cit.dataareaid
        AND id.inventdimid          = cit.inventdimid WHERE cit.recid <> 0) t
         ;
+

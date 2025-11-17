@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='salesgroup_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='salesgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesgroup/salesgroup.py
 -- Root method: Salesgroup.salesgroupdetail [SalesGroupDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY csg.recid) AS SalesGroupKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM {{ ref('commissionsalesgroup') }} csg
+

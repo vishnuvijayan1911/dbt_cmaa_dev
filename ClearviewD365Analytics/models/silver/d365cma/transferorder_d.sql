@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='transferorder_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='transferorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorder/transferorder.py
 -- Root method: TransferOrder.transferorderdetail [TransferOrderDetail]
@@ -17,3 +17,4 @@ FROM {{ ref('inventtransfertable') }} itt
 LEFT JOIN {{ ref('enumeration') }}   we
   ON we.enumvalueid = itt.transferstatus
  AND we.enum        = 'InventTransferStatus';
+

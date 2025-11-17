@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productreceiptline_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productreceiptline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productreceiptline/productreceiptline.py
 -- Root method: Productreceiptline.productreceiptlinedetail [ProductReceiptLineDetail]
@@ -16,3 +16,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY vpst.recid) AS ProductReceiptLineKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
         ,'1900-01-01'                                                     AS ActivityDate
       FROM {{ ref('vendpackingsliptrans') }} vpst
+

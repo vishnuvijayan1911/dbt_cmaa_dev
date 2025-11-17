@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='standardinverseuomconversion_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='standardinverseuomconversion') }}
 
 -- Source file: cma/cma/layers/_base/_silver/standardinverseuomconversion/standardinverseuomconversion.py
 -- Root method: StandardInverseUomConversion.standard_inverse_uom_conversion [StandardInverseUomConversionDetail]
@@ -20,3 +20,4 @@ select  prd.productkey,
 	    inner join silver.cma_uom uom1 on lower(touom.symbol)   = lower(uom1.uom) 
 	    inner join silver.cma_legalentity le
 	    on le.legalentityid=prd.legalentityid
+

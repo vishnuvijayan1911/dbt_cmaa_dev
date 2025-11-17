@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='maintenancejobtradecertificate_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='maintenancejobtradecertificate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancejobtradecertificate/maintenancejobtradecertificate.py
 -- Root method: Maintenancejobtradecertificate.maintenancejobtradecertificatedetail [MaintenanceJobTradeCertificateDetail]
@@ -21,3 +21,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY eajtc.recid) AS MaintenanceJobTradeCertifica
         ON hct.recid   = eajtc.hcmcertificatetype
       LEFT JOIN {{ ref('entassetjobtrade') }}       eajt
         ON eajt.recid  = eajtc.jobtrade;
+

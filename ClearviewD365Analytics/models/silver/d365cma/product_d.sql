@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='product_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='product') }}
 
 -- Source file: cma/cma/layers/_base/_silver/product/product.py
 -- Root method: Product.productdetail [ProductDetail]
@@ -246,3 +246,4 @@ SELECT
          ,CURRENT_TIMESTAMP                                               AS _CreatedDate
          ,CURRENT_TIMESTAMP                                               AS _ModifiedDate
          ,'1900-01-01'                                               AS ActivityDate
+

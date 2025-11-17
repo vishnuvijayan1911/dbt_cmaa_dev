@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='inventorystatus_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='inventorystatus') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorystatus/inventorystatus.py
 -- Root method: Inventorystatus.inventorystatusdetail [InventoryStatusDetail]
@@ -15,3 +15,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ws.recid) AS InventoryStatusKey
         , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
       FROM {{ ref('whsinventstatus') }} ws
+

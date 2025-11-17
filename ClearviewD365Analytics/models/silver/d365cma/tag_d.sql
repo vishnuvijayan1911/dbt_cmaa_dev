@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='tag_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='tag') }}
 
 -- Source file: cma/cma/layers/_base/_silver/tag/tag.py
 -- Root method: Tag.tagdetail [TagDetail]
@@ -57,3 +57,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS TagKey
 	   AND we.enumvalueid     =  pdm.status
      WHERE ib.inventbatchid <> '0'
        AND ib.inventbatchid <> ''
+

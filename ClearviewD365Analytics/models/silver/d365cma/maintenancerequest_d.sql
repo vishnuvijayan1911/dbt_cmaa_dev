@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='maintenancerequest_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='maintenancerequest') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancerequest/maintenancerequest.py
 -- Root method: Maintenancerequest.maintenancerequestdetail [MaintenanceRequestDetail]
@@ -24,3 +24,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY rt.recid) AS MaintenanceRequestKey
         ON rt.dataareaid = slog.dataareaid
        AND rt.recid      = slog.refrecid
        AND slog.remark IN ( 'Request Created', 'Maintenance request created', 'Anmodning Oprettet' );
+

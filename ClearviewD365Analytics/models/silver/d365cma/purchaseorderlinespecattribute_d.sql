@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorderlinespecattribute/purchaseorderlinespecattribute.py
 -- Root method: Purchaseorderlinespecattribute.purchaseorderlinespecattributedetail [PurchaseOrderLineSpecAttributeDetail]
@@ -61,3 +61,4 @@ SELECT dso.PurchaseOrderLineKey
        AND dso._SourceID = 1
      GROUP BY dso.PurchaseOrderLineKey
             , ba.recid;
+

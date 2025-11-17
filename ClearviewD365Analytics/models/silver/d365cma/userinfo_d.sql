@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='userinfo_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='userinfo') }}
 
 -- Source file: cma/cma/layers/_base/_silver/userinfo/userinfo.py
 -- Root method: Userinfo.userinfodetail [UserInfoDetail]
@@ -16,3 +16,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t.UserName) AS UserInfoKey
 
 
       FROM {{ ref('userinfo') }} uf) t;
+

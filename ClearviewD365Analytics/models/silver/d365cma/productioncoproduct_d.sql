@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='productioncoproduct_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='productioncoproduct') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productioncoproduct/productioncoproduct.py
 -- Root method: Productioncoproduct.productioncoproductdetail [ProductionCoProductDetail]
@@ -35,3 +35,4 @@ SELECT
       LEFT JOIN {{ ref('enumeration') }} e1
         ON e1.enum        = 'InventRefType'
        AND e1.enumvalueid = ts.ReferenceTypeID;
+

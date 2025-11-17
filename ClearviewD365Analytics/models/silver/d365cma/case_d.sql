@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='case_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='case') }}
 
 -- Source file: cma/cma/layers/_base/_silver/case/case.py
 -- Root method: Case.casedetail [CaseDetail]
@@ -85,3 +85,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
   LEFT JOIN {{ ref('enumeration') }} we3
     ON we3.enum        = 'CaseResolutionType'
    AND we3.enumvalueid = ts.CaseResolutionID;
+

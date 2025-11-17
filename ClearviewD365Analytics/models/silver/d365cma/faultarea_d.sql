@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='faultarea_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='faultarea') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultarea/faultarea.py
 -- Root method: Faultarea.faultareadetail [FaultAreaDetail]
@@ -16,3 +16,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultAreaKey
 
 
       FROM {{ ref('entassetfaultarea') }} fa
+

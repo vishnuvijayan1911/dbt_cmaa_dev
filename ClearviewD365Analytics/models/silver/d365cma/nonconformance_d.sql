@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='nonconformance_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='nonconformance') }}
 
 -- Source file: cma/cma/layers/_base/_silver/nonconformance/nonconformance.py
 -- Root method: Nonconformance.nonconformancedetail [NonConformanceDetail]
@@ -58,3 +58,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS NonConformanceKe
   LEFT JOIN {{ ref('enumeration') }}  we4
     ON we4.enum        = 'NoYes'
    AND we4.enumvalueid = ts.IsTreatmentRequired;
+

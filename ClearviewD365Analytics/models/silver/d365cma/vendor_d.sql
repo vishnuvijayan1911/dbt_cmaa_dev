@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='vendor_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='vendor') }}
 
 -- Source file: cma/cma/layers/_base/_silver/vendor/vendor.py
 -- Root method: Vendor.get_detail_query [VendorDetail]
@@ -109,3 +109,4 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS VendorKey
    ON te2.Party      = ts.RecID_DPT
   AND te2.Type       = 2 -- EMail
 WHERE ts.VendorAccount <> '';
+

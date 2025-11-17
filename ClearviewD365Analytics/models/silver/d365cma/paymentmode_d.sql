@@ -1,4 +1,4 @@
-{{ config(materialized='table', tags=['silver'], alias='paymentmode_dim') }}
+﻿{{ config(materialized='table', tags=['silver'], alias='paymentmode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/paymentmode/paymentmode.py
 -- Root method: Paymentmode.paymentmodedetail [PaymentModeDetail]
@@ -34,3 +34,4 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.PaymentModeID) AS Payment
 
       FROM paymentmodepaymode pa
      WHERE pa.RankVal = 1 ) t;
+
