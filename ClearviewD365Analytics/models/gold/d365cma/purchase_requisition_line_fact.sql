@@ -29,6 +29,6 @@ SELECT  t.PurchaseRequisitionLineKey AS [Purchase requisition line key]
     , t.BasePrice_TransCur         AS [Requisition price in trans currency]
     , CAST(1 AS INT)               AS [Requisition lines]
     , d.Date                       AS [Created date]
-  FROM {{ ref("PurchaseRequisitionLine_Fact") }}     t
+  FROM {{ ref("purchaserequisitionline_f") }}     t
 INNER JOIN {{ ref("Date") }}                        d 
     ON d.DateKey                          = t.CreatedDateKey;

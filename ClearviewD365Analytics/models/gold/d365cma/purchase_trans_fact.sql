@@ -49,7 +49,7 @@ INNER JOIN {{ ref("PurchaseOrderLine_Fact") }}              polf
     ON ist.InventoryTransStatusKey      = poltf.InventoryTransStatusKey
   LEFT JOIN {{ ref("PurchaseType") }}                        st 
     ON st.PurchaseTypeKey               = polf.PurchaseTypeKey
-  FULL OUTER JOIN {{ ref("PurchaseRequisitionLine_Fact") }}  prl 
+  FULL OUTER JOIN {{ ref("purchaserequisitionline_f") }}  prl 
     ON prl.PurchaseRequisitionLineKey   = polf.PurchaseRequisitionLineKey
   LEFT JOIN {{ ref("Date") }}                                Receiveddate
     ON Receiveddate.DateKey             = prlf.ReceiptDateKey

@@ -14,8 +14,8 @@ SELECT  t.PurchaseRequisitionLineKey AS [Purchase requisition line key]
     , NULLIF(ru.UOM, '')           AS [Requisition UOM]
     , NULLIF(d.Date, '1/1/1900')   AS [Requisition date]
     , NULLIF(d2.Date, '1/1/1900')  AS [Required date]
-  FROM {{ ref("PurchaseRequisitionLine") }}           t 
-INNER JOIN {{ ref("PurchaseRequisitionLine_Fact") }} f 
+  FROM {{ ref("purchaserequisitionline_d") }}           t 
+INNER JOIN {{ ref("purchaserequisitionline_f") }} f 
     ON f.PurchaseRequisitionLineKey = t.PurchaseRequisitionLineKey
 INNER JOIN {{ ref("Date") }}                         d 
     ON d.DateKey                    = f.CreatedDateKey
