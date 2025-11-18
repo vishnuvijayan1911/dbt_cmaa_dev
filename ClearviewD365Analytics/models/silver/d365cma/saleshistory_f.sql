@@ -39,7 +39,7 @@ saleshistory_facthistory AS (
                         , ROW_NUMBER () OVER (PARTITION BY sh._RecID
     ORDER BY sh.BookDate DESC)                              AS RankVal
                         , sh._RecID                         AS _RecID
-                     FROM {{ ref('saleshistory_f') }} sh
+                     FROM {{ this }} sh
 
 
           ) AS t
@@ -121,8 +121,8 @@ saleshistory_factstage AS (
     ORDER BY sh.BookDate DESC       )                            AS RankVal
                                     , sh._RecID                  AS _RecID
                                  FROM (   SELECT *
-                                            FROM {{ ref('saleshistory_f') }}
-                                           WHERE _RecID NOT IN ( SELECT DISTINCT _RecID FROM {{ ref('saleshistory_f') }} WHERE ModifiedBy = '' )) sh
+                                            FROM {{ this }}
+                                           WHERE _RecID NOT IN ( SELECT DISTINCT _RecID FROM {{ this }} WHERE ModifiedBy = '' )) sh
                                  LEFT JOIN {{ ref('salesorderline_f') }}                                                                          sol
                                    ON sol._RecID = sh._RecID
                                  LEFT JOIN {{ ref('salesline') }}                                                                                    sl
@@ -204,7 +204,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
         ON th._RecID            = ts._RecID
       LEFT JOIN {{ ref('salesupdatetype_d') }} st
         ON st.SalesUpdateTypeID = ts.SalesUpdateTypeID 
-        WHERE ts._RecID  NOT IN (SELECT _RecID FROM {{ ref('saleshistory_f') }})
+        WHERE ts._RecID  NOT IN (SELECT _RecID FROM {{ this }})
         UNION
         SELECT 
 		  _CreatedDate
@@ -244,5 +244,5 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
          ,  ModifiedBy
          ,  _RecID
          , _SourceID                                                                                                           AS _SourceID
-		FROM {{ ref('saleshistory_f') }}
+		FROM {{ this }}
 		) t;
