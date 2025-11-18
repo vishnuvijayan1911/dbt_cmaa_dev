@@ -10,7 +10,7 @@ WITH
 tagactuals_factsumunit AS (
     SELECT tat.recid
              , itm.cmasecondaryuom AS TagactualsSUMUnit
-          FROM {{ ref('cmatagactualstable') }}     tat
+          FROM {{ ref('tagactualstable') }}     tat
           LEFT JOIN {{ ref('inventtable') }}       it
             ON it.dataareaid  = tat.dataareaid
            AND it.itemid       = tat.itemid
@@ -34,7 +34,7 @@ tagactuals_factstage AS (
              , ipr.cmaweightuom
              , tat.recid  AS _RecID
              , 1          AS _SourceID
-          FROM {{ ref('cmatagactualstable') }}    tat
+          FROM {{ ref('tagactualstable') }}    tat
           LEFT JOIN {{ ref('inventparameters') }} ipr
             ON ipr.dataareaid = tat.dataareaid
           LEFT JOIN {{ ref('inventdim') }}        id

@@ -237,7 +237,7 @@ FROM
               {{ ref('product_d') }} k 
               ON k.itemid = pj.itemid 
             INNER JOIN
-              {{ ref('cmatagactualstable') }} ct 
+              {{ ref('tagactualstable') }} ct 
               ON ct.dataareaid = pj.dataareaid 
               AND ct.referencenumber = pj.prodid 
         WHERE
