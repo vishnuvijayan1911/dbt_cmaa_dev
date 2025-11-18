@@ -16,16 +16,16 @@ cmaproductattributes AS (
            , Shape.value      AS [Shape]
            , CONCAT (pt.name, ' ', '-', ' ', it.itemid) AS [Product]
         FROM {{ ref('inventtable') }}  it
-        LEFT JOIN {{ ref('cmaproductattributevalues') }} dim1 
+        LEFT JOIN {{ ref('productattributevalues') }} dim1 
         ON it.product = dim1.productid
         and dim1.name   ='Dimension 1'
-        LEFT JOIN {{ ref('cmaproductattributevalues') }} dim2 
+        LEFT JOIN {{ ref('productattributevalues') }} dim2 
         ON it.product = dim2.productid
         and dim2.name   ='Dimension 2'
-        LEFT JOIN {{ ref('cmaproductattributevalues') }} Grade 
+        LEFT JOIN {{ ref('productattributevalues') }} Grade 
         ON it.product = Grade.productid
         and Grade.name   ='Grade'
-        LEFT JOIN {{ ref('cmaproductattributevalues') }} Shape 
+        LEFT JOIN {{ ref('productattributevalues') }} Shape 
         ON it.product = Shape.productid
         and Shape.name   ='Shape'
         LEFT JOIN {{ ref('ecoresproducttranslation') }}  pt
@@ -72,7 +72,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RECID) AS TagAttributeInfoKey,
       and a.dataareaid = p.dataareaid
       INNER JOIN {{ ref('enumeration') }} e
          ON e.enumvalueid = a.cmabacategorysort
-         AND e.enum = 'cmaBACategorySort'
+         AND e.enum = 'BACategorySort'
       LEFT JOIN cmaproductattributes pa
       on pa.ItemID = a.itemid
       and pa.DataAreaID = a.dataareaid
