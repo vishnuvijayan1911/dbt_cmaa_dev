@@ -142,7 +142,7 @@ production_factunit AS (
                         , ROW_NUMBER() OVER (PARTITION BY ct.dataareaid, ct.referencenumber
     ORDER BY ct.dataareaid, ct.referencenumber) AS RankVal
                      FROM {{ ref('prodtable') }}               pt
-                    INNER JOIN {{ ref('cmatagactualstable') }} ct
+                    INNER JOIN {{ ref('tagactualstable') }} ct
                        ON ct.dataareaid     = pt.dataareaid
                       AND ct.referencenumber = pt.prodid) t
          WHERE t.RankVal = 1;
