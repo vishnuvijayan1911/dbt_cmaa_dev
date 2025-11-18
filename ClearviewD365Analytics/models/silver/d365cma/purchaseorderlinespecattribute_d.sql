@@ -17,7 +17,7 @@ purchaseorderlinespecattribute AS (
              , CASE WHEN ISNUMERIC(ba.pdsbatchattribmax) = 1 THEN ba.pdsbatchattribmax END                     AS PDSBATCHATTRIBMAX
              , pl.modifieddatetime                                                                            AS _SourceDate
           FROM {{ ref('purchline') }}               pl
-         INNER JOIN {{ ref('cmabatchattributes') }} ba
+         INNER JOIN {{ ref('batchattributes') }} ba
             ON ba.refrecid = pl.recid
          WHERE ba.cmabarelation = 2;
 )
