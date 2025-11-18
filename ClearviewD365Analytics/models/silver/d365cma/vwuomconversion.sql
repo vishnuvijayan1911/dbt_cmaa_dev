@@ -1,5 +1,5 @@
 ﻿{{ config(materialized='table', tags=['silver'], alias='vwuomconversion') }}
 
 SELECT *
-  FROM {{ ref('vwuomconversion') }};
+  FROM {{ ref('uom_d') }};
 
