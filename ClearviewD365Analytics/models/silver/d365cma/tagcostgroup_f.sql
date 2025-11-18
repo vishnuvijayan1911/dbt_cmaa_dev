@@ -26,7 +26,7 @@ tagcostgroup_factstage AS (
      INNER JOIN {{ ref('inventdim') }}              id
         ON id.dataareaid    = oi.dataareaid
        AND id.inventdimid   = oi.inventdimid
-     INNER JOIN {{ ref('cmatagcostsbycostgroup') }} ib
+     INNER JOIN {{ ref('tagcostsbycostgroup') }} ib
         ON ib.dataareaid    = id.dataareaid
        AND ib.itemid        = oi.itemid
        AND ib.inventbatchid = id.inventbatchid

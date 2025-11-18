@@ -307,6 +307,8 @@ sources:
       - name: purchreqline
       - name: purchreqtable
       - name: purchtable
+      - name: reqpo      
+      - name: reqplanversion         
       - name: reqgroup
       - name: reqitemtable
       - name: reqtrans
