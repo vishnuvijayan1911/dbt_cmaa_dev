@@ -45,7 +45,7 @@ NULLIF (t._1E0170, '') AS [1E0170]
       , NULLIF(t.BestBeforeDate, '1/1/1900')                           AS [Best before date]
       , NULLIF(t.ExpirationDate, '1/1/1900')                           AS [Expiration date]
       , NULLIF(t.ProductionDate, '1/1/1900')                           AS [Production date]
-    FROM {{ ref("tagattributes_d") }}         t
+    FROM {{ ref("tagattribute_d") }}         t
     LEFT JOIN {{ ref('date_d') }}   dd
       ON dd.Date          = t.ProductionDate
     LEFT JOIN {{ ref("vendor_d") }} dv
