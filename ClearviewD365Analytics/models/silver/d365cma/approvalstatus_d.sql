@@ -11,4 +11,3 @@ WITH detail AS (
 SELECT ApprovalStatusID
      , ApprovalStatus
   FROM detail
- ORDER BY ApprovalStatusID;

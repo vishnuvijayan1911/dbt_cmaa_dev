@@ -23,5 +23,5 @@ SELECT
 
       FROM agreementstatestage               ts
       LEFT JOIN {{ ref("enumeration") }} we
-        ON we.EnumValueID = ts.AgreementStateID
-       AND we.Enum        = 'AgreementState';
+        ON we.enumvalueid = ts.AgreementStateID
+       AND we.enum        = 'AgreementState';
