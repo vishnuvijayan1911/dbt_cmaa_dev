@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='uomfrominvoicecharges') }}
+{{ config(materialized='table', tags=['silver'], alias='uomfrominvoicecharges') }}
 
 -- Source file: cma/cma/layers/_base/_silver/uomfrominvoicecharges/uomfrominvoicecharges.py
 -- Root method: UomFromInvoiceCharges.uoms_from_invoice_charges_detail [UomFromInvoiceChargesDetail]

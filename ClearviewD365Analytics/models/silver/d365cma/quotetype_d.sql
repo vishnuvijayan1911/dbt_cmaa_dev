@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='quotetype') }}
+{{ config(materialized='table', tags=['silver'], alias='quotetype') }}
 
 WITH detail AS (
     SELECT we.EnumValueID AS QuoteTypeID

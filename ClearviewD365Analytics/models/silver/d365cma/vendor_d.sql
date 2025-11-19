@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='vendor') }}
+{{ config(materialized='table', tags=['silver'], alias='vendor') }}
 
 -- Source file: cma/cma/layers/_base/_silver/vendor/vendor.py
 -- Root method: Vendor.get_detail_query [VendorDetail]

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='netrequirements') }}
+{{ config(materialized='table', tags=['silver'], alias='netrequirements') }}
 
 -- Source file: cma/cma/layers/_base/_silver/netrequirements/netrequirements.py
 -- Root method: NetRequirements.netrequirementsdetail [NetRequirementsDetail]

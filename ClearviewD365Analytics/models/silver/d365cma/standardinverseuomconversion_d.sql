@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='standardinverseuomconversion') }}
+{{ config(materialized='table', tags=['silver'], alias='standardinverseuomconversion') }}
 
 -- Source file: cma/cma/layers/_base/_silver/standardinverseuomconversion/standardinverseuomconversion.py
 -- Root method: StandardInverseUomConversion.standard_inverse_uom_conversion [StandardInverseUomConversionDetail]

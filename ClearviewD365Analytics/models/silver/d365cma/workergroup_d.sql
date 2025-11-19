@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='workergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workergroup/workergroup.py
 -- Root method: Workergroup.workergroupdetail [WorkerGroupDetail]

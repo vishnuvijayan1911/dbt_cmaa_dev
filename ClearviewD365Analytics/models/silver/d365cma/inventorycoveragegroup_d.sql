@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorycoveragegroup/inventorycoveragegroup.py
 -- Root method: Inventorycoveragegroup.inventorycoveragegroupdetail [InventoryCoverageGroupDetail]

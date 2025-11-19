@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='legalentity') }}
+{{ config(materialized='table', tags=['silver'], alias='legalentity') }}
 
 -- Source file: cma/cma/layers/_base/_silver/legalentity/legalentity.py
 -- Root method: Legalentity.get_detail_query [LegalEntityDetail]

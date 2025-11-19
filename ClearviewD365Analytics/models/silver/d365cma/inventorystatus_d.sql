@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorystatus') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorystatus') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorystatus/inventorystatus.py
 -- Root method: Inventorystatus.inventorystatusdetail [InventoryStatusDetail]

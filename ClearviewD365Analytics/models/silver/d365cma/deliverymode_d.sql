@@ -1,4 +1,4 @@
-﻿---{{ config(materialized='table', tags=['silver'], alias='deliverymode') }}
+---{{ config(materialized='table', tags=['silver'], alias='deliverymode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliverymode/deliverymode.py
 -- Root method: Deliverymode.deliverymodedetail [DeliveryModeDetail]

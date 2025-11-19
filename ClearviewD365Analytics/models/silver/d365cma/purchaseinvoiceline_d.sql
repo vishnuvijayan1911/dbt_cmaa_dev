@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseinvoiceline') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseinvoiceline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseinvoiceline/purchaseinvoiceline.py
 -- Root method: Purchaseinvoiceline.purchaseinvoicelinedetail [PurchaseInvoiceLineDetail]

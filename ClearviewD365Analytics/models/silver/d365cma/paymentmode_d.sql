@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='paymentmode') }}
+{{ config(materialized='table', tags=['silver'], alias='paymentmode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/paymentmode/paymentmode.py
 -- Root method: Paymentmode.paymentmodedetail [PaymentModeDetail]

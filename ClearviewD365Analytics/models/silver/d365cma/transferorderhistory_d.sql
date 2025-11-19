@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='transferorderhistory') }}
+{{ config(materialized='table', tags=['silver'], alias='transferorderhistory') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorderhistory/transferorderhistory.py
 -- Root method: TransferOrderHistory.transferorderhistorydetail [TransferOrderHistoryDetail]

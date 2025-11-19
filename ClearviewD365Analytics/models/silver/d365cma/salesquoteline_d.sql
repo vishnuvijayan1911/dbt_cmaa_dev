@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesquoteline') }}
+{{ config(materialized='table', tags=['silver'], alias='salesquoteline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesquoteline/salesquoteline.py
 -- Root method: Salesquoteline.salesquotelinedetail [SalesQuoteLineDetail]

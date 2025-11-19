@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='shippingload') }}
+{{ config(materialized='table', tags=['silver'], alias='shippingload') }}
 
 -- Source file: cma/cma/layers/_base/_silver/shippingload/shippingload.py
 -- Root method: Shippingload.get_detail_query [ShippingLoadDetail]

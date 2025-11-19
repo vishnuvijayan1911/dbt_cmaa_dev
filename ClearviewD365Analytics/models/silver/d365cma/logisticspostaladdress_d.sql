@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='logisticspostaladdress') }}
+{{ config(materialized='table', tags=['silver'], alias='logisticspostaladdress') }}
 
 -- Source file: cma/cma/layers/_base/_silver/logisticspostaladdress/logisticspostaladdress.py
 -- Root method: Logisticspostaladdress.logisticspostaladdressdetail [LogisticsPostalAddressDetail]

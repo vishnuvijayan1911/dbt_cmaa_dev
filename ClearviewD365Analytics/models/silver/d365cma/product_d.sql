@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='product') }}
+{{ config(materialized='table', tags=['silver'], alias='product') }}
 
 -- Source file: cma/cma/layers/_base/_silver/product/product.py
 -- Root method: Product.productdetail [ProductDetail]

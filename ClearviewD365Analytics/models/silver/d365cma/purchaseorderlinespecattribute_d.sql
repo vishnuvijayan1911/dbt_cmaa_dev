@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorderlinespecattribute/purchaseorderlinespecattribute.py
 -- Root method: Purchaseorderlinespecattribute.purchaseorderlinespecattributedetail [PurchaseOrderLineSpecAttributeDetail]

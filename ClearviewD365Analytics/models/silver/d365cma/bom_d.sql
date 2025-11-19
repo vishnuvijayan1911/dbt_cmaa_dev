@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='bom') }}
+{{ config(materialized='table', tags=['silver'], alias='bom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/bom/bom.py
 -- Root method: Bom.bomdetail [BOMDetail]

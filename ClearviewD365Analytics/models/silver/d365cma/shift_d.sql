@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='shift') }}
+{{ config(materialized='table', tags=['silver'], alias='shift') }}
 {% set shift_prefix = env_var('DATAVERSE_SHIFT_PREFIX', '') %}
 
 -- Source file: cma/cma/layers/_base/_silver/shift/shift.py

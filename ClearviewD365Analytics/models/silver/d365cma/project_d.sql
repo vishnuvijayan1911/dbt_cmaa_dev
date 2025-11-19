@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='project') }}
+{{ config(materialized='table', tags=['silver'], alias='project') }}
 
 -- Source file: cma/cma/layers/_base/_silver/project/project.py
 -- Root method: Project.projectdetail [ProjectDetail]

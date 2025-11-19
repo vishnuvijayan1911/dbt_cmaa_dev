@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorder') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorder/purchaseorder.py
 -- Root method: Purchaseorder.purchaseorderdetail [PurchaseOrderDetail]

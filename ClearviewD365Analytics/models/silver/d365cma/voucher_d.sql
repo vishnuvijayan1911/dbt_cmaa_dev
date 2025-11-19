@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='voucher') }}
+{{ config(materialized='table', tags=['silver'], alias='voucher') }}
 
 -- Source file: cma/cma/layers/_base/_silver/voucher/voucher.py
 -- Root method: Voucher.voucherdetail [VoucherDetail]

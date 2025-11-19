@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesorder') }}
+{{ config(materialized='table', tags=['silver'], alias='salesorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesorder/salesorder.py
 -- Root method: Salesorder.salesorderdetail [SalesOrderDetail]

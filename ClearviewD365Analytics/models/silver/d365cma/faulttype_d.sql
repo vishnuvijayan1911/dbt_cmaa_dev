@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='faulttype') }}
+{{ config(materialized='table', tags=['silver'], alias='faulttype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faulttype/faulttype.py
 -- Root method: Faulttype.faulttypedetail [FaultTypeDetail]

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='deliveryterm') }}
+{{ config(materialized='table', tags=['silver'], alias='deliveryterm') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliveryterm/deliveryterm.py
 -- Root method: Deliveryterm.deliverytermdetail [DeliveryTermDetail]

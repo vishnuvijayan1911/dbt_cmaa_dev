@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaserequisitionline') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaserequisitionline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaserequisitionline/purchaserequisitionline.py
 -- Root method: Purchaserequisitionline.purchaserequisitionlinedetail [PurchaseRequisitionLineDetail]

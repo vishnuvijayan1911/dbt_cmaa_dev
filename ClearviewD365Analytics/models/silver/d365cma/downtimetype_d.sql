@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='downtimetype') }}
+{{ config(materialized='table', tags=['silver'], alias='downtimetype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/downtimetype/downtimetype.py
 -- Root method: Downtimetype.downtimetypedetail [DowntimeTypeDetail]

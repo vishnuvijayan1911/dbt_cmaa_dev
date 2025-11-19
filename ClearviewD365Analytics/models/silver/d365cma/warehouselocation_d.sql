@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='warehouselocation') }}
+{{ config(materialized='table', tags=['silver'], alias='warehouselocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/warehouselocation/warehouselocation.py
 -- Root method: Warehouselocation.warehouselocationdetail [WarehouseLocationDetail]

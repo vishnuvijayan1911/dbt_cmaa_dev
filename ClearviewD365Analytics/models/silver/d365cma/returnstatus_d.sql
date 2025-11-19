@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='returnstatus') }}
+{{ config(materialized='table', tags=['silver'], alias='returnstatus') }}
 
 -- TODO: replace with real logic for returnstatus_d
 WITH detail AS (

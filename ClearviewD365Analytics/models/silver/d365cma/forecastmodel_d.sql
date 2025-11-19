@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='forecastmodel') }}
+{{ config(materialized='table', tags=['silver'], alias='forecastmodel') }}
 
 -- Source file: cma/cma/layers/_base/_silver/forecastmodel/forecastmodel.py
 -- Root method: Forecastmodel.forecastmodeldetail [ForecastModelDetail]

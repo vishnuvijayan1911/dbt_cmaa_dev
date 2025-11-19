@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workordercriticality') }}
+{{ config(materialized='table', tags=['silver'], alias='workordercriticality') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workordercriticality/workordercriticality.py
 -- Root method: Workordercriticality.workordercriticalitydetail [WorkOrderCriticalityDetail]

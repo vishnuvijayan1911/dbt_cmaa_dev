@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productreceiptline') }}
+{{ config(materialized='table', tags=['silver'], alias='productreceiptline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productreceiptline/productreceiptline.py
 -- Root method: Productreceiptline.productreceiptlinedetail [ProductReceiptLineDetail]

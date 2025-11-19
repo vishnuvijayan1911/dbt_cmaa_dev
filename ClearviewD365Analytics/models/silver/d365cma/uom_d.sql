@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='uom') }}
+{{ config(materialized='table', tags=['silver'], alias='uom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/uom/uom.py
 -- Root method: Uom.uomdetail [UOMDetail]

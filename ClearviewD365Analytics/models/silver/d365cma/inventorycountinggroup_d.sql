@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorycountinggroup') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorycountinggroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorycountinggroup/inventorycountinggroup.py
 -- Root method: Inventorycountinggroup.inventorycountinggroupdetail [InventoryCountingGroupDetail]

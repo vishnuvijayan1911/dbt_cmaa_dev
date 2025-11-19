@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='maintenancerequest') }}
+{{ config(materialized='table', tags=['silver'], alias='maintenancerequest') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancerequest/maintenancerequest.py
 -- Root method: Maintenancerequest.maintenancerequestdetail [MaintenanceRequestDetail]

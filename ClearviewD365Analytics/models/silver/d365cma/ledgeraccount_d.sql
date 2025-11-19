@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='ledgeraccount') }}
+{{ config(materialized='table', tags=['silver'], alias='ledgeraccount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/ledgeraccount/ledgeraccount.py
 -- Root method: Ledgeraccount.ledgeraccountdetail [LedgerAccountDetail]

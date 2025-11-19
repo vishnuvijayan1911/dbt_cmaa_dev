@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='financial') }}
+{{ config(materialized='table', tags=['silver'], alias='financial') }}
 
 -- Source file: cma/cma/layers/_base/_silver/financial/financial.py
 -- Root method: Financial.financialdetail [FinancialDetail]

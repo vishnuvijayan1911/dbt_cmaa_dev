@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productspecattribute') }}
+{{ config(materialized='table', tags=['silver'], alias='productspecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productspecattribute/productspecattribute.py
 -- Root method: Productspecattribute.productspecattributedetail [ProductSpecAttributeDetail]

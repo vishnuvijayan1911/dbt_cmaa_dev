@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='lot') }}
+{{ config(materialized='table', tags=['silver'], alias='lot') }}
 
 -- Source file: cma/cma/layers/_base/_silver/lot/lot.py
 -- Root method: Lot.lotdetail [LotDetail]

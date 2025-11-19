@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='cashdiscount') }}
+{{ config(materialized='table', tags=['silver'], alias='cashdiscount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/cashdiscount/cashdiscount.py
 -- Root method: Cashdiscount.cashdiscountdetail [CashDiscountDetail]

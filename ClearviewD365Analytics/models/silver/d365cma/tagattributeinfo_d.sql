@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='tagattributeinfo') }}
+{{ config(materialized='table', tags=['silver'], alias='tagattributeinfo') }}
 
 -- Source file: cma/cma/layers/_base/_silver/tagattributeinfo/tagattributeinfo.py
 -- Root method: TagAttributeInfo.tagattributeinfodetail [TagAttributeInfoDetail]

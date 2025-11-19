@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='licenseplate') }}
+{{ config(materialized='table', tags=['silver'], alias='licenseplate') }}
 
 -- Source file: cma/cma/layers/_base/_silver/licenseplate/licenseplate.py
 -- Root method: Licenseplate.licenseplatedetail [LicensePlateDetail]

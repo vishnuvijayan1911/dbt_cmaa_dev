@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='balance_status') }}
+{{ config(materialized='table', tags=['silver'], alias='balance_status') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.balance_status

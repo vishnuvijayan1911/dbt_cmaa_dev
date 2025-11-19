@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventoryjournal') }}
+{{ config(materialized='table', tags=['silver'], alias='inventoryjournal') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventoryjournal/inventoryjournal.py
 -- Root method: Inventoryjournal.inventoryjournaldetail [InventoryJournalDetail]

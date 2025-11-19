@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='faultcause') }}
+{{ config(materialized='table', tags=['silver'], alias='faultcause') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultcause/faultcause.py
 -- Root method: Faultcause.faultcausedetail [FaultCauseDetail]

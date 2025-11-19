@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorymakeorbuy') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorymakeorbuy') }}
 
 WITH detail AS (
     SELECT

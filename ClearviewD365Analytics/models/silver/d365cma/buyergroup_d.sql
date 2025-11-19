@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='buyergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='buyergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/buyergroup/buyergroup.py
 -- Root method: Buyergroup.buyergroupdetail [BuyerGroupDetail]

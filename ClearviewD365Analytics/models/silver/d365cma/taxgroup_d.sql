@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='taxgroup') }}
+{{ config(materialized='table', tags=['silver'], alias='taxgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxgroup/taxgroup.py
 -- Root method: Taxgroup.taxgroupdetail [TaxGroupDetail]

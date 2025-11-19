@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesagreementline') }}
+{{ config(materialized='table', tags=['silver'], alias='salesagreementline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesagreementline/salesagreementline.py
 -- Root method: Salesagreementline.salesagreementlinedetail [SalesAgreementLineDetail]

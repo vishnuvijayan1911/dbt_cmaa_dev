@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='packingslipline') }}
+{{ config(materialized='table', tags=['silver'], alias='packingslipline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/packingslipline/packingslipline.py
 -- Root method: Packingslipline.packingsliplinedetail [PackingSlipLineDetail]

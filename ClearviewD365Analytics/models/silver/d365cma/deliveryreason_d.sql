@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='deliveryreason') }}
+{{ config(materialized='table', tags=['silver'], alias='deliveryreason') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliveryreason/deliveryreason.py
 -- Root method: Deliveryreason.deliveryreasondetail [DeliveryReasonDetail]

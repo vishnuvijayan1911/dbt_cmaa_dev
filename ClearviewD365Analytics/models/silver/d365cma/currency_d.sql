@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='currency') }}
+{{ config(materialized='table', tags=['silver'], alias='currency') }}
 
 -- Source file: cma/cma/layers/_base/_silver/currency/currency.py
 -- Root method: Currency.currencydetail [CurrencyDetail]

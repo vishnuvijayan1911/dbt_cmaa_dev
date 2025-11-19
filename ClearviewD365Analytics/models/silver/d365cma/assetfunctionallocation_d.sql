@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation') }}
+{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/assetfunctionallocation/assetfunctionallocation.py
 -- Root method: Assetfunctionallocation.assetfunctionallocationdetail [AssetFunctionalLocationDetail]

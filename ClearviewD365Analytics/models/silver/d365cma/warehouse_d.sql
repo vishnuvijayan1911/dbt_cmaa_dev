@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='warehouse') }}
+{{ config(materialized='table', tags=['silver'], alias='warehouse') }}
 
 -- Source file: cma/cma/layers/_base/_silver/warehouse/warehouse.py
 -- Root method: Warehouse.get_detail_query [WarehouseDetail]

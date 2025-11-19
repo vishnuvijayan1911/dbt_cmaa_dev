@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='faultremedy') }}
+{{ config(materialized='table', tags=['silver'], alias='faultremedy') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultremedy/faultremedy.py
 -- Root method: Faultremedy.faultremedydetail [FaultRemedyDetail]

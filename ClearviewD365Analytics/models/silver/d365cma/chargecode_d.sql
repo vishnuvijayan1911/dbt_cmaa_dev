@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='chargecode') }}
+{{ config(materialized='table', tags=['silver'], alias='chargecode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/chargecode/chargecode.py
 -- Root method: Chargecode.chargecodedetail [ChargeCodeDetail]

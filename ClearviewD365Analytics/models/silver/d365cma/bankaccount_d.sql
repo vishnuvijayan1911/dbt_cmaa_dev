@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='bankaccount') }}
+{{ config(materialized='table', tags=['silver'], alias='bankaccount') }}
 
 -- Source file: cma/cma/layers/_base/_silver/bankaccount/bankaccount.py
 -- Root method: Bankaccount.bankaccountdetail [BankAccountDetail]

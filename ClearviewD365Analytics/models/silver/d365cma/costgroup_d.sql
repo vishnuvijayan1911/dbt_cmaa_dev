@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='costgroup') }}
+{{ config(materialized='table', tags=['silver'], alias='costgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/costgroup/costgroup.py
 -- Root method: Costgroup.costgroupdetail [CostGroupDetail]

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workordertype') }}
+{{ config(materialized='table', tags=['silver'], alias='workordertype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workordertype/workordertype.py
 -- Root method: Workordertype.workordertypedetail [WorkOrderTypeDetail]

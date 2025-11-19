@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='userinfo') }}
+{{ config(materialized='table', tags=['silver'], alias='userinfo') }}
 
 -- Source file: cma/cma/layers/_base/_silver/userinfo/userinfo.py
 -- Root method: Userinfo.userinfodetail [UserInfoDetail]

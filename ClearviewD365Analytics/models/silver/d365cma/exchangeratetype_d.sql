@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='exchangeratetype') }}
+{{ config(materialized='table', tags=['silver'], alias='exchangeratetype') }}
 
 -- Source file: cma/cma/layers/_base/_silver/exchangeratetype/exchangeratetype.py
 -- Root method: Exchangeratetype.exchangeratetypedetail [ExchangeRateTypeDetail]

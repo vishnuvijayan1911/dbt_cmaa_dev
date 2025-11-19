@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='taxcode') }}
+{{ config(materialized='table', tags=['silver'], alias='taxcode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxcode/taxcode.py
 -- Root method: Taxcode.taxcodedetail [TaxCodeDetail]

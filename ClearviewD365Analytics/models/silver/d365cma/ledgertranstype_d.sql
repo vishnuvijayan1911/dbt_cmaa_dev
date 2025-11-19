@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='ledgertranstype') }}
+{{ config(materialized='table', tags=['silver'], alias='ledgertranstype') }}
 
 WITH detail AS (
     SELECT we.EnumValueID AS LedgerTransTypeID

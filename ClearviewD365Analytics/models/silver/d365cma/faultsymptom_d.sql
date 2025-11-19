@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='faultsymptom') }}
+{{ config(materialized='table', tags=['silver'], alias='faultsymptom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/faultsymptom/faultsymptom.py
 -- Root method: Faultsymptom.faultsymptomdetail [FaultSymptomDetail]

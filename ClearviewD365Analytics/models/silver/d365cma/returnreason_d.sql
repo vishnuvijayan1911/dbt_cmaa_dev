@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='returnreason') }}
+{{ config(materialized='table', tags=['silver'], alias='returnreason') }}
 
 -- Source file: cma/cma/layers/_base/_silver/returnreason/returnreason.py
 -- Root method: Returnreason.returnreasondetail [ReturnReasonDetail]

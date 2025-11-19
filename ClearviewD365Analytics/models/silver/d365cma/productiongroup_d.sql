@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productiongroup') }}
+{{ config(materialized='table', tags=['silver'], alias='productiongroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productiongroup/productiongroup.py
 -- Root method: Productiongroup.productiongroupdetail [ProductionGroupDetail]

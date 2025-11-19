@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesinvoice') }}
+{{ config(materialized='table', tags=['silver'], alias='salesinvoice') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesinvoice/salesinvoice.py
 -- Root method: Salesinvoice.salesinvoicedetail [SalesInvoiceDetail]

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='customergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='customergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/customergroup/customergroup.py
 -- Root method: Customergroup.customergroupdetail [CustomerGroupDetail]

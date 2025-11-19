@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='sales_update_type') }}
+{{ config(materialized='table', tags=['silver'], alias='sales_update_type') }}
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.sales_update_type

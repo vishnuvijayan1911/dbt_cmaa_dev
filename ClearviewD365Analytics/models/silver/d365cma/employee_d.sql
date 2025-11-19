@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='employee') }}
+{{ config(materialized='table', tags=['silver'], alias='employee') }}
 
 -- Source file: cma/cma/layers/_base/_silver/employee/employee.py
 -- Root method: Employee.employeedetail [EmployeeDetail]

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productionbom') }}
+{{ config(materialized='table', tags=['silver'], alias='productionbom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionbom/productionbom.py
 -- Root method: Productionbom.productionbomdetail [ProductionBOMDetail]

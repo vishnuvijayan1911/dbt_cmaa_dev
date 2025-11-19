@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='paymentterm') }}
+{{ config(materialized='table', tags=['silver'], alias='paymentterm') }}
 
 -- Source file: cma/cma/layers/_base/_silver/paymentterm/paymentterm.py
 -- Root method: Paymentterm.paymenttermdetail [PaymentTermDetail]

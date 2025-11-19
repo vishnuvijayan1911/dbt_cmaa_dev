@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='tag') }}
+{{ config(materialized='table', tags=['silver'], alias='tag') }}
 
 -- Source file: cma/cma/layers/_base/_silver/tag/tag.py
 -- Root method: Tag.tagdetail [TagDetail]
