@@ -14,7 +14,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY cij.invoiceid) AS SalesInvoiceKey
          , cij.duedate     AS DueDate
          , cij.recid      AS _RecID
          , 1               AS _SourceID
-        , CURRENT_TIMESTAMP AS _ModifiedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
         ,'1900-01-01'       AS ActivityDate 
 
       FROM {{ ref('custinvoicejour') }} cij

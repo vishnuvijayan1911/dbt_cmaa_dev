@@ -292,8 +292,6 @@ productionpicklistjournal_factdetailmain AS (
            AND dwl.WarehouseLocation = t1.WarehouseLocation;
 )
 SELECT
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY t1._RecID, t1._SourceID) AS ProductionPickListJournalKey
          , t1.ProductionBOMKey											  AS ProductionBOMKey
          , t1.ProductionKey												  AS ProductionKey
@@ -359,6 +357,8 @@ SELECT
          , t1.PerSeries													  AS PerSeries
          , t1._SourceID													  AS _SourceID
          , t1._RecID													  AS _RecID
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM productionpicklistjournal_factdetailmain             t1
       LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
         ON vuc.legalentitykey  = t1.LegalEntityKey

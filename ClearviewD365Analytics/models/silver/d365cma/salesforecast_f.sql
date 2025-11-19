@@ -113,8 +113,6 @@ salesforecast_factdetail1 AS (
            AND dsp._SourceID      = 1;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS SalesForecastKey
          , ts.LegalEntityKey
          , ts.CustomerKey
@@ -146,6 +144,8 @@ SELECT
          , ts._RecID
          , ts._SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM salesforecast_factdetail1                 ts
       LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
         ON vuc.legalentitykey  = ts.LegalEntityKey

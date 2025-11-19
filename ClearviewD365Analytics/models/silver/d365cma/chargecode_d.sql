@@ -17,8 +17,6 @@ chargecodedetail1 AS (
           FROM {{ ref('markuptable') }} mu;
 )
 SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.ChargeCode, t.ModuleTypeID) AS ChargeCodeKey
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
         , * FROM (
         SELECT DISTINCT
           ts.LegalEntityID                                               AS LegalEntityID
@@ -28,6 +26,8 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.ChargeCode, t.ModuleTypeI
          , we1.enumvalue                                                  AS ModuleType
 
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM chargecodedetail1             ts
       LEFT JOIN {{ ref('enumeration') }} we1
         ON we1.enumvalueid = ts.ModuleType

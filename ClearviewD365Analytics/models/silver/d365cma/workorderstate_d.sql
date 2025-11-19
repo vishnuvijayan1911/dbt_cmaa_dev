@@ -11,8 +11,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderStateKey
          , ISNULL(NULLIF(JT.name, ''), JT.workorderlifecyclestateid)                                            AS WorkOrderState
          , JT.recid                                                                                             AS _RecID
          , 1                                                                                                    AS _SourceID
-         ,  CURRENT_TIMESTAMP                                                                                      AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP                                                                                      AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                      AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                      AS  _ModifiedDate
       FROM {{ ref('entassetworkorderlifecyclestate') }} JT
 

@@ -11,9 +11,9 @@ SELECT  ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultAreaKey
          , ISNULL(NULLIF(fa.description, ''), fa.faultareaid) AS FaultArea
          , fa.recid                                          AS _RecID
          , 1                                                  AS _SourceID
-         , CURRENT_TIMESTAMP AS _CreatedDate
-         ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate 
       FROM {{ ref('entassetfaultarea') }} fa
 

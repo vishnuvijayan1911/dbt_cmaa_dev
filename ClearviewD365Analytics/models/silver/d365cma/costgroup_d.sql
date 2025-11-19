@@ -49,8 +49,8 @@ costgroupdetail2 AS (
 )
 SELECT *
 
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM (SELECT * FROM costgroupdetail1 UNION SELECT * FROM costgroupdetail2) t;
 

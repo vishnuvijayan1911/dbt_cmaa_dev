@@ -28,9 +28,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg._SourceID) AS FaultCauseFactK
          , ofc.faultcausekey AS FaultCauseKey
          , stg._SourceID     AS _SourceID
          , stg._RecID
-         ,CURRENT_TIMESTAMP AS _CreatedDate
-         ,CURRENT_TIMESTAMP AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM faultcause_factstage               stg
      INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID  = stg.LegalEntityID

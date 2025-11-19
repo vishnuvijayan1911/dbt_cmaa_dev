@@ -82,7 +82,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ExchangeRateKey
          , ts.ExchangeDateKey  AS ExchangeDateKey
          , ts._RecID           AS _RecID
          , ts._SourceID        AS _SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM exchangeratefactdetail1 ts;

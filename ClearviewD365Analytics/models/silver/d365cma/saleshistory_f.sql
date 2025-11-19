@@ -155,8 +155,6 @@ saleshistory_factstage AS (
 )
 SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
     SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
           ,ISNULL (ts.SalesOrderLineKey, th.SalesOrderLineKey)                                                         AS SalesOrderLineKey
          , ISNULL (ts.SalesStatusKey, th.SalesStatusKey)                                                               AS SalesStatusKey
          , st.SalesUpdateTypeKey                                                                                       AS SalesUpdateTypeKey
@@ -196,6 +194,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
          , ts._RecID                                                                                                   AS _RecID
          , 1                                                                                                           AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM saleshistory_factstage                 ts
       LEFT JOIN {{ ref('salesline') }}       sl
         ON sl.recid            = ts._RecID

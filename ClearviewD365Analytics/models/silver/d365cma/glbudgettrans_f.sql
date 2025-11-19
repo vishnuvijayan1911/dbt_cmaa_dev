@@ -65,9 +65,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY le.LegalEntityKey, dca.LedgerAccountKey, dd.D
          , bg.BudgetDiff            AS BudgetAmount
          , bg.BudgetDiff_TransCur   AS BudgetAmount_TransCur
          , te.BudgetNumber          AS BudgetNumber
-         ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM glbudgettrans_factstage                     te
      INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID        = te.LegalEntityID

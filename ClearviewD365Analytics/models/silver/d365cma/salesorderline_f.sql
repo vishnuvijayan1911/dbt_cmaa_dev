@@ -899,9 +899,9 @@ salesorderline_factdetailbase AS (
              , t._SourceDate
              , t._RecID                                                                 AS _RecID
              , t._SourceID                                                              AS _SourceID
-             , CURRENT_TIMESTAMP AS _CreatedDate
-             , CURRENT_TIMESTAMP AS _ModifiedDate
 
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
           FROM salesorderline_factdetail1                   t
           LEFT JOIN {{ ref('legalentity_d') }}       le
             ON le.LegalEntityKey    = t.LegalEntityKey
@@ -1028,8 +1028,8 @@ salesorderline_factdetailcad AS (
              , t._SourceDate
              , t._RecID                                                                 AS _RecID
              , t._SourceID                                                              AS _SourceID
-             , CURRENT_TIMESTAMP AS _CreatedDate
-             , CURRENT_TIMESTAMP AS _ModifiedDate
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
           FROM salesorderline_factdetailbase                   t
           LEFT JOIN {{ ref('exchangerate_f') }} ex
@@ -1172,8 +1172,8 @@ salesorderline_factdetailmxp AS (
              , t._SourceDate
              , t._RecID                                                                 AS _RecID
              , t._SourceID                                                              AS _SourceID
-             , CURRENT_TIMESTAMP AS _CreatedDate
-             , CURRENT_TIMESTAMP AS _ModifiedDate
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+             , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
           FROM salesorderline_factdetailcad                   t
           LEFT JOIN {{ ref('exchangerate_f') }} ex
@@ -1327,8 +1327,8 @@ SELECT t.CurrencyKey                                                            
          , t._SourceDate
          , t._RecID                                                                 AS _RecID
          , t._SourceID                                                              AS _SourceID
-         , CURRENT_TIMESTAMP AS _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
       FROM salesorderline_factdetailmxp                   t
       LEFT JOIN {{ ref('exchangerate_f') }} ex

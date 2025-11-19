@@ -81,9 +81,9 @@ ORDER BY ma.recid)                                                              
          , ta.Suspended                                                                                 AS Suspended
          , ta._RecID                                                                                    AS _RecID
          , ta._SourceID                                                                                 AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM ledgeraccountdetail1                     ta
       LEFT JOIN {{ ref('mainaccount') }}         ma
         ON ma.recid               = ta.RecID_MA

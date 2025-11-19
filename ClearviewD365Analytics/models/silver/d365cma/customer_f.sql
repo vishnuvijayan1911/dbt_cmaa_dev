@@ -107,8 +107,8 @@ SELECT  dv.CustomerKey                                                          
        , ts._SourceDate                                                                                                  AS _SourceDate
        , ts._RecID                                                                                                       AS _RecID
        , ts._SourceID                                                                                                    AS _SourceID
-       , CURRENT_TIMESTAMP                                                                                               AS _CreatedDate
-       , CURRENT_TIMESTAMP                                                                                               AS _ModifiedDate  
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                               AS _CreatedDate
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                               AS _ModifiedDate  
  FROM   customer_factstage                    ts
 INNER JOIN {{ ref('legalentity_d') }}         le
    ON le.LegalEntityID    = ts.LegalEntityID

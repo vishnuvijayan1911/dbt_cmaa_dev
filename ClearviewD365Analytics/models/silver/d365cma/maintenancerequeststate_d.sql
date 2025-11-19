@@ -12,7 +12,7 @@ SELECT
          , REPLACE(slog.requestlifecyclestateid, 'InProgress', 'In-progress') AS MaintenanceRequestStateID
          , slog.recid                  AS _RecID
          , 1                            AS _SourceID
-         , CURRENT_TIMESTAMP                                               AS _CreatedDate
-         , CURRENT_TIMESTAMP                                               AS _ModifiedDate         
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate         
       FROM {{ ref('entassetrequestlifecyclestate') }} slog;
 

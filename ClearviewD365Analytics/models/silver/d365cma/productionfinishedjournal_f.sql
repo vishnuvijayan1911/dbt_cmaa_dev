@@ -319,8 +319,6 @@ productionfinishedjournal_factdetailmain AS (
     	      ON dd2.Date                         = CAST (t1.PostedDateTime AT TIME ZONE 'UTC' AT TIME ZONE le.TimeZone AS Date);
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY t1._RecID, t1._SourceID) AS ProductionFinishedJournalKey
          , t1.ProductionKey
          , t1.LegalEntityKey
@@ -358,6 +356,8 @@ SELECT
          , t1.PostedTime                       AS PostedTime
          , t1._SourceID											   AS _SourceID
          , t1._RecID											   AS _RecID
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
        FROM productionfinishedjournal_factdetailmain              t1
       LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
         ON vuc.legalentitykey  = t1.LegalEntityKey

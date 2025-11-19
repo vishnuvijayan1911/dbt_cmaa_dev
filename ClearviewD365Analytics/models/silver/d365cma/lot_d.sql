@@ -11,7 +11,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ito.recid) AS LotKey
          , ito.referenceid   AS SourceReferenceID
          , 1                 AS _SourceID
          , ito.recid        AS _RecID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('inventtransorigin') }} ito
 

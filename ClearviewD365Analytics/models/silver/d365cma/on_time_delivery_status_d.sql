@@ -13,49 +13,49 @@ SELECT t.[OnTimeDeliveryStatusID]
                         , 'Not yet due'   AS OnTimeDeliveryStatus
                         , 'Not yet due'   AS OnTimeStatus
                         , 'Not delivered' AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  2               AS OnTimeDeliveryStatusID
                         , 'Past due'      AS OnTimeDeliveryStatus
                         , 'Late'          AS OnTimeStatus
                         , 'Not delivered' AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  3                AS OnTimeDeliveryStatusID
                         , 'Received late' AS OnTimeDeliveryStatus
                         , 'Late'           AS OnTimeStatus
                         , 'Delivered'      AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  4                   AS OnTimeDeliveryStatusID
                         , 'Received on-time' AS OnTimeDeliveryStatus
                         , 'On-time'           AS OnTimeStatus
                         , 'Delivered'         AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  5                         AS OnTimeDeliveryStatusID
                         , 'Received (no due date)' AS OnTimeDeliveryStatus
                         , 'On-time'                 AS OnTimeStatus
                         , 'Delivered'               AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  6                    AS OnTimeDeliveryStatusID
                         , 'Open (no due date)' AS OnTimeDeliveryStatus
                         , 'Not yet due'        AS OnTimeStatus
                         , 'Not delivered'      AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                    UNION ALL
                    SELECT  7        AS OnTimeDeliveryStatusID
                         , 'Return' AS OnTimeDeliveryStatus
                         , 'Return' AS OnTimeStatus
                         , 'Return' AS DeliveryStatus
-                        , CURRENT_TIMESTAMP AS _CreatedDate
-                        , CURRENT_TIMESTAMP AS _ModifiedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+                        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
                         ) t
 

@@ -50,7 +50,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY t._RecID, t._SourceID) AS ShippingLoadKey
      , t.LoadShippedConfirmationDate
      , t._RecID
      , t._SourceID
-     ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
+     ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
 --   INTO #Detail
   FROM shippingloaddetail1                  t
   LEFT JOIN {{ ref('ontimeloadstatus_d') }} l

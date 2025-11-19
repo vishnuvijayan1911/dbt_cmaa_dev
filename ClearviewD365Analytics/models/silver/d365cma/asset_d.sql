@@ -49,9 +49,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS AssetKey
          , ts.AssetValidTo
          , ts._RecID
          , ts._SourceID
-         ,  CURRENT_TIMESTAMP    AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
       FROM assetstage                           ts
       LEFT JOIN {{ ref('assetfunctionallocation_d') }} afl
         ON afl.LegalEntityID        = ts.LegalEntityID

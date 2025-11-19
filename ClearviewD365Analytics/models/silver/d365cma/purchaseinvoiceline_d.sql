@@ -14,9 +14,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY vij.recid) AS PurchaseInvoiceLineKey
          , 1                                                                                AS _SourceID
          , vij.recid                                                                       AS _RECID
          , ISNULL (vit.recid, 0)                                                           AS _RecID2
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('vendinvoicejour') }}       vij
       LEFT JOIN {{ ref('vendinvoicetrans') }} vit
         ON vit.dataareaid         = vij.dataareaid

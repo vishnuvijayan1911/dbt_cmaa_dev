@@ -1224,7 +1224,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._SourceID) AS InventoryValueBalanceKey
     , uc.ClosingQuantity_PC                           AS ClosingQuantity_PC
     , uc.ClosingQuantity_PC - uc.OpeningQuantity_PC   AS TransQuantity_PC
     , td._SourceID                                    AS _SourceID
-    , CURRENT_TIMESTAMP AS _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
   FROM inventoryvaluebalance_factdetail1            td
   LEFT JOIN inventoryvaluebalance_factuomcovnversion uc
     ON uc.ProductKey           = td.ProductKey

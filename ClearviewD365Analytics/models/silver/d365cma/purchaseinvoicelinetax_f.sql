@@ -80,8 +80,8 @@ SELECT td.PurchaseInvoiceLineTaxKey
          , td._SourceDate
          , td._RecID
          , td._SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM purchaseinvoicelinetax_factdetail1 td
      WHERE td.TransDate BETWEEN td.TaxStartDate AND td.TaxEndDate;

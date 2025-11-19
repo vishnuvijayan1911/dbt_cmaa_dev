@@ -11,7 +11,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY rrc.recid) AS ReturnReasonKey
          , CASE WHEN rrc.description = '' THEN rrc.reasoncodeid ELSE rrc.description END AS ReturnReason
          , rrc.recid                                                                    AS _RecID
          , 1                                                                             AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('returnreasoncode') }} rrc
 

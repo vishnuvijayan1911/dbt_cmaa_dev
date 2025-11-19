@@ -11,8 +11,8 @@ SELECT
          , CASE WHEN dc.txt = '' THEN dc.currencycode ELSE dc.txt END AS Currency
          , dc.recid                                                   AS _RecID
          , 1                                                          AS _SourceID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
     FROM {{ ref('currency') }} dc
     WHERE dc.currencycode <> '';
 

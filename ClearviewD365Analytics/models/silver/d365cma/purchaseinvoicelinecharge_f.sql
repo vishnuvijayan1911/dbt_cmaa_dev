@@ -182,9 +182,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._RecID1) AS PurchaseInvoiceLine
          , ts._RecID                                                           AS _RecID1
          , ts._RecID1                                                           AS _RecID2
          , 1                                                                   AS _SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM purchaseinvoicelinecharge_factcharge                      ts
      INNER JOIN {{ ref('legalentity_d') }}         le
         ON le.LegalEntityID     = ts.LegalEntityID

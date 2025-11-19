@@ -17,9 +17,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY st.recid) AS SalesOrderKey
             , st.modifieddatetime                                               AS _SourceDate
             , st.recid                                                          AS _RecID
             , 1                                                                 AS _SourceID
-            , CURRENT_TIMESTAMP                                                 AS _CreatedDate
-            , CURRENT_TIMESTAMP                                                 AS _ModifiedDate
             ,'1900-01-01'                                                       AS ActivityDate  
 
+            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _CreatedDate
+            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _ModifiedDate
         FROM {{ ref('salestable') }} st
 

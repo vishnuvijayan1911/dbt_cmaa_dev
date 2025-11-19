@@ -33,7 +33,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS BankAccountTransK
          , ts.TransAmount_TransCur AS TransAmount_TransCur
          , ts._SourceID
          , ts._RecID
-         , CURRENT_TIMESTAMP AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
       FROM bankaccounttrans_factstage                  ts
      INNER JOIN {{ ref('legalentity_d') }}     le

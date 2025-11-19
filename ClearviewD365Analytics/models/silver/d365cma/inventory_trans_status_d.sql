@@ -4,8 +4,6 @@
 -- Root method: DimensionTables.inventory_trans_status
 
 SELECT 
-     CURRENT_TIMESTAMP                         AS _CreatedDate
-, CURRENT_TIMESTAMP                          AS _ModifiedDate
 , CASE WHEN we.enum = 'StatusIssue' THEN 1 ELSE 2 END                                                             AS InventoryTransStatusTypeID
 , CASE WHEN we.enum = 'StatusIssue' THEN 'Issue' ELSE 'Receipt' END                                               AS InventoryTransStatusType
 , we.enumvalueid                                                                                                  AS InventoryTransStatusID
@@ -77,6 +75,8 @@ SELECT
                AND we.enumvalueid IN ( 1, 2 )
                THEN 'Received' END
           , '')                                                                                                      AS InventoryTransStatusGroup
+     cast(CURRENT_TIMESTAMP as DATETIME2(6))                         AS _CreatedDate
+, cast(CURRENT_TIMESTAMP as DATETIME2(6))                          AS _ModifiedDate
 FROM {{ ref('enumeration') }} we
 WHERE we.enum IN ( 'StatusIssue', 'StatusReceipt' )
 AND we.enumvalueid <> 0

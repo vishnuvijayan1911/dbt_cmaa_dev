@@ -736,8 +736,8 @@ SELECT ISNULL(dcg.CostGroupKey, -1) AS CostGroupKey
          , 1                            AS _SourceID
          , tcd.RecID                    AS _RecID
          , tcd.RECID1                   AS _RECID1
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM inventorycostdetail         tcd
       LEFT JOIN {{ ref('costgroup_d') }}  dcg
         ON dcg.CostGroupID = tcd.CostGroupID

@@ -12,9 +12,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY pt.recid) AS PaymentTermKey
          , pt.numofdays                                                             AS PaymentDays
          , pt.recid                                                                 AS _RecID
          , 1                                                                        AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('paymterm') }} pt
      WHERE pt.paymtermid <> ''
      ORDER BY pt.dataareaid

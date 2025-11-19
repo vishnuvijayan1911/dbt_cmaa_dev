@@ -54,8 +54,6 @@ salesinvoicelinetaxtrans_factsilratio AS (
           FROM salesinvoicelinetaxtrans_factsilkeys tk;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesInvoiceLineTaxTransKey
          , * FROM ( SELECT DISTINCT
            fclt.SalesInvoiceLineTransKey
@@ -72,6 +70,8 @@ SELECT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
        FROM {{ ref('salesinvoicelinetax_f') }}        ft
      INNER JOIN salesinvoicelinetaxtrans_factsilkeys                       tk
         ON tk.RecID_TT = ft._RecID

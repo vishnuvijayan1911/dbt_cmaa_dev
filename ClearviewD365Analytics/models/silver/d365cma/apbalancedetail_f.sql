@@ -497,7 +497,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY dv.VendorKey, le.LegalEntityKey, dd.DateKey, 
          , ts.DiscountLost                    AS DiscountLost
          , ts.DiscountTaken                   AS DiscountTaken
          , 1                                  AS _SourceID
-         , CURRENT_TIMESTAMP AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
       FROM apbalancedetail_factstagemain             ts
      INNER JOIN {{ ref('legalentity_d') }}   le

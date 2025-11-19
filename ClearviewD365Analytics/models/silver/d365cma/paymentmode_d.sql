@@ -23,8 +23,6 @@ paymentmodepaymode AS (
          WHERE PayModeID <> '';
 )
 SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.PaymentModeID) AS PaymentModeKey
-     ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate,
         * FROM (
             SELECT DISTINCT
            pa.DATAAREAID                                             AS LegalEntityID
@@ -32,6 +30,8 @@ SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.PaymentModeID) AS Payment
          , CASE WHEN pa.Name = '' THEN pa.PayModeID ELSE pa.Name END AS PaymentMode
 
 
+     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate,
       FROM paymentmodepaymode pa
      WHERE pa.RankVal = 1 ) t;
 

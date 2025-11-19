@@ -114,10 +114,10 @@ SELECT
                 ELSE '' END                                                                                       AS OnTimeStatus
          , ts._RecID
          , ts._SourceID
-           ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                                 AS _ModifiedDate
         ,'1900-01-01'                                                       AS ActivityDate
 
 
+           ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _ModifiedDate
       FROM productiondetail2 ts;
 

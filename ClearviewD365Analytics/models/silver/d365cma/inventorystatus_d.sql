@@ -11,8 +11,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY ws.recid) AS InventoryStatusKey
          , ws.inventstatusid                                              AS InventoryStatusID
          , ws.recid                                                       AS _RecID
          , 1                                                              AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('whsinventstatus') }} ws
 

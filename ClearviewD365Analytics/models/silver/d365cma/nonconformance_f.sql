@@ -120,8 +120,8 @@ SELECT tl.NonConformanceKey                                       AS NonConforma
      , tl.TestDefectQuantity * ISNULL (vuc4.factor, 1)            AS TestDefectQuantity_SQIN
      , tl._RecID                                                  AS _RecID
      , tl._SourceID                                               AS _SourceID
-     , CURRENT_TIMESTAMP                                          AS _CreatedDate
-     , CURRENT_TIMESTAMP                                          AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _ModifiedDate
   FROM nonconformance_facttmp      tl
   LEFT JOIN {{ ref('vwuomconversion_ft') }}   vuc
     ON vuc.legalentitykey  = tl.LegalEntityKey

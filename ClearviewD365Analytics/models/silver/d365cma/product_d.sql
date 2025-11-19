@@ -200,11 +200,11 @@ SELECT
          , pv.RecoverableScrap
          , pv._SourceID
          , pv._RecID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-         ,CURRENT_TIMESTAMP                                               AS _ModifiedDate
          ,'1900-01-01'                                               AS ActivityDate
 
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM productdetail1               pv
 
           UNION 
@@ -243,7 +243,7 @@ SELECT
          , '' AS RecoverableScrap
          , 0 AS _SourceID
          , 0 AS _RecID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-         ,CURRENT_TIMESTAMP                                               AS _ModifiedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
          ,'1900-01-01'                                               AS ActivityDate
 

@@ -92,9 +92,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID) AS ProjectKey
          , ProjectNameLevel8
          , ts._RecID
          , 1                AS _SourceID
-         ,  CURRENT_TIMESTAMP    AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
       FROM projectstage               ts
       LEFT JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid = ts.ProjectStateID

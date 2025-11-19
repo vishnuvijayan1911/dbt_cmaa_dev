@@ -15,7 +15,7 @@ SELECT
          , ba.currencycode                                           AS CurrencyID
          , ba.recid                                                  AS _RecID
          , 1                                                         AS _SourceID
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
 
       FROM {{ ref('bankaccounttable') }} ba
 

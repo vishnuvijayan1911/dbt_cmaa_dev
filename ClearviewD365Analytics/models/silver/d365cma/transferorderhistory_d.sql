@@ -12,8 +12,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY itj.recid) AS TransferOrderHistoryKey
    , we.enumvalue                                AS UpdateType
    , itj.recid                                   AS _RecID
    , 1                                           AS _SourceID
-   , CURRENT_TIMESTAMP                           AS _CreatedDate
-   , CURRENT_TIMESTAMP                           AS _ModifiedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                           AS _CreatedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                           AS _ModifiedDate
 FROM {{ ref('inventtransferjour') }} itj
 LEFT JOIN {{ ref('enumeration') }}   we
   ON we.enumvalueid = itj.updatetype

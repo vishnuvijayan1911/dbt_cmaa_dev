@@ -183,8 +183,6 @@ purchaseagreementline_factdetail1 AS (
             ON du.UOM               = tl.AgreementUnit;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , tl.PurchaseAgreementLineKey							   AS PurchaseAgreementLineKey
          , tl.AgreementStateKey									   AS AgreementStateKey
          , tl.AgreementUOMKey									   AS AgreementUOMKey
@@ -237,6 +235,8 @@ SELECT
          , tl._RecID											   AS _RecID
          , tl._SourceID											   AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM purchaseagreementline_factdetail1              tl
       LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
         ON vuc.legalentitykey  = tl.LegalEntityKey

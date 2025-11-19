@@ -11,8 +11,8 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ec.recid) AS SalesCategoryKey
       , ec1.name                   AS ProductCategory
       , ec.recid                 AS _RecID
       , 1                          AS _SourceID
-      ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-  , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+      ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+  , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
    FROM {{ ref('ecorescategory') }}                 ec
 INNER JOIN  {{ ref('ecorescategoryhierarchy') }}     ech
    ON ech.recid                      = ec.categoryhierarchy

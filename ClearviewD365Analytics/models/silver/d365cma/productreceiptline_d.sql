@@ -12,8 +12,8 @@ SELECT  ROW_NUMBER() OVER (ORDER BY vpst.recid) AS ProductReceiptLineKey
          , vpst.fullymatched                                                                 AS IsFullyMatched
          , vpst.recid                                                                       AS _RecID
          , 1                                                                                 AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
         ,'1900-01-01'                                                     AS ActivityDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('vendpackingsliptrans') }} vpst
 

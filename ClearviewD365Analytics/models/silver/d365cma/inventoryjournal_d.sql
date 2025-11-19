@@ -26,9 +26,9 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID) AS InventoryJournalKey
          , e1.enumvalue     AS JournalType
          , 1                AS _SourceID
          , ts._RecID        AS _RecID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM inventoryjournalstage               ts
       LEFT JOIN {{ ref('enumeration') }} e1
         ON e1.enum          = 'InventJournalType'
