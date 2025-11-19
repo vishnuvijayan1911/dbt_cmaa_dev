@@ -1,11 +1,11 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='chargetype') }}
+{{ config(materialized='table', tags=['silver'], alias='chargetype') }}
 
 WITH detail AS (
     SELECT
-        we.EnumValueID AS ChargeTypeID,
-        we.EnumValue   AS ChargeType
+        we.enumvalueid AS ChargeTypeID,
+        we.enumvalue   AS ChargeType
       FROM {{ ref('enumeration') }} AS we
-     WHERE we.Enum = 'MarkUpType'
+     WHERE we.enum = 'MarkUpType'
 )
 
 SELECT *
