@@ -7,33 +7,43 @@
 -- schema_name: temp
 
 WITH assetstage AS (
+
     SELECT
-        OT.dataareaid AS LegalEntityID,
-        OT.objectid AS AssetID,
-        ISNULL(NULLIF(OT.name, ''), OT.objectid) AS Asset,
-        AOT.objecttypeid AS AssetType,
-        OT.modelyear AS ModelYear,
-        M.modelid AS Model,
-        OLS.objectlifecyclestateid AS AssetState,
-        OT.fixedassetid AS FixedAssetID,
-        OT.wrkctrid AS ResourceID,
-        FL.functionallocationid AS FunctionalLocationID,
-        CAST(OT.activefrom AS DATE) AS AssetValidFrom,
-        ISNULL(NULLIF(CAST(OT.activeto AS DATE), '1900-01-01'), '9999-12-31') AS AssetValidTo,
-        OT.recid AS _RecID,
-        1 AS _SourceID
-    FROM {{ ref('entassetobjecttable') }} AS OT
+        OT.dataareaid                                            AS LegalEntityID,
+        OT.objectid                                              AS AssetID,
+        ISNULL(NULLIF(OT.name, ''), OT.objectid)                 AS Asset,
+        AOT.objecttypeid                                         AS AssetType,
+        OT.modelyear                                             AS ModelYear,
+        M.modelid                                                AS Model,
+        OLS.objectlifecyclestateid                               AS AssetState,
+        OT.fixedassetid                                          AS FixedAssetID,
+        OT.wrkctrid                                              AS ResourceID,
+        FL.functionallocationid                                  AS FunctionalLocationID,
+        CAST(OT.activefrom AS DATE)                              AS AssetValidFrom,
+        ISNULL(
+            NULLIF(CAST(OT.activeto AS DATE), '1900-01-01'),
+            '9999-12-31'
+        )                                                        AS AssetValidTo,
+        OT.recid                                                 AS _RecID,
+        1                                                        AS _SourceID
+    FROM {{ ref('entassetobjecttable') }}              AS OT
     LEFT JOIN {{ ref('entassetobjectlifecyclestate') }} AS OLS
         ON OLS.recid = OT.objectlifecyclestate
-    LEFT JOIN {{ ref('entassetfunctionallocation') }} AS FL
+    LEFT JOIN {{ ref('entassetfunctionallocation') }}  AS FL
         ON FL.recid = OT.functionallocation
-    LEFT JOIN {{ ref('entassetobjecttype') }} AS AOT
+    LEFT JOIN {{ ref('entassetobjecttype') }}          AS AOT
         ON AOT.recid = OT.objecttype
-    LEFT JOIN {{ ref('entassetmodel') }} AS M
+    LEFT JOIN {{ ref('entassetmodel') }}               AS M
         ON M.recid = OT.model
+
 )
+
 SELECT
-    ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS AssetKey,
+    ROW_NUMBER() OVER (
+        ORDER BY
+            ts._RecID,
+            ts._SourceID
+    )                                                   AS AssetKey,
     afl.AssetFunctionalLocationKey,
     ts.LegalEntityID,
     ts.AssetID,
@@ -48,9 +58,9 @@ SELECT
     ts.AssetValidTo,
     ts._RecID,
     ts._SourceID,
-    cast(CURRENT_TIMESTAMP AS DATETIME2(6)) AS _CreatedDate,
-    cast(CURRENT_TIMESTAMP AS DATETIME2(6)) AS _ModifiedDate
+    CAST(CURRENT_TIMESTAMP AS DATETIME2(6))             AS _CreatedDate,
+    CAST(CURRENT_TIMESTAMP AS DATETIME2(6))             AS _ModifiedDate
 FROM assetstage AS ts
 LEFT JOIN {{ ref('assetfunctionallocation_d') }} AS afl
-    ON afl.LegalEntityID = ts.LegalEntityID
+    ON afl.LegalEntityID        = ts.LegalEntityID
    AND afl.FunctionalLocationID = ts.FunctionalLocationID;
