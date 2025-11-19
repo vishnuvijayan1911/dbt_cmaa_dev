@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='asset') }}
+{{ config(materialized='table', tags=['silver'], alias='asset') }}
 
 -- Source file: cma/cma/layers/_base/_silver/asset/asset.py
 -- Root method: Asset.assetdetail [AssetDetail]
