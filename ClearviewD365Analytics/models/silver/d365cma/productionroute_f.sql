@@ -150,9 +150,9 @@ SELECT
          , t1.HourlyRate                  AS HourlyRate
          , t1._RecID                      AS _RecID
          , t1._SourceID                   AS _SourceID
-         , CURRENT_TIMESTAMP              AS _CreatedDate
-         , CURRENT_TIMESTAMP              AS _ModifiedDate 
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))              AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))              AS _ModifiedDate 
       FROM  productionroute_factproduct                   t1
      INNER JOIN {{ ref('legalentity_d') }}              le
         ON le.LegalEntityID            = t1.LegalEntityID

@@ -276,8 +276,6 @@ salesinvoicelinechargetrans_facttrans4 AS (
        SELECT * FROM salesinvoicelinechargetrans_facttrans3
 )
 SELECT DISTINCT
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , fc.SalesInvoiceLineChargeKey
          , ISNULL(fclt.SalesInvoiceLineTransKey, -1)                            AS SalesInvoiceLineTransKey
          , ISNULL(tt.IncludedCharge_TransCur, fc.IncludedCharge_TransCur)       AS IncludedCharge_TransCur
@@ -297,6 +295,8 @@ SELECT DISTINCT
          , ISNULL(tt._RecID3, 0)                                                AS _RecID3
          , 1                                                                    AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('salesinvoicelinecharge_f') }}     fc
 
       LEFT JOIN salesinvoicelinechargetrans_facttrans4                         tt

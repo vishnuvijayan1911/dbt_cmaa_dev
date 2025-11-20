@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='customer') }}
+{{ config(materialized='table', tags=['silver'], alias='customer') }}
 
 -- Source file: cma/cma/layers/_base/_silver/customer/customer.py
 -- Root method: Customer.customerdetail [CustomerDetail]
@@ -101,7 +101,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS CustomerKey
          , ts.VATNumber                                                                         AS VATNumber
          , ts._RecID                                                                            AS _RecID
          , ts._SourceID                                                                         AS _SourceID
-         , CURRENT_TIMESTAMP                                                                    AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                    AS _ModifiedDate
          ,'1900-01-01'                                                                          AS ActivityDate
       FROM customerdetail1                ts
       LEFT JOIN customerelectronicaddress te1

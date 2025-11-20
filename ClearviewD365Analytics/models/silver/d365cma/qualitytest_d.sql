@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='qualitytest') }}
+{{ config(materialized='table', tags=['silver'], alias='qualitytest') }}
 
 -- Source file: cma/cma/layers/_base/_silver/qualitytest/qualitytest.py
 -- Root method: QualityTest.qualitytestdetail [QualityTestDetail]

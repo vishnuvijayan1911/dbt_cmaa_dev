@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesinvoiceline') }}
+{{ config(materialized='table', tags=['silver'], alias='salesinvoiceline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesinvoiceline/salesinvoiceline.py
 -- Root method: Salesinvoiceline.salesinvoicelinedetail [SalesInvoiceLineDetail]
@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT  ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesInvoiceLineKey
-    , CURRENT_TIMESTAMP                                                             AS _ModifiedDate 
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _ModifiedDate 
     , * FROM ( SELECT DISTINCT
           cij.dataareaid                                                              AS LegalEntityID
          , cij.invoiceid                                                                AS InvoiceID

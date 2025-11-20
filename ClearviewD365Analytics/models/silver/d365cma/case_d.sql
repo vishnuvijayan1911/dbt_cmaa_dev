@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='case') }}
+{{ config(materialized='table', tags=['silver'], alias='case') }}
 
 -- Source file: cma/cma/layers/_base/_silver/case/case.py
 -- Root method: Case.casedetail [CaseDetail]

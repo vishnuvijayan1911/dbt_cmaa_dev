@@ -529,8 +529,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._RECID1) AS SalesOrderLineTransKey
     , td._RECID1                               AS _RECID1
     , td._RecID2                               AS _RecID2
     , td._SourceID                             AS _SourceID
-    , CURRENT_TIMESTAMP                        AS  _CreatedDate  
-    , CURRENT_TIMESTAMP                        AS _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                        AS  _CreatedDate  
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                        AS _ModifiedDate
   FROM salesorderlinetrans_factdetail1             td
   LEFT JOIN {{ ref('agingbucket_d') }} ab
     ON td.ReservedDays BETWEEN ab.AgeDaysBegin AND ab.AgeDaysEnd;

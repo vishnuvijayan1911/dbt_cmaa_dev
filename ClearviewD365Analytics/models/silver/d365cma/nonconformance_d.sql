@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='nonconformance') }}
+{{ config(materialized='table', tags=['silver'], alias='nonconformance') }}
 
 -- Source file: cma/cma/layers/_base/_silver/nonconformance/nonconformance.py
 -- Root method: Nonconformance.nonconformancedetail [NonConformanceDetail]

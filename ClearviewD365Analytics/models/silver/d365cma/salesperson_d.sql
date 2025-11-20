@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesperson') }}
+{{ config(materialized='table', tags=['silver'], alias='salesperson') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesperson/salesperson.py
 -- Root method: Salesperson.salespersondetail [SalesPersonDetail]
@@ -17,8 +17,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY hcm.recid) AS SalesPersonKey
          , hcm.modifieddatetime                                              AS _SourceDate
          , hcm.recid                                                         AS _RecID
          , 1                                                                  AS _SourceID
-         , CURRENT_TIMESTAMP                                                 AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                 AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _ModifiedDate  
       FROM {{ ref('hcmworker') }}          hcm
       LEFT JOIN  {{ ref('dirpartytable') }}  dpt
         ON dpt.recid = hcm.person;

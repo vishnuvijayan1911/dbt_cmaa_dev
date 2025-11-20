@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productionbom') }}
+{{ config(materialized='table', tags=['silver'], alias='productionbom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionbom/productionbom.py
 -- Root method: Productionbom.productionbomdetail [ProductionBOMDetail]
@@ -46,10 +46,10 @@ SELECT
          , ts.IsOSP              AS IsOSP
          , ts._RecID             AS _RecID
          , ts._SourceID          AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
     FROM productionbomstage               ts
      INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID

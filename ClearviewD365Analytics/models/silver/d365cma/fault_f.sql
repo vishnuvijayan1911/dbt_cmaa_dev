@@ -69,9 +69,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg.SourceID) AS FaultKey
          , stg.FaultID
          , stg._RecID
          , stg.SourceID            AS _SourceID
-         , CURRENT_TIMESTAMP AS _CreatedDate
-         ,CURRENT_TIMESTAMP AS _ModifiedDate 
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate 
       FROM fault_factstage                      stg
      INNER JOIN {{ ref('legalentity_d') }}        le
         ON le.LegalEntityID       = stg.LegalEntityID

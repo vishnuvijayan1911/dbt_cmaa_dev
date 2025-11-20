@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='maintenancerequest') }}
+{{ config(materialized='table', tags=['silver'], alias='maintenancerequest') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancerequest/maintenancerequest.py
 -- Root method: Maintenancerequest.maintenancerequestdetail [MaintenanceRequestDetail]
@@ -16,9 +16,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY rt.recid) AS MaintenanceRequestKey
          , slog.createdby              AS RequestCreateBy
          , rt.recid                    AS _RecID
          , 1                            AS _SourceID
-         , CURRENT_TIMESTAMP AS _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM {{ ref('entassetrequesttable') }}           rt
       LEFT JOIN {{ ref('entassetlifecyclestatelog') }} slog
         ON rt.dataareaid = slog.dataareaid

@@ -21,9 +21,9 @@ SELECT le.LegalEntityKey
          , wop.WorkOrderPoolKey
          , ts._RecID
          , ts._SourceID
-         , CURRENT_TIMESTAMP   AS _CreatedDate
-         , CURRENT_TIMESTAMP   AS _ModifiedDate
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))   AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))   AS _ModifiedDate
       FROM workorderpool_factstage                ts
      INNER JOIN {{ ref('legalentity_d') }}   le
         ON le.LegalEntityID = ts.DATAAREAID

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='transferorderhistoryline') }}
+{{ config(materialized='table', tags=['silver'], alias='transferorderhistoryline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorderhistoryline/transferorderhistoryline.py
 -- Root method: TransferOrderHistoryline.transferorderhistorylinedetail [TransferOrderHistoryLineDetail]
@@ -12,7 +12,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY itjl.recid) AS TransferOrderHistoryLineKey
 	 , itjl.voucherid                               AS VoucherID
      , itjl.recid                                   AS _RecID
      , 1                                            AS _SourceID
-     , CURRENT_TIMESTAMP                            AS _CreatedDate
-     , CURRENT_TIMESTAMP                            AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                            AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                            AS _ModifiedDate
   FROM {{ ref('inventtransferjourline') }} itjl;
 

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='netrequirements') }}
+{{ config(materialized='table', tags=['silver'], alias='netrequirements') }}
 
 -- Source file: cma/cma/layers/_base/_silver/netrequirements/netrequirements.py
 -- Root method: NetRequirements.netrequirementsdetail [NetRequirementsDetail]
@@ -24,8 +24,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID) AS NetRequirementsKey
                 , CAST(pt.createddatetime AS Datetime) AT TIME ZONE 'UTC' AT TIME ZONE le.TimeZone                               AS OrderCreatedDateTime
                 , rt.recid                                                                                                       AS _RecID
                 , 1                                                                                                              AS _SourceID
-                , CURRENT_TIMESTAMP                                                                                              AS _CreatedDate
-                , CURRENT_TIMESTAMP                                                                                              AS _ModifiedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                              AS _CreatedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                              AS _ModifiedDate
              FROM {{ ref('reqtrans') }}            rt
              INNER JOIN {{ ref('legalentity_d') }}         le
 			         ON le.LegalEntityID   = rt.dataareaid

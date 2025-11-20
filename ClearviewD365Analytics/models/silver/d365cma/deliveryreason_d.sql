@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='deliveryreason') }}
+{{ config(materialized='table', tags=['silver'], alias='deliveryreason') }}
 
 -- Source file: cma/cma/layers/_base/_silver/deliveryreason/deliveryreason.py
 -- Root method: Deliveryreason.deliveryreasondetail [DeliveryReasonDetail]
@@ -12,8 +12,8 @@ SELECT
          , dm.txt         AS DeliveryReason
          , dm.recid      AS _RecID
          , 1              AS _SourceID         
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
      FROM {{ ref('dlvreason') }} dm
      WHERE dm.code <> '';
 

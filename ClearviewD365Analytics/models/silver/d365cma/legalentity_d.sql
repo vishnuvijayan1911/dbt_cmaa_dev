@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='legalentity') }}
+{{ config(materialized='table', tags=['silver'], alias='legalentity') }}
 
 -- Source file: cma/cma/layers/_base/_silver/legalentity/legalentity.py
 -- Root method: Legalentity.get_detail_query [LegalEntityDetail]
@@ -18,9 +18,9 @@ t.LegalEntityID,
      , t.DefaultExchangeRateTypeID
      , t._SourceID
      , t._RecID
-     ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-     ,CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
      FROM (   SELECT DISTINCT
                    da.fno_id                                          AS LegalEntityID,
                      da.name                                        AS LegalEntity

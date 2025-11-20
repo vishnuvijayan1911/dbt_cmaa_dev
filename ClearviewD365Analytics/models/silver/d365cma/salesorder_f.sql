@@ -274,8 +274,6 @@ salesorder_factdetailmain AS (
            AND ddr.DeliveryReasonID = ts.DeliveryReasonID;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                                    AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                                    AS _ModifiedDate 
          , tdm.SalesOrderKey                                                                                    AS SalesOrderKey
          , tdm.CashDiscountKey                                                                                  AS CashDiscountKey
          , tdm.CurrencyKey                                                                                      AS CurrencyKey
@@ -331,4 +329,6 @@ SELECT
          , tdm._RecID                                                                                           AS _RecID
          , tdm._SourceID                                                                                        AS _SourceID
          , tdm._SourceDate
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _ModifiedDate 
       FROM salesorder_factdetailmain tdm;

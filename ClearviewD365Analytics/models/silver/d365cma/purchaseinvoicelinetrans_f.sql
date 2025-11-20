@@ -384,9 +384,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY fcl._RecID1, fcl._RecID2, tt.RecID_IT) AS Pur
          , fcl._RecID2                                                                                                 AS _RecID2
          , fcl._RecID1                                                                                                 AS _RecID1
          , 1                                                                                                           AS _SourceID
-         ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM {{ ref('purchaseinvoiceline_f') }}          fcl
       LEFT JOIN purchaseinvoicelinetrans_factadj4                          tt
         ON tt.PurchaseInvoiceLineKey  = fcl.PurchaseInvoiceLineKey

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation') }}
+{{ config(materialized='table', tags=['silver'], alias='assetfunctionallocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/assetfunctionallocation/assetfunctionallocation.py
 -- Root method: Assetfunctionallocation.assetfunctionallocationdetail [AssetFunctionalLocationDetail]
@@ -40,9 +40,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY FL.recid) AS AssetFunctionalLocationKey
          , flt9.name                                              AS Level9Type
          , FL.recid                                              AS _RecID
          , 1                                                      AS _SourceID
-         ,  CURRENT_TIMESTAMP                                       AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP                                        AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                       AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                        AS  _ModifiedDate
       FROM {{ ref('entassetfunctionallocation') }}               FL
       LEFT JOIN {{ ref('entassetfunctionallocationtype') }}      flt
         ON flt.recid               = FL.functionallocationtype

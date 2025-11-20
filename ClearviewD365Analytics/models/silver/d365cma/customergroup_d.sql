@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='customergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='customergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/customergroup/customergroup.py
 -- Root method: Customergroup.customergroupdetail [CustomerGroupDetail]
@@ -11,8 +11,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY cg.recid) AS CustomerGroupKey
          , COALESCE(NULLIF(cg.name, ''), cg.custgroup, '') AS CustomerGroup
          , cg.recid                                        AS _RecID
          , 1                                               AS _SourceID    
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('custgroup') }} AS cg
 

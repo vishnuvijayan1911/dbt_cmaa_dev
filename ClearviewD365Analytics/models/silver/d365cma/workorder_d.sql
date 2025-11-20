@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workorder') }}
+{{ config(materialized='table', tags=['silver'], alias='workorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workorder/workorder.py
 -- Root method: Workorder.workorderdetail [WorkOrderDetail]
@@ -54,9 +54,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
          , CAST(ISNULL (SLOG.CreatedDate, SLOGFirstRecord.CreatedDate) AS DATE)                                                AS CreateDate
          , WOT.recid                                                                                                           AS _RecID
          , 1                                                                                                                   AS _SourceID
-         ,  CURRENT_TIMESTAMP                                                                                                                                                               AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP                                                                                                                                                               AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _ModifiedDate
       FROM {{ ref('entassetworkordertable') }}               WOT
 
 

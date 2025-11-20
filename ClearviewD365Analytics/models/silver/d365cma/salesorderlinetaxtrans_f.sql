@@ -48,8 +48,6 @@ salesorderlinetaxtrans_factsolratio AS (
           FROM salesorderlinetaxtrans_factsolkeys tk;
 )
 SELECT DISTINCT
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ft.SalesOrderLineTaxKey
          , fclt.SalesOrderLineTransKey
          , ft.SalesOrderLineKey
@@ -64,6 +62,8 @@ SELECT DISTINCT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('salesorderlinetax_f') }}           ft
      INNER JOIN salesorderlinetaxtrans_factsolkeys                        tk
         ON tk.RecID_TT = ft._RecID

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='documentstatus') }}
+{{ config(materialized='table', tags=['silver'], alias='documentstatus') }}
 
 WITH detail AS (
     SELECT we.EnumValueID AS DocumentStatusID

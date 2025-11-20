@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseinvoice') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseinvoice') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseinvoice/purchaseinvoice.py
 -- Root method: Purchaseinvoice.purchaseinvoicedetail [PurchaseInvoiceDetail]
@@ -15,8 +15,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY vij.recid) AS PurchaseInvoiceKey
          , vij.modifieddatetime AS _SourceDate
          , vij.recid            AS _RecID
          , 1                     AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
         ,'1900-01-01'                                                     AS ActivityDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('vendinvoicejour') }} vij
 

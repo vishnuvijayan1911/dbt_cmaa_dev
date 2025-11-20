@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='financial') }}
+{{ config(materialized='table', tags=['silver'], alias='financial') }}
 
 -- Source file: cma/cma/layers/_base/_silver/financial/financial.py
 -- Root method: Financial.financialdetail [FinancialDetail]
@@ -59,7 +59,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._RecID, td._SourceID) AS FinancialKey
          , td.MainAccountID
          , td._SourceID
          , td._RecID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate         
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate         
       FROM financialdetail1 td;
 

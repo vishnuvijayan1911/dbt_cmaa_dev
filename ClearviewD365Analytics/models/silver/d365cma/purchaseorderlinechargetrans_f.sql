@@ -252,9 +252,9 @@ SELECT
          , ISNULL(fc._RecID2, 0)                                                AS _RecID2
          , ISNULL(tt._RecID3, 0)                                                AS _RecID3
          , 1                                                                    AS _SourceID
-         , CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('purchaseorderlinecharge_f') }}     fc
       LEFT JOIN purchaseorderlinechargetrans_facttrans4                          tt
         ON tt.PurchaseOrderLineChargeKey = fc.PurchaseOrderLineChargeKey

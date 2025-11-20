@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productattribute') }}
+{{ config(materialized='table', tags=['silver'], alias='productattribute') }}
 
 -- TODO: replace with real logic for productattribute_d
 select *

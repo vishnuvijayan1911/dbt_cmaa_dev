@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseorderlinespecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorderlinespecattribute/purchaseorderlinespecattribute.py
 -- Root method: Purchaseorderlinespecattribute.purchaseorderlinespecattributedetail [PurchaseOrderLineSpecAttributeDetail]
@@ -52,9 +52,9 @@ SELECT dso.PurchaseOrderLineKey
          , MAX(ba._sourcedate)                                                                                      AS _SourceDate
          , ba.recid                                                                                                AS _RecID
          , 1                                                                                                        AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM purchaseorderlinespecattribute                      ba
      INNER JOIN {{ ref('purchaseorderline_d') }} dso
         ON dso._RecID    = ba.recid

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='buyergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='buyergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/buyergroup/buyergroup.py
 -- Root method: Buyergroup.buyergroupdetail [BuyerGroupDetail]
@@ -11,9 +11,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS BuyerGroupKey
          , CASE WHEN ib.description = '' THEN ib.[GROUP] ELSE ib.description END AS BuyerGroup
          , ib.recid                                                             AS _RecID
          , 1                                                                    AS _SourceID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('inventbuyergroup') }} ib
      WHERE ib.description <> '';
 

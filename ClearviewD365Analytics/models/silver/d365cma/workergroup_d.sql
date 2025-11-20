@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workergroup') }}
+{{ config(materialized='table', tags=['silver'], alias='workergroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workergroup/workergroup.py
 -- Root method: Workergroup.workergroupdetail [WorkerGroupDetail]
@@ -11,9 +11,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkerGroupKey
          , ISNULL(NULLIF(JT.name, ''), JT.workergroupid) AS WorkerGroup
          , JT.recid                                   AS _RecID
          , 1                                             AS _SourceID
-         ,  CURRENT_TIMESTAMP                                                          AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP                                                          AS  _ModifiedDate
 
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                          AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                          AS  _ModifiedDate
       FROM {{ ref('entassetworkergroup') }} JT
 

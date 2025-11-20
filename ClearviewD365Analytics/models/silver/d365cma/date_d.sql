@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='date') }}
+{{ config(materialized='table', tags=['silver'], alias='date') }}
 
 -- Source file: cma/cma/layers/_base/_silver/date/date.py
 -- Root method: Date.get_detail_query [DateDetail]
@@ -313,7 +313,7 @@ ORDER BY d1.Date)                                            AS FiscalDayOfMonth
     , d1.FiscalQuarterDate
     , d1.FiscalQuarter
     , d1.FiscalDate
-    , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
 
   -- INTO #DETAIL
   FROM datedetail1                 d1

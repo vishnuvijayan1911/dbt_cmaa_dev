@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productionroutegroup') }}
+{{ config(materialized='table', tags=['silver'], alias='productionroutegroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionroutegroup/productionroutegroup.py
 -- Root method: Productionroutegroup.productionroutegroupdetail [ProductionRouteGroupDetail]
@@ -10,8 +10,8 @@ SELECT
          , pg.dataareaid  AS LegalEntityID
          , pg.routegroupid AS ProductionRouteGroupID
          , pg.name         AS ProductionRouteGroup
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('routegroup') }} pg
      WHERE pg.routegroupid <> '';
 

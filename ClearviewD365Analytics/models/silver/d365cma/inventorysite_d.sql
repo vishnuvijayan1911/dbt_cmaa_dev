@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorysite') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorysite') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorysite/inventorysite.py
 -- Root method: Inventorysite.inventorysitedetail [InventorySiteDetail]
@@ -12,9 +12,9 @@ SELECT
          , CASE WHEN ivs.name = '' THEN ivs.siteid ELSE ivs.name END AS InventorySite
          , ivs.recid                                                 AS _RecID
          , 1                                                         AS _SourceID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('inventsite') }} ivs
      WHERE ivs.siteid <> ''
 

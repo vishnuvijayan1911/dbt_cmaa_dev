@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workordercriticality') }}
+{{ config(materialized='table', tags=['silver'], alias='workordercriticality') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workordercriticality/workordercriticality.py
 -- Root method: Workordercriticality.workordercriticalitydetail [WorkOrderCriticalityDetail]
@@ -12,8 +12,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderCriticalityKey
          , JT.ratingfactor AS CriticalityRatingFactor
          , JT.recid       AS _RecID
          , 1               AS _SourceID
-         ,  CURRENT_TIMESTAMP    AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP    AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
       FROM {{ ref('entassetcriticality') }} JT
 

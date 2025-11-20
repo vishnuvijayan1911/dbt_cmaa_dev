@@ -78,8 +78,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY t1._RecID) AS SalesOrderLineTaxKey
          , t1._SourceDate
          , t1._RecID
          , t1._SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM salesorderlinetax_factdetailmain t1
      WHERE t1.TransDate BETWEEN t1.TaxStartDate AND t1.TaxEndDate;

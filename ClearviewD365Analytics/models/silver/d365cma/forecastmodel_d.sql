@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='forecastmodel') }}
+{{ config(materialized='table', tags=['silver'], alias='forecastmodel') }}
 
 -- Source file: cma/cma/layers/_base/_silver/forecastmodel/forecastmodel.py
 -- Root method: Forecastmodel.forecastmodeldetail [ForecastModelDetail]
@@ -24,8 +24,6 @@ forecastmodelstage AS (
 )
 SELECT 
         ROW_NUMBER() OVER (ORDER BY t.ModelID, t.ParentModelID, t.LegalEntityID) AS ForecastModelKey
-       ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                              AS _ModifiedDate
         , * FROM (
           SELECT DISTINCT  ts.LegalEntityID                                          AS LegalEntityID
          , ts.ModelID                                                AS ModelID
@@ -36,6 +34,8 @@ SELECT
          , ts.BudgetTypeID                                           AS BudgetTypeID
          , we2.enumvalue                                             AS BudgetType
 
+       ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                              AS _ModifiedDate
       FROM forecastmodelstage               ts
      INNER JOIN {{ ref('enumeration') }} we1
         ON we1.enum        = 'HeadingSub'

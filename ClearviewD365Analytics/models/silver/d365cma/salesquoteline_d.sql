@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesquoteline') }}
+{{ config(materialized='table', tags=['silver'], alias='salesquoteline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesquoteline/salesquoteline.py
 -- Root method: Salesquoteline.salesquotelinedetail [SalesQuoteLineDetail]
@@ -14,10 +14,10 @@ SELECT ROW_NUMBER() OVER (ORDER BY ql.recid) AS SalesQuoteLineKey
 		 , ql.modifieddatetime                                                           AS _SourceDate
          , ql.recid                                                                      AS _RecID
          , 1                                                                             AS _SourceID
-         , CURRENT_TIMESTAMP                                                             AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                             AS _ModifiedDate
          ,'1900-01-01'                                                                   AS ActivityDate           
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _ModifiedDate
       FROM {{ ref('salesquotationline') }}       ql
      INNER JOIN {{ ref('salesquotationtable') }} qt
         ON qt.dataareaid  = ql.dataareaid

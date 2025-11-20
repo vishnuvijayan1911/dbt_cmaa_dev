@@ -309,9 +309,9 @@ SELECT DISTINCT tl.PurchaseInvoiceLineKey
          , tl._RecID1
          , tl._RECID2
          , tl._SourceID
-         ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM purchaseinvoiceline_factline                    tl
       LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
         ON vuc.legalentitykey  = tl.LegalEntityKey

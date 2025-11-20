@@ -409,8 +409,8 @@ SELECT po.ProductionKey                                                         
          , t2.OrderedQuantity_FT                                                                                     AS OrderedQuantity_FT
          , t1._SourceID                                                                                              AS _SourceID
          , t1._RecID                                                                                                 AS _RecID
-         ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM production_factproduct                          t1
       LEFT JOIN production_factuomconversion                t2
         ON t2._RecID                        = t1._RecID

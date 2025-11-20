@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='quotestatus') }}
+{{ config(materialized='table', tags=['silver'], alias='quotestatus') }}
 
 
 WITH detail AS (

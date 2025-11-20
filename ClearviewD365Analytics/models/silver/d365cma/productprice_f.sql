@@ -24,8 +24,6 @@ productprice_factcost AS (
            AND IM.costingtype = 2;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY dd.DateKey) AS ProductPriceKey
          , dle.LegalEntityKey
          , dp.ProductKey
@@ -33,6 +31,8 @@ SELECT
          , dd.DateKey      AS FromDateKey
          , dd1.DateKey     AS ToDateKey
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM productprice_factcost      tc
      INNER JOIN {{ ref('legalentity_d') }} dle
         ON dle.LegalEntityID = tc.DATAAREAID

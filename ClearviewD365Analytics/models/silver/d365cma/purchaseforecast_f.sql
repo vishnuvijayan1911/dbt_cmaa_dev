@@ -94,8 +94,6 @@ purchaseforecast_factdetail1 AS (
             ON du.UOM             = ts.PURCHUNITID;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS PurchaseForecastKey,
     ts.LegalEntityKey
          , ts.CurrencyKey										   AS CurrencyKey
@@ -121,6 +119,8 @@ SELECT
          , ts._RecID
          , ts._SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM purchaseforecast_factdetail1               ts
       LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
         ON vuc.legalentitykey  = ts.LegalEntityKey

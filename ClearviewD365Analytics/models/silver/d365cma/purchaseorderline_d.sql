@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='purchaseorderline') }}
+{{ config(materialized='table', tags=['silver'], alias='purchaseorderline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/purchaseorderline/purchaseorderline.py
 -- Root method: PurchaseOrderLine.get_detail_query [PurchaseOrderLineDetail]
@@ -21,9 +21,9 @@ SELECT * FROM
          , pl.modifieddatetime                                                                                       AS _SourceDate
          , pl.recid                                                                                                  AS _RecID
          , 1                                                                                                         AS _SourceID
-         ,CURRENT_TIMESTAMP                                                                                          AS _CreatedDate
-        , CURRENT_TIMESTAMP                                                                                          AS _ModifiedDate
 		, pl.isdeleted
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                          AS _ModifiedDate
       FROM {{ ref('purchline') }}          pl    
      INNER JOIN {{ ref('purchtable') }}    pt
         ON pt.dataareaid = pl.dataareaid

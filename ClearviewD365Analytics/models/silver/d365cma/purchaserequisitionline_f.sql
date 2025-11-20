@@ -154,8 +154,6 @@ purchaserequisitionline_factdetail1 AS (
             ON ds.DocumentStateID       = ts.DocumentStateID;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , td.PurchaseRequisitionLineKey
          , td.CurrencyKey
          , td.LegalEntityKey
@@ -193,6 +191,8 @@ SELECT
          , td._RecID
          , td._SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM purchaserequisitionline_factdetail1                 td
       LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
         ON vuc.legalentitykey  = td.LegalEntityKey

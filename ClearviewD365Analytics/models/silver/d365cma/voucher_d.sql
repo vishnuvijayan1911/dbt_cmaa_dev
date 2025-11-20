@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='voucher') }}
+{{ config(materialized='table', tags=['silver'], alias='voucher') }}
 
 -- Source file: cma/cma/layers/_base/_silver/voucher/voucher.py
 -- Root method: Voucher.voucherdetail [VoucherDetail]
@@ -7,12 +7,12 @@
 
 SELECT 
            ROW_NUMBER() OVER (ORDER BY t.VoucherID) AS VoucherKey
-            , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
          , *  FROM ( SELECT DISTINCT
            gj.subledgervoucherdataareaid AS LegalEntityID
          , gj.subledgervoucher           AS VoucherID
 
+            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM {{ ref('generaljournalentry') }} gj
      WHERE gj.subledgervoucher <> '') t;
 

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='taxgroup') }}
+{{ config(materialized='table', tags=['silver'], alias='taxgroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxgroup/taxgroup.py
 -- Root method: Taxgroup.taxgroupdetail [TaxGroupDetail]
@@ -11,8 +11,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY tg.recid) AS TaxGroupKey
          , CASE WHEN tg.taxgroupname = '' THEN tg.taxgroup ELSE tg.taxgroupname END AS TaxGroup
          , tg.recid                                                                 AS _RecID
          , 1                                                                        AS _SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM {{ ref('taxgroupheading') }} tg
      WHERE tg.taxgroup <> '';
 

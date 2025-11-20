@@ -59,8 +59,6 @@ purchaseinvoicelinetaxtrans_factpilratio AS (
           FROM purchaseinvoicelinetaxtrans_factpilkeys tk;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY t._RecID) AS PurchaseInvoiceLineTaxTransKey
          , * FROM ( SELECT DISTINCT
           ft.PurchaseInvoiceLineKey
@@ -77,6 +75,8 @@ SELECT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('purchaseinvoicelinetax_f') }}        ft
      INNER JOIN purchaseinvoicelinetaxtrans_factpilkeys                          tk
         ON tk.RecID_TT  = ft._RecID

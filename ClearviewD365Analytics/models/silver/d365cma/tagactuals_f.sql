@@ -76,8 +76,6 @@ tagactuals_factdetailmain AS (
             ON uo2.UOM          = ts.CMAWEIGHTUOM;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY dm._RecID, dm._SourceID) AS TagActualsKey
         , dm.LegalEntityKey
          , dm.ProductKey
@@ -91,6 +89,8 @@ SELECT
          , dm._RecID
          , dm._SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM tagactuals_factdetailmain              dm
       LEFT JOIN {{ ref('vwuomconversion') }} vuc1
         ON vuc1.legalentitykey = dm.LegalEntityKey

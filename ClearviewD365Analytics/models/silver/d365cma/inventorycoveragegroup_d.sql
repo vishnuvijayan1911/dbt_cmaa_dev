@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup') }}
+{{ config(materialized='table', tags=['silver'], alias='inventorycoveragegroup') }}
 
 -- Source file: cma/cma/layers/_base/_silver/inventorycoveragegroup/inventorycoveragegroup.py
 -- Root method: Inventorycoveragegroup.inventorycoveragegroupdetail [InventoryCoverageGroupDetail]
@@ -25,9 +25,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCoverage
          , we.enumvalue                AS InventoryCoverageRule
          , ts._SourceID                AS _SourceID
          , ts._RecID                   AS _RecID
-        ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM inventorycoveragegroupstage               ts
      INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID = ts.LegalEntityID

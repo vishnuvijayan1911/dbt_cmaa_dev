@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productionrouteoperation') }}
+{{ config(materialized='table', tags=['silver'], alias='productionrouteoperation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productionrouteoperation/productionrouteoperation.py
 -- Root method: Productionrouteoperation.productionrouteoperationdetail [ProductionRouteOperationDetail]
@@ -12,7 +12,7 @@ SELECT
          , ro.name        AS Operation
          , ro.recid      AS _RecID
          , 1              AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('routeoprtable') }} ro;
 

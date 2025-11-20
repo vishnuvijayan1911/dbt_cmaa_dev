@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='standarduomconversion') }}
+{{ config(materialized='table', tags=['silver'], alias='standarduomconversion') }}
 
 -- Source file: cma/cma/layers/_base/_silver/standarduomconversion/standarduomconversion.py
 -- Root method: StandardUomConversion.standard_uom_conversion [StandardUomConversionDetail]

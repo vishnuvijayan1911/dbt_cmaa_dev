@@ -27,9 +27,9 @@ addresscountry AS (
 SELECT
     ROW_NUMBER() OVER (ORDER BY t._RecID) AS AddressKey,
     *
-        , CURRENT_TIMESTAMP                                          AS _CreatedDate
-        , CURRENT_TIMESTAMP                                         AS _ModifiedDate
         , '1900-01-01'                                               AS ActivityDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM (   SELECT lpa.location                                                                            AS Location
                     , lpa.street                                                                              AS Street
                     , lpa.city                                                                                AS City

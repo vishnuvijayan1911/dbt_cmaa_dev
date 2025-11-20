@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='procurementcategory') }}
+{{ config(materialized='table', tags=['silver'], alias='procurementcategory') }}
 
 -- Source file: cma/cma/layers/_base/_silver/procurementcategory/procurementcategory.py
 -- Root method: Procurementcategory.procurementcategorydetail [ProcurementCategoryDetail]
@@ -11,9 +11,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY ec.recid) AS ProcurementCategoryKey
          , ec1.name                   AS ProductCategory
          , 1                          AS _SourceID
          , ec.recid                   AS _RecID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('ecorescategory') }}       ec
      INNER JOIN  {{ ref('ecorescategoryhierarchy') }}     ech
         ON ech.recid                       = ec.categoryhierarchy

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='transferorder') }}
+{{ config(materialized='table', tags=['silver'], alias='transferorder') }}
 
 -- Source file: cma/cma/layers/_base/_silver/transferorder/transferorder.py
 -- Root method: TransferOrder.transferorderdetail [TransferOrderDetail]
@@ -11,8 +11,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY itt.recid) AS TransferOrderKey
    , we.enumvalue                                AS TransferStatus
    , itt.recid                                   AS _RecID
    , 1                                           AS _SourceID
-   , CURRENT_TIMESTAMP                           AS _CreatedDate
-   , CURRENT_TIMESTAMP                           AS _ModifiedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                           AS _CreatedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                           AS _ModifiedDate
 FROM {{ ref('inventtransfertable') }} itt
 LEFT JOIN {{ ref('enumeration') }}   we
   ON we.enumvalueid = itt.transferstatus

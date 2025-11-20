@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='logisticspostaladdress') }}
+{{ config(materialized='table', tags=['silver'], alias='logisticspostaladdress') }}
 
 -- Source file: cma/cma/layers/_base/_silver/logisticspostaladdress/logisticspostaladdress.py
 -- Root method: Logisticspostaladdress.logisticspostaladdressdetail [LogisticsPostalAddressDetail]
@@ -39,8 +39,8 @@ SELECT *
                     , CAST(ISNULL(lpa.validto, '2154-12-31') AS DATE)       AS ValidTo
                     , CAST(ROW_NUMBER() OVER (PARTITION BY lpa.location
 ORDER BY ISNULL(lpa.validto, CAST('2154-12-31' AS DATE)) DESC) AS SMALLINT) AS LocationRank
-                    ,  CURRENT_TIMESTAMP                                       AS  _CreatedDate
-                    ,  CURRENT_TIMESTAMP                                       AS  _ModifiedDate
+                    ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                       AS  _CreatedDate
+                    ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                       AS  _ModifiedDate
                  FROM {{ ref('logisticspostaladdress') }} lpa
                  LEFT JOIN logisticspostaladdresscountry                        tc
                    ON tc.CountryRegionID = lpa.countryregionid) t

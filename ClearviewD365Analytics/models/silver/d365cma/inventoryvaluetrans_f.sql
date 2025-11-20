@@ -714,9 +714,9 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts.RECID_IT, ts.RECID_ITPDP, ts.RECID_IS, ts
          , ts.RECID_IS                                AS _RecID3
          , ts.RECID_ITPDF                             AS _RecID4
          , 1                                          AS _SourceID
-         ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-         , CURRENT_TIMESTAMP AS _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
       FROM inventoryvaluetrans_factdetail1            ts
       LEFT JOIN inventoryvaluetrans_factuomconversion uc
         ON uc._RecID = ts.RECID_IT

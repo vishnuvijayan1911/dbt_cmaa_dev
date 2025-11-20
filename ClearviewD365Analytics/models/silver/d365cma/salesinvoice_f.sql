@@ -78,8 +78,6 @@ salesinvoice_factstage AS (
            AND ct.voucher              = cij.ledgervoucher;
 )
 SELECT DISTINCT
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , dsi.SalesInvoiceKey    AS SalesInvoiceKey
          , cd.CashDiscountKey     AS CashDiscountKey
          , dc.CustomerKey         AS CustomerKey
@@ -112,6 +110,8 @@ SELECT DISTINCT
          , ts._RecID              AS _RecID
          , ts._SourceID           AS _SourceID
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM salesinvoice_factstage                  ts
      INNER JOIN {{ ref('legalentity_d') }}    le
         ON le.LegalEntityID    = ts.LegalEntityID

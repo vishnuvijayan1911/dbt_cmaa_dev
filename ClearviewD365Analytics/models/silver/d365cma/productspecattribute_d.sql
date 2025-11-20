@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='productspecattribute') }}
+{{ config(materialized='table', tags=['silver'], alias='productspecattribute') }}
 
 -- Source file: cma/cma/layers/_base/_silver/productspecattribute/productspecattribute.py
 -- Root method: Productspecattribute.productspecattributedetail [ProductSpecAttributeDetail]
@@ -144,9 +144,9 @@ SELECT dp.ProductKey
          , MAX(CASE WHEN ba.pdsbatchattribrelation = 'Yield' THEN ba.pdsbatchattribmax END)                         AS Yield_Maximum
          , MAX(ba._recid)                                                                                           AS _RecID
          , 1                                                                                                        AS _SourceID
-         ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
 
+         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM productspecattributestage         ba
      INNER JOIN {{ ref('product_d') }} dp
         ON dp.LegalEntityID = ba.legalentityid

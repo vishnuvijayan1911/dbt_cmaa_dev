@@ -257,8 +257,6 @@ salesorderlinechargetrans_facttrans4 AS (
             SELECT * FROM salesorderlinechargetrans_facttrans3
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesOrderLineChargeTransKey
          , * FROM ( SELECT DISTINCT
           fc.SalesOrderLineChargeKey
@@ -280,6 +278,8 @@ SELECT
          , ISNULL (fc._RecID1, 0)                                                AS _RECID1
          , ISNULL (fc._RecID2, 0)                                                AS _RecID2
          , 1                                                                     AS _SourceID
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('salesorderlinecharge_f') }}     fc
            LEFT JOIN salesorderlinechargetrans_facttrans4                       tt
         ON tt.SalesOrderLineChargeKey = fc.SalesOrderLineChargeKey

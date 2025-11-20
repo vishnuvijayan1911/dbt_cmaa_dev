@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='warehouselocation') }}
+{{ config(materialized='table', tags=['silver'], alias='warehouselocation') }}
 
 -- Source file: cma/cma/layers/_base/_silver/warehouselocation/warehouselocation.py
 -- Root method: Warehouselocation.warehouselocationdetail [WarehouseLocationDetail]
@@ -14,9 +14,9 @@ SELECT  ROW_NUMBER() OVER (ORDER BY wl.recid) AS WarehouseLocationKey
       , wl.wmslocationid                                                      AS WarehouseLocation
       , wl.recid                                                             AS _RecID
       , 1                                                                     AS _SourceID
-      , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-      , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
    FROM {{ ref('wmslocation') }}       wl
 INNER JOIN {{ ref('inventlocation') }}  il
    ON il.dataareaid      = wl.dataareaid

@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='uom') }}
+{{ config(materialized='table', tags=['silver'], alias='uom') }}
 
 -- Source file: cma/cma/layers/_base/_silver/uom/uom.py
 -- Root method: Uom.uomdetail [UOMDetail]
@@ -20,8 +20,8 @@ SELECT
          , we1.enumvalue AS UOMClass
          , ts._RecID     AS _RecID
          , ts._SourceID  AS _SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate
       FROM uomstage               ts
       LEFT JOIN {{ ref('enumeration') }} we1
         ON we1.enum        = 'UnitOfMeasureClass'

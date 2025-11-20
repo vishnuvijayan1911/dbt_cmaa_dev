@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='production') }}
+{{ config(materialized='table', tags=['silver'], alias='production') }}
 
 -- Source file: cma/cma/layers/_base/_silver/production/production.py
 -- Root method: Production.productiondetail [ProductionDetail]
@@ -114,10 +114,10 @@ SELECT
                 ELSE '' END                                                                                       AS OnTimeStatus
          , ts._RecID
          , ts._SourceID
-           ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                                 AS _ModifiedDate
         ,'1900-01-01'                                                       AS ActivityDate
 
 
+           ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _ModifiedDate
       FROM productiondetail2 ts;
 

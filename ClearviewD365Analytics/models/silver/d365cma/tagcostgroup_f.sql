@@ -99,8 +99,8 @@ tagcostgroup_factdetail1 AS (
        , d.costingqty
        , d.costamount
        , d.costamount/isnull(nullif(d.costingqty, 0), 1) as unitcost
-       , CURRENT_TIMESTAMP                               as _createddate
-       , CURRENT_TIMESTAMP                               as _modifieddate 
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _createddate
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _modifieddate 
        , d._sourceid
        , d._recid
     FROM tagcostgroup_factdetailmain  d;
@@ -116,8 +116,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY d._recid, d._sourceid) AS Tagcostgroupkey
    , d.costingqty
    , d.costamount
    , d.unitcost
-   , CURRENT_TIMESTAMP                               as _createddate
-   , CURRENT_TIMESTAMP                               as _modifieddate 
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _createddate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _modifieddate 
    , d._sourceid
    , d._recid
 FROM tagcostgroup_factdetail1  d;

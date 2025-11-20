@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='maintenancejobtrade') }}
+{{ config(materialized='table', tags=['silver'], alias='maintenancejobtrade') }}
 
 -- Source file: cma/cma/layers/_base/_silver/maintenancejobtrade/maintenancejobtrade.py
 -- Root method: Maintenancejobtrade.maintenancejobtradedetail [MaintenanceJobTradeDetail]

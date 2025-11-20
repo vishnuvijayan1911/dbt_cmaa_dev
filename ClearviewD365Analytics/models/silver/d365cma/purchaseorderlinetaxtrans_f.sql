@@ -48,8 +48,6 @@ purchaseorderlinetaxtrans_factpolratio AS (
           FROM purchaseorderlinetaxtrans_factpolkeys tk;
 )
 SELECT DISTINCT
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , ROW_NUMBER() OVER (ORDER BY tk.RecID_IT) AS PurchaseOrderLineTaxTransKey
           , ft.PurchaseOrderLineKey
          , ft.PurchaseOrderLineTaxKey
@@ -65,6 +63,8 @@ SELECT DISTINCT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID 
 
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM {{ ref('purchaseorderlinetax_f') }}        ft
      INNER JOIN purchaseorderlinetaxtrans_factpolkeys                        tk
         ON tk.RecID_TT = ft._RecID

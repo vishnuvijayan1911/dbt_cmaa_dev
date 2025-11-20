@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='salesagreementline') }}
+{{ config(materialized='table', tags=['silver'], alias='salesagreementline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/salesagreementline/salesagreementline.py
 -- Root method: Salesagreementline.salesagreementlinedetail [SalesAgreementLineDetail]
@@ -8,8 +8,6 @@
 SELECT * FROM (
         SELECT
         ROW_NUMBER() OVER (ORDER BY t._RecID) AS SalesAgreementLineKey
-          ,CURRENT_TIMESTAMP                                               AS _CreatedDate
-        , CURRENT_TIMESTAMP                                               AS _ModifiedDate
         ,'1900-01-01'                                                     AS ActivityDate
         , *  FROM ( SELECT DISTINCT
           sah.customerdataareaid                                               AS LegalEntityID
@@ -21,6 +19,8 @@ SELECT * FROM (
         , al.recid                                                            AS _RecID
         , 1                                                                   AS _SourceID
         , al.isdeleted
+          ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM {{ ref('agreementline') }}        al
     INNER JOIN {{ ref('agreementheader') }} ah
         ON ah.recid               = al.agreement

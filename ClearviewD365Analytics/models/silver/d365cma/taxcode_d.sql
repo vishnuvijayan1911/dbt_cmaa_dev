@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='taxcode') }}
+{{ config(materialized='table', tags=['silver'], alias='taxcode') }}
 
 -- Source file: cma/cma/layers/_base/_silver/taxcode/taxcode.py
 -- Root method: Taxcode.taxcodedetail [TaxCodeDetail]
@@ -33,9 +33,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY tt._recid) AS TaxCodeKey
          , we.enumvalue     AS TaxOrigin
          , tt._recid        AS _RecID
          , 1                AS _SourceID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate   
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate   
       FROM taxcodestage               tt
      INNER JOIN {{ ref('enumeration') }} we
         ON we.enumvalueid = TaxBaseID

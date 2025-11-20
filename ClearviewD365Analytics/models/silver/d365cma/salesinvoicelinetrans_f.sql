@@ -421,9 +421,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY tt.PackingSlipID) AS SalesInvoiceLineTransKey
                , fcl._RecID2                                                                                            AS _RECID2
                , fcl._RecID1                                                                                            AS _RECID1
                , 1                                                                                                      AS _SourceID
-               ,  CURRENT_TIMESTAMP  AS  _CreatedDate
-               , CURRENT_TIMESTAMP AS _ModifiedDate
 
+               ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
+               , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
             FROM {{ ref('salesinvoiceline_f') }}          fcl
 
             LEFT JOIN  salesinvoicelinetrans_facttransadj4                       tt

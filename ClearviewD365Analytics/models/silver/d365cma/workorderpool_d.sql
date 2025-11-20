@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='workorderpool') }}
+{{ config(materialized='table', tags=['silver'], alias='workorderpool') }}
 
 -- Source file: cma/cma/layers/_base/_silver/workorderpool/workorderpool.py
 -- Root method: Workorderpool.workorderpooldetail [WorkOrderPoolDetail]

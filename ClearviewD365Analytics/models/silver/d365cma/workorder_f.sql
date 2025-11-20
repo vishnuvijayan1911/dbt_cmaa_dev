@@ -100,9 +100,9 @@ SELECT wo.WorkOrderKey
          , dd5.DateKey                                                          AS ScheduleStartDateKey
          , CAST(ond.OnTimeStatusKey AS INT)                                     AS OnTimeStatusDueDateKey
          , CAST(ons.OnTimeStatusKey AS INT)                                     AS OnTimeStatusStartDateKey
-         ,  CURRENT_TIMESTAMP                                                                                                        AS  _CreatedDate
-         ,  CURRENT_TIMESTAMP                                                                                                        AS  _ModifiedDate
 
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                        AS  _CreatedDate
+         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                        AS  _ModifiedDate
       FROM workorder_factstage                      ts
      INNER JOIN {{ ref('legalentity_d') }}          le
         ON le.LegalEntityID   = ts.LegalEntityID

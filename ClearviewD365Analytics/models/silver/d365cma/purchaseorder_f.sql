@@ -282,8 +282,6 @@ purchaseorder_factdetailmain AS (
            AND cd.CashDiscountID       = ts.CashDiscountID;
 )
 SELECT 
-           CURRENT_TIMESTAMP                                                                      AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                                      AS _ModifiedDate 
          , tdm.PurchaseOrderKey                                                                      AS PurchaseOrderKey
          , tdm.BuyerGroupKey                                                                         AS BuyerGroupKey
          , tdm.BuyerKey                                                                              AS BuyerKey
@@ -325,4 +323,6 @@ SELECT
          , tdm.BillableCharge + tdm.NonBillableCharge                                                AS TotalCharge
          , tdm._RecID                                                                                AS _RecID
          , 1                                                                                         AS _SourceID
+           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
       FROM purchaseorder_factdetailmain tdm;

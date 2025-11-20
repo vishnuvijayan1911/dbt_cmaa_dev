@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='qualityorderline') }}
+{{ config(materialized='table', tags=['silver'], alias='qualityorderline') }}
 
 -- Source file: cma/cma/layers/_base/_silver/qualityorderline/qualityorderline.py
 -- Root method: Qualityorderline.qualityorderlinedetail [QualityOrderLineDetail]

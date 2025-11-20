@@ -397,9 +397,9 @@ SELECT ROW_NUMBER() OVER (ORDER BY td._RecID, td._SourceID) AS InventoryTransKey
          , td.OnHandTrans
          , td._SourceID
          , td._RecID
-         , CURRENT_TIMESTAMP                                                            AS _CreatedDate
-         , CURRENT_TIMESTAMP                                                            AS _ModifiedDate  
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
       FROM inventorytrans_factdetailmain              td
       LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
         ON vuc.productkey      = td.ProductKey

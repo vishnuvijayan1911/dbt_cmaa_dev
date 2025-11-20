@@ -1,4 +1,4 @@
-﻿{{ config(materialized='table', tags=['silver'], alias='date445') }}
+{{ config(materialized='table', tags=['silver'], alias='date445') }}
 
 -- Source file: cma/cma/layers/_base/_silver/date445/date445.py
 -- Root method: Date445.get_detail_query [DateDetail]
