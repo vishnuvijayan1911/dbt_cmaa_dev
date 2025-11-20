@@ -1,4 +1,4 @@
 {{ config(materialized='view') }}
 
 select  *
-from {{ source("lakehouse","optionsetmetadata") }};
+from {{ source("lakehouse","OptionsetMetadata") }};
