@@ -17,14 +17,18 @@ sources:
       - name: fact
       - name: factmeasure
       - name: fiscalcalendardate
+<<<<<<< HEAD
       - name: globalenummetadata
+=======
+      - name: GlobalOptionsetMetadata
+>>>>>>> 832eed70b8166c3c65c6888e4c5bce6fca1f4cd3
       - name: model
       - name: modelfact
-      - name: optionsetmetadata
-      - name: statemetadata
-      - name: statusmetadata
-      - name: targetmetadata
-      - name: uniqueindex
+      - name: OptionsetMetadata
+      - name: StateMetadata
+      - name: StatusMetadata
+      - name: TargetMetadata
+      # - name: uniqueindex
       - name: accountant_br
       - name: accountingdistribution
       - name: accountingevent
@@ -273,7 +277,7 @@ sources:
       - name: markuptrans
       - name: ominternalorganization
       - name: omoperatingunit
-      - name: oracle_enumeration
+     # - name: oracle_enumeration
       - name: paymterm
       - name: pdsbatchattrib
       - name: pdsbatchattribbyitem
@@ -354,10 +358,10 @@ sources:
       - name: vendtrans
       - name: vendtranscashdisc
       - name: vendtransopen
-      - name: wcisalesopportunity
-      - name: wcisalesquotedetail
-      - name: wcisalesquotetable
-      - name: wcisalesquotetabledetail
+      # - name: wcisalesopportunity
+      # - name: wcisalesquotedetail
+      # - name: wcisalesquotetable
+      # - name: wcisalesquotetabledetail
       - name: whsinventreserve
       - name: whsinventstatus
       - name: whslicenseplate
