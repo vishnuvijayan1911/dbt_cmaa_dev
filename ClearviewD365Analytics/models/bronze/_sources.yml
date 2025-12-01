@@ -371,6 +371,7 @@ sources:
       - name: wrkctrresourcegroup
       - name: wrkctrresourcegroupresource
       - name: wrkctrtable
+      - name: srsanalysisenums
 
       
   - name: warehouse

@@ -46,7 +46,7 @@ casestage AS (
        AND chd.recid               = cdb.categoryrecid
       LEFT JOIN {{ ref('omoperatingunit') }}             oou
         ON oou.recid               = cdb.department
-       AND oou.omoperatingunittype = 1;
+       AND oou.omoperatingunittype = 'OMDepartment' --1
 )
 SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
      , ts.CaseID                                             AS CaseID
@@ -77,12 +77,11 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
     ON dsp._RecID      = ts.RecID_HCM
    AND dsp._SourceID   = 1
   LEFT JOIN {{ ref('enumeration') }} we1
-    ON we1.enum        = 'CaseStatus'
+    ON we1.enum        = 'status'
    AND we1.enumvalueid = ts.StatusID
   LEFT JOIN {{ ref('enumeration') }} we2
-    ON we2.enum        = 'CaseCategoryType'
+    ON we2.enum        = 'categorytype'
    AND we2.enumvalueid = ts.CategoryTypeID
   LEFT JOIN {{ ref('enumeration') }} we3
-    ON we3.enum        = 'CaseResolutionType'
-   AND we3.enumvalueid = ts.CaseResolutionID;
-
+    ON we3.enum        = 'resolution'
+   AND we3.enumvalueid = ts.CaseResolutionID

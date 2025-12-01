@@ -17,5 +17,4 @@ SELECT ROW_NUMBER () OVER (ORDER BY itj.recid) AS TransferOrderHistoryKey
 FROM {{ ref('inventtransferjour') }} itj
 LEFT JOIN {{ ref('enumeration') }}   we
   ON we.enumvalueid = itj.updatetype
- AND we.enum        = 'InventTransferUpdateType';
-
+ AND we.enum        = 'updatetype'

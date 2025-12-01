@@ -8,35 +8,35 @@
 
 WITH
 workorderslogfirstrecord AS (
-    SELECT MIN (CREATED) AS CreatedDate
-             , REFRECID
-             , DATAAREAID
+    SELECT MIN (created) AS CreatedDate
+             , refrecid
+             , dataareaid
 
           FROM {{ ref('entassetlifecyclestatelog') }}
-         GROUP BY REFRECID
-                , DATAAREAID;
+         GROUP BY refrecid
+                , dataareaid
 ),
 workorderslog AS (
-    SELECT MAX (CREATED)         AS CreatedDate
-             , REFRECID
-             , REFTABLEID
-             , LIFECYCLESTATEREFRECID
-             , CREATEDBY             AS CreatedBy
-             , REMARK
+    SELECT MAX (created)         AS CreatedDate
+             , refrecid
+             , reftableid
+             , lifecyclestaterefrecid
+             , createdby             AS CreatedBy
+             , remark
 
           FROM {{ ref('entassetlifecyclestatelog') }}
-         WHERE (REMARK LIKE 'Work Order Created%' OR REMARK LIKE 'Arbejdsordre oprettet%')
-         GROUP BY REFRECID
-                , REFTABLEID
-                , LIFECYCLESTATEREFRECID
-                , CREATEDBY
-                , REMARK;
+         WHERE (remark LIKE 'Work Order Created%' OR remark LIKE 'Arbejdsordre oprettet%')
+         GROUP BY refrecid
+                , reftableid
+                , lifecyclestaterefrecid
+                , createdby
+                , remark
 )
 SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
-         , WOT.dataareaid                                                                                                     AS LegalEntityID
+         , WOT.dataareaid                                                                                                      AS LegalEntityID
          , WOT.workorderid                                                                                                     AS WorkOrderID
-         , CASE WHEN WOT.active = 1 THEN 'Active' ELSE 'Inactive' END                                                          AS ActiveStatus
-         , enum.enumvalue                                                                                                      AS CostType
+         , CASE WHEN WOT.active = 'Yes' THEN 'Active' ELSE 'Inactive' END                                                      AS ActiveStatus
+         , WOT.costtype                                                                                                        AS CostType
          , WOT.description                                                                                                     AS WorkOrderDesc
          , WOTA.workorderid                                                                                                    AS ParentWorkorderID
          , WOT.scheduleoneworker                                                                                               AS ScheduleOneWorker
@@ -54,9 +54,8 @@ SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
          , CAST(ISNULL (SLOG.CreatedDate, SLOGFirstRecord.CreatedDate) AS DATE)                                                AS CreateDate
          , WOT.recid                                                                                                           AS _RecID
          , 1                                                                                                                   AS _SourceID
-
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _CreatedDate
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                                                                                               AS  _ModifiedDate
       FROM {{ ref('entassetworkordertable') }}               WOT
 
 
@@ -65,14 +64,11 @@ SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
       LEFT JOIN {{ ref('entassetworkordertable') }}          WOTA
         ON WOT.parentworkorder         = WOTA.recid
       LEFT JOIN workorderslog                               SLOG
-        ON WOT.recid                  = SLOG.REFRECID
+        ON WOT.recid                  = SLOG.refrecid
       LEFT JOIN workorderslogfirstrecord                    SLOGFirstRecord
-        ON WOT.recid                  = SLOGFirstRecord.REFRECID
-       AND WOT.dataareaid             = SLOGFirstRecord.DATAAREAID
-      LEFT JOIN {{ ref('enumeration') }}                     enum
-        ON enum.enum                   = 'AssetCostType'
-       AND enum.enumvalueid            = WOT.costtype
+        ON WOT.recid                  = SLOGFirstRecord.refrecid
+       AND WOT.dataareaid             = SLOGFirstRecord.dataareaid
       LEFT JOIN {{ ref('entassetworkorderservicelevel') }}   wos
         ON wos.dataareaid             = WOT.dataareaid
-       AND wos.servicelevel            = WOT.servicelevel;
+       AND wos.servicelevel            = WOT.servicelevel
 

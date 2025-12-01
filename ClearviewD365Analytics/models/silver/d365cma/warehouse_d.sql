@@ -27,8 +27,8 @@ warehousestage AS (
       AND ins.siteid        = il.inventsiteid
       LEFT JOIN {{ ref('inventlocationlogisticslocation') }} ll
         ON ll.inventlocation = il.recid
-      AND ll.isprimary      = 1
-    WHERE il.inventlocationid <> '';
+      AND ll.isprimary      = 'Yes' -- updated as per Fabric standard field
+    WHERE il.inventlocationid <> ''
 ),
 warehouseaddress AS (
     SELECT t.*
@@ -43,28 +43,28 @@ warehouseaddress AS (
                     , ROW_NUMBER() OVER (PARTITION BY Location
     ORDER BY _RecID DESC) AS Rank_Val
                 FROM {{ ref('address_d') }}) t
-    WHERE t.Rank_Val = 1;
+    WHERE t.Rank_Val = 1
 )
 SELECT 
- ROW_NUMBER() OVER (ORDER BY ts.WarehouseID, ts.LegalEntityID) AS WarehouseKey
-     , ts.LegalEntityID                                                                    AS LegalEntityID
-     , ts.CustomerAccount                                                                  AS CustomerAccount
-     , ts.SiteID                                                                           AS SiteID
-     , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                              AS Site
-     , ts.WarehouseID                                                                      AS WarehouseID
-     , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END               AS Warehouse
-     , ts.WarehouseTypeID                                                                  AS WarehouseTypeID
-     , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END            AS WarehouseType
-     , lpa.Street                                                                          AS WarehouseStreet
-     , lpa.City                                                                            AS WarehouseCity
-     , lpa.StateProvince                                                                   AS WarehouseStateProvince
-     , CASE WHEN lpa.CountryID = 'USA' THEN LEFT(lpa.PostalCode, 5)ELSE lpa.PostalCode END AS WarehousePostalCode
-     , lpa.CountryID                                                                       AS WarehouseCountryID
-     , CASE WHEN lpa.Country = '' THEN lpa.CountryID ELSE lpa.Country END                  AS WarehouseCountry
-     , ts.VendorAccount                                                                    AS VendorAccount
-     , ts._SourceDate                                                                      AS _SourceDate
-     , ts._RecID                                                                           AS _RecID
-     , ts._SourceID                                                                        AS _SourceID
+ ROW_NUMBER() OVER (ORDER BY ts.WarehouseID, ts.LegalEntityID)                                         AS WarehouseKey
+     , ts.LegalEntityID                                                                                AS LegalEntityID
+     , ts.CustomerAccount                                                                              AS CustomerAccount
+     , ts.SiteID                                                                                       AS SiteID
+     , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                                          AS Site
+     , ts.WarehouseID                                                                                  AS WarehouseID
+     , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END                           AS Warehouse
+     , we1.enumid                                                                                      AS WarehouseTypeID -- data type updated, need to fetch the ID column
+     , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END                        AS WarehouseType
+     , lpa.Street                                                                                      AS WarehouseStreet
+     , lpa.City                                                                                        AS WarehouseCity
+     , lpa.StateProvince                                                                               AS WarehouseStateProvince
+     , CASE WHEN lpa.CountryID = 'USA' THEN LEFT(lpa.PostalCode, 5)ELSE lpa.PostalCode END             AS WarehousePostalCode
+     , lpa.CountryID                                                                                   AS WarehouseCountryID
+     , CASE WHEN lpa.Country = '' THEN lpa.CountryID ELSE lpa.Country END                              AS WarehouseCountry
+     , ts.VendorAccount                                                                                AS VendorAccount
+     , ts._SourceDate                                                                                  AS _SourceDate
+     , ts._RecID                                                                                       AS _RecID
+     , ts._SourceID                                                                                    AS _SourceID
 
      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _CreatedDate
      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _ModifiedDate  
@@ -72,6 +72,5 @@ SELECT
    LEFT JOIN warehouseaddress        lpa
      ON lpa.Location    = ts.Location
    LEFT JOIN {{ ref('enumeration') }} we1
-     ON we1.enum        = 'InventLocationType'
+     ON we1.enum        = 'inventlocationtype'
    AND we1.enumvalueid = ts.WarehouseTypeID
-
