@@ -599,7 +599,7 @@ inventoryonhand_factdetailmain AS (
       on iss.legalentityid              = ts.dataareaid
      and iss.inventorystatusid          = ts.inventstatusid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RecID) AS InventoryOnHandKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID']) }} AS InventoryOnHandKey
      , td.CustomerKey
      , td.AgingMasterTagKey
      , td.AgingTagKey

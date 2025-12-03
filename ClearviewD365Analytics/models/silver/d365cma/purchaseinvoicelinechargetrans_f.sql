@@ -285,7 +285,7 @@ purchaseinvoicelinechargetrans_facttrans4 AS (
       SELECT * FROM purchaseinvoicelinechargetrans_facttrans3
 )
 SELECT DISTINCT
-           ROW_NUMBER() OVER (ORDER BY fc._RecID1) AS PurchaseInvoiceLineChargeTransKey
+           {{ dbt_utils.generate_surrogate_key(['fc._RecID1']) }} AS PurchaseInvoiceLineChargeTransKey
          , ISNULL(fc.PurchaseInvoiceLineChargeKey, -1)                          AS PurchaseInvoiceLineChargeKey
          , ISNULL(pilt.PurchaseInvoiceLineTransKey, -1)                         AS PurchaseInvoiceLineTransKey
          , ISNULL(tt.IncludedCharge_TransCur, fc.IncludedCharge_TransCur)       AS IncludedCharge_TransCur

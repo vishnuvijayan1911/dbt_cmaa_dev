@@ -59,7 +59,7 @@ purchaseinvoicelinetaxtrans_factpilratio AS (
           FROM purchaseinvoicelinetaxtrans_factpilkeys tk;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY t._RecID) AS PurchaseInvoiceLineTaxTransKey
+         , {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS PurchaseInvoiceLineTaxTransKey
          , * FROM ( SELECT DISTINCT
           ft.PurchaseInvoiceLineKey
          , ft.PurchaseInvoiceLineTaxKey

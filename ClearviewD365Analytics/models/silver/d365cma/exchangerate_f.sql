@@ -74,7 +74,7 @@ exchangeratefactdetail1 AS (
                        ON d.Date = r.ExchDate) t
          WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ExchangeRateKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ExchangeRateKey
     , ts.FromCurrencyID   AS FromCurrencyID
          , ts.ToCurrencyID     AS ToCurrencyID
          , ts.ExchangeRateType AS ExchangeRateType

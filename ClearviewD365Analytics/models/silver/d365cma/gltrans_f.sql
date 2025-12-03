@@ -80,7 +80,7 @@ gltrans_factstage AS (
           LEFT JOIN gltrans_factlinedesc                 tld
             ON tld.RECID = jae.recid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS GLTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS GLTransKey
          , dd.DateKey               AS AccountingDateKey
          , cc.CurrencyKey           AS CurrencyKey
          , dca.LedgerAccountKey     AS LedgerAccountKey

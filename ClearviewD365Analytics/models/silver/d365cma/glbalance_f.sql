@@ -130,7 +130,7 @@ glbalance_factsummary AS (
                 , tb.LedgerAccount
                 , tb.AccountingMonth;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY dd.DateKey, le.LegalEntityKey, dca.LedgerAccountKey) AS GLBalanceKey
+SELECT {{ dbt_utils.generate_surrogate_key(['dd.DateKey', 'le.LegalEntityKey', 'dca.LedgerAccountKey']) }} AS GLBalanceKey
 	, ISNULL(dca.LedgerAccountKey, -1) AS LedgerAccountKey
          , le.LegalEntityKey                AS LegalEntityKey
          , dd.DateKey                       AS TransDateKey

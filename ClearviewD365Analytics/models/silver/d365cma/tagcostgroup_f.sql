@@ -105,7 +105,7 @@ tagcostgroup_factdetail1 AS (
        , d._recid
     FROM tagcostgroup_factdetailmain  d;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY d._recid, d._sourceid) AS Tagcostgroupkey
+SELECT {{ dbt_utils.generate_surrogate_key(['d._recid', 'd._sourceid']) }} AS Tagcostgroupkey
    , d.legalentitykey
    , d.tagkey
    , d.productkey

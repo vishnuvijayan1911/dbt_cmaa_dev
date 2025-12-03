@@ -257,7 +257,7 @@ salesorderlinechargetrans_facttrans4 AS (
             SELECT * FROM salesorderlinechargetrans_facttrans3
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesOrderLineChargeTransKey
+         , {{ dbt_utils.generate_surrogate_key(['t._RecID1']) }} AS SalesOrderLineChargeTransKey
          , * FROM ( SELECT DISTINCT
           fc.SalesOrderLineChargeKey
          , ISNULL (solt.SalesOrderLineTransKey, -1)                              AS SalesOrderLineTransKey

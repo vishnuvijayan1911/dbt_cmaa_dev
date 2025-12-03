@@ -37,7 +37,7 @@ bomline_factbom AS (
                       AND db.BOMID         = b.bomid) t
          WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS BOMLineKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS BOMLineKey
          , le.LegalEntityKey AS LegalEntityKey
          , tb.BOMKey         AS BOMKey
          , dp.ProductKey     AS ProductKey
