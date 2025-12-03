@@ -1,4 +1,8 @@
 {{ config(materialized='view') }}
 
-select  *
-from {{ source("lakehouse","enumeration") }};
+SELECT DISTINCT
+      optionsetname AS enum
+    , enumvalue     AS enumvalue
+    , enumvalueid   AS enumid
+    , externalvalue AS enumvalueid
+FROM {{ source("lakehouse","globalenummetadata") }}
