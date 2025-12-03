@@ -39,11 +39,7 @@ WITH assetstage AS (
 )
 
 SELECT
-    ROW_NUMBER() OVER (
-        ORDER BY
-            ts._RecID,
-            ts._SourceID
-    )                                                   AS AssetKey,
+    {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS AssetKey,
     afl.AssetFunctionalLocationKey,
     ts.LegalEntityID,
     ts.AssetID,
