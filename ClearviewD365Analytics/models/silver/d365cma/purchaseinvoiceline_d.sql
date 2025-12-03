@@ -5,7 +5,7 @@
 -- external_table_name: PurchaseInvoiceLineDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY vij.recid) AS PurchaseInvoiceLineKey
+SELECT {{ dbt_utils.generate_surrogate_key(['vij.recid']) }} AS PurchaseInvoiceLineKey
          , vij.dataareaid                                                                  AS LegalEntityID
          , vij.invoiceid                                                                    AS InvoiceID
          , RIGHT('000' + CAST(CAST(vit.purchaselinelinenumber AS BIGINT) AS VARCHAR(6)), 6) AS LineNumber

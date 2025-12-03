@@ -7,7 +7,7 @@
 
 SELECT * FROM (
         SELECT
-        ROW_NUMBER() OVER (ORDER BY t._RecID) AS SalesAgreementLineKey
+        {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS SalesAgreementLineKey
         ,'1900-01-01'                                                     AS ActivityDate
         , *  FROM ( SELECT DISTINCT
           sah.customerdataareaid                                               AS LegalEntityID

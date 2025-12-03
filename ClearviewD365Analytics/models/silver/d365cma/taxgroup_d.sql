@@ -5,7 +5,7 @@
 -- external_table_name: TaxGroupDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY tg.recid) AS TaxGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['tg.recid']) }} AS TaxGroupKey
          , tg.dataareaid                                                            AS LegalEntityID
          , tg.taxgroup                                                              AS TaxGroupID
          , CASE WHEN tg.taxgroupname = '' THEN tg.taxgroup ELSE tg.taxgroupname END AS TaxGroup

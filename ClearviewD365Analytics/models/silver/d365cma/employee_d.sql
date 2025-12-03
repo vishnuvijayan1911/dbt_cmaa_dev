@@ -79,7 +79,7 @@ employeedetail1 AS (
                        ON ted.RECID    = dpt.recid) AS t
           WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS EmployeeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS EmployeeKey
          ,  ts.EmployeeAddress AS EmployeeAddress
          , ts.EmployeeName    AS EmployeeName
          , ts.EmployeePhone   AS EmployeePhone

@@ -39,7 +39,7 @@ financialdetail1 AS (
               ON p.recid                          = omi.recid
          GROUP BY davs.recid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RecID, td._SourceID) AS FinancialKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID', 'td._SourceID']) }} AS FinancialKey
            ,td.BusinessUnitID
          , CASE WHEN td.BusinessUnit = ''
                 THEN td.BusinessUnitID

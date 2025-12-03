@@ -17,7 +17,7 @@ inventoryjournalstage AS (
 
           FROM {{ ref('inventjournaltable') }} ijt
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID) AS InventoryJournalKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['ts._RecID']) }} AS InventoryJournalKey
          , ts.LegalEntityID AS LegalEntityID
          , ts.ApprovedBy    AS ApprovedBy
          , ts.ApprovedDate  AS ApprovedDate

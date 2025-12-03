@@ -5,7 +5,7 @@
 -- external_table_name: MaintenanceJobTradeDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS MaintenanceJobTradeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['JT.recid']) }} AS MaintenanceJobTradeKey
          , JT.dataareaid                                    AS LegalEntityID
          , JT.jobtradeid                                     AS JobTradeID
          , ISNULL(NULLIF(JT.description, ''), JT.jobtradeid) AS JobTrade

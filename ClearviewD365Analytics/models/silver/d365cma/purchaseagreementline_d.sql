@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-        ROW_NUMBER() OVER (ORDER BY t._RecID) AS PurchaseAgreementLineKey
+        {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS PurchaseAgreementLineKey
         ,'1900-01-01'                                                         AS ActivityDate
         , * FROM ( SELECT DISTINCT
            pah.vendordataareaid                                                 AS LegalEntityID

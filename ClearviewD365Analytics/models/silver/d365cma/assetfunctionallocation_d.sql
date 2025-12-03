@@ -5,7 +5,7 @@
 -- external_table_name: AssetFunctionalLocationDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY FL.recid) AS AssetFunctionalLocationKey
+SELECT {{ dbt_utils.generate_surrogate_key(['FL.recid']) }} AS AssetFunctionalLocationKey
     , FL.dataareaid                                        AS LegalEntityID
          , FL.functionallocationid                                AS FunctionalLocationID
          , ISNULL(NULLIF(FL.name, ''), FL.functionallocationid)   AS FunctionalLocation

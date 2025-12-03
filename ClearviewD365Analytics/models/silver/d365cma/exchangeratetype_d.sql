@@ -5,7 +5,7 @@
 -- external_table_name: ExchangeRateTypeDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY ert.recid) AS ExchangeRateTypeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ert.recid']) }} AS ExchangeRateTypeKey
            ,ert.name   AS ExchangeRateType
          , ert.recid AS _RecID
          , 1          AS _SourceID

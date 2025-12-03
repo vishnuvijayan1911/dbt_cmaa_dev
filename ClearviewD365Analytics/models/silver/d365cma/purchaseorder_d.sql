@@ -5,7 +5,7 @@
 -- external_table_name: PurchaseOrderDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY pt.recid) AS PurchaseOrderKey
+SELECT {{ dbt_utils.generate_surrogate_key(['pt.recid']) }} AS PurchaseOrderKey
      ,pt.dataareaid                                                   AS LegalEntityID
          , CASE WHEN pt.purchname = '' THEN pt.purchid ELSE pt.purchname END AS PurchaseDesc
          , pt.purchid                                                        AS PurchaseOrderID

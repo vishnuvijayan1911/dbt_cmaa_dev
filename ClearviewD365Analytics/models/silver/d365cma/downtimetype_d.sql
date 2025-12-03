@@ -5,7 +5,7 @@
 -- external_table_name: DowntimeTypeDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY rt.recid) AS DowntimeTypeKey 
+SELECT {{ dbt_utils.generate_surrogate_key(['rt.recid']) }} AS DowntimeTypeKey 
     ,rt.dataareaid         AS LegalEntityID
          , rt.kpiinclude           AS KPIInclude
          , rt.name                 AS DowntimeTypeID

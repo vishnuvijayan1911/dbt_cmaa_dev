@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-        ROW_NUMBER() OVER (ORDER BY dm.recid) AS DeliveryReasonKey
+        {{ dbt_utils.generate_surrogate_key(['dm.recid']) }} AS DeliveryReasonKey
          ,dm.dataareaid AS LegalEntityID
          , dm.code        AS DeliveryReasonID
          , dm.txt         AS DeliveryReason

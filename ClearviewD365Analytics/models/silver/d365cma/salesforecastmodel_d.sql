@@ -24,7 +24,7 @@ salesforecastmodelstage AS (
                              AND fs.active      = 1);
 )
 SELECT 
-           ROW_NUMBER() OVER (ORDER BY t.ModelID) AS SalesForecastModelKey
+           {{ dbt_utils.generate_surrogate_key(['t.ModelID']) }} AS SalesForecastModelKey
         , * FROM ( SELECT DISTINCT
            ts.LegalEntityID AS LegalEntityID
          , ts.ModelID       AS ModelID

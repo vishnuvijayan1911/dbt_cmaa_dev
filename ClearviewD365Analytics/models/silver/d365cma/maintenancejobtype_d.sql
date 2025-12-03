@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT
-          ROW_NUMBER() OVER (ORDER BY jt.recid) AS MaintenanceJobTypeKey 
+          {{ dbt_utils.generate_surrogate_key(['jt.recid']) }} AS MaintenanceJobTypeKey 
           ,jt.dataareaid                                   AS LegalEntityID
 
          , jt.jobtypeid                                     AS MaintenanceJobTypeID

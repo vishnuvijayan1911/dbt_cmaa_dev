@@ -46,7 +46,7 @@ warehouseaddress AS (
     WHERE t.Rank_Val = 1;
 )
 SELECT 
- ROW_NUMBER() OVER (ORDER BY ts.WarehouseID, ts.LegalEntityID) AS WarehouseKey
+ {{ dbt_utils.generate_surrogate_key(['ts.WarehouseID', 'ts.LegalEntityID']) }} AS WarehouseKey
      , ts.LegalEntityID                                                                    AS LegalEntityID
      , ts.CustomerAccount                                                                  AS CustomerAccount
      , ts.SiteID                                                                           AS SiteID

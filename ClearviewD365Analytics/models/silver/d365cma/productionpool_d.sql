@@ -5,7 +5,7 @@
 -- external_table_name: ProductionPoolDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY pg.recid) AS ProductionPoolKey
+SELECT {{ dbt_utils.generate_surrogate_key(['pg.recid']) }} AS ProductionPoolKey
     ,pg.dataareaid                                              AS LegalEntityID
          , pg.prodpoolid                                              AS ProductionPoolID
          , CASE WHEN pg.name = '' THEN pg.prodpoolid ELSE pg.name END AS ProductionPool

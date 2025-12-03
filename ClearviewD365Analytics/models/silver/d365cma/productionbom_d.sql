@@ -32,7 +32,7 @@ productionbomstage AS (
            AND ib.itemid      = pb.itemid;
 )
 SELECT
-          ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ProductionBOMKey
+          {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ProductionBOMKey
          ,ts.LegalEntityID      AS LegalEntityID
          , ts.LineNumber         AS LineNumber
          , ts.OperationNumber    AS OperationNumber

@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT * FROM 
-		(SELECT ROW_NUMBER() OVER (ORDER BY pl.recid) AS PurchaseOrderLineKey
+		(SELECT {{ dbt_utils.generate_surrogate_key(['pl.recid']) }} AS PurchaseOrderLineKey
          , pl.dataareaid                                                                                             AS LegalEntityID
          , pl.inventtransid                                                                                          AS LotID
          , pl.purchid                                                                                                AS PurchaseOrderID

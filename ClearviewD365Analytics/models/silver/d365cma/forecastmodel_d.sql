@@ -23,7 +23,7 @@ forecastmodelstage AS (
          WHERE fm.type = 0;
 )
 SELECT 
-        ROW_NUMBER() OVER (ORDER BY t.ModelID, t.ParentModelID, t.LegalEntityID) AS ForecastModelKey
+        {{ dbt_utils.generate_surrogate_key(['t.ModelID', 't.ParentModelID', 't.LegalEntityID']) }} AS ForecastModelKey
         , * FROM (
           SELECT DISTINCT  ts.LegalEntityID                                          AS LegalEntityID
          , ts.ModelID                                                AS ModelID

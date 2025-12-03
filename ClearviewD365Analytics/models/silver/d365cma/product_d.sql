@@ -171,7 +171,7 @@ productdetail1 AS (
        AND we1.enumvalueid = p1.ItemTypeID  --fix error int comparision with varchar
 )
 SELECT
-       ROW_NUMBER() OVER (ORDER BY pv._RecID, pv._SourceID) AS ProductKey
+       {{ dbt_utils.generate_surrogate_key(['pv._RecID', 'pv._SourceID']) }} AS ProductKey
      , pv.DimensionGroup
      , pv.ItemID
      , pv.ItemGroupID

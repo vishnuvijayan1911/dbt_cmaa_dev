@@ -5,7 +5,7 @@
 -- external_table_name: PurchaseInvoiceDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY vij.recid) AS PurchaseInvoiceKey
+SELECT {{ dbt_utils.generate_surrogate_key(['vij.recid']) }} AS PurchaseInvoiceKey
          , vij.dataareaid       AS LegalEntityID
          , vij.duedate           AS DueDate
          , vij.invoiceid         AS InvoiceID
