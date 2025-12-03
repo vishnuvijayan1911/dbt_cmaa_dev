@@ -4,7 +4,7 @@ WITH detail AS (
     SELECT we.enumid      AS DocumentStatusID
          , we.enumvalue   AS DocumentStatus
       FROM {{ ref('enumeration') }} we
-     WHERE we.enum = 'DocumentStatus'
+     WHERE we.enum = 'documentstatus'
 )
 
 SELECT DocumentStatusID

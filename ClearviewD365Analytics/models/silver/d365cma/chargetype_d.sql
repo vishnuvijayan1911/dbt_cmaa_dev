@@ -2,11 +2,11 @@
 
 WITH detail AS (
     SELECT
-        we.enumvalueid AS ChargeTypeID,
+        we.enumid AS ChargeTypeID,
         we.enumvalue   AS ChargeType
       FROM {{ ref('enumeration') }} AS we
-     WHERE we.enum = 'MarkUpType'
+     WHERE we.enum = 'cmamarkuptype'
 )
 
 SELECT *
-  FROM detail;
+  FROM detail

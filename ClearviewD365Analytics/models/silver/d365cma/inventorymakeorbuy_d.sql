@@ -2,10 +2,10 @@
 
 WITH detail AS (
     SELECT
-        we1.enumvalueid AS InventoryMakeOrBuyID,
+        we1.enumid AS InventoryMakeOrBuyID,
         we1.enumvalue   AS InventoryMakeOrBuy
       FROM {{ ref('enumeration') }} AS we1
-     WHERE we1.enum = 'ReqPOType'
+     WHERE we1.enum = 'reqpotype'
 )
 
 SELECT *

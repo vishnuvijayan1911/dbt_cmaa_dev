@@ -4,8 +4,8 @@ WITH detail AS (
     SELECT we.enumid     AS DocumentStateID  -- Changed this mapping due to enum workaround for fabric.
          , we.enumvalue   AS DocumentState
       FROM {{ ref('enumeration') }} we
-     WHERE we.enum = 'VersioningDocumentState'
+     WHERE we.enum = 'documentstate'
 )
 SELECT DocumentStateID
      , DocumentState
-  FROM detail;
+  FROM detail
