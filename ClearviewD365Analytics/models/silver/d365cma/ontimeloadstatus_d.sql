@@ -1,7 +1,7 @@
 {{ config(materialized='table', tags=['silver'], alias='ontimeloadstatus') }}
 
 SELECT
-    ROW_NUMBER() OVER (ORDER BY t.OnTimeLoadStatusID) AS OnTimeLoadStatusKey,
+    {{ dbt_utils.generate_surrogate_key(['t.OnTimeLoadStatusID']) }}  AS OnTimeLoadStatusKey,
     t.*
 FROM (
     SELECT 1 AS OnTimeLoadStatusID, 'Not yet due' AS OnTimeLoadStatus, 'Not yet due' AS OnTimeStatus, 'Not shipped' AS ShipStatus
