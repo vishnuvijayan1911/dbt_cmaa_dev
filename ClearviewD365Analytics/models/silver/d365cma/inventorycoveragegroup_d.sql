@@ -17,7 +17,7 @@ inventorycoveragegroupstage AS (
 
           FROM {{ ref('reqgroup') }} rg
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCoverageGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS InventoryCoverageGroupKey
          , le.LegalEntityID            AS LegalEntityID
          , ts.InventoryCoverageGroupID AS InventoryCoverageGroupID
          , ts.InventoryCoverageGroup   AS InventoryCoverageGroup

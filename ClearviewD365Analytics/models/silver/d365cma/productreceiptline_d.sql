@@ -5,7 +5,7 @@
 -- external_table_name: ProductReceiptLineDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY vpst.recid) AS ProductReceiptLineKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['vpst.recid']) }} AS ProductReceiptLineKey
         , vpst.dataareaid                                                                  AS LegalEntityID
          , vpst.packingslipid                                                                AS ReceiptID
          , RIGHT('000' + CAST(CAST(vpst.purchaselinelinenumber AS BIGINT) AS VARCHAR(6)), 6) AS LineNumber

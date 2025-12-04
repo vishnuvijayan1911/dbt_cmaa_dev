@@ -321,7 +321,7 @@ purchaseorderlinetrans_factprorate4 AS (
       Select * from   purchaseorderlinetrans_factprorate3
 )
 SELECT 
-    ROW_NUMBER() OVER (ORDER BY fpl._RecID) AS PurchaseOrderLineTransKey,
+    {{ dbt_utils.generate_surrogate_key(['fpl._RecID']) }} AS PurchaseOrderLineTransKey,
     fpl.PurchaseOrderLineKey                                                                                    AS PurchaseOrderLineKey
          , ds.InventoryTransStatusKey                                                                                  AS InventoryTransStatusKey
          , dt.TagKey                                                                                                   AS TagKey

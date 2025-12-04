@@ -5,7 +5,7 @@
 -- external_table_name: ReturnReasonDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY rrc.recid) AS ReturnReasonKey
+SELECT {{ dbt_utils.generate_surrogate_key(['rrc.recid']) }} AS ReturnReasonKey
          , rrc.dataareaid                                                            AS LegalEntityID
          , rrc.reasoncodeid                                                              AS ReturnReasonID
          , CASE WHEN rrc.description = '' THEN rrc.reasoncodeid ELSE rrc.description END AS ReturnReason

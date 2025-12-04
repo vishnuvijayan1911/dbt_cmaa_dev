@@ -1,13 +1,12 @@
 {{ config(materialized='table', tags=['silver'], alias='documentstatus') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS DocumentStatusID
-         , we.EnumValue   AS DocumentStatus
+    SELECT we.enumid      AS DocumentStatusID
+         , we.enumvalue   AS DocumentStatus
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'DocumentStatus'
+     WHERE we.enum = 'documentstatus'
 )
 
 SELECT DocumentStatusID
      , DocumentStatus
-  FROM detail
- ORDER BY DocumentStatusID;
+  FROM detail;

@@ -147,7 +147,7 @@ purchaseinvoicelinecharge_factcharge AS (
            AND ex.ToCurrencyID     = ts.TransCurrencyID
            AND ex.ExchangeRateType = le.TransExchangeRateType;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._RecID1) AS PurchaseInvoiceLineChargeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._RecID1']) }} AS PurchaseInvoiceLineChargeKey
       ,dc.ChargeCodeKey                                                    AS ChargeCodeKey
          , dcc.ChargeCategoryKey                                               AS ChargeCategoryKey
          , cur.CurrencyKey                                                     AS ChargeCurrencyKey

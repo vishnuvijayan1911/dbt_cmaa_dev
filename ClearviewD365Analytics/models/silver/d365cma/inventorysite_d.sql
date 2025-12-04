@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-     ROW_NUMBER() OVER (ORDER BY ivs.recid) AS InventorySiteKey,
+     {{ dbt_utils.generate_surrogate_key(['ivs.recid']) }} AS InventorySiteKey,
     ivs.dataareaid                                            AS LegalEntityID
          , ivs.siteid                                                AS InventorySiteID
          , CASE WHEN ivs.name = '' THEN ivs.siteid ELSE ivs.name END AS InventorySite

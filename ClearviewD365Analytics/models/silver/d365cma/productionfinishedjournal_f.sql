@@ -319,7 +319,7 @@ productionfinishedjournal_factdetailmain AS (
     	      ON dd2.Date                         = CAST (t1.PostedDateTime AT TIME ZONE 'UTC' AT TIME ZONE le.TimeZone AS Date);
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY t1._RecID, t1._SourceID) AS ProductionFinishedJournalKey
+         , {{ dbt_utils.generate_surrogate_key(['t1._RecID', 't1._SourceID']) }} AS ProductionFinishedJournalKey
          , t1.ProductionKey
          , t1.LegalEntityKey
          , t1.OrderCreatedDateKey								   AS OrderCreatedDateKey

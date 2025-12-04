@@ -5,7 +5,7 @@
 -- external_table_name: MaintenanceRequestDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY rt.recid) AS MaintenanceRequestKey
+SELECT {{ dbt_utils.generate_surrogate_key(['rt.recid']) }} AS MaintenanceRequestKey
         , CAST(rt.actualstart AS DATE) AS ActualStartDate
          , CAST(rt.actualend AS DATE)   AS ActualEndDate
          , rt.description               AS RequestDesc

@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT  
-          ROW_NUMBER() OVER (ORDER BY rty.recid) AS MaintenanceRequestTypeKey
+          {{ dbt_utils.generate_surrogate_key(['rty.recid']) }} AS MaintenanceRequestTypeKey
           ,rty.requesttypeid AS MaintenanceRequestTypeID
 
          , rty.dataareaid   AS LegalEntityID

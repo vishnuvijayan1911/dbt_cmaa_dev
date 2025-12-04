@@ -5,7 +5,7 @@
 -- external_table_name: PackingSlipLineDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY t._RecID) AS PackingSlipLineKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS PackingSlipLineKey
         , '1900-01-01'                                                    AS ActivityDate
         , *
              ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate

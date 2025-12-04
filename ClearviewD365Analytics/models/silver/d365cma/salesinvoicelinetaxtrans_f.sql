@@ -54,7 +54,7 @@ salesinvoicelinetaxtrans_factsilratio AS (
           FROM salesinvoicelinetaxtrans_factsilkeys tk;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesInvoiceLineTaxTransKey
+         , {{ dbt_utils.generate_surrogate_key(['t._RecID1']) }} AS SalesInvoiceLineTaxTransKey
          , * FROM ( SELECT DISTINCT
            fclt.SalesInvoiceLineTransKey
          , ft.SalesInvoiceLineTaxKey

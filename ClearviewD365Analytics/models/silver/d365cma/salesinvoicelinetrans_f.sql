@@ -372,7 +372,7 @@ salesinvoicelinetrans_factinvoicetrans2 AS (
     INNER JOIN {{ ref('packingsliplinetrans_f') }} prlt
        ON prlt.PackingSlipLineKey = prl.PackingSlipLineKey;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY tt.PackingSlipID) AS SalesInvoiceLineTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['tt.PackingSlipID']) }} AS SalesInvoiceLineTransKey
          ,fcl.SalesInvoiceLineKey                                                                                AS SalesInvoiceLineKey
                , ISNULL (s.InventoryTransStatusKey, -1)                                                                 AS InventoryTransStatusKey
                , dt.TagKey                                                                                              AS TagKey

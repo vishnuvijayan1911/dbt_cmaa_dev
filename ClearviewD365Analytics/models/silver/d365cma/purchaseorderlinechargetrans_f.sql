@@ -232,7 +232,7 @@ purchaseorderlinechargetrans_facttrans4 AS (
       SELECT * FROM purchaseorderlinechargetrans_facttrans3
 )
 SELECT 
-           ROW_NUMBER() OVER (ORDER BY t.IncludeInTotalPrice) AS PurchaseOrderLineChargeTransKey
+           {{ dbt_utils.generate_surrogate_key(['t.IncludeInTotalPrice']) }} AS PurchaseOrderLineChargeTransKey
          , * FROM ( SELECT DISTINCT
            fc.PurchaseOrderLineChargeKey
          , ISNULL(polt.PurchaseOrderLineTransKey, -1)                           AS PurchaseOrderLineTransKey

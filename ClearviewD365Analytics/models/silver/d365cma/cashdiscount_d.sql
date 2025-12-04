@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-    ROW_NUMBER() OVER (ORDER BY cd.recid) AS CashDiscountKey,
+    {{ dbt_utils.generate_surrogate_key(['cd.recid']) }} AS CashDiscountKey,
     cd.dataareaid                                                              AS LegalEntityID
          , cd.cashdisccode                                                            AS CashDiscountID
          , CASE WHEN cd.description = '' THEN cd.cashdisccode ELSE cd.description END AS CashDiscount

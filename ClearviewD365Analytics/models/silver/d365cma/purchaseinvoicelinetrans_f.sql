@@ -340,7 +340,7 @@ purchaseinvoicelinetrans_factinvoicetrans2 AS (
             ON prlt.ProductReceiptLineKey = prl.ProductReceiptLineKey
          WHERE frl.PurchaseOrderLineKey <> -1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY fcl._RecID1, fcl._RecID2, tt.RecID_IT) AS PurchaseInvoiceLineTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['fcl._RecID1', 'fcl._RecID2', 'tt.RecID_IT']) }} AS PurchaseInvoiceLineTransKey
          , fcl.PurchaseInvoiceLineKey                                                                                  AS PurchaseInvoiceLineKey
          , COALESCE (prlt.ProductReceiptLineTransKey, it2.ProductReceiptLineTransKey, -1)                              AS ProductReceiptLineTransKey
          , COALESCE (prlt.PurchaseOrderLineTransKey, it1.PurchaseOrderLineTransKey, it2.PurchaseOrderLineTransKey, -1) AS PurchaseOrderLineTransKey

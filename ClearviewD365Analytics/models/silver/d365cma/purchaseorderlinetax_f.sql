@@ -67,7 +67,7 @@ purchaseorderlinetax_factdetailmain AS (
            AND ex.ToCurrencyID     = le.AccountingCurrencyID
            AND ex.ExchangeRateType = le.TransExchangeRateType;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY t1._RecID) AS PurchaseOrderLineTaxKey
+SELECT {{ dbt_utils.generate_surrogate_key(['t1._RecID']) }} AS PurchaseOrderLineTaxKey
         ,  t1.LegalEntityKey
          , t1.TransDateKey
          , t1.PurchaseOrderLineKey

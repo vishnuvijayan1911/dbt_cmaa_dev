@@ -57,7 +57,7 @@ fault_factstage AS (
           LEFT JOIN {{ ref('entassetfaulttype') }}          ft
             ON ft.recid            = ofs.faulttype;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg.SourceID) AS FaultKey
+SELECT {{ dbt_utils.generate_surrogate_key(['stg._RecID', 'stg.SourceID']) }} AS FaultKey
          ,  fa.faultareakey         AS FaultAreaKey
          , ofs.faultsymptomkey     AS FaultSymptomKey
          , ft.faulttypekey         AS FaultTypeKey

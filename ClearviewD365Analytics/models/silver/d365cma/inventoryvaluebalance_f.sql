@@ -1200,7 +1200,7 @@ inventoryvaluebalance_factuomcovnversion AS (
               , WarehouseKey
               , WarehouseLocationKey;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._SourceID) AS InventoryValueBalanceKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._SourceID']) }} AS InventoryValueBalanceKey
     , td.ProductKey                                   AS ProductKey
     , td.BalanceDateKey                               AS BalanceDateKey
     , td.AgingBucketKey                               AS AgingBucketKey

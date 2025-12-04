@@ -21,7 +21,7 @@ bankaccounttrans_factstage AS (
              , bat.recid                  AS _RecID
           FROM {{ ref('bankaccounttrans') }} bat
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS BankAccountTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS BankAccountTransKey
          , dd.DateKey              AS TransDateKey
          , ba.BankAccountKey       AS BankAccountKey
          , cc.CurrencyKey          AS CurrencyKey

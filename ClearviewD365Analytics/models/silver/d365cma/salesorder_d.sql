@@ -5,7 +5,7 @@
 -- external_table_name: SalesOrderDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY st.recid) AS SalesOrderKey
+SELECT {{ dbt_utils.generate_surrogate_key(['st.recid']) }} AS SalesOrderKey
             , st.customerref                                                   AS CustomerReference
             , st.purchorderformnum                                              AS CustomerRequisition
             , st.deliveryname                                                   AS DeliveryName

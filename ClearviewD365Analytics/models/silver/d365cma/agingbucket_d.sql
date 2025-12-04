@@ -121,7 +121,7 @@ agingbucketdays2 AS (
 
           FROM agingbucketdays1 t1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY t.AgeDaysBegin, t.AgeDaysEnd) AS AgingBucketKey
+SELECT {{ dbt_utils.generate_surrogate_key(['t.AgeDaysBegin', 't.AgeDaysEnd']) }} AS AgingBucketKey
 
           ,t.AgeDaysBegin
          , t.AgeDaysEnd

@@ -18,7 +18,7 @@ costgroupstage AS (
                 , cg.costgrouptype;
 ),
 costgroupdetail1 AS (
-    SELECT ROW_NUMBER() OVER (ORDER BY ts.CostGroupID) AS CostGroupKey
+    SELECT {{ dbt_utils.generate_surrogate_key(['ts.CostGroupID']) }} AS CostGroupKey
              , ts.CostGroupID   AS CostGroupID
              , ts.CostGroup     AS CostGroup
              , ts.CostGroupType AS CostGroupTypeID
@@ -35,7 +35,7 @@ costgroupdetail1 AS (
             ON cb.CostBucketID = ISNULL(ucg.costbucketid, 'MAT');
 ),
 costgroupdetail2 AS (
-    SELECT ROW_NUMBER() OVER (ORDER BY ucg.costgroupid) AS CostGroupKey
+    SELECT {{ dbt_utils.generate_surrogate_key(['ucg.costgroupid']) }} AS CostGroupKey
               ,ucg.costgroupid AS CostGroupID
              , cb.CostBucket   AS CostGroup
              , 0               AS CostGroupTypeID

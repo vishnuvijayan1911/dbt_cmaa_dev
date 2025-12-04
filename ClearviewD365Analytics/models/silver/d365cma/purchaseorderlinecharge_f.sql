@@ -228,7 +228,7 @@ purchaseorderlinecharge_factcharge AS (
            AND ex.ToCurrencyID     = t.TransCurrencyID
            AND ex.ExchangeRateType = le.TransExchangeRateType;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID) AS PurchaseOrderLineChargeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID']) }} AS PurchaseOrderLineChargeKey
          , dc.ChargeCodeKey                                            AS ChargeCodeKey
          , dcc.ChargeCategoryKey                                       AS ChargeCategoryKey
          , cur.CurrencyKey                                             AS ChargeCurrencyKey

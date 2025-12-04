@@ -32,7 +32,7 @@ SELECT t.BOMKey
 
         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
-      FROM   (SELECT ROW_NUMBER() OVER (ORDER BY bv.recid) AS BOMKey
+      FROM   (SELECT {{ dbt_utils.generate_surrogate_key(['bv.recid']) }} AS BOMKey
                      ,bv.dataareaid     AS LegalEntityID
                     , bv.bomid          AS BOMID
                     , bv.name           AS BOM

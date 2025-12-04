@@ -21,7 +21,7 @@ downtime_factstage AS (
 
           FROM {{ ref('entassetobjectproductionstop') }} rt;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS DowntimeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS DowntimeKey
           ,dt.DowntimeTypeKey
          , dfl.AssetFunctionalLocationKey AS FunctionalLocationKey
          , do.AssetKey

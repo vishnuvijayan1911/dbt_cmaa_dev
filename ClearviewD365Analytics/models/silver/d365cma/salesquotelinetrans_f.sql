@@ -74,7 +74,7 @@ salesquotelinetrans_facttransuom AS (
           FROM salesquotelinetrans_facttrans t;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY fcl._RecID) AS SalesQuoteLineTransKey
+         , {{ dbt_utils.generate_surrogate_key(['fcl._RecID']) }} AS SalesQuoteLineTransKey
           ,fcl.SalesQuoteLineKey
          , ds.InventoryTransStatusKey                                                                           AS InventoryTransStatusKey
          , dt.TagKey                                                                                            AS TagKey

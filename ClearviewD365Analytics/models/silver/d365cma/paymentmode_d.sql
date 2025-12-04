@@ -22,7 +22,7 @@ paymentmodepaymode AS (
                      FROM {{ ref('custpaymmodetable') }} cpmt) AS t
          WHERE PayModeID <> '';
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.PaymentModeID) AS PaymentModeKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.PaymentModeID']) }} AS PaymentModeKey
         * FROM (
             SELECT DISTINCT
            pa.DATAAREAID                                             AS LegalEntityID

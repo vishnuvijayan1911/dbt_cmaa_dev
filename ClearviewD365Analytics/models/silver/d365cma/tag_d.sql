@@ -21,7 +21,7 @@ tagcountry AS (
                     WHERE lt.languageid = 'en-us') t
          WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS TagKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ib.recid']) }} AS TagKey
           ,ib.dataareaid                                                                             AS LegalEntityID
          , ib.cmartsparent                                                                            AS ParentTagID
          , ib.inventbatchid                                                                           AS TagID

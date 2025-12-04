@@ -2,10 +2,10 @@
 
 WITH detail AS (
     SELECT
-        e1.EnumValueID AS PostingTypeID,
-        e1.EnumValue   AS PostingType
+        e1.enumid AS PostingTypeID,
+        e1.enumvalue   AS PostingType
       FROM {{ ref('enumeration') }} AS e1
-     WHERE e1.Enum = 'LedgerPostingType'
+     WHERE e1.enum = 'postingtype'
 )
 
 SELECT *

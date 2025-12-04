@@ -181,7 +181,7 @@ aptrans_factstage AS (
           LEFT JOIN aptrans_factpaymenttrans       tpi
             ON tpi.RecID                     = vt.recid )  a 		Where a.RowNum = 1;
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS APTransKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS APTransKey
          , de.EmployeeKey         AS ApproverKey
          , ab1.AgingBucketKey     AS AgingBucketDueKey
          , ab.AgingBucketKey      AS AgingBucketInvoiceKey

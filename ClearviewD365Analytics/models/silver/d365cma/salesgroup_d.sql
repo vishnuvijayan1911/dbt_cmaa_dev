@@ -5,7 +5,7 @@
 -- external_table_name: SalesGroupDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY csg.recid) AS SalesGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['csg.recid']) }} AS SalesGroupKey
         ,csg.dataareaid                                            AS LegalEntityID
          , csg.groupid                                                AS SalesGroupID
          , CASE WHEN csg.name = '' THEN csg.groupid ELSE csg.name END AS SalesGroup

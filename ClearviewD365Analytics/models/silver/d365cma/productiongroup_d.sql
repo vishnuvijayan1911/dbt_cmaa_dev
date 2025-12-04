@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-        ROW_NUMBER() OVER (ORDER BY pg.recid) AS ProductionGroupKey
+        {{ dbt_utils.generate_surrogate_key(['pg.recid']) }} AS ProductionGroupKey
         ,pg.dataareaid                                               AS LegalEntityID
          , pg.prodgroupid                                              AS ProductionGroupID
          , CASE WHEN pg.name = '' THEN pg.prodgroupid ELSE pg.name END AS ProductionGroup

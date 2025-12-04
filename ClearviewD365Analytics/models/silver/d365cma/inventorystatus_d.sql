@@ -5,7 +5,7 @@
 -- external_table_name: InventoryStatusDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY ws.recid) AS InventoryStatusKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ws.recid']) }} AS InventoryStatusKey
          , ws.dataareaid                                                  AS LegalEntityID
          , CASE WHEN ws.name = '' THEN ws.inventstatusid ELSE ws.name END AS InventoryStatus
          , ws.inventstatusid                                              AS InventoryStatusID

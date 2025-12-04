@@ -65,7 +65,7 @@ projectstage AS (
             ON pt8.projid      = pt7.parentid
            AND pt8.dataareaid = pt7.dataareaid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID) AS ProjectKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID']) }} AS ProjectKey
          , ts.ProjectID
          , ts.ParentProjectID
          , ts.ProjectName

@@ -5,7 +5,7 @@
 -- external_table_name: LotDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY ito.recid) AS LotKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ito.recid']) }} AS LotKey
          , ito.dataareaid   AS LegalEntityID
          , ito.inventtransid AS LotID
          , ito.referenceid   AS SourceReferenceID
