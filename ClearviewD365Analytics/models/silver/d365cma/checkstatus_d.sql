@@ -1,10 +1,10 @@
 {{ config(materialized='table', tags=['silver'], alias='checkstatus') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS CheckStatusID
-         , we.EnumValue   AS CheckStatus
+    SELECT we.enumvalueid AS CheckStatusID
+         , we.enumvalue   AS CheckStatus
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'ChequeStatus'
+     WHERE we.enum = 'chequestatus'
 )
 
 SELECT CheckStatusID

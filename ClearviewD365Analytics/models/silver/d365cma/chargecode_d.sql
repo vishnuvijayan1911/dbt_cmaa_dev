@@ -14,7 +14,7 @@ chargecodedetail1 AS (
              , mu.txt         AS Charge
              , mu.moduletype  AS ModuleType
 
-          FROM {{ ref('markuptable') }} mu;
+          FROM {{ ref('markuptable') }} mu
 )
 SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.ChargeCode', 't.ModuleTypeID']) }} AS ChargeCodeKey
         , * FROM (
@@ -31,6 +31,6 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.ChargeCode', 
       FROM chargecodedetail1             ts
       LEFT JOIN {{ ref('enumeration') }} we1
         ON we1.enumvalueid = ts.ModuleType
-       AND we1.enum        = 'MarkupModuleType'
+       AND we1.enum        = 'markupmoduletype'
      WHERE ts.ChargeCode <> '') t;
 
