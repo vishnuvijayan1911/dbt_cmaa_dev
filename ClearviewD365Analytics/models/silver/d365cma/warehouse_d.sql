@@ -46,27 +46,6 @@ warehouseaddress AS (
     WHERE t.Rank_Val = 1
 )
 SELECT 
-<<<<<<< HEAD
- ROW_NUMBER() OVER (ORDER BY ts.WarehouseID, ts.LegalEntityID)                                         AS WarehouseKey
-     , ts.LegalEntityID                                                                                AS LegalEntityID
-     , ts.CustomerAccount                                                                              AS CustomerAccount
-     , ts.SiteID                                                                                       AS SiteID
-     , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                                          AS Site
-     , ts.WarehouseID                                                                                  AS WarehouseID
-     , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END                           AS Warehouse
-     , we1.enumid                                                                                      AS WarehouseTypeID -- data type updated, need to fetch the ID column
-     , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END                        AS WarehouseType
-     , lpa.Street                                                                                      AS WarehouseStreet
-     , lpa.City                                                                                        AS WarehouseCity
-     , lpa.StateProvince                                                                               AS WarehouseStateProvince
-     , CASE WHEN lpa.CountryID = 'USA' THEN LEFT(lpa.PostalCode, 5)ELSE lpa.PostalCode END             AS WarehousePostalCode
-     , lpa.CountryID                                                                                   AS WarehouseCountryID
-     , CASE WHEN lpa.Country = '' THEN lpa.CountryID ELSE lpa.Country END                              AS WarehouseCountry
-     , ts.VendorAccount                                                                                AS VendorAccount
-     , ts._SourceDate                                                                                  AS _SourceDate
-     , ts._RecID                                                                                       AS _RecID
-     , ts._SourceID                                                                                    AS _SourceID
-=======
  {{ dbt_utils.generate_surrogate_key(['ts.WarehouseID', 'ts.LegalEntityID']) }} AS WarehouseKey
      , ts.LegalEntityID                                                                    AS LegalEntityID
      , ts.CustomerAccount                                                                  AS CustomerAccount
@@ -74,7 +53,7 @@ SELECT
      , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                              AS Site
      , ts.WarehouseID                                                                      AS WarehouseID
      , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END               AS Warehouse
-     , ts.WarehouseTypeID                                                                  AS WarehouseTypeID
+     , we1.enumid                                                                          AS WarehouseTypeID -- data type updated, need to fetch the ID column
      , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END            AS WarehouseType
      , lpa.Street                                                                          AS WarehouseStreet
      , lpa.City                                                                            AS WarehouseCity
@@ -86,10 +65,8 @@ SELECT
      , ts._SourceDate                                                                      AS _SourceDate
      , ts._RecID                                                                           AS _RecID
      , ts._SourceID                                                                        AS _SourceID
->>>>>>> db49a969de400983631fe6fe6226a8c58cf95fc1
-
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _ModifiedDate  
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                             AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                             AS _ModifiedDate  
    FROM warehousestage               ts
    LEFT JOIN warehouseaddress        lpa
      ON lpa.Location    = ts.Location
