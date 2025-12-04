@@ -13,7 +13,7 @@ vendorstage AS (
         , dpt.name + ' ' + '-' +' ' + vt.accountnum                                  AS Vendor
         , dpt.name                                                                   AS VendorName
         , dpt.namealias                                                              AS VendorAlias
-        , CASE WHEN vt.blocked = 'No'         -- db has different values as compared to the enum file, need to validate and update this block
+        , CASE WHEN vt.blocked = 'No'
                THEN 'No hold'         
                WHEN vt.blocked = 'Invoice'         
                THEN 'Hold - Invoice'         
@@ -36,7 +36,7 @@ vendorstage AS (
         , vt.vatnum                                                                  AS VATNumber
         , vt.vendgroup                                                               AS VendorGroupID
         , vg.name                                                                    AS VendorGroup
-        , CASE WHEN vt.tax1099reports = 'Yes' THEN 'Reports 1099' ELSE NULL END      AS Is1099Reported -- updated since fabric contain Yes/No values (only No values in the available dataset, need to create some dummy data to test this)
+        , CASE WHEN vt.tax1099reports = 'Yes' THEN 'Reports 1099' ELSE NULL END      AS Is1099Reported
         , dpt.recid                                                                  AS RecID_DPT
         , vt.recid                                                                   AS _RecID
         , 1                                                                          AS _SourceID
@@ -74,7 +74,7 @@ vendorelectronicaddress AS (
                   ON dpl.party    = dpt.recid
                INNER JOIN {{ ref('logisticselectronicaddress') }} lea
                   ON dpl.location = lea.location
-                 AND lea.type IN ( 'Phone', 'Email' )  -- Updated where clause as enumeration field caused data type mismatch issue
+                 AND lea.type IN ( 'Phone', 'Email' )
      ) AS t
     WHERE t.RankVal = 1
 )
@@ -104,8 +104,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS 
  FROM vendorstage                  ts
  LEFT JOIN vendorelectronicaddress te1
    ON te1.Party      = ts.RecID_DPT
-  AND te1.Type       = 'Phone' -- Updated join as enumeration field caused data type mismatch issue
+  AND te1.Type       = 'Phone'
  LEFT JOIN vendorelectronicaddress te2
    ON te2.Party      = ts.RecID_DPT
-  AND te2.Type       = 'Email' -- Updated join as enumeration field caused data type mismatch issue
+  AND te2.Type       = 'Email'
 WHERE ts.VendorAccount <> ''

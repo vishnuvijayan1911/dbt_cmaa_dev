@@ -53,7 +53,7 @@ SELECT
      , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                              AS Site
      , ts.WarehouseID                                                                      AS WarehouseID
      , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END               AS Warehouse
-     , we1.enumid                                                                          AS WarehouseTypeID -- data type updated, need to fetch the ID column
+     , we1.enumid                                                                          AS WarehouseTypeID
      , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END            AS WarehouseType
      , lpa.Street                                                                          AS WarehouseStreet
      , lpa.City                                                                            AS WarehouseCity
