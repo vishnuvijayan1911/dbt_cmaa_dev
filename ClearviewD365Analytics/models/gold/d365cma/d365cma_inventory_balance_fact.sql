@@ -1,0 +1,22 @@
+{{ config(materialized='view', schema='gold', alias="Inventory balance fact") }}
+
+SELECT  t.InventoryValueBalanceKey                                  AS [Inventory value balance key]
+    , t.AgingBucketKey                                             AS [Aging bucket key]
+    , t.BalanceDateKey                                             AS [Balance date key]
+    , t.LegalEntityKey                                             AS [Legal entity key]
+    , t.ProductKey                                                 AS [Product key]
+    , t.WarehouseKey                                               AS [Warehouse key]
+    , t.ClosingValue                                               AS [Closing value]
+    , t.ClosingQuantity                                            AS [Closing quantity]
+    , t.ClosingQuantity_LB * 1 AS [Closing LB], t.ClosingQuantity_LB * 0.01 AS [Closing CWT], t.ClosingQuantity_LB * 0.0005 AS [Closing TON]
+    , t.ClosingQuantity_PC * 1 AS [Closing PC]
+    , t.OpeningValue                                               AS [Opening value]
+    , t.OpeningQuantity                                            AS [Opening quantity]
+    , t.OpeningQuantity_LB * 1 AS [Opening LB], t.OpeningQuantity_LB * 0.01 AS [Opening CWT], t.OpeningQuantity_LB * 0.0005 AS [Opening TON]
+    , t.OpeningQuantity_PC * 1 AS [Opening PC]
+    , t.TransValue                                                 AS [Activity value]
+    , t.TransQuantity                                              AS [Activity quantity]
+    , t.TransQuantity_LB * 1 AS [Activity LB], t.TransQuantity_LB * 0.01 AS [Activity CWT], t.TransQuantity_LB * 0.0005 AS [Activity TON]
+    , t.TransQuantity_PC * 1 AS [Activity PC]
+    , CASE WHEN t.InventoryValueBalanceKey <> -1 THEN 1 ELSE 0 END AS [Inventory balance count]
+  FROM {{ ref("d365cma_inventoryvaluebalance_f") }} t;
