@@ -22,7 +22,7 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID) AS InventoryJournalKey
          , ts.ApprovedBy    AS ApprovedBy
          , ts.ApprovedDate  AS ApprovedDate
          , ts.JournalNumber AS JournalNumber
-         , e1.enumvalueid   AS JournalTypeID
+         , e1.enumid        AS JournalTypeID
          , e1.enumvalue     AS JournalType
          , 1                AS _SourceID
          , ts._RecID        AS _RecID
@@ -31,7 +31,7 @@ SELECT  ROW_NUMBER() OVER (ORDER BY ts._RecID) AS InventoryJournalKey
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM inventoryjournalstage               ts
       LEFT JOIN {{ ref('enumeration') }} e1
-        ON e1.enum          = 'InventJournalType'
+        ON e1.enum          = 'inventjournaltype'
        AND e1.enumvalueid   = ts.JournalTypeID
        AND ts.JournalNumber <> '';
 

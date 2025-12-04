@@ -1,13 +1,12 @@
 {{ config(materialized='table', tags=['silver'], alias='invoicetype') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS InvoiceTypeID
-         , we.EnumValue   AS InvoiceType
+    SELECT we.enumid AS InvoiceTypeID
+         , we.enumvalue   AS InvoiceType
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'RefNum'
+     WHERE we.enum = 'refnum'
 )
 
 SELECT InvoiceTypeID
      , InvoiceType
-  FROM detail
- ORDER BY InvoiceTypeID;
+  FROM detail;

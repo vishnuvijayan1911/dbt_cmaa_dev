@@ -33,8 +33,8 @@ t.LegalEntityID,
                     , ldg.defaultexchangeratetype                    AS DefaultExchangeRateTypeID
                     , 1                                              AS _SourceID
                     , da.recid                                       AS _RecID
-                    , ROW_NUMBER() OVER (PARTITION BY da.id
-ORDER BY da.id      )                                                AS RankValue
+                    , ROW_NUMBER() OVER (PARTITION BY da.Id
+ORDER BY da.Id      )                                                AS RankValue
 
               FROM {{ ref('dataarea') }}                da
                INNER JOIN  {{ ref('ledger') }}                  ldg

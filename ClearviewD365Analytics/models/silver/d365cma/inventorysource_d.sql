@@ -2,13 +2,12 @@
 
 
 WITH detail AS (
-    SELECT we.EnumValueID AS InventorySourceID
-         , we.EnumValue   AS InventorySource
+    SELECT we.enumid AS InventorySourceID
+         , we.enumvalue   AS InventorySource
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'InventTransType'
+     WHERE we.enum = 'inventtranstype'
 )
 
 SELECT InventorySourceID
      , InventorySource
-  FROM detail
- ORDER BY InventorySourceID;
+  FROM detail;

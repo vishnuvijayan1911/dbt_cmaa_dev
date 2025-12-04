@@ -21,7 +21,7 @@ logisticspostaladdresscountry AS (
                        ON lt.partition       = lac.partition
                       AND lt.countryregionid = lac.countryregionid
                     WHERE lt.languageid = 'en-us') t
-         WHERE t.RankVal = 1;
+         WHERE t.RankVal = 1
 )
 SELECT *
 

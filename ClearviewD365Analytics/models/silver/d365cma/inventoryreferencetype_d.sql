@@ -1,13 +1,12 @@
 {{ config(materialized='table', tags=['silver'], alias='inventoryreferencetype') }}
 
 WITH detail_inventoryreferencetype AS (
-    SELECT e1.EnumValueID AS InventoryReferenceTypeID
-         , e1.EnumValue   AS InventoryReferenceType
+    SELECT e1.enumid AS InventoryReferenceTypeID
+         , e1.enumvalue   AS InventoryReferenceType
       FROM {{ ref('enumeration') }} e1
-     WHERE e1.Enum = 'InventRefType'
+     WHERE e1.enum = 'inventreftype'
 )
 
 SELECT InventoryReferenceTypeID
      , InventoryReferenceType
-  FROM detail_inventoryreferencetype
- ORDER BY InventoryReferenceTypeID;
+  FROM detail_inventoryreferencetype;
