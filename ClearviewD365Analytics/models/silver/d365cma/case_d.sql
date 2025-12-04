@@ -46,7 +46,7 @@ casestage AS (
        AND chd.recid               = cdb.categoryrecid
       LEFT JOIN {{ ref('omoperatingunit') }}             oou
         ON oou.recid               = cdb.department
-       AND oou.omoperatingunittype = 'OMDepartment' --1
+       AND oou.omoperatingunittype = 'OMDepartment'
 )
 SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
      , ts.CaseID                                             AS CaseID

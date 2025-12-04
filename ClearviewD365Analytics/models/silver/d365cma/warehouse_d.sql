@@ -27,7 +27,7 @@ warehousestage AS (
       AND ins.siteid        = il.inventsiteid
       LEFT JOIN {{ ref('inventlocationlogisticslocation') }} ll
         ON ll.inventlocation = il.recid
-      AND ll.isprimary      = 'Yes' -- updated as per Fabric standard field
+      AND ll.isprimary      = 'Yes'
     WHERE il.inventlocationid <> ''
 ),
 warehouseaddress AS (
