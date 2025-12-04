@@ -16,12 +16,12 @@ agreementstatestage AS (
 )
 SELECT 
       {{ dbt_utils.generate_surrogate_key(["AgreementStateID"]) }} as AgreementStateKey, 
-    ts.agreementatateid AS AgreementStateID
+    ts.AgreementStateID AS AgreementStateID
          , we.enumvalue        AS AgreementState
-         , ts._sourceid        AS _SourceID
+         , ts._SourceID        AS _SourceID
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
 
       FROM agreementstatestage               ts
       LEFT JOIN {{ ref("enumeration") }} we
         ON we.enumvalueid = ts.AgreementStateID
-       AND we.enum        = 'AgreementState';
+       AND we.enum        = 'agreementstate';

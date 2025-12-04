@@ -7,8 +7,8 @@
 
 SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS BuyerGroupKey
         ,ib.dataareaid                                                      AS LegalEntityID
-         , ib.[GROUP]                                                           AS BuyerGroupID
-         , CASE WHEN ib.description = '' THEN ib.[GROUP] ELSE ib.description END AS BuyerGroup
+         , ib.[group]                                                           AS BuyerGroupID
+         , CASE WHEN ib.description = '' THEN ib.[group] ELSE ib.description END AS BuyerGroup
          , ib.recid                                                             AS _RecID
          , 1                                                                    AS _SourceID
 

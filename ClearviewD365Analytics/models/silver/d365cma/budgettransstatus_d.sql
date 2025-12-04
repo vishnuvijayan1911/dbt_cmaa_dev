@@ -1,10 +1,10 @@
 {{ config(materialized='table', tags=['silver'], alias='budgettransstatus') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS BudgetTransStatusID
-         , we.EnumValue   AS BudgetTransStatus
+    SELECT we.enumvalueid AS BudgetTransStatusID
+         , we.enumvalue   AS BudgetTransStatus
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'BudgetTransactionStatus'
+     WHERE we.enum = 'transactionstatus'
 )
 
 SELECT BudgetTransStatusID

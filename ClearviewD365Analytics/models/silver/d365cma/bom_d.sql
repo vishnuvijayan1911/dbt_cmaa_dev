@@ -8,7 +8,7 @@
 
 WITH
 bomunit AS (
-    SELECT bv.recid   AS RecID
+    SELECT bv.recid   AS _RecID
              , itm.unitid AS UnitID
 
           FROM {{ ref('bomversion') }}             bv
@@ -18,9 +18,9 @@ bomunit AS (
          INNER JOIN {{ ref('inventtablemodule') }} itm
             ON itm.dataareaid  = it.dataareaid
            AND itm.itemid      = it.itemid
-         WHERE itm.moduletype = 0;
+         WHERE itm.moduletype = 'Invent'
 )
-SELECT t.BOMkey
+SELECT t.BOMKey
           ,t.LegalEntityID
          , t.BOMID
          , t.BOM
@@ -45,7 +45,7 @@ SELECT t.BOMkey
 ORDER BY bv.bomid, bv.dataareaid DESC) AS RankValue
                  FROM {{ ref('bomversion') }} bv
                  LEFT JOIN bomunit     tu
-                   ON tu.RECID  = bv.recid
-                WHERE bv.active = 1) AS t
+                   ON tu._RecID  = bv.recid
+                WHERE bv.active = 'Yes') AS t
      WHERE RankValue = 1;
 
