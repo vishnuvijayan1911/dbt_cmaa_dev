@@ -5,7 +5,7 @@
 -- external_table_name: UserInfoDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY t.UserName) AS UserInfoKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['t.UserName']) }} AS UserInfoKey
          * FROM (
     SELECT DISTINCT
            uf.name    AS CreatedBy

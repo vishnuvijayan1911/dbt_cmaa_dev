@@ -113,7 +113,7 @@ inventorycoverage_factdetailmain AS (
             ON ic.LegalEntityID             = li.LegalEntityID
            AND ic.InventoryCoverageGroupID  = li.InventoryCoverageGroupID;
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY td._RecID, td._SourceID) AS InventoryCoverageKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['td._RecID', 'td._SourceID']) }} AS InventoryCoverageKey
          , td.LegalEntityKey
          , td.ProductKey
          , td.InventorySiteKey

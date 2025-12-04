@@ -345,7 +345,7 @@ inventorytrans_factdetailmain AS (
             ON vou1.LegalEntityID             = t1.LegalEntityID
            AND vou1.VoucherID                 = t1.PhysicalVoucherID;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RecID, td._SourceID) AS InventoryTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID', 'td._SourceID']) }} AS InventoryTransKey
          , td.InventoryTransStatusKey
          , td.AgingBucketKey
          , td.InventoryStatusKey

@@ -113,7 +113,7 @@ salesforecast_factdetail1 AS (
            AND dsp._SourceID      = 1;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS SalesForecastKey
+         , {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS SalesForecastKey
          , ts.LegalEntityKey
          , ts.CustomerKey
          , ts.CurrencyKey                              AS CurrencyKey

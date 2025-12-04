@@ -5,7 +5,7 @@
 -- external_table_name: SalesPersonDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY hcm.recid) AS SalesPersonKey
+SELECT {{ dbt_utils.generate_surrogate_key(['hcm.recid']) }} AS SalesPersonKey
     ,hcm.personnelnumber                                                AS SalesPersonID
 			 , ISNULL(
       UPPER(LEFT(dpt.name, 1))

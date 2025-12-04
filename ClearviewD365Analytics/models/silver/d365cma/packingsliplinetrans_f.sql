@@ -404,7 +404,7 @@ packingsliplinetrans_facttrans_updated AS (
       AND ta._RecID2            = t._RecID2
 )
 SELECT DISTINCT 
-      ROW_NUMBER() OVER (ORDER BY frl.PackingSlipLineKey) AS PackingSlipLineTransKey
+      {{ dbt_utils.generate_surrogate_key(['frl.PackingSlipLineKey']) }} AS PackingSlipLineTransKey
       , frl.PackingSlipLineKey                                                                               AS PackingSlipLineKey
     , dis.InventoryTransStatusKey                                                                          AS InventoryTransStatusKey
     , ISNULL(dp1.ProductKey, -1)                                                                           AS MasterProductKey

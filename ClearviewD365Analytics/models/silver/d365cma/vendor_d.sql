@@ -78,7 +78,7 @@ vendorelectronicaddress AS (
      ) AS t
     WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS VendorKey 
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS VendorKey 
       , ts.LegalEntityID                                       AS LegalEntityID
       , ts.BuyerGroupID                                        AS BuyerGroupID
       , ts.BuyerGroup                                          AS BuyerGroup

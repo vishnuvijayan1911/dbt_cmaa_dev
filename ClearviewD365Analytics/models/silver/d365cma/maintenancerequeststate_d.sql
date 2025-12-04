@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-          ROW_NUMBER() OVER (ORDER BY slog.recid) AS MaintenanceRequestStateKey 
+          {{ dbt_utils.generate_surrogate_key(['slog.recid']) }} AS MaintenanceRequestStateKey 
          , slog.dataareaid                                                      AS LegalEntityID
          , slog.name                    AS MaintenanceRequestState
          , REPLACE(slog.requestlifecyclestateid, 'InProgress', 'In-progress') AS MaintenanceRequestStateID

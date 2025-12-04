@@ -5,7 +5,7 @@
 -- external_table_name: WorkOrderPoolDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY wop.recid) AS WorkOrderPoolKey
+SELECT {{ dbt_utils.generate_surrogate_key(['wop.recid']) }} AS WorkOrderPoolKey
          , wop.name        AS WorkOrderPool
          , wop.poolid      AS WorkOrderPoolID
          , wop.dataareaid AS LegalEntityID

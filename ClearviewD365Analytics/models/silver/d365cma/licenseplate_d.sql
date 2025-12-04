@@ -5,7 +5,7 @@
 -- external_table_name: LicensePlateDetail
 -- schema_name: temp
 
-SELECT *, ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.LicensePlate) AS LicensePlateKey
+SELECT *, {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.LicensePlate']) }} AS LicensePlateKey
    ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
          FROM (

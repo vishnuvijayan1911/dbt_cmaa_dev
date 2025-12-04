@@ -5,7 +5,7 @@
 -- external_table_name: WorkOrderCriticalityDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderCriticalityKey
+SELECT {{ dbt_utils.generate_surrogate_key(['JT.recid']) }} AS WorkOrderCriticalityKey
           ,JT.dataareaid  AS LegalEntityID
          , JT.criticality  AS WorkOrderCriticalityID
          , JT.name         AS WorkOrderCriticality

@@ -462,7 +462,7 @@ salesorderlinetrans_factdetail1 AS (
       ON ds.InventoryTransStatusID     = CASE WHEN ts.STATUSISSUE > 0 THEN ts.STATUSISSUE ELSE ts.STATUSRECEIPT END
     AND ds.InventoryTransStatusTypeID = CASE WHEN ts.STATUSISSUE > 0 THEN 1 ELSE 2 END;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RECID1) AS SalesOrderLineTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RECID1']) }} AS SalesOrderLineTransKey
     , td.SalesOrderLineKey                     AS SalesOrderLineKey
     , td.ReserveDate                           AS ReserveDate
     , td.ReservedDays                          AS DaysReserved

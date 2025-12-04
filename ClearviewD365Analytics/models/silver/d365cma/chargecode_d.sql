@@ -16,7 +16,7 @@ chargecodedetail1 AS (
 
           FROM {{ ref('markuptable') }} mu;
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY t.LegalEntityID, t.ChargeCode, t.ModuleTypeID) AS ChargeCodeKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.ChargeCode', 't.ModuleTypeID']) }} AS ChargeCodeKey
         , * FROM (
         SELECT DISTINCT
           ts.LegalEntityID                                               AS LegalEntityID

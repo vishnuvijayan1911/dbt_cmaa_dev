@@ -155,7 +155,7 @@ glcostdetail_factstage AS (
             ON ivs.dataareaid  = id.dataareaid
            AND ivs.siteid       = id.inventsiteid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID1, ts._RecID2, ts._SourceID) AS GLCostDetailKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID1', 'ts._RecID2', 'ts._SourceID']) }} AS GLCostDetailKey
          , da.AddressKey              AS AddressKey
          , cc.CurrencyKey             AS CurrencyKey
          , dd1.DateKey                AS InvoiceDateKey

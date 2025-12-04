@@ -78,7 +78,7 @@ customerelectronicaddress AS (
     WHERE t.RankVal = 1
 )
 SELECT
-      ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS CustomerKey  
+      {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS CustomerKey  
     , ts.LegalEntityID                                     AS LegalEntityID
     , ts.CustomerAccount                                   AS CustomerAccount
     , ts.Customer                                          AS Customer

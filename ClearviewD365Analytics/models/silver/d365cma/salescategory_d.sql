@@ -5,7 +5,7 @@
 -- external_table_name: SalesCategoryDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY ec.recid) AS SalesCategoryKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['ec.recid']) }} AS SalesCategoryKey
        , ec.name                    AS SalesCategory
       , ISNULL(ec2.name, ec1.name) AS ProductFamily
       , ec1.name                   AS ProductCategory

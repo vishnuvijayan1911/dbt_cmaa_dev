@@ -475,7 +475,7 @@ apbalancedetail_factpurchaseinvoice AS (
                       AND ts.VendorAccount = dpi.VendorAccount) t
          WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY dv.VendorKey, le.LegalEntityKey, dd.DateKey, vo.VoucherKey, dpi.PurchaseInvoiceKey) AS APBalanceKey
+SELECT {{ dbt_utils.generate_surrogate_key(['dv.VendorKey', 'le.LegalEntityKey', 'dd.DateKey', 'vo.VoucherKey', 'dpi.PurchaseInvoiceKey']) }} AS APBalanceKey
           ,le.LegalEntityKey                  AS LegalEntityKey
          , ab1.AgingBucketKey                 AS AgingBucketDueKey
          , ab.AgingBucketKey                  AS AgingBucketInvoiceKey

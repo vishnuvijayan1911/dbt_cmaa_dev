@@ -23,7 +23,7 @@ taxcodestage AS (
             ON tt.dataareaid  = td.dataareaid 
            AND tt.taxcode     = td.taxcode;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY tt._recid) AS TaxCodeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['tt._recid']) }} AS TaxCodeKey
          , tt.taxcode       AS TaxCode
          , tt.taxname       AS TaxName
          , tt.legalentityid AS LegalEntityID

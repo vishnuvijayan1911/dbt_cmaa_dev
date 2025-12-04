@@ -37,7 +37,7 @@ productionroutestage AS (
            AND rg.routegroupid = pr.routegroupid;
 )
 SELECT 
-          ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ProductionRouteKey
+          {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ProductionRouteKey
          , ts.LegalEntityID                                                           AS LegalEntityID
          , CASE WHEN ts.OperationFinished = 1 THEN 'Finished' ELSE 'Not finished' END AS OperationFinished
          , ts.OperationNumber                                                         AS OperationNumber

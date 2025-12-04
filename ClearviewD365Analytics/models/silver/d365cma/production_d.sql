@@ -84,7 +84,7 @@ productiondetail2 AS (
           FROM productiondetail1 ts;
 )
 SELECT 
-    ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ProductionKey
+    {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ProductionKey
     ,ts.LegalEntityID
          , ts.ProductionID
          , ts.BOMID

@@ -24,7 +24,7 @@ productprice_factcost AS (
            AND IM.costingtype = 2;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY dd.DateKey) AS ProductPriceKey
+         , {{ dbt_utils.generate_surrogate_key(['dd.DateKey']) }} AS ProductPriceKey
          , dle.LegalEntityKey
          , dp.ProductKey
          , tc.StandardCost AS StandardPrice

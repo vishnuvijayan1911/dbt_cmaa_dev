@@ -5,7 +5,7 @@
 -- external_table_name: BuyerGroupDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY ib.recid) AS BuyerGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ib.recid']) }} AS BuyerGroupKey
         ,ib.dataareaid                                                      AS LegalEntityID
          , ib.[GROUP]                                                           AS BuyerGroupID
          , CASE WHEN ib.description = '' THEN ib.[GROUP] ELSE ib.description END AS BuyerGroup

@@ -60,7 +60,7 @@ ledgeraccountdetail1 AS (
                 , we1.enumvalueid
                 , we1.enumvalue;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ta._RecID, ta._SourceID) AS LedgerAccountKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ta._RecID', 'ta._SourceID']) }} AS LedgerAccountKey
          , ISNULL(we1.enumvalueid, -1)                                                                  AS MainAccountTypeID
          , ISNULL(we1.enumvalue, '0')                                                                   AS MainAccountType
          , mac.accountcategory                                                                          AS MainAccountCategoryID

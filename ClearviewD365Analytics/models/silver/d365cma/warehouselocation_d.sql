@@ -5,7 +5,7 @@
 -- external_table_name: WarehouseLocationDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY wl.recid) AS WarehouseLocationKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['wl.recid']) }} AS WarehouseLocationKey
          ,wl.dataareaid                                                 AS LegalEntityID
       , ins.siteid                                                     AS SiteID
       , ISNULL(NULLIF(LTRIM(RTRIM(ins.name)), ''), ins.siteid)         AS Site

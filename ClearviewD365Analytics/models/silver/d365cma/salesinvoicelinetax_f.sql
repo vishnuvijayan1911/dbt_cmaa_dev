@@ -66,7 +66,7 @@ salesinvoicelinetax_factdetail1 AS (
            AND ex.ToCurrencyID     = le.AccountingCurrencyID
            AND ex.ExchangeRateType = le.TransExchangeRateType;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RecID) AS SalesInvoiceLineTaxKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID']) }} AS SalesInvoiceLineTaxKey
          , td.LegalEntityKey
          , td.TransDateKey
          , td.SalesInvoiceLineKey
