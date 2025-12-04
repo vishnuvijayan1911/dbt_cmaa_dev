@@ -5,7 +5,7 @@
 -- external_table_name: CustomerGroupDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY cg.recid) AS CustomerGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['cg.recid']) }} AS CustomerGroupKey
          , cg.dataareaid                                   AS LegalEntityID
          , cg.custgroup                                    AS CustomerGroupID
          , COALESCE(NULLIF(cg.name, ''), cg.custgroup, '') AS CustomerGroup

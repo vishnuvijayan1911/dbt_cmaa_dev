@@ -25,7 +25,7 @@ addresscountry AS (
       WHERE t.RankVal = 1
 )
 SELECT
-    ROW_NUMBER() OVER (ORDER BY t._RecID) AS AddressKey,
+    {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS AddressKey,
     *
         , '1900-01-01'                                               AS ActivityDate
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate

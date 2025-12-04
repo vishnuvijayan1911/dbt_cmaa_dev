@@ -5,8 +5,13 @@
 -- external_table_name: UserInfoDetail
 -- schema_name: temp
 
+<<<<<<< HEAD
 SELECT  ROW_NUMBER() OVER (ORDER BY t.UserName) AS UserInfoKey
         , t.* FROM (
+=======
+SELECT  {{ dbt_utils.generate_surrogate_key(['t.UserName']) }} AS UserInfoKey
+         * FROM (
+>>>>>>> db49a969de400983631fe6fe6226a8c58cf95fc1
     SELECT DISTINCT
            uf.name                                      AS CreatedBy
          , uf.company                                   AS LegalEntityID

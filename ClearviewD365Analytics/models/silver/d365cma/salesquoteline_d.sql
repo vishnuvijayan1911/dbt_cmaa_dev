@@ -5,7 +5,7 @@
 -- external_table_name: SalesQuoteLineDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY ql.recid) AS SalesQuoteLineKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ql.recid']) }} AS SalesQuoteLineKey
          , ql.dataareaid                                                                 AS LegalEntityID
          , ql.inventtransid                                                              AS LotID
          , qt.quotationid                                                                AS QuoteID

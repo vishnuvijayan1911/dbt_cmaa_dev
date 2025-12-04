@@ -292,7 +292,7 @@ productionpicklistjournal_factdetailmain AS (
            AND dwl.WarehouseLocation = t1.WarehouseLocation;
 )
 SELECT
-         , ROW_NUMBER() OVER (ORDER BY t1._RecID, t1._SourceID) AS ProductionPickListJournalKey
+         , {{ dbt_utils.generate_surrogate_key(['t1._RecID', 't1._SourceID']) }} AS ProductionPickListJournalKey
          , t1.ProductionBOMKey											  AS ProductionBOMKey
          , t1.ProductionKey												  AS ProductionKey
          , t1.BOMUOMKey													  AS BOMUOMKey

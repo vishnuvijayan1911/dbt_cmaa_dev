@@ -5,7 +5,7 @@
 -- external_table_name: SalesInvoiceLineDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY t._RecID1) AS SalesInvoiceLineKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['t._RecID1']) }} AS SalesInvoiceLineKey
     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _ModifiedDate 
     , * FROM ( SELECT DISTINCT
           cij.dataareaid                                                              AS LegalEntityID

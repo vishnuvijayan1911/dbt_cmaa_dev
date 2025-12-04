@@ -2,10 +2,10 @@
 
 WITH detail AS (
     SELECT
-        we1.EnumValueID AS ChargeCategoryID,
-        we1.EnumValue   AS ChargeCategory
+        we1.enumid AS ChargeCategoryID,
+        we1.enumvalue   AS ChargeCategory
       FROM {{ ref('enumeration') }} AS we1
-     WHERE we1.Enum = 'MarkupCategory'
+     WHERE we1.enum = 'markupcategory'
 )
 
 SELECT *

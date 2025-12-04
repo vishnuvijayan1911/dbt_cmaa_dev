@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-ROW_NUMBER() OVER (ORDER BY t.LegalEntity) AS LegalEntityKey,
+{{ dbt_utils.generate_surrogate_key(['t.LegalEntity']) }} AS LegalEntityKey,
 t.LegalEntityID,
       CASE WHEN t.LegalEntity = '' THEN t.LegalEntityID ELSE t.LegalEntity END AS LegalEntity
      , t.AccountingCurrencyID

@@ -11,12 +11,13 @@ sources:
       - name: logisticsaddresscountryregiontranslation
       - name: logisticspostaladdress
       - name: dlvmode
+      - name: cmaproductattributevalues
       - name: area
       - name: dates
       - name: fact
       - name: factmeasure
       - name: fiscalcalendardate
-      - name: GlobalOptionsetMetadata
+      - name: globalenummetadata
       - name: model
       - name: modelfact
       - name: OptionsetMetadata
@@ -211,6 +212,7 @@ sources:
       - name: forecastpurch
       - name: forecastsales
       - name: generaljournalaccountentry
+      - name: globaloptionsetmetadata
       - name: generaljournalentry
       - name: hcmcertificatetype
       - name: hcmemployment

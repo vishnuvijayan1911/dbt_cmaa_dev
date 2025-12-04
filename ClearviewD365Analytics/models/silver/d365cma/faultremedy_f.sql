@@ -26,7 +26,7 @@ faultremedy_factstage AS (
             ON fr.dataareaid  = ofr.dataareaid
            AND fr.recid       = ofr.faultremedy;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg._SourceID) AS FaultRemedyFactKey
+SELECT {{ dbt_utils.generate_surrogate_key(['stg._RecID', 'stg._SourceID']) }} AS FaultRemedyFactKey
           , fr.faultremedykey   AS FaultRemedyKey
          , f.FaultCauseFactKey AS FactCauseFactKey
          , le.LegalEntityKey   AS LegalEntityKey

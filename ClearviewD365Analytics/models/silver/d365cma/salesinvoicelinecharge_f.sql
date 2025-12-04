@@ -210,7 +210,7 @@ salesinvoicelinecharge_factdetail1 AS (
            AND ex1.ToCurrencyID     = le.AccountingCurrencyID
            AND ex1.ExchangeRateType = le.TransExchangeRateType;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY td._RecID1) AS SalesInvoiceLineChargeKey
+SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID1']) }} AS SalesInvoiceLineChargeKey
         , td.ChargeCodeKey
          , td.ChargeCategoryKey
          , td.ChargeCurrencyKey

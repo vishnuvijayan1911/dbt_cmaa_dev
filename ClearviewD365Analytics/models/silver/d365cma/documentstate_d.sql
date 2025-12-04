@@ -1,13 +1,11 @@
 {{ config(materialized='table', tags=['silver'], alias='documentstate') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS DocumentStateID
-         , we.EnumValue   AS DocumentState
+    SELECT we.enumid     AS DocumentStateID  -- Changed this mapping due to enum workaround for fabric.
+         , we.enumvalue   AS DocumentState
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'VersioningDocumentState'
+     WHERE we.enum = 'documentstate'
 )
-
 SELECT DocumentStateID
      , DocumentState
   FROM detail
- ORDER BY DocumentStateID;

@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-           ROW_NUMBER() OVER (ORDER BY t.VoucherID) AS VoucherKey
+           {{ dbt_utils.generate_surrogate_key(['t.VoucherID']) }} AS VoucherKey
          , *  FROM ( SELECT DISTINCT
            gj.subledgervoucherdataareaid AS LegalEntityID
          , gj.subledgervoucher           AS VoucherID

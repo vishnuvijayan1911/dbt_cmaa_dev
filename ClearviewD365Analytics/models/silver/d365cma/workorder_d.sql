@@ -32,8 +32,13 @@ workorderslog AS (
                 , createdby
                 , remark
 )
+<<<<<<< HEAD
 SELECT ROW_NUMBER() OVER (ORDER BY WOT.recid) AS WorkOrderKey
          , WOT.dataareaid                                                                                                      AS LegalEntityID
+=======
+SELECT {{ dbt_utils.generate_surrogate_key(['WOT.recid']) }} AS WorkOrderKey
+         , WOT.dataareaid                                                                                                     AS LegalEntityID
+>>>>>>> db49a969de400983631fe6fe6226a8c58cf95fc1
          , WOT.workorderid                                                                                                     AS WorkOrderID
          , CASE WHEN WOT.active = 'Yes' THEN 'Active' ELSE 'Inactive' END                                                      AS ActiveStatus
          , WOT.costtype                                                                                                        AS CostType

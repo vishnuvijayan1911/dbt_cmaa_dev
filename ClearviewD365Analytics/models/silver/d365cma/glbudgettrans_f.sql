@@ -54,7 +54,7 @@ glbudgettrans_factbudget AS (
 
           FROM glbudgettrans_factstage st;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY le.LegalEntityKey, dca.LedgerAccountKey, dd.DateKey, bt.budgettypekey) AS GLBudgetTransKey
+SELECT {{ dbt_utils.generate_surrogate_key(['le.LegalEntityKey', 'dca.LedgerAccountKey', 'dd.DateKey', 'bt.budgettypekey']) }} AS GLBudgetTransKey
          , dd.DateKey               AS TransDateKey
          , le.LegalEntityKey        AS LegalEntityKey
          , bts.BudgetTransStatusKey AS BudgetTransStatusKey

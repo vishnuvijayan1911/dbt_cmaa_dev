@@ -94,7 +94,7 @@ purchaseforecast_factdetail1 AS (
             ON du.UOM             = ts.PURCHUNITID;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS PurchaseForecastKey,
+         , {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS PurchaseForecastKey,
     ts.LegalEntityKey
          , ts.CurrencyKey										   AS CurrencyKey
          , ts.FinancialKey

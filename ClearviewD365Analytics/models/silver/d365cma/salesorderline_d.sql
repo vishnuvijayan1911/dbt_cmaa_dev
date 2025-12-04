@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-           ROW_NUMBER() OVER (ORDER BY sl.salesid) AS SalesOrderLineKey
+           {{ dbt_utils.generate_surrogate_key(['sl.salesid']) }} AS SalesOrderLineKey
          , sl.dataareaid                                                            AS LegalEntityID
          , sh.salesid                                                               AS SalesOrderID
          , RIGHT('000' + CAST(CAST(sl.customerlinenum AS BIGINT) AS VARCHAR(7)), 7) AS LineNumber

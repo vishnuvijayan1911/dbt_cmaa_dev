@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-     ROW_NUMBER() OVER (ORDER BY dc.recid) AS CurrencyKey,
+     {{ dbt_utils.generate_surrogate_key(['dc.recid']) }} AS CurrencyKey,
     dc.currencycode                                            AS CurrencyID
          , CASE WHEN dc.txt = '' THEN dc.currencycode ELSE dc.txt END AS Currency
          , dc.recid                                                   AS _RecID

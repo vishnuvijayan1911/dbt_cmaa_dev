@@ -76,7 +76,7 @@ tagactuals_factdetailmain AS (
             ON uo2.UOM          = ts.CMAWEIGHTUOM;
 )
 SELECT 
-         , ROW_NUMBER() OVER (ORDER BY dm._RecID, dm._SourceID) AS TagActualsKey
+         , {{ dbt_utils.generate_surrogate_key(['dm._RecID', 'dm._SourceID']) }} AS TagActualsKey
         , dm.LegalEntityKey
          , dm.ProductKey
          , dm.TagKey

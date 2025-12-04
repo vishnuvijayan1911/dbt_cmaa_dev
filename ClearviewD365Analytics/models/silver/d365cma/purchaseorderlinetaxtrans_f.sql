@@ -48,7 +48,7 @@ purchaseorderlinetaxtrans_factpolratio AS (
           FROM purchaseorderlinetaxtrans_factpolkeys tk;
 )
 SELECT DISTINCT
-         , ROW_NUMBER() OVER (ORDER BY tk.RecID_IT) AS PurchaseOrderLineTaxTransKey
+         , {{ dbt_utils.generate_surrogate_key(['tk.RecID_IT']) }} AS PurchaseOrderLineTaxTransKey
           , ft.PurchaseOrderLineKey
          , ft.PurchaseOrderLineTaxKey
          , fclt.PurchaseOrderLineTransKey

@@ -16,7 +16,7 @@ inventorycountinggroupstage AS (
              , 1                AS _SourceID
           FROM {{ ref('inventcountgroup') }} icg
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS InventoryCountingGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS InventoryCountingGroupKey
          , ts.LegalEntityID            AS LegalEntityID
          , ts.InventoryCountingGroupID AS InventoryCountingGroupID
          , ts.InventoryCountingGroup   AS InventoryCountingGroup

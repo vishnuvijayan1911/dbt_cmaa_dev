@@ -186,7 +186,7 @@ workorderline_factstage AS (
            AND tfc.PROJID                    = WOL.projid
            AND tfc.DATAAREAID               = WOL.dataareaid;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS WorkOrderLineKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS WorkOrderLineKey
          , le.LegalEntityKey
          , afl.AssetFunctionalLocationKey
          , obj.AssetKey

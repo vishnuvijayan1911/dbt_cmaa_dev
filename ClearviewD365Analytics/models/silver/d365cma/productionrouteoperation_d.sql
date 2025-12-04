@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT
-          ROW_NUMBER() OVER (ORDER BY ro.oprid) AS ProductionRouteOperationKey
+          {{ dbt_utils.generate_surrogate_key(['ro.oprid']) }} AS ProductionRouteOperationKey
          , ro.dataareaid AS LegalEntityID
          , ro.oprid       AS OperationID
          , ro.name        AS Operation

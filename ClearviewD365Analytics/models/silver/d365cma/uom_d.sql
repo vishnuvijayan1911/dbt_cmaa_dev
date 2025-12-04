@@ -15,7 +15,7 @@ uomstage AS (
             FROM {{ ref('unitofmeasure') }} uom
 )
 SELECT 
-     ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS UOMKey,
+     {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS UOMKey,
     ts.UOM        AS UOM
          , we1.enumvalue AS UOMClass
          , ts._RecID                 AS _RecID

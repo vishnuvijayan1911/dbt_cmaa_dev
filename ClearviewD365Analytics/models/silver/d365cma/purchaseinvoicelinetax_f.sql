@@ -28,7 +28,7 @@ purchaseinvoicelinetax_factstage AS (
          WHERE tt.taxamount <> 0;
 ),
 purchaseinvoicelinetax_factdetail1 AS (
-    SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID) AS PurchaseInvoiceLineTaxKey
+    SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID']) }} AS PurchaseInvoiceLineTaxKey
              , le.LegalEntityKey                                                                 AS LegalEntityKey
              , dd.DateKey                                                                        AS TransDateKey
              , dpil.PurchaseInvoiceLineKey                                                       AS PurchaseInvoiceLineKey

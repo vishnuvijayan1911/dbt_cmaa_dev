@@ -41,7 +41,7 @@ productionresourcestage AS (
                        ON wc1.wrkctrid     = wcrg.wrkctrid) x
          WHERE x.Latest = 1;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ProductionResourceKey,
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ProductionResourceKey,
     ts.LegalEntityID                                                                  AS LegalEntityID
    , ts.ResourceID                                                                     AS ResourceID
    , CASE WHEN ts.Resource = '' THEN ts.ResourceID ELSE ts.Resource END                AS Resource

@@ -655,7 +655,7 @@ inventoryvaluetrans_factuomconversion AS (
            AND vuc5.fromuom        = td.InventoryUOM
         -- AND vuc5.touom          = 'SQIN'
 )
-SELECT  ROW_NUMBER() OVER (ORDER BY ts.RECID_IT, ts.RECID_ITPDP, ts.RECID_IS, ts.RECID_ITPDF) AS InventoryValueTransKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['ts.RECID_IT', 'ts.RECID_ITPDP', 'ts.RECID_IS', 'ts.RECID_ITPDF']) }} AS InventoryValueTransKey
          , ts.InventoryTransStatusKey                 AS InventoryTransStatusKey
          , ts.LegalEntityKey                          AS LegalEntityKey
          , ts.LotKey                                  AS LotKey

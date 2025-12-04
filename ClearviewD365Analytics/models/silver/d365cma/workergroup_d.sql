@@ -5,7 +5,7 @@
 -- external_table_name: WorkerGroupDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkerGroupKey
+SELECT {{ dbt_utils.generate_surrogate_key(['JT.recid']) }} AS WorkerGroupKey
          , JT.dataareaid                              AS LegalEntityID
          , JT.workergroupid                              AS WorkerGroupID
          , ISNULL(NULLIF(JT.name, ''), JT.workergroupid) AS WorkerGroup

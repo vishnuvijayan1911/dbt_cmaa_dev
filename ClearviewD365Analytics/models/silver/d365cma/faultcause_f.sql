@@ -23,7 +23,7 @@ faultcause_factstage AS (
             ON fc.dataareaid  = ofc.dataareaid
            AND fc.recid      = ofc.faultcause;
 )
-SELECT ROW_NUMBER() OVER (ORDER BY stg._RecID, stg._SourceID) AS FaultCauseFactKey
+SELECT {{ dbt_utils.generate_surrogate_key(['stg._RecID', 'stg._SourceID']) }} AS FaultCauseFactKey
           ,ff.FaultKey       AS FaultKey
          , ofc.faultcausekey AS FaultCauseKey
          , stg._SourceID     AS _SourceID

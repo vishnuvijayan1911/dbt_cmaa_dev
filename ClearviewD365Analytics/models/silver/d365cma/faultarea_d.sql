@@ -5,7 +5,7 @@
 -- external_table_name: FaultAreaDetail
 -- schema_name: temp
 
-SELECT  ROW_NUMBER() OVER (ORDER BY fa.recid) AS FaultAreaKey
+SELECT  {{ dbt_utils.generate_surrogate_key(['fa.recid']) }} AS FaultAreaKey
          , fa.dataareaid                                     AS LegalEntityID
          , fa.faultareaid                                     AS FaultAreaID
          , ISNULL(NULLIF(fa.description, ''), fa.faultareaid) AS FaultArea

@@ -254,7 +254,7 @@ productreceiptlinetrans_facttransadj4 AS (
     SELECT * FROM productreceiptlinetrans_facttransadj3
 )
 SELECT 
-    ROW_NUMBER() OVER (ORDER BY frl.ProductReceiptLineKey) AS ProductReceiptLineTransKey,
+    {{ dbt_utils.generate_surrogate_key(['frl.ProductReceiptLineKey']) }} AS ProductReceiptLineTransKey,
     frl.ProductReceiptLineKey
          , dis.InventoryTransStatusKey                                                                               AS InventoryTransStatusKey
          , dt.TagKey                                                                                                 AS TagKey

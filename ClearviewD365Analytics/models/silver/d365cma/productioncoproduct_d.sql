@@ -19,7 +19,7 @@ productioncoproductstage AS (
           FROM {{ ref('pmfprodcoby') }} pr
 )
 SELECT 
-         ROW_NUMBER() OVER (ORDER BY ts._RecID, ts._SourceID) AS ProductionCoProductKey
+         {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS ProductionCoProductKey
          ,ts.InnerDiameter   AS InnerDiameter
          , ts.OuterDiameter   AS OuterDiameter
          , ts.ReferenceID     AS ReferenceID

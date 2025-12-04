@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT
-           ROW_NUMBER() OVER (ORDER BY pg.dataareaid, pg.routegroupid) AS ProductionRouteGroupKey
+           {{ dbt_utils.generate_surrogate_key(['pg.dataareaid', 'pg.routegroupid']) }} AS ProductionRouteGroupKey
          , pg.dataareaid  AS LegalEntityID
          , pg.routegroupid AS ProductionRouteGroupID
          , pg.name         AS ProductionRouteGroup

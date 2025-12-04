@@ -5,7 +5,7 @@
 -- external_table_name: WorkOrderStateDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY JT.recid) AS WorkOrderStateKey
+SELECT {{ dbt_utils.generate_surrogate_key(['JT.recid']) }} AS WorkOrderStateKey
           ,JT.dataareaid                                                                                        AS LegalEntityID
          , REPLACE(REPLACE(JT.workorderlifecyclestateid, 'InProgress', 'In-progress'), 'Cancelled', 'Canceled') AS WorkOrderStateID
          , ISNULL(NULLIF(JT.name, ''), JT.workorderlifecyclestateid)                                            AS WorkOrderState

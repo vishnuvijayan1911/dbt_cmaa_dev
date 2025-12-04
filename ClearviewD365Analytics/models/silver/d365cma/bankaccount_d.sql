@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-           ROW_NUMBER() OVER (ORDER BY ba.recid) AS BankAccountKey
+           {{ dbt_utils.generate_surrogate_key(['ba.recid']) }} AS BankAccountKey
          , ba.dataareaid                                             AS LegalEntityID
          , ba.accountid                                              AS BankAccountID
          , ba.accountnum                                             AS BankAccountNum

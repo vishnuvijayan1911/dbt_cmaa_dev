@@ -5,7 +5,7 @@
 -- external_table_name: PaymentTermDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER() OVER (ORDER BY pt.recid) AS PaymentTermKey
+SELECT {{ dbt_utils.generate_surrogate_key(['pt.recid']) }} AS PaymentTermKey
          , pt.dataareaid                                                            AS LegalEntityID
          , pt.paymtermid                                                            AS PaymentTermID
          , CASE WHEN pt.description = '' THEN pt.paymtermid ELSE pt.description END AS PaymentTerm

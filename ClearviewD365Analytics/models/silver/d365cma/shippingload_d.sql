@@ -39,7 +39,7 @@ shippingloaddetail1 AS (
     --   INTO #Detail1
       FROM {{ ref('whsloadtable') }} wlt
 )
-SELECT ROW_NUMBER() OVER (ORDER BY t._RecID, t._SourceID) AS ShippingLoadKey
+SELECT {{ dbt_utils.generate_surrogate_key(['t._RecID', 't._SourceID']) }} AS ShippingLoadKey
       ,t.LegalEntityID
      , t.LoadID
      , we1.enumvalue AS LoadStatus

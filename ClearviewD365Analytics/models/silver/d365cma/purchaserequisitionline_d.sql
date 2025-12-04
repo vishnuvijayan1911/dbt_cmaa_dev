@@ -6,7 +6,7 @@
 -- schema_name: temp
 
 SELECT 
-        ROW_NUMBER() OVER (ORDER BY prl.recid) AS PurchaseRequisitionLineKey,
+        {{ dbt_utils.generate_surrogate_key(['prl.recid']) }} AS PurchaseRequisitionLineKey,
         prl.inventdimiddataarea   
                                                         AS LegalEntityID
          , CASE WHEN prt.purchreqname = '' THEN prt.purchreqid ELSE prt.purchreqname END AS Requisition
