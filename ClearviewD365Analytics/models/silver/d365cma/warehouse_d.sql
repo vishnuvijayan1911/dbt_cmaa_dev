@@ -27,8 +27,8 @@ warehousestage AS (
       AND ins.siteid        = il.inventsiteid
       LEFT JOIN {{ ref('inventlocationlogisticslocation') }} ll
         ON ll.inventlocation = il.recid
-      AND ll.isprimary      = 1
-    WHERE il.inventlocationid <> '';
+      AND ll.isprimary      = 'Yes'
+    WHERE il.inventlocationid <> ''
 ),
 warehouseaddress AS (
     SELECT t.*
@@ -43,7 +43,7 @@ warehouseaddress AS (
                     , ROW_NUMBER() OVER (PARTITION BY Location
     ORDER BY _RecID DESC) AS Rank_Val
                 FROM {{ ref('address_d') }}) t
-    WHERE t.Rank_Val = 1;
+    WHERE t.Rank_Val = 1
 )
 SELECT 
  {{ dbt_utils.generate_surrogate_key(['ts.WarehouseID', 'ts.LegalEntityID']) }} AS WarehouseKey
@@ -53,7 +53,7 @@ SELECT
      , CASE WHEN ts.Site = '' THEN ts.SiteID ELSE ts.Site END                              AS Site
      , ts.WarehouseID                                                                      AS WarehouseID
      , CASE WHEN ts.Warehouse = '' THEN ts.WarehouseID ELSE ts.Warehouse END               AS Warehouse
-     , ts.WarehouseTypeID                                                                  AS WarehouseTypeID
+     , we1.enumid                                                                          AS WarehouseTypeID
      , CASE we1.enumvalue WHEN 'Default' THEN 'Standard' ELSE we1.enumvalue END            AS WarehouseType
      , lpa.Street                                                                          AS WarehouseStreet
      , lpa.City                                                                            AS WarehouseCity
@@ -65,13 +65,11 @@ SELECT
      , ts._SourceDate                                                                      AS _SourceDate
      , ts._RecID                                                                           AS _RecID
      , ts._SourceID                                                                        AS _SourceID
-
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _ModifiedDate  
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                             AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                             AS _ModifiedDate  
    FROM warehousestage               ts
    LEFT JOIN warehouseaddress        lpa
      ON lpa.Location    = ts.Location
    LEFT JOIN {{ ref('enumeration') }} we1
-     ON we1.enum        = 'InventLocationType'
+     ON we1.enum        = 'inventlocationtype'
    AND we1.enumvalueid = ts.WarehouseTypeID
-
