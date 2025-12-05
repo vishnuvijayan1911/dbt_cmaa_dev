@@ -48,7 +48,7 @@ casestage AS (
         ON oou.recid               = cdb.department
        AND oou.omoperatingunittype = 'OMDepartment'
 )
-SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS CaseKey
      , ts.CaseID                                             AS CaseID
      , ts.EmailID                                            AS EmailID
      , ts.LegalEntityID                                      AS LegalEntityID

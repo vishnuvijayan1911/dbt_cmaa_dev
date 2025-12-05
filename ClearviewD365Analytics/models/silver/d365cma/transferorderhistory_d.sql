@@ -5,7 +5,7 @@
 -- external_table_name: TransferOrderHistoryDetail
 -- schema_name: temp
 
-SELECT ROW_NUMBER () OVER (ORDER BY itj.recid) AS TransferOrderHistoryKey
+SELECT {{ dbt_utils.generate_surrogate_key(['itj.recid']) }} AS TransferOrderHistoryKey
    , itj.dataareaid                              AS LegalEntityID
    , itj.transferid                              AS TransferOrderID
    , itj.voucherid                               AS VoucherID
