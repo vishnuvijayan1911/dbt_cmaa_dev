@@ -2,7 +2,7 @@
 
 -- Source file: cma/cma/layers/_base/_silver/dimension_tables/dimension_tables.py
 -- Root method: DimensionTables.cost_bucket
-
+select A.* from (
 SELECT 
           '' AS CostBucketKey
           , '' AS CostBucketGroupID
@@ -18,94 +18,95 @@ SELECT  1
           , 'Processing cost'
           , 'DL'
           , 'Direct labor'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 Union
 SELECT 2
           ,'PROC'
           , 'Processing cost'
           , 'DOH'
           , 'Direct overhead'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 3,
      'PROC'
           , 'Processing cost'
           , 'DD'
           , 'Direct depreciation'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 4,
      'PROC'
           , 'Processing cost'
           , 'IL'
           , 'Indirect labor'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 5,
      'PROC'
           , 'Processing cost'
           , 'IOH'
           , 'Indirect overhead'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 6,
      'PROC'
           , 'Processing cost'
           , 'ID'
           , 'Indirect depreciation'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 7,
      'PROC'
           , 'Processing cost'
           , 'SCRP'
           , 'Scrap'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 8,
           'PROC'
           , 'Processing cost'
           , 'SCRP_CR'
           , 'Scrap credit'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 9,
      'MATL'
           , 'Material cost'
           , 'MAT'
           , 'Material'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 10
      ,'SELL'
           , 'Selling cost'
           , 'OF'
           , 'Outbound freight'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 11,
      'SELL'
           , 'Selling cost'
           , 'PKG'
           , 'Packaging'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }}
 UNION
 SELECT 12,
      'SELL'
           , 'Selling cost'
           , 'TARIFF'
           , 'Tariff'
-          , CURRENT_TIMESTAMP
-          , CURRENT_TIMESTAMP
+          , {{ dbt.current_timestamp() }}
+          , {{ dbt.current_timestamp() }} ) AS A;
+
 
