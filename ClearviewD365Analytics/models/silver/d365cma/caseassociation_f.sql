@@ -143,7 +143,7 @@ caseassociation_factproduct AS (
                 WHERE ca.entitytype = 23) t
      WHERE t.RankVal = 1;
 )
-SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseAssociationKey
+SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS CaseAssociationKey
      , ISNULL (cd.CaseKey, -1)                               AS CaseKey
      , ISNULL (db.BOMKey, -1)                                AS EntityBOMKey
      , ISNULL (c.CustomerKey, -1)                            AS EntityCustomerKey
