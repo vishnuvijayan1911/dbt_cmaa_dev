@@ -15,7 +15,7 @@ addresscountry AS (
                         , CAST(ISNULL(lt.longname, ' ') AS VARCHAR(250))  AS CountryLongName
                         , ROW_NUMBER() OVER (PARTITION BY lac.countryregionid
     ORDER BY lac.countryregionid)                                          AS RankVal
-        FROM {{ ref('logisticspostaladdress') }}                        lpa
+        FROM {{ ref('Logisticspostaladdress') }}                        lpa
           INNER JOIN {{ ref('logisticsaddresscountryregion') }}            lac
           ON lac.countryregionid = lpa.countryregionid
           INNER JOIN {{ ref('logisticsaddresscountryregiontranslation') }} lt
