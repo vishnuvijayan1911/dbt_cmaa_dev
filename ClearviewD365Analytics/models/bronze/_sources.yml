@@ -376,6 +376,6 @@ sources:
 
       
   - name: warehouse
-    database: whcmaanonprodref
+    database: dwh_dbt_cmaa_nonprod_perf
     schema: bronze
     tables: []
