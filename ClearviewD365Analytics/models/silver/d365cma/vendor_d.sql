@@ -8,38 +8,38 @@
 
 WITH
 vendorstage AS (
-    SELECT vt.dataareaid                                                   AS LegalEntityID
-        , vt.accountnum                                                     AS VendorAccount
-        , dpt.name + ' ' + '-' +' ' + vt.accountnum                  AS Vendor
-        , dpt.name                                                          AS VendorName
-        , dpt.namealias                                                     AS VendorAlias
-        , CASE WHEN vt.blocked = 0
-               THEN 'No hold'
-               WHEN vt.blocked = 1
-               THEN 'Hold - Invoice'
-               WHEN vt.blocked = 2
-               THEN 'Hold - All'
-               WHEN vt.blocked = 3
-               THEN 'Hold - Payment'
-               WHEN vt.blocked = 4
-               THEN 'Hold - Requisition'
-               WHEN vt.blocked = 5
-               THEN 'Hold - Never' END                                      AS OnHoldStatus
-        , vt.itembuyergroupid                                               AS BuyerGroupID
-        , ibg.description                                                   AS BuyerGroup
-        , vt.invoiceaccount                                                 AS InvoiceAccount
-        , lob.lineofbusinessid                                              AS LineOfBusinessID
-        , lob.description                                                   AS LineOfBusiness
-        , vt.youraccountnum                                                 AS OurAccountID
-        , vt.purchpoolid                                                    AS PurchasePoolID
-        , pl.name                                                           AS PurchasePool
-        , vt.vatnum                                                         AS VATNumber
-        , vt.vendgroup                                                      AS VendorGroupID
-        , vg.name                                                           AS VendorGroup
-        , CASE WHEN vt.tax1099reports = 1 THEN 'Reports 1099' ELSE NULL END AS Is1099Reported
-        , dpt.recid                                                         AS RecID_DPT
-        , vt.recid                                                          AS _RecID
-        , 1                                                                 AS _SourceID
+    SELECT vt.dataareaid                                                             AS LegalEntityID
+        , vt.accountnum                                                              AS VendorAccount
+        , dpt.name + ' ' + '-' +' ' + vt.accountnum                                  AS Vendor
+        , dpt.name                                                                   AS VendorName
+        , dpt.namealias                                                              AS VendorAlias
+        , CASE WHEN vt.blocked = 'No'
+               THEN 'No hold'         
+               WHEN vt.blocked = 'Invoice'         
+               THEN 'Hold - Invoice'         
+               WHEN vt.blocked = 'All'         
+               THEN 'Hold - All'         
+               WHEN vt.blocked = 'Payment'        
+               THEN 'Hold - Payment'         
+               WHEN vt.blocked = 'Requisition'        
+               THEN 'Hold - Requisition'         
+               WHEN vt.blocked = 'Never'         
+               THEN 'Hold - Never' END                                               AS OnHoldStatus
+        , vt.itembuyergroupid                                                        AS BuyerGroupID
+        , ibg.description                                                            AS BuyerGroup
+        , vt.invoiceaccount                                                          AS InvoiceAccount
+        , lob.lineofbusinessid                                                       AS LineOfBusinessID
+        , lob.description                                                            AS LineOfBusiness
+        , vt.youraccountnum                                                          AS OurAccountID
+        , vt.purchpoolid                                                             AS PurchasePoolID
+        , pl.name                                                                    AS PurchasePool
+        , vt.vatnum                                                                  AS VATNumber
+        , vt.vendgroup                                                               AS VendorGroupID
+        , vg.name                                                                    AS VendorGroup
+        , CASE WHEN vt.tax1099reports = 'Yes' THEN 'Reports 1099' ELSE NULL END      AS Is1099Reported
+        , dpt.recid                                                                  AS RecID_DPT
+        , vt.recid                                                                   AS _RecID
+        , 1                                                                          AS _SourceID
      FROM {{ ref('vendtable') }}             vt
     INNER JOIN {{ ref('dirpartytable') }}    dpt
        ON dpt.recid            = vt.party
@@ -54,7 +54,7 @@ vendorstage AS (
       AND pl.purchpoolid       = vt.purchpoolid
      LEFT JOIN {{ ref('inventbuyergroup') }} ibg
        ON ibg.dataareaid      = vt.dataareaid
-      AND ibg.[GROUP]           = vt.itembuyergroupid;
+      AND ibg.[group]           = vt.itembuyergroupid
 ),
 vendorelectronicaddress AS (
     SELECT t.Partition
@@ -74,9 +74,9 @@ vendorelectronicaddress AS (
                   ON dpl.party    = dpt.recid
                INNER JOIN {{ ref('logisticselectronicaddress') }} lea
                   ON dpl.location = lea.location
-                 AND lea.type IN ( 1, 2 ) -- 1:Phone No, 2:Email
+                 AND lea.type IN ( 'Phone', 'Email' )
      ) AS t
-    WHERE t.RankVal = 1;
+    WHERE t.RankVal = 1
 )
 SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS VendorKey 
       , ts.LegalEntityID                                       AS LegalEntityID
@@ -104,9 +104,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS 
  FROM vendorstage                  ts
  LEFT JOIN vendorelectronicaddress te1
    ON te1.Party      = ts.RecID_DPT
-  AND te1.Type       = 1 -- Phone
+  AND te1.Type       = 'Phone'
  LEFT JOIN vendorelectronicaddress te2
    ON te2.Party      = ts.RecID_DPT
-  AND te2.Type       = 2 -- EMail
-WHERE ts.VendorAccount <> '';
-
+  AND te2.Type       = 'Email'
+WHERE ts.VendorAccount <> ''

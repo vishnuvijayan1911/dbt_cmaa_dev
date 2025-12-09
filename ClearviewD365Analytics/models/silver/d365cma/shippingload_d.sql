@@ -51,11 +51,9 @@ SELECT {{ dbt_utils.generate_surrogate_key(['t._RecID', 't._SourceID']) }} AS Sh
      , t._RecID
      , t._SourceID
      ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
---   INTO #Detail
   FROM shippingloaddetail1                  t
   LEFT JOIN {{ ref('ontimeloadstatus_d') }} l
     ON t.OnTimeLoadStatusID = l.OnTimeLoadStatusID
   LEFT JOIN {{ ref('enumeration') }}      we1
     ON we1.enumvalueid      = t.LoadStatusID
-   AND we1.enum             = 'WHSLoadStatus';
-
+   AND we1.enum             = 'loadstatus'
