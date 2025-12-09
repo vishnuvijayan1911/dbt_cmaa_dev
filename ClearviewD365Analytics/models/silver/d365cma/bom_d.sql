@@ -34,7 +34,7 @@ SELECT t.BOMKey
         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM   (SELECT {{ dbt_utils.generate_surrogate_key(['bv.recid']) }} AS BOMKey
                      ,bv.dataareaid     AS LegalEntityID
-                    , bv.bomid          AS BOMID
+                    , bv.BOMID          AS BOMID
                     , bv.name           AS BOM
                     , bv.pmfbatchsize   AS FormulaSize
                     , tu.UnitID         AS FormulaUOM
