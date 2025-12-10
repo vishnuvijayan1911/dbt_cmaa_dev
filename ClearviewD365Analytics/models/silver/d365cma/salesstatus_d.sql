@@ -1,13 +1,12 @@
 {{ config(materialized='table', tags=['silver'], alias='salesstatus') }}
 
 WITH detail AS (
-    SELECT we.EnumValueID AS SalesStatusID
-         , we.EnumValue   AS SalesStatus
+    SELECT we.enumvalueid AS SalesStatusID
+         , we.enumvalue   AS SalesStatus
       FROM {{ ref('enumeration') }} we
-     WHERE we.Enum = 'SalesStatus'
+     WHERE we.enum = 'SalesStatus'
 )
 
 SELECT SalesStatusID
      , SalesStatus
   FROM detail
- ORDER BY SalesStatusID;

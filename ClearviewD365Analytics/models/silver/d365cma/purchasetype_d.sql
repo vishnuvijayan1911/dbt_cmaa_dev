@@ -10,4 +10,3 @@ WITH detail AS (
 SELECT PurchaseTypeID
      , PurchaseType
   FROM detail
- ORDER BY PurchaseTypeID;

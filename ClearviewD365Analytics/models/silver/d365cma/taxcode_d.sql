@@ -21,23 +21,23 @@ taxcodestage AS (
           FROM {{ ref('taxtable') }}     tt
           LEFT JOIN {{ ref('taxdata') }} td
             ON tt.dataareaid  = td.dataareaid 
-           AND tt.taxcode     = td.taxcode;
+           AND tt.taxcode     = td.taxcode
 )
-SELECT {{ dbt_utils.generate_surrogate_key(['tt._recid']) }} AS TaxCodeKey
-         , tt.taxcode       AS TaxCode
-         , tt.taxname       AS TaxName
-         , tt.legalentityid AS LegalEntityID
-         , tt.taxstartdate  AS TaxStartDate
-         , tt.taxenddate    AS TaxEndDate
-         , tt.taxvalue      AS TaxValue
+SELECT {{ dbt_utils.generate_surrogate_key(['_RecID']) }} AS TaxCodeKey
+         , tt.TaxCode       AS TaxCode
+         , tt.TaxName       AS TaxName
+         , tt.LegalEntityID AS LegalEntityID
+         , tt.TaxStartDate  AS TaxStartDate
+         , tt.TaxEndDate    AS TaxEndDate
+         , tt.TaxValue      AS TaxValue
          , we.enumvalue     AS TaxOrigin
-         , tt._recid        AS _RecID
+         , tt._RecID       AS _RecID
          , 1                AS _SourceID
 
          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate   
       FROM taxcodestage               tt
      INNER JOIN {{ ref('enumeration') }} we
-        ON we.enumvalueid = TaxBaseID
+        ON we.enumvalueid = tt.TaxBaseID
        AND we.enum        = 'TaxBaseType';
 
