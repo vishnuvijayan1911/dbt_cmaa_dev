@@ -467,6 +467,8 @@ SELECT DISTINCT
     , 1                                                                                                    AS _SourceID
     , ISNULL(tt._RecID2, 0)                                                                                AS _RecID2
     , frl._RecID                                                                                           AS _RECID
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM {{ ref('packingslipline_f') }}          frl
   LEFT JOIN packingsliplinetrans_facttrans_updated                       tt
     ON frl.PackingSlipLineKey         = tt.PackingSlipLineKey

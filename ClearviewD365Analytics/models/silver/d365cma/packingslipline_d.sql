@@ -19,6 +19,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS PackingSlipLineK
          , cpst.recid                                                        AS _RecID
          , 1                                                                  AS _SourceID
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('custpackingsliptrans') }}     cpst
      INNER JOIN {{ ref('custpackingslipjour') }} cpsj
         ON cpsj.dataareaid   = cpst.dataareaid

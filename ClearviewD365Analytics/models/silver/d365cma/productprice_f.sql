@@ -31,8 +31,8 @@ SELECT
          , dd.DateKey      AS FromDateKey
          , dd1.DateKey     AS ToDateKey
 
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM productprice_factcost      tc
      INNER JOIN {{ ref('legalentity_d') }} dle
         ON dle.LegalEntityID = tc.DATAAREAID

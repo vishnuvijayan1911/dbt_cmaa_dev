@@ -533,8 +533,8 @@ SELECT tl.SalesInvoiceLineKey
       , tl._RecID1                                                                                                   AS _RecID1
       , tl._RecID2                                                                                                   AS _RecID2
       , tl._SourceID
-      , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-      , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
     FROM salesinvoiceline_factline                    tl
     LEFT JOIN {{ ref('vwuomconversion_ft') }} vuc
       ON vuc.legalentitykey  = tl.LegalEntityKey

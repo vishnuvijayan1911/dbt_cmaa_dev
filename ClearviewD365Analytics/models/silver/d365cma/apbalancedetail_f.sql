@@ -497,8 +497,9 @@ SELECT {{ dbt_utils.generate_surrogate_key(['dv.VendorKey', 'le.LegalEntityKey',
          , ts.DiscountLost                    AS DiscountLost
          , ts.DiscountTaken                   AS DiscountTaken
          , 1                                  AS _SourceID
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM apbalancedetail_factstagemain             ts
      INNER JOIN {{ ref('legalentity_d') }}   le
         ON ts.LegalEntityID  = le.LegalEntityID

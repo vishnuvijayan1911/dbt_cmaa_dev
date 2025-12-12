@@ -313,9 +313,10 @@ ORDER BY d1.Date)                                            AS FiscalDayOfMonth
     , d1.FiscalQuarterDate
     , d1.FiscalQuarter
     , d1.FiscalDate
-    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
 
   -- INTO #DETAIL
+  , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+  , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM datedetail1                 d1
   LEFT JOIN {{ ref('fiscalcalendardate') }} fcd
     ON fcd.gregoriandate = d1.Date

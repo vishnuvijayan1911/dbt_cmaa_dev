@@ -8,6 +8,8 @@ SELECT t.OnTimeStatusID
  ,t.OnTime
  ,CAST(t.ProcessStatus AS varchar(50))  AS ProcessStatus
  ,CAST(t.OnTimeStatusType AS varchar(100))  AS OnTimeStatusType
+ , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+ , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
      FROM (
                ---------------Work Order Status (Due date)--------------------
                SELECT 1                              AS OnTimeStatusID

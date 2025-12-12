@@ -56,6 +56,8 @@ SELECT f.ProductionFinishedJournalKey AS ProductionFinishedJournalKey
      , s.shift                                          AS Shift
      , f._SourceID                                      AS _SourceID
      , f._RecID                                         AS _RecID
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM {{ ref('productionfinishedjournal_f') }} f
  INNER JOIN {{ ref('legalentity_d') }}               le
     ON le.LegalEntityKey  = f.LegalEntityKey

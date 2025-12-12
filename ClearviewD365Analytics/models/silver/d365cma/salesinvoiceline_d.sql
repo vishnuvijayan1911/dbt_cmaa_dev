@@ -6,7 +6,6 @@
 -- schema_name: temp
 
 SELECT  {{ dbt_utils.generate_surrogate_key(['t._RecID1']) }} AS SalesInvoiceLineKey
-    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _ModifiedDate 
     , * FROM ( SELECT DISTINCT
           cij.dataareaid                                                              AS LegalEntityID
          , cij.invoiceid                                                                AS InvoiceID
@@ -17,6 +16,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['t._RecID1']) }} AS SalesInvoiceLin
          , 1                                                                            AS _SourceID
 
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('custinvoicejour') }}       cij
 
       LEFT JOIN {{ ref('custinvoicetrans') }} cit

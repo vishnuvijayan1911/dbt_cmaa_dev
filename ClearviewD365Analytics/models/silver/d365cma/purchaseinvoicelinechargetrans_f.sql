@@ -305,8 +305,8 @@ SELECT DISTINCT
          , ISNULL(tt._RecID3, 0)                                                AS _RecID3
          , 1                                                                    AS _SourceID
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                    AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                    AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('purchaseinvoicelinecharge_f') }}     fc
       LEFT JOIN purchaseinvoicelinechargetrans_facttrans4                            tt
         ON tt.PurchaseInvoiceLineChargeKey = fc.PurchaseInvoiceLineChargeKey

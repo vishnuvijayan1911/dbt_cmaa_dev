@@ -20,6 +20,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS QualityTestKey
                 , t.modifiedby                                             AS ModifiedBy
                 , t.recid                                                  AS _RecID
                 , 1                                                        AS _SourceID
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
              FROM {{ ref('inventtesttable') }}  t
              LEFT JOIN {{ ref('enumeration') }} we1
                ON we1.enum        = 'InventTestType'

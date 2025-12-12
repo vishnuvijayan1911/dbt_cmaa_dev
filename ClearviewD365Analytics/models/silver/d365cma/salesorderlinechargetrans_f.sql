@@ -278,8 +278,8 @@ SELECT
          , ISNULL (fc._RecID1, 0)                                                AS _RECID1
          , ISNULL (fc._RecID2, 0)                                                AS _RecID2
          , 1                                                                     AS _SourceID
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('salesorderlinecharge_f') }}     fc
            LEFT JOIN salesorderlinechargetrans_facttrans4                       tt
         ON tt.SalesOrderLineChargeKey = fc.SalesOrderLineChargeKey

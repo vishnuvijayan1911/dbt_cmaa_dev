@@ -34,8 +34,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS 
          , ts._RecID
          , ts._SourceID
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _CreatedDate
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM downtime_factstage                              ts
       LEFT JOIN {{ ref('downtimetype_d') }} dt
         ON dt._RecID         = ts.RECID_PT

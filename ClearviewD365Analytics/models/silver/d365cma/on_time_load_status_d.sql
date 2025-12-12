@@ -7,8 +7,9 @@ SELECT t.[OnTimeLoadStatusID]
           ,CAST(t.[OnTimeLoadStatus] AS VARCHAR(50)) AS OnTimeLoadStatus
           ,CAST(t.[OnTimeStatus] AS VARCHAR(50)) AS OnTimeStatus
           ,CAST(t.[ShipStatus] AS VARCHAR(50)) AS ShipStatus
-          ,t.[_ModifiedDate]
 
+          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM (   SELECT  1             AS OnTimeLoadStatusID
                , 'Not yet due' AS OnTimeLoadStatus
                , 'Not yet due' AS OnTimeStatus

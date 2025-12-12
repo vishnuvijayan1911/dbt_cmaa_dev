@@ -39,8 +39,8 @@ SELECT *
                     , CAST(ISNULL(lpa.validto, '2154-12-31') AS DATE)       AS ValidTo
                     , CAST(ROW_NUMBER() OVER (PARTITION BY lpa.location
 ORDER BY ISNULL(lpa.validto, CAST('2154-12-31' AS DATE)) DESC) AS SMALLINT) AS LocationRank
-                    ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                       AS  _CreatedDate
-                    ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))                                       AS  _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
                  FROM {{ ref('logisticspostaladdress') }} lpa
                  LEFT JOIN logisticspostaladdresscountry                        tc
                    ON tc.CountryRegionID = lpa.countryregionid) t

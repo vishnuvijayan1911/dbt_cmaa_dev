@@ -15,8 +15,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['vij.recid']) }} AS PurchaseInvoiceL
          , vij.recid                                                                       AS _RECID
          , ISNULL (vit.recid, 0)                                                           AS _RecID2
 
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('vendinvoicejour') }}       vij
       LEFT JOIN {{ ref('vendinvoicetrans') }} vit
         ON vit.dataareaid         = vij.dataareaid

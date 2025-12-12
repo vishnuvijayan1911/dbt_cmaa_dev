@@ -72,6 +72,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts._RecID, ts._SourceID) AS CaseKey
      , ts._SourceDate                                        AS _SourceDate
      , ts._RecID                                             AS _RecID
      , ts._SourceID                                          AS _SourceID
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM casestage          ts
   LEFT JOIN {{ ref('salesperson_d') }} dsp
     ON dsp._RecID      = ts.RecID_HCM

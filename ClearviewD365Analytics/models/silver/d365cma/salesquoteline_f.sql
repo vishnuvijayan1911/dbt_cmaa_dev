@@ -257,8 +257,8 @@ SELECT DISTINCT td.SalesQuoteLineKey
       , td._SourceDate                                                                                               AS _SourceDate
       , td._RecID
       , td._SourceID
-      , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS  _CreatedDate
-      , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
     FROM salesquoteline_factdetailmain                td
     LEFT JOIN {{ ref('vwuomconversion_ft') }}   vuc
       ON vuc.legalentitykey  = td.LegalEntityKey

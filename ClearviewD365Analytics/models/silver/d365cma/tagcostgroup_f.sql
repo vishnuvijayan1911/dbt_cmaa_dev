@@ -116,8 +116,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['d._recid', 'd._sourceid']) }} AS Ta
    , d.costingqty
    , d.costamount
    , d.unitcost
-   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _createddate
-   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                               as _modifieddate 
    , d._sourceid
    , d._recid
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM tagcostgroup_factdetail1  d;

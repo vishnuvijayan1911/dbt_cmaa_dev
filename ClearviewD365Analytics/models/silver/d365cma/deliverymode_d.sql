@@ -11,8 +11,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(["dm.recid"]) }}            AS Delive
          , CASE WHEN dm.txt = '' THEN dm.code ELSE dm.txt END AS DeliveryMode
          , dm.recid                                           AS _RecID
          , 1                                                  AS _SourceID
-         ,  cast(CURRENT_TIMESTAMP  as DATETIME2(6))                                              AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP  as DATETIME2(6))                                              AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('dlvmode') }} dm
      WHERE dm.code <> '';
 

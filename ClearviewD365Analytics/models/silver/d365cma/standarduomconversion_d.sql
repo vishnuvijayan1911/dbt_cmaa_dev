@@ -18,6 +18,8 @@ SELECT
         uomc.factor,
         prd.productwidth,
         prd.productlength     
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('product_d') }} prd
       INNER JOIN {{ ref('unitofmeasureconversion') }} uomc ON uomc.product = prd.productid
       INNER JOIN {{ ref('unitofmeasure') }} fromuom ON fromuom.recid = uomc.fromunitofmeasure

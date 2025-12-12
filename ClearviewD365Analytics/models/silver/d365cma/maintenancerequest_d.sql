@@ -17,8 +17,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['rt.recid']) }} AS MaintenanceReques
          , rt.recid                    AS _RecID
          , 1                            AS _SourceID
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('entassetrequesttable') }}           rt
       LEFT JOIN {{ ref('entassetlifecyclestatelog') }} slog
         ON rt.dataareaid = slog.dataareaid

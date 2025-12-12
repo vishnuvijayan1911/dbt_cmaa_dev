@@ -29,8 +29,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['stg._RecID', 'stg._SourceID']) }} A
          , stg._SourceID     AS _SourceID
          , stg._RecID
 
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM faultcause_factstage               stg
      INNER JOIN {{ ref('legalentity_d') }} le
         ON le.LegalEntityID  = stg.LegalEntityID

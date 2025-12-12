@@ -10,8 +10,8 @@ SELECT
          , pg.dataareaid  AS LegalEntityID
          , pg.routegroupid AS ProductionRouteGroupID
          , pg.name         AS ProductionRouteGroup
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('routegroup') }} pg
      WHERE pg.routegroupid <> '';
 

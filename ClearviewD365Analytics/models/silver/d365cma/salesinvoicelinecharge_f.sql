@@ -251,8 +251,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID1']) }} AS SalesInvoiceLin
          , td._RecID2
          , td._SourceID
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesinvoicelinecharge_factdetail1                   td
       LEFT JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityKey    = td.LegalEntityKey

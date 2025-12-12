@@ -159,6 +159,8 @@ SELECT DISTINCT
     , ts.TotalDiscount_TransCur                AS TotalDiscount_TransCur
     , ts._SourceID                             AS _SourceID
     , ts._RecID                                AS _RecID
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
  FROM purchaseinvoice_factstage    ts
 INNER JOIN {{ ref('legalentity_d') }}       le
    ON le.LegalEntityID     = ts.LegalEntityID

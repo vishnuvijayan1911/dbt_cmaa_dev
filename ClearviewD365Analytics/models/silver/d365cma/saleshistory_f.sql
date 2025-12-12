@@ -207,8 +207,6 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
         WHERE ts._RecID  NOT IN (SELECT _RecID FROM {{ this }})
         UNION
         SELECT 
-		  _CreatedDate
-         , _ModifiedDate 
           , SalesOrderLineKey
          ,SalesStatusKey
          , SalesUpdateTypeKey
@@ -244,5 +242,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID ) AS SalesHistoryKey, * FROM (
          ,  ModifiedBy
          ,  _RecID
          , _SourceID                                                                                                           AS _SourceID
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 		FROM {{ this }}
 		) t;

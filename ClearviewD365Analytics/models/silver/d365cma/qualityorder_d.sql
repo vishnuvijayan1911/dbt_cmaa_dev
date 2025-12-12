@@ -16,6 +16,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY qt.dataareaid, qt.qualityorderid) AS Quality
      , qt.modifiedby                                                  AS ModifiedBy
      , qt.recid                                                       AS _RecID
      , 1                                                              AS _SourceID
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM {{ ref('inventqualityordertable') }} qt
   LEFT JOIN {{ ref('enumeration') }}        we1
     ON we1.enum        = 'InventTestOrderStatus'

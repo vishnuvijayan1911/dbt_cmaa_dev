@@ -38,6 +38,8 @@ SELECT dqol.QualityOrderLineKey        AS QualityOrderLineKey
      , ts.TestValue                    AS TestValue
      , ts.RecID                        AS _RecID
      , 1                               AS _SourceID
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM qualityorderline_factstage      ts
  INNER JOIN {{ ref('qualityorderline_d') }}         dqol
     ON dqol._RecID        = ts.RecID

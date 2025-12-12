@@ -16,8 +16,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ql.recid']) }} AS SalesQuoteLineKey
          , 1                                                                             AS _SourceID
          ,'1900-01-01'                                                                   AS ActivityDate           
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                             AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('salesquotationline') }}       ql
      INNER JOIN {{ ref('salesquotationtable') }} qt
         ON qt.dataareaid  = ql.dataareaid

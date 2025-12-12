@@ -329,6 +329,6 @@ SELECT
          , tdm._RecID                                                                                           AS _RecID
          , tdm._SourceID                                                                                        AS _SourceID
          , tdm._SourceDate
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesorder_factdetailmain tdm;

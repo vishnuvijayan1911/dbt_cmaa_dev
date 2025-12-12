@@ -205,8 +205,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS 
      , ts.IsPrimary                                          AS IsPrimary
      , ts._RecID                                             AS _RecID
      , ts._SourceID                                          AS _SourceID
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                     AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                     AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM caseassociation_factstage        ts
   LEFT JOIN caseassociation_factitem    ti
     ON ti.RecID_CA         = ts._RecID

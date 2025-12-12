@@ -422,8 +422,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['tt.PackingSlipID']) }} AS SalesInvo
                , fcl._RecID1                                                                                            AS _RECID1
                , 1                                                                                                      AS _SourceID
 
-               ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-               , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+               , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+               , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
             FROM {{ ref('salesinvoiceline_f') }}          fcl
 
             LEFT JOIN  salesinvoicelinetrans_facttransadj4                       tt

@@ -66,8 +66,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['le.LegalEntityKey', 'dca.LedgerAcco
          , bg.BudgetDiff_TransCur   AS BudgetAmount_TransCur
          , te.BudgetNumber          AS BudgetNumber
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM glbudgettrans_factstage                     te
      INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID        = te.LegalEntityID

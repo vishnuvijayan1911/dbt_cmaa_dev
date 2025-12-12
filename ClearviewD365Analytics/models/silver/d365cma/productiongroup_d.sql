@@ -11,8 +11,8 @@ SELECT
          , pg.prodgroupid                                              AS ProductionGroupID
          , CASE WHEN pg.name = '' THEN pg.prodgroupid ELSE pg.name END AS ProductionGroup
 
-          ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('prodgroup') }} pg
      WHERE pg.prodgroupid <> '';
 

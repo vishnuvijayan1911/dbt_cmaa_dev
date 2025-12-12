@@ -62,8 +62,8 @@ SELECT DISTINCT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('salesorderlinetax_f') }}           ft
      INNER JOIN salesorderlinetaxtrans_factsolkeys                        tk
         ON tk.RecID_TT = ft._RecID

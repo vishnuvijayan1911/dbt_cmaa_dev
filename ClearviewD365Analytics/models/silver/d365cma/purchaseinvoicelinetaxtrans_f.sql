@@ -75,8 +75,8 @@ SELECT
          , tk.RecID_TT                               AS _RecID2
          , 1                                         AS _SourceID
 
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('purchaseinvoicelinetax_f') }}        ft
      INNER JOIN purchaseinvoicelinetaxtrans_factpilkeys                          tk
         ON tk.RecID_TT  = ft._RecID

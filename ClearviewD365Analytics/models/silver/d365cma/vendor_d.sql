@@ -101,6 +101,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._SourceID']) }} AS 
       , te1.Locator                                            AS VendorPhone
       , ts._RecID                                              AS _RecID
       , ts._SourceID                                           AS _SourceID
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
  FROM vendorstage                  ts
  LEFT JOIN vendorelectronicaddress te1
    ON te1.Party      = ts.RecID_DPT

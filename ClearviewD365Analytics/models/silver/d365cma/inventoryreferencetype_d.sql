@@ -9,5 +9,7 @@ WITH detail_inventoryreferencetype AS (
 
 SELECT InventoryReferenceTypeID
      , InventoryReferenceType
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM detail_inventoryreferencetype
  ORDER BY InventoryReferenceTypeID;

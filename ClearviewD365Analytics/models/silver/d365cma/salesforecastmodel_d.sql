@@ -36,8 +36,8 @@ SELECT
          , we2.enumvalue    AS BudgetType
 
 
-           , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesforecastmodelstage               ts
      INNER JOIN {{ ref('enumeration') }} we1
         ON we1.enum        = 'HeadingSub'

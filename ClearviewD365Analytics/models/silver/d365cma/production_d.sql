@@ -117,7 +117,7 @@ SELECT
         ,'1900-01-01'                                                       AS ActivityDate
 
 
-           ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                 AS _ModifiedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM productiondetail2 ts;
 

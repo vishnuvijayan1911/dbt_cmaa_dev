@@ -385,5 +385,7 @@ ORDER BY a.Date)                                                             AS 
         , a.IsWeekday
         , DENSE_RANK () OVER (ORDER BY a.FiscalWeekDate)                    AS FiscalWeekID
       --INTO #Detail
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM fiscaldate445 a;
 

@@ -389,7 +389,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY dd.DateKey, le.LegalEntityKey, dc.CustomerKe
     , ts.DiscountLost                                                                                                 AS DiscountLost
     , ts.DiscountTaken                                                                                                AS DiscountTaken
     , 1                                                                                                               AS _SourceID
-    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                               AS _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
  FROM arbalancedetail_factstage             ts
 INNER JOIN {{ ref('legalentity_d') }}                    le
    ON ts.LegalEntityID   = le.LegalEntityID

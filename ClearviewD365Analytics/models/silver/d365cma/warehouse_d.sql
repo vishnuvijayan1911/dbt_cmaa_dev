@@ -66,8 +66,8 @@ SELECT
      , ts._RecID                                                                           AS _RecID
      , ts._SourceID                                                                        AS _SourceID
 
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                   AS _ModifiedDate  
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
    FROM warehousestage               ts
    LEFT JOIN warehouseaddress        lpa
      ON lpa.Location    = ts.Location

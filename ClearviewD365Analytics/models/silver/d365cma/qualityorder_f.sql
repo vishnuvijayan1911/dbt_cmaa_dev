@@ -175,6 +175,8 @@ SELECT td.QualityOrderKey                         AS QualityOrderKey
      , td.TransQuantity * ISNULL (vuc5.factor, 1) AS TransQuantity_SQIN
      , td._RecID                                  AS _RecID
      , td._SourceID                               AS _SourceID
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM qualityorder_factdetail1    td
   LEFT JOIN {{ ref('vwuomconversion_ft') }}   vuc1
     ON vuc1.legalentitykey = td.LegalEntityKey

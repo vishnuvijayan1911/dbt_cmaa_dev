@@ -63,6 +63,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RECID) AS TagAttributeInfoKey,
          , e.enumvalue               AS [Tag attribute category]
          , CAST(p.proddate AS DATE)  AS [Created date time]
          , a.recid                   AS [_RecID]
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('pdsbatchattributes') }} a
       INNER JOIN {{ ref('dataarea') }} da
          ON da.fno_id = a.dataareaid

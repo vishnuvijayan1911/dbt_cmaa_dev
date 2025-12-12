@@ -79,7 +79,7 @@ SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID']) }} AS SalesInvoiceLine
          , td._RecID
          , td._SourceID
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesinvoicelinetax_factdetail1 td
      WHERE td.TransDate BETWEEN td.TaxStartDate AND td.TaxEndDate;

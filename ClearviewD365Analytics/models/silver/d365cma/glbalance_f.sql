@@ -139,6 +139,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['dd.DateKey', 'le.LegalEntityKey', '
          , te.DebitAmount                   AS DebitAmount
          , te.TransAmount                   AS TransAmount
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM glbalance_factsummary               te
      INNER JOIN {{ ref('legalentity_d') }}   le
         ON le.LegalEntityID = te.LegalEntityID

@@ -23,5 +23,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts.LegalEntityID, ts.QualityOrderID, ts.Sequ
                 , t.modifiedby                                                           AS ModifiedBy
                 , t.recid                                                                AS _RecID
                 , 1                                                                      AS _SourceID
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
              FROM {{ ref('inventqualityorderline') }} t) ts;
 

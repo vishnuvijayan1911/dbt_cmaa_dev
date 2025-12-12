@@ -106,6 +106,8 @@ SELECT dv.VendorKey                                                             
               ELSE 0 END                                                                                                 AS RemainingCredit_USD
        , ts._RecID                                                                                                       AS _RecID
        , ts._SourceID                                                                                                    AS _SourceID
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+       , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
  FROM vendor_factstage                       ts
 INNER JOIN {{ ref('legalentity_d') }}         le
    ON le.LegalEntityID    = ts.LegalEntityID

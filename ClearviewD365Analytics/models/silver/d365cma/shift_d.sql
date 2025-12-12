@@ -43,5 +43,7 @@ SELECT ROW_NUMBER () OVER (ORDER BY ts.LegalEntityID, ts.InventorySiteID, ts.Shi
      , ts.Shift                                                                                                                           AS Shift
      , ts.ShiftStartTime                                                                                                                  AS ShiftStartTime
      , ts.ShiftEndTime                                                                                                                    AS ShiftEndTime
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM shiftstage ts;
 

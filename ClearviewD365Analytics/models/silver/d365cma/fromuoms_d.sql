@@ -252,6 +252,8 @@ FROM
             k.productlength,
             pr.itemid,
             u.symbol AS fromuom 
+            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
         FROM
             {{ ref('purchreqline') }} pr 
             INNER JOIN

@@ -164,8 +164,8 @@ SELECT dm.TransferOrderLinekey
      , dm.TransferedQuantity * ISNULL (vuc4.factor, 0)                 AS TransferedQuantity_SQIN
      , dm._RecID
      , dm._SourceID
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM transferorderline_factdetailmain dm
   LEFT JOIN {{ ref('vwuomconversion') }}           vuc
     ON vuc.legalentitykey  = dm.LegalEntityKey

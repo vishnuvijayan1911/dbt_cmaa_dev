@@ -30,8 +30,6 @@ SELECT t.BOMkey
          , t._RecID
          , t._SourceID  
 
-        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
       FROM   (SELECT {{ dbt_utils.generate_surrogate_key(['bv.recid']) }} AS BOMKey
                      ,bv.dataareaid     AS LegalEntityID
                     , bv.bomid          AS BOMID
@@ -43,6 +41,8 @@ SELECT t.BOMkey
                     , 1                 AS _SourceID
                     , ROW_NUMBER() OVER (PARTITION BY bv.bomid, bv.dataareaid
 ORDER BY bv.bomid, bv.dataareaid DESC) AS RankValue
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
                  FROM {{ ref('bomversion') }} bv
                  LEFT JOIN bomunit     tu
                    ON tu.RECID  = bv.recid

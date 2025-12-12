@@ -12,6 +12,8 @@ select  prd.productkey,
               CASE WHEN uomc.factor = 0 then CAST(0 as FLOAT)
 		          else CAST(1 AS FLOAT) / CAST(uomc.factor AS FLOAT)
 		          END as factor
+		          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+		          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       from {{ ref('product_d') }} prd
       inner join {{ ref('unitofmeasureconversion') }} uomc on uomc.product = prd.productid
       inner join {{ ref('unitofmeasure') }} fromuom on fromuom.recid = uomc.fromunitofmeasure

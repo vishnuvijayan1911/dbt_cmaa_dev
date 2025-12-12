@@ -50,8 +50,9 @@ SELECT {{ dbt_utils.generate_surrogate_key(['t._RecID', 't._SourceID']) }} AS Sh
      , t.LoadShippedConfirmationDate
      , t._RecID
      , t._SourceID
-     ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))    AS  _ModifiedDate
 --   INTO #Detail
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM shippingloaddetail1                  t
   LEFT JOIN {{ ref('ontimeloadstatus_d') }} l
     ON t.OnTimeLoadStatusID = l.OnTimeLoadStatusID

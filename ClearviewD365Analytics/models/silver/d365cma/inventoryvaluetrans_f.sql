@@ -715,8 +715,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['ts.RECID_IT', 'ts.RECID_ITPDP', 't
          , ts.RECID_ITPDF                             AS _RecID4
          , 1                                          AS _SourceID
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM inventoryvaluetrans_factdetail1            ts
       LEFT JOIN inventoryvaluetrans_factuomconversion uc
         ON uc._RecID = ts.RECID_IT

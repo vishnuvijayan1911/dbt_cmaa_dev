@@ -11,8 +11,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['ec.recid']) }} AS SalesCategoryKey
       , ec1.name                   AS ProductCategory
       , ec.recid                 AS _RecID
       , 1                          AS _SourceID
-      ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-  , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+      , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
    FROM {{ ref('ecorescategory') }}                 ec
 INNER JOIN  {{ ref('ecorescategoryhierarchy') }}     ech
    ON ech.recid                      = ec.categoryhierarchy

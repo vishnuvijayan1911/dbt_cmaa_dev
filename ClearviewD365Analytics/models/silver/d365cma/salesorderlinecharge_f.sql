@@ -256,8 +256,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['ts._RecID', 'ts._RecID1']) }} AS Sa
          , ts._RecID                                                   AS _RecID1
          , ts._RecID1                                                  AS _RecID2
          , 1                                                           AS _SourceID
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesorderlineproductcharge                   ts
      INNER JOIN {{ ref('legalentity_d') }}       le
         ON le.LegalEntityID     = ts.LegalEntityID

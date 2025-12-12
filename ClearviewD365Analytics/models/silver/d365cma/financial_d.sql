@@ -59,7 +59,7 @@ SELECT {{ dbt_utils.generate_surrogate_key(['td._RecID', 'td._SourceID']) }} AS 
          , td.MainAccountID
          , td._SourceID
          , td._RecID
-        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate         
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM financialdetail1 td;
 

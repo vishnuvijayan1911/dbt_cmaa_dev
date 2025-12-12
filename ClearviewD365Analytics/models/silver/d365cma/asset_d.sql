@@ -54,8 +54,8 @@ SELECT
     ts.AssetValidTo,
     ts._RecID,
     ts._SourceID,
-    CAST(CURRENT_TIMESTAMP AS DATETIME2(6))             AS _CreatedDate,
-    CAST(CURRENT_TIMESTAMP AS DATETIME2(6))             AS _ModifiedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM assetstage AS ts
 LEFT JOIN {{ ref('assetfunctionallocation_d') }} AS afl
     ON afl.LegalEntityID        = ts.LegalEntityID

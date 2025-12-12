@@ -29,8 +29,8 @@ SELECT di.LotKey              AS LotKey
          , 1                      AS _SourceID
          , ts._RecID              AS _RecID
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM lot_factstage                  ts
      INNER JOIN {{ ref('legalentity_d') }}     le
         ON le.LegalEntityID      = ts.LegalEntityID

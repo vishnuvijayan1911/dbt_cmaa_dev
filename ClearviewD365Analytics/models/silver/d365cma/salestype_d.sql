@@ -9,5 +9,7 @@ WITH detail AS (
 
 SELECT SalesTypeID
      , SalesType
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM detail
  ORDER BY SalesTypeID;

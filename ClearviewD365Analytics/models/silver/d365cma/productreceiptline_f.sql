@@ -273,8 +273,8 @@ SELECT DISTINCT td.ProductReceiptLineKey
          , td._SourceID
          , td._RecID
 
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM productreceiptline_factdetailmain              td
       LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
         ON vuc.legalentitykey  = td.LegalEntityKey

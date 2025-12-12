@@ -14,8 +14,9 @@ SELECT {{ dbt_utils.generate_surrogate_key(['cij.invoiceid']) }} AS SalesInvoice
          , cij.duedate     AS DueDate
          , cij.recid      AS _RecID
          , 1               AS _SourceID
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
         ,'1900-01-01'       AS ActivityDate 
 
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('custinvoicejour') }} cij
 

@@ -19,8 +19,6 @@ t.LegalEntityID,
      , t._SourceID
      , t._RecID
 
-     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
      FROM (   SELECT DISTINCT
                    da.fno_id                                          AS LegalEntityID,
                      da.name                                        AS LegalEntity
@@ -36,6 +34,8 @@ t.LegalEntityID,
                     , ROW_NUMBER() OVER (PARTITION BY da.id
 ORDER BY da.id      )                                                AS RankValue
 
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
               FROM {{ ref('dataarea') }}                da
                INNER JOIN  {{ ref('ledger') }}                  ldg
                ON ldg.name   = da.fno_id

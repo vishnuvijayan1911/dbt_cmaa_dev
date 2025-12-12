@@ -26,8 +26,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.ChargeCode', 
          , we1.enumvalue                                                  AS ModuleType
 
 
-        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM chargecodedetail1             ts
       LEFT JOIN {{ ref('enumeration') }} we1
         ON we1.enumvalueid = ts.ModuleType

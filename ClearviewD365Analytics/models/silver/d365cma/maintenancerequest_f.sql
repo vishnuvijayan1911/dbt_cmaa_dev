@@ -40,8 +40,8 @@ SELECT
          , ts._SourceID
 
 
-    cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS _CreatedDate
-    , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
     FROM maintenancerequest_factstage ts
      INNER JOIN {{ ref('maintenancerequest_d') }}      re
         ON re._RecID                   = ts._RecID

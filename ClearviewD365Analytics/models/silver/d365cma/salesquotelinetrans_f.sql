@@ -110,8 +110,8 @@ SELECT
          , fcl._RecID                                                                                           AS _RecID1
          , 1                                                                                                    AS _SourceID
 
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                    AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('salesquoteline_f') }}       fcl
 
       LEFT JOIN salesquotelinetrans_factstage                   ts

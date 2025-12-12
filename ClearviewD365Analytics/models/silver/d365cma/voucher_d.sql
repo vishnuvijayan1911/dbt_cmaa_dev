@@ -11,8 +11,8 @@ SELECT
            gj.subledgervoucherdataareaid AS LegalEntityID
          , gj.subledgervoucher           AS VoucherID
 
-            , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                            AS _ModifiedDate  
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('generaljournalentry') }} gj
      WHERE gj.subledgervoucher <> '') t;
 

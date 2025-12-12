@@ -22,8 +22,8 @@ SELECT * FROM
          , pl.recid                                                                                                  AS _RecID
          , 1                                                                                                         AS _SourceID
 		, pl.isdeleted
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                          AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                          AS _ModifiedDate
+		, cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+		, cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('purchline') }}          pl    
      INNER JOIN {{ ref('purchtable') }}    pt
         ON pt.dataareaid = pl.dataareaid

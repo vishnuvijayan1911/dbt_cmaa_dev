@@ -24,8 +24,8 @@ SELECT ROW_NUMBER () OVER (ORDER BY t._RecID) AS NetRequirementsKey
                 , CAST(pt.createddatetime AS Datetime) AT TIME ZONE 'UTC' AT TIME ZONE le.TimeZone                               AS OrderCreatedDateTime
                 , rt.recid                                                                                                       AS _RecID
                 , 1                                                                                                              AS _SourceID
-                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                              AS _CreatedDate
-                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                                              AS _ModifiedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+                , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
              FROM {{ ref('reqtrans') }}            rt
              INNER JOIN {{ ref('legalentity_d') }}         le
 			         ON le.LegalEntityID   = rt.dataareaid

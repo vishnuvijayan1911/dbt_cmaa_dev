@@ -10,4 +10,6 @@ WITH detail AS (
 
 SELECT ApprovalStatusID
      , ApprovalStatus
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM detail

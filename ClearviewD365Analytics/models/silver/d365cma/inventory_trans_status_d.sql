@@ -75,8 +75,8 @@ SELECT
                AND we.enumvalueid IN ( 1, 2 )
                THEN 'Received' END
           , '')                                                                                                      AS InventoryTransStatusGroup
-     cast(CURRENT_TIMESTAMP as DATETIME2(6))                         AS _CreatedDate
-, cast(CURRENT_TIMESTAMP as DATETIME2(6))                          AS _ModifiedDate
+          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+          , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM {{ ref('enumeration') }} we
 WHERE we.enum IN ( 'StatusIssue', 'StatusReceipt' )
 AND we.enumvalueid <> 0

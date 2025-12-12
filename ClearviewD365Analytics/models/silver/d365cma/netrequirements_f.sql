@@ -124,6 +124,8 @@ SELECT tl.LegalEntityKey                                   AS LegalEntityKey
    , tl.Partition                                             AS Partition
    , tl._RecID                                                AS _RecID
    , tl._SourceID
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+   , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM netrequirements_factmain tl
 LEFT JOIN {{ ref('vwuomconversion') }}   vuc
   ON vuc.legalentitykey  = tl.LegalEntityKey

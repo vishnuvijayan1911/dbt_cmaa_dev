@@ -357,8 +357,8 @@ SELECT
          , t1.PerSeries													  AS PerSeries
          , t1._SourceID													  AS _SourceID
          , t1._RecID													  AS _RecID
-           cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                                                      AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM productionpicklistjournal_factdetailmain             t1
       LEFT JOIN {{ ref('vwuomconversion_lb') }} vuc
         ON vuc.legalentitykey  = t1.LegalEntityKey

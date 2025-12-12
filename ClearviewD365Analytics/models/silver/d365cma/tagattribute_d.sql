@@ -25,6 +25,8 @@ tagattributesdetail1 AS (
 )
 SELECT ib.*
         ,{{ get_tag_attr_def_for_detail() }}
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
     FROM {{ ref('tag_d') }}                     ib
 
     LEFT JOIN tagattributesdetail1                           tt

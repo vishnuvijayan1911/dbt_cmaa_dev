@@ -5,6 +5,8 @@
 
 SELECT *
 
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM (   SELECT 
                1           AS SalesUpdateTypeID
                , 'New order' AS SalesUpdateType

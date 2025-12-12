@@ -144,5 +144,7 @@ cleaned AS (
 )
 
 SELECT *
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM cleaned
 WHERE ProductKey <> -1;

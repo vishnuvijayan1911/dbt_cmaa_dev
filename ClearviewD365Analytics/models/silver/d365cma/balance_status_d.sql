@@ -19,7 +19,7 @@ SELECT 0  AS BalanceStatusID
                , 'Zero balance'   AS BalanceStatus
                , c.CreditStatusID AS CreditStatusID
                , c.CreditStatus   AS CreditStatus
-               , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-               , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS  _ModifiedDate
+               , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+               , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
      FROM (SELECT 0 AS CreditStatusID, 'No credit used' AS CreditStatus) AS c
 

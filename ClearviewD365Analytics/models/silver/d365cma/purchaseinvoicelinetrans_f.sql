@@ -385,8 +385,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['fcl._RecID1', 'fcl._RecID2', 'tt.Re
          , fcl._RecID1                                                                                                 AS _RecID1
          , 1                                                                                                           AS _SourceID
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('purchaseinvoiceline_f') }}          fcl
       LEFT JOIN purchaseinvoicelinetrans_factadj4                          tt
         ON tt.PurchaseInvoiceLineKey  = fcl.PurchaseInvoiceLineKey

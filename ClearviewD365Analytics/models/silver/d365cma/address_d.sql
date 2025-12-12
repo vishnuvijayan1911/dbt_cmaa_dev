@@ -28,8 +28,6 @@ SELECT
     {{ dbt_utils.generate_surrogate_key(['t._RecID']) }} AS AddressKey,
     *
         , '1900-01-01'                                               AS ActivityDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM (   SELECT lpa.location                                                                            AS Location
                     , lpa.street                                                                              AS Street
                     , lpa.city                                                                                AS City
@@ -41,6 +39,8 @@ SELECT
 ORDER BY ISNULL(lpa.validto, CAST('2154-12-31' AS DATE)) DESC) AS SMALLINT)                                   AS LocationRank
                     , lpa.recid                                                                               AS _RecID
                     , 1                                                                                       AS _SourceID
+                    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+                    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
     FROM {{ ref('logisticspostaladdress') }} lpa
       LEFT JOIN addresscountry             tc
       ON tc.CountryRegionID = lpa.countryregionid ) t;

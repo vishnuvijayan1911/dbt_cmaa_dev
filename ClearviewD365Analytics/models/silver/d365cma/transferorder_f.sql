@@ -26,8 +26,8 @@ SELECT t.transferorderkey         AS TransferOrderkey
      , dw2.warehousekey           AS ToWarehouseKey
      , ts._RecID                  AS _RecID
      , ts._SourceID               AS _SourceID
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))          AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))          AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM transferorder_factstage ts
   INNER JOIN {{ ref('transferorder_d') }}    t
     ON t._RecID          = ts._RecID

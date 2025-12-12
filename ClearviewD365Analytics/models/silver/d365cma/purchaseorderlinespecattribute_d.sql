@@ -53,8 +53,8 @@ SELECT dso.PurchaseOrderLineKey
          , ba.recid                                                                                                AS _RecID
          , 1                                                                                                        AS _SourceID
 
-         ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM purchaseorderlinespecattribute                      ba
      INNER JOIN {{ ref('purchaseorderline_d') }} dso
         ON dso._RecID    = ba.recid

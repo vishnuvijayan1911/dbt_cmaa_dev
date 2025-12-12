@@ -146,7 +146,6 @@ SELECT {{ dbt_utils.generate_surrogate_key(['t.AgeDaysBegin', 't.AgeDaysEnd']) }
           , CASE WHEN t.Age_30_90_180_360_540_720_sort < -32767
                 THEN -9999
                 ELSE CASE WHEN t.Age_30_90_180_360_540_720_sort > 32767 THEN 9990 ELSE Age_30_90_180_360_540_720_sort END END              AS Age_30_90_180_360_540_720_sort
-          ,GETDATE() as   _ModifiedDate
 
       FROM (   SELECT t2.AgeDaysBegin
                     , t2.AgeDaysEnd
@@ -160,6 +159,8 @@ SELECT {{ dbt_utils.generate_surrogate_key(['t.AgeDaysBegin', 't.AgeDaysEnd']) }
                     , MIN(t2.AgeDaysBegin) OVER (PARTITION BY t2.Age_30_35_40_45_60_90_120) AS Age_30_35_40_45_60_90_120_sort
                     , t2.Age_30_90_180_360_540_720
                     , MIN(t2.AgeDaysBegin) OVER (PARTITION BY t2.Age_30_90_180_360_540_720) AS Age_30_90_180_360_540_720_sort
+                    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+                    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
                  FROM agingbucketdays2 t2) t
 
 

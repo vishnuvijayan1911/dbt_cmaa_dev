@@ -1327,9 +1327,9 @@ SELECT t.CurrencyKey                                                            
          , t._SourceDate
          , t._RecID                                                                 AS _RecID
          , t._SourceID                                                              AS _SourceID
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM salesorderline_factdetailmxp                   t
       LEFT JOIN {{ ref('exchangerate_f') }} ex
         ON ex.ExchangeDateKey   = t.OrderDateKey

@@ -104,8 +104,8 @@ SELECT dm.TransferOrderHistoryLinekey
      , dm.ScrappedQuantity * ISNULL (vuc4.factor, 0)            AS ScrappedQuantity_SQIN
      , dm._RecID
      , dm._SourceID
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                        AS _CreatedDate
-     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                        AS _ModifiedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+     , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
   FROM transferorderhistoryline_factdetailmain dm
   LEFT JOIN {{ ref('vwuomconversion') }}           vuc
     ON vuc.legalentitykey  = dm.LegalEntityKey

@@ -30,8 +30,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['t.LegalEntityID', 't.PaymentModeID
          , CASE WHEN pa.Name = '' THEN pa.PayModeID ELSE pa.Name END AS PaymentMode
 
 
-     ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate,
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM paymentmodepaymode pa
      WHERE pa.RankVal = 1 ) t;
 

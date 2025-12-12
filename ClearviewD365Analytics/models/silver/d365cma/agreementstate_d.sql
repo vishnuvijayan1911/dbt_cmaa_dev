@@ -19,8 +19,9 @@ SELECT
     ts.agreementatateid AS AgreementStateID
          , we.enumvalue        AS AgreementState
          , ts._sourceid        AS _SourceID
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM agreementstatestage               ts
       LEFT JOIN {{ ref("enumeration") }} we
         ON we.enumvalueid = ts.AgreementStateID

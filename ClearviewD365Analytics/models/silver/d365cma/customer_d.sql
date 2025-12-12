@@ -102,8 +102,9 @@ SELECT
     , ts.VATNumber                                         AS VATNumber
     , ts._RecID                                            AS _RecID
     , ts._SourceID                                         AS _SourceID
-    , CAST(CURRENT_TIMESTAMP AS DATETIME2(6))              AS _ModifiedDate
     , '1900-01-01'                                         AS ActivityDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+    , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
 FROM customerdetail1                AS ts
 LEFT JOIN customerelectronicaddress AS te1
   ON te1.Party = ts.RecID_DPT

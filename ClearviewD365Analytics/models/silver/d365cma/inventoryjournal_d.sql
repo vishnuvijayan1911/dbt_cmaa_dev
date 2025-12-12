@@ -27,8 +27,8 @@ SELECT  {{ dbt_utils.generate_surrogate_key(['ts._RecID']) }} AS InventoryJourna
          , 1                AS _SourceID
          , ts._RecID        AS _RecID
 
-        ,cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _CreatedDate
-        , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                               AS _ModifiedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM inventoryjournalstage               ts
       LEFT JOIN {{ ref('enumeration') }} e1
         ON e1.enum          = 'InventJournalType'

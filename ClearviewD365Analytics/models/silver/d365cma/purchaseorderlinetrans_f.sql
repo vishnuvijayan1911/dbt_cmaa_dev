@@ -387,8 +387,8 @@ SELECT
          , fpl._RecID                                                                                                  AS _RecID1
          , 1                                                                                                           AS _SourceID
 
-         ,  cast(CURRENT_TIMESTAMP as DATETIME2(6))  AS  _CreatedDate
-         , cast(CURRENT_TIMESTAMP as DATETIME2(6)) AS _ModifiedDate 
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                          AS _CreatedDate
+         , cast(CURRENT_TIMESTAMP as DATETIME2(6))                                         AS _ModifiedDate
       FROM {{ ref('purchaseorderline_f') }}    fpl
        LEFT JOIN purchaseorderlinetrans_factprorate4                 ts
         ON ts.PurchaseOrderLineKey       = fpl.PurchaseOrderLineKey
