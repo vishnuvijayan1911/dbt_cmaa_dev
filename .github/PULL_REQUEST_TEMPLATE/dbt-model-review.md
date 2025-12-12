@@ -29,6 +29,28 @@
 - [ ] Outliers or null patterns are understood and acceptable.
 - [ ] Confirm any known business KPIs are unchanged, or changes are explained.
 
+## 2nd Priority – Data Quality Test Coverage
+
+### A. Core dbt tests
+
+- [ ] Add dbt tests for key columns:
+  - [ ] `not_null`
+  - [ ] `unique` (for primary keys or business keys)
+  - [ ] `accepted_values` (for status or type flags, enums)
+  - [ ] `relationships` (foreign key relationships to parent tables)
+
+### B. Custom tests
+
+- [ ] Add custom tests where logic is complex (for example calculated metrics, business rules).
+- [ ] Ensure tests are defined in `.yml` files and linked to the correct models.
+
+### C. Execution and tagging
+
+- [ ] Run `dbt test` and confirm all critical tests pass.
+- [ ] Tag tests or models (for example `tags: ['dq', 'critical']`) for focused test runs.
+- [ ] Document what each important test is protecting (business rationale).
+
+
 ## Notes
 
 - Summary of analysis:
