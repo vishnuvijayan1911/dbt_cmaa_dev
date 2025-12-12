@@ -42,13 +42,13 @@
 ### B. Custom tests
 
 - [ ] Add custom tests where logic is complex (for example calculated metrics, business rules).
-- [ ] Ensure tests are defined in `.yml` files and linked to the correct models.
+- [ ] Ensure tests are defined in `.yml` files and linked to the correct models and modules.
 
 ### C. Execution and tagging
 
 - [ ] Run `dbt test` and confirm all critical tests pass.
-- [ ] Tag tests or models (for example `tags: ['dq', 'critical']`) for focused test runs.
-- [ ] Document what each important test is protecting (business rationale).
+- [ ] Tag tests or models (for example `tags: ['dq', 'sales']`) for focused modulewise test runs.
+- [ ] Document what each important test is protecting (business rationale if any).
 
 
 ## Notes
